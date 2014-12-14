@@ -1,15 +1,21 @@
-package com.elfec.ssc;
+package com.elfec.ssc.view;
+
+import com.elfec.ssc.R;
+import com.elfec.ssc.presenter.ViewAccountsPresenter;
+import com.elfec.ssc.presenter.views.IViewAccounts;
 
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
 
-public class ViewAccounts extends Activity {
+public class ViewAccounts extends Activity implements IViewAccounts {
 
+	private ViewAccountsPresenter presenter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
+        presenter = new ViewAccountsPresenter(this);
     }
 
 
