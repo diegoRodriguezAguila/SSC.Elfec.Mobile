@@ -6,9 +6,10 @@ import com.elfec.ssc.presenter.views.IViewAccounts;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 
-public class ViewAccounts extends Activity implements IViewAccounts {
+public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
     @Override
