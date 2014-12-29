@@ -62,6 +62,11 @@
 	  <item name="android:background">@drawable/ssc_elfec_btn_default_holo_light</item>
 	  <item name="android:textColor">#ffffff</item>
   </style>
+  
+  <style name="Button_mahapp" parent="android:Widget.Holo.Light.Button">
+	  <item name="android:background">@drawable/btn_mahapps</item>
+	  <item name="android:textColor">@color/light_text_color</item>
+  </style>
 
   <style name="ImageButtonssc_elfec" parent="android:Widget.Holo.Light.ImageButton">
 	  <item name="android:background">@drawable/ssc_elfec_btn_default_holo_light</item>

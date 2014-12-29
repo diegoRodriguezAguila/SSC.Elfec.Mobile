@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="ssc_elfec_color">#006086</color>
+    <color name="light_text_color">#2196F3</color>
     <color name="background_soft_gray">#E7E8EA</color>
 </resources>

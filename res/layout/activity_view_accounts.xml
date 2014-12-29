@@ -21,6 +21,7 @@
         android:layout_below="@+id/textView1"
         android:layout_marginTop="94dp"
         android:layout_toRightOf="@+id/textView1"
+        android:onClick="showDialog"
         android:text="Apretar" />
 
     <EditText
@@ -44,5 +45,15 @@
         android:layout_toRightOf="@+id/textView1"
         android:ems="10"
         android:inputType="textEmailAddress" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/button1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginTop="34dp"
+        style="@style/Button_mahapp"
+        android:text="ACEPTAR" />
 
 </RelativeLayout>

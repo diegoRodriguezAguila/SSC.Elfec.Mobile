@@ -72,12 +72,19 @@
   <style name="RadioButtonssc_elfec" parent="android:Widget.CompoundButton.RadioButton">
       <item name="android:button">@drawable/ssc_elfec_btn_radio_holo_light</item>
   </style>
-
+  
   <style name="Buttonssc_elfec" parent="android:Widget.Button">
 	  <item name="android:background">@drawable/ssc_elfec_btn_default_holo_light</item>
 	  <item name="android:minHeight">48dip</item>
 	  <item name="android:minWidth">64dip</item>
 	  <item name="android:textColor">#ffffff</item>
+  </style>
+
+  <style name="Button_mahapp" parent="android:Widget.Button">
+	  <item name="android:background">@drawable/btn_mahapps</item>
+	  <item name="android:minHeight">48dip</item>
+	  <item name="android:minWidth">64dip</item>
+	  <item name="android:textColor">@color/light_text_color</item>
   </style>
 
   <style name="ImageButtonssc_elfec" parent="android:Widget.ImageButton">
