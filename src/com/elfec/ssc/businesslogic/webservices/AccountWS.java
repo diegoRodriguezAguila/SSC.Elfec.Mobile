@@ -27,10 +27,10 @@ public class AccountWS
 	public List<Integer> registerAccount(String accountNumber, String nUS, String gmail, String phoneNumber, 
 			String deviceBrand, String deviceModel, String deviceIMEI, String gCMtoken)
 	{
-		WebServiceConnector<List<Integer>> accountWS = 
+		WebServiceConnector<List<Integer>> accountWSConnector = 
 				new WebServiceConnector<List<Integer>>("http://192.168.12.81/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
 						"ssc_elfec", "RegisterAccount", new RegisterAccountWSConverter());
-		accountWS.execute(new WSParam("AccountNumber", accountNumber), new WSParam("NUS", nUS), new WSParam("GMail", gmail), 
+		accountWSConnector.execute(new WSParam("AccountNumber", accountNumber), new WSParam("NUS", nUS), new WSParam("GMail", gmail), 
 				new WSParam("PhoneNumber", phoneNumber), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
 		return null;
