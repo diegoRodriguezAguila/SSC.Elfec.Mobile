@@ -2,10 +2,16 @@
 
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-
+    
     <style name="ssc_elfec" parent="@style/_ssc_elfec" />
 
     <style name="_ssc_elfec" parent="Theme.AppCompat.Light.DarkActionBar">
+        
+        <item name="colorPrimary">#3F51B5</item>
+	    <item name="colorPrimaryDark">#303F9F</item>
+	    <item name="colorAccent">#FF4081</item>
+	    <item name="alertDialogProTheme">@style/Theme.FlavoredMaterialLight</item>
+        
         <item name="homeAsUpIndicator">@null</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/background_soft_gray</item>

@@ -2,6 +2,24 @@
 
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+    <style name="Theme.FlavoredMaterialLight" parent="Theme.AlertDialogPro.Material.Light">
+        <item name="colorPrimary">@color/ssc_elfec_color</item>
+        <item name="colorPrimaryDark">@color/ssc_elfec_color</item>
+        <item name="colorAccent">@color/light_text_color</item>
+        <item name="android:windowTitleStyle">@style/AdpTitleStyle</item>
+        <item name="adpButtonBarNegativeButtonStyle">@style/AdpNormalButtonStyle</item>
+        <item name="adpButtonBarNeutralButtonStyle">@style/AdpNormalButtonStyle</item>
+    </style>
+
+    <style name="AdpTitleStyle" parent="DialogWindowTitle.AlertDialogPro.Material.Light">
+        <item name="android:textColor">?attr/colorPrimary</item>
+    </style>
+
+    <style name="AdpNormalButtonStyle" parent="Widget.AlertDialogPro.Material.Light.Button">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+    
 	<style name="ActionBar.Solid.Ssc_elfec" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
 	    <item name="height">@dimen/action_bar_height</item>
         <item name="background">@drawable/ab_solid_ssc_elfec3</item>
@@ -66,6 +84,7 @@
   <style name="Button_mahapp" parent="android:Widget.Holo.Light.Button">
 	  <item name="android:background">@drawable/btn_mahapps</item>
 	  <item name="android:textColor">@color/light_text_color</item>
+	  <item name="textAllCaps">true</item>
   </style>
 
   <style name="ImageButtonssc_elfec" parent="android:Widget.Holo.Light.ImageButton">

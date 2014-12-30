@@ -32,15 +32,15 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
     
     public void showDialog(View v)
     {
-    	(new AlertDialogPro.Builder(this, R.style.Theme_AlertDialogPro_Material_Light)).setTitle(R.string.app_name)
-        .setMessage("Hello, charming AlertDialogPro!")
-        .setPositiveButton("Nice Job", new OnClickListener() {
+    	(new AlertDialogPro.Builder(this)).setTitle("CUADRO DE DIÁLOGO")
+        .setMessage("Hola, esta es una prueba de que se muestre un diálogo")
+        .setPositiveButton("Aceptar", new OnClickListener() {
+			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// TODO Auto-generated method stub
-				
+				presenter.invokeAccountWS();
 			}
-		})
+		}).setNegativeButton("Cancelar", null).setNeutralButton("Ignorar", null)
         .show();
     }
 }
