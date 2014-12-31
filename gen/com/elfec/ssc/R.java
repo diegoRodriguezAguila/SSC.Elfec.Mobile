@@ -393,6 +393,10 @@ theme attribute (in the form
 containing a value of this type.
          */
         public static final int barSize=0x7f01009f;
+        /** <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+         */
+        public static final int buttonBackground=0x7f0100c2;
         /**  A style that may be applied to Buttons placed within a
              LinearLayout with the style buttonBarStyle to form a button bar. 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
@@ -405,6 +409,22 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
          */
         public static final int buttonBarStyle=0x7f01002e;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int buttonIcon=0x7f0100c1;
+        /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+         */
+        public static final int buttonText=0x7f0100c0;
         /**  Close button icon 
          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
 or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
@@ -1512,19 +1532,19 @@ containing a value of this type.
         public static final int abc_config_showMenuShortcutsWhenKeyboardPresent=0x7f070003;
     }
     public static final class color {
-        public static final int abc_background_cache_hint_selector_material_dark=0x7f080039;
-        public static final int abc_background_cache_hint_selector_material_light=0x7f08003a;
+        public static final int abc_background_cache_hint_selector_material_dark=0x7f08003c;
+        public static final int abc_background_cache_hint_selector_material_light=0x7f08003d;
         public static final int abc_input_method_navigation_guard=0x7f080003;
-        public static final int abc_primary_text_disable_only_material_dark=0x7f08003b;
-        public static final int abc_primary_text_disable_only_material_light=0x7f08003c;
-        public static final int abc_primary_text_material_dark=0x7f08003d;
-        public static final int abc_primary_text_material_light=0x7f08003e;
-        public static final int abc_search_url_text=0x7f08003f;
+        public static final int abc_primary_text_disable_only_material_dark=0x7f08003e;
+        public static final int abc_primary_text_disable_only_material_light=0x7f08003f;
+        public static final int abc_primary_text_material_dark=0x7f080040;
+        public static final int abc_primary_text_material_light=0x7f080041;
+        public static final int abc_search_url_text=0x7f080042;
         public static final int abc_search_url_text_normal=0x7f080000;
         public static final int abc_search_url_text_pressed=0x7f080002;
         public static final int abc_search_url_text_selected=0x7f080001;
-        public static final int abc_secondary_text_material_dark=0x7f080040;
-        public static final int abc_secondary_text_material_light=0x7f080041;
+        public static final int abc_secondary_text_material_dark=0x7f080043;
+        public static final int abc_secondary_text_material_light=0x7f080044;
         public static final int accent_material_dark=0x7f08000f;
         public static final int accent_material_light=0x7f08000e;
         public static final int adp_mtrl_btn_disabled_light=0x7f080035;
@@ -1547,8 +1567,11 @@ containing a value of this type.
         public static final int bright_foreground_inverse_material_light=0x7f080019;
         public static final int bright_foreground_material_dark=0x7f080014;
         public static final int bright_foreground_material_light=0x7f080015;
+        public static final int btn_disabled_gray=0x7f08003a;
+        public static final int btn_square_text_color=0x7f080045;
         public static final int button_material_dark=0x7f080010;
         public static final int button_material_light=0x7f080011;
+        public static final int dark_gray=0x7f080039;
         public static final int dim_foreground_disabled_material_dark=0x7f08001c;
         public static final int dim_foreground_disabled_material_light=0x7f08001d;
         public static final int dim_foreground_material_dark=0x7f08001a;
@@ -1588,6 +1611,7 @@ containing a value of this type.
         public static final int secondary_text_disabled_material_dark=0x7f08002b;
         public static final int secondary_text_disabled_material_light=0x7f080029;
         public static final int ssc_elfec_color=0x7f080036;
+        public static final int ssc_elfec_color_pressed=0x7f08003b;
         public static final int switch_thumb_normal_material_dark=0x7f080012;
         public static final int switch_thumb_normal_material_light=0x7f080013;
     }
@@ -1682,6 +1706,11 @@ containing a value of this type.
         public static final int abc_text_size_title_material_toolbar=0x7f090012;
         public static final int action_bar_height=0x7f090038;
         /**  Default screen margins, per the Android Design guidelines. 
+
+         Example customization of dimensions originally defined in res/values/dimens.xml
+         (such as screen margins) for screens with more than 820dp of available width. This
+         would include 7" and 10" devices in landscape (~960dp and ~1280dp respectively).
+    
 
          Customize dimensions originally defined in res/values/dimens.xml (such as
          screen margins) for sw720dp devices (e.g. 10" tablets) in landscape here.
@@ -1827,152 +1856,160 @@ containing a value of this type.
         public static final int btn_mahapps_disabled=0x7f02004b;
         public static final int btn_mahapps_normal=0x7f02004c;
         public static final int btn_mahapps_pressed=0x7f02004d;
-        public static final int cab_background_bottom_ssc_elfec=0x7f02004e;
-        public static final int cab_background_top_ssc_elfec=0x7f02004f;
-        public static final int custom_cursor=0x7f020050;
-        public static final int ic_launcher=0x7f020051;
-        public static final int list_focused_ssc_elfec=0x7f020052;
-        public static final int list_pressed_ssc_elfec=0x7f020053;
-        public static final int menu_dropdown_panel_ssc_elfec=0x7f020054;
-        public static final int progress_bg_ssc_elfec=0x7f020055;
-        public static final int progress_horizontal_ssc_elfec=0x7f020056;
-        public static final int progress_primary_ssc_elfec=0x7f020057;
-        public static final int progress_secondary_ssc_elfec=0x7f020058;
-        public static final int selectable_background_ssc_elfec=0x7f020059;
-        public static final int spinner_ab_default_ssc_elfec=0x7f02005a;
-        public static final int spinner_ab_disabled_ssc_elfec=0x7f02005b;
-        public static final int spinner_ab_focused_ssc_elfec=0x7f02005c;
-        public static final int spinner_ab_pressed_ssc_elfec=0x7f02005d;
-        public static final int spinner_background_ab_ssc_elfec=0x7f02005e;
-        public static final int ssc_elfec_activated_background_holo_light=0x7f02005f;
-        public static final int ssc_elfec_btn_check_holo_light=0x7f020060;
-        public static final int ssc_elfec_btn_check_off_disabled_focused_holo_light=0x7f020061;
-        public static final int ssc_elfec_btn_check_off_disabled_holo_light=0x7f020062;
-        public static final int ssc_elfec_btn_check_off_focused_holo_light=0x7f020063;
-        public static final int ssc_elfec_btn_check_off_holo_light=0x7f020064;
-        public static final int ssc_elfec_btn_check_off_pressed_holo_light=0x7f020065;
-        public static final int ssc_elfec_btn_check_on_disabled_focused_holo_light=0x7f020066;
-        public static final int ssc_elfec_btn_check_on_disabled_holo_light=0x7f020067;
-        public static final int ssc_elfec_btn_check_on_focused_holo_light=0x7f020068;
-        public static final int ssc_elfec_btn_check_on_holo_light=0x7f020069;
-        public static final int ssc_elfec_btn_check_on_pressed_holo_light=0x7f02006a;
-        public static final int ssc_elfec_btn_default_disabled_focused_holo_light=0x7f02006b;
-        public static final int ssc_elfec_btn_default_disabled_holo_light=0x7f02006c;
-        public static final int ssc_elfec_btn_default_focused_holo_light=0x7f02006d;
-        public static final int ssc_elfec_btn_default_holo_light=0x7f02006e;
-        public static final int ssc_elfec_btn_default_normal_holo_light=0x7f02006f;
-        public static final int ssc_elfec_btn_default_pressed_holo_light=0x7f020070;
-        public static final int ssc_elfec_btn_radio_holo_light=0x7f020071;
-        public static final int ssc_elfec_btn_radio_off_disabled_focused_holo_light=0x7f020072;
-        public static final int ssc_elfec_btn_radio_off_disabled_holo_light=0x7f020073;
-        public static final int ssc_elfec_btn_radio_off_focused_holo_light=0x7f020074;
-        public static final int ssc_elfec_btn_radio_off_holo_light=0x7f020075;
-        public static final int ssc_elfec_btn_radio_off_pressed_holo_light=0x7f020076;
-        public static final int ssc_elfec_btn_radio_on_disabled_focused_holo_light=0x7f020077;
-        public static final int ssc_elfec_btn_radio_on_disabled_holo_light=0x7f020078;
-        public static final int ssc_elfec_btn_radio_on_focused_holo_light=0x7f020079;
-        public static final int ssc_elfec_btn_radio_on_holo_light=0x7f02007a;
-        public static final int ssc_elfec_btn_radio_on_pressed_holo_light=0x7f02007b;
-        public static final int ssc_elfec_btn_rating_star_off_focused_holo_light=0x7f02007c;
-        public static final int ssc_elfec_btn_rating_star_off_normal_holo_light=0x7f02007d;
-        public static final int ssc_elfec_btn_rating_star_off_pressed_holo_light=0x7f02007e;
-        public static final int ssc_elfec_btn_rating_star_on_focused_holo_light=0x7f02007f;
-        public static final int ssc_elfec_btn_rating_star_on_normal_holo_light=0x7f020080;
-        public static final int ssc_elfec_btn_rating_star_on_pressed_holo_light=0x7f020081;
-        public static final int ssc_elfec_btn_toggle_holo_light=0x7f020082;
-        public static final int ssc_elfec_btn_toggle_off_disabled_focused_holo_light=0x7f020083;
-        public static final int ssc_elfec_btn_toggle_off_disabled_holo_light=0x7f020084;
-        public static final int ssc_elfec_btn_toggle_off_focused_holo_light=0x7f020085;
-        public static final int ssc_elfec_btn_toggle_off_normal_holo_light=0x7f020086;
-        public static final int ssc_elfec_btn_toggle_off_pressed_holo_light=0x7f020087;
-        public static final int ssc_elfec_btn_toggle_on_disabled_focused_holo_light=0x7f020088;
-        public static final int ssc_elfec_btn_toggle_on_disabled_holo_light=0x7f020089;
-        public static final int ssc_elfec_btn_toggle_on_focused_holo_light=0x7f02008a;
-        public static final int ssc_elfec_btn_toggle_on_normal_holo_light=0x7f02008b;
-        public static final int ssc_elfec_btn_toggle_on_pressed_holo_light=0x7f02008c;
-        public static final int ssc_elfec_edit_text_holo_light=0x7f02008d;
-        public static final int ssc_elfec_fastscroll_thumb_default_holo=0x7f02008e;
-        public static final int ssc_elfec_fastscroll_thumb_holo=0x7f02008f;
-        public static final int ssc_elfec_fastscroll_thumb_pressed_holo=0x7f020090;
-        public static final int ssc_elfec_ic_navigation_drawer=0x7f020091;
-        public static final int ssc_elfec_item_background_holo_light=0x7f020092;
-        public static final int ssc_elfec_list_activated_holo=0x7f020093;
-        public static final int ssc_elfec_list_focused_holo=0x7f020094;
-        public static final int ssc_elfec_list_longpressed_holo=0x7f020095;
-        public static final int ssc_elfec_list_pressed_holo_light=0x7f020096;
-        public static final int ssc_elfec_list_selector_background_transition_holo_light=0x7f020097;
-        public static final int ssc_elfec_list_selector_disabled_holo_light=0x7f020098;
-        public static final int ssc_elfec_list_selector_holo_light=0x7f020099;
-        public static final int ssc_elfec_progress_bg_holo_light=0x7f02009a;
-        public static final int ssc_elfec_progress_horizontal_holo_light=0x7f02009b;
-        public static final int ssc_elfec_progress_indeterminate_horizontal_holo_light=0x7f02009c;
-        public static final int ssc_elfec_progress_primary_holo_light=0x7f02009d;
-        public static final int ssc_elfec_progress_secondary_holo_light=0x7f02009e;
-        public static final int ssc_elfec_progressbar_indeterminate_holo1=0x7f02009f;
-        public static final int ssc_elfec_progressbar_indeterminate_holo2=0x7f0200a0;
-        public static final int ssc_elfec_progressbar_indeterminate_holo3=0x7f0200a1;
-        public static final int ssc_elfec_progressbar_indeterminate_holo4=0x7f0200a2;
-        public static final int ssc_elfec_progressbar_indeterminate_holo5=0x7f0200a3;
-        public static final int ssc_elfec_progressbar_indeterminate_holo6=0x7f0200a4;
-        public static final int ssc_elfec_progressbar_indeterminate_holo7=0x7f0200a5;
-        public static final int ssc_elfec_progressbar_indeterminate_holo8=0x7f0200a6;
-        public static final int ssc_elfec_rate_star_big_half_holo_light=0x7f0200a7;
-        public static final int ssc_elfec_rate_star_big_off_holo_light=0x7f0200a8;
-        public static final int ssc_elfec_rate_star_big_on_holo_light=0x7f0200a9;
-        public static final int ssc_elfec_rate_star_small_half_holo_light=0x7f0200aa;
-        public static final int ssc_elfec_rate_star_small_off_holo_light=0x7f0200ab;
-        public static final int ssc_elfec_rate_star_small_on_holo_light=0x7f0200ac;
-        public static final int ssc_elfec_ratingbar_full_empty_holo_light=0x7f0200ad;
-        public static final int ssc_elfec_ratingbar_full_filled_holo_light=0x7f0200ae;
-        public static final int ssc_elfec_ratingbar_full_holo_light=0x7f0200af;
-        public static final int ssc_elfec_ratingbar_holo_light=0x7f0200b0;
-        public static final int ssc_elfec_ratingbar_small_holo_light=0x7f0200b1;
-        public static final int ssc_elfec_scrubber_control_disabled_holo=0x7f0200b2;
-        public static final int ssc_elfec_scrubber_control_focused_holo=0x7f0200b3;
-        public static final int ssc_elfec_scrubber_control_normal_holo=0x7f0200b4;
-        public static final int ssc_elfec_scrubber_control_pressed_holo=0x7f0200b5;
-        public static final int ssc_elfec_scrubber_control_selector_holo_light=0x7f0200b6;
-        public static final int ssc_elfec_scrubber_primary_holo=0x7f0200b7;
-        public static final int ssc_elfec_scrubber_progress_horizontal_holo_light=0x7f0200b8;
-        public static final int ssc_elfec_scrubber_secondary_holo=0x7f0200b9;
-        public static final int ssc_elfec_scrubber_track_holo_light=0x7f0200ba;
-        public static final int ssc_elfec_spinner_background_holo_light=0x7f0200bb;
-        public static final int ssc_elfec_spinner_default_holo_light=0x7f0200bc;
-        public static final int ssc_elfec_spinner_disabled_holo_light=0x7f0200bd;
-        public static final int ssc_elfec_spinner_focused_holo_light=0x7f0200be;
-        public static final int ssc_elfec_spinner_pressed_holo_light=0x7f0200bf;
-        public static final int ssc_elfec_switch_bg_disabled_holo_light=0x7f0200c0;
-        public static final int ssc_elfec_switch_bg_focused_holo_light=0x7f0200c1;
-        public static final int ssc_elfec_switch_bg_holo_light=0x7f0200c2;
-        public static final int ssc_elfec_switch_inner_holo_light=0x7f0200c3;
-        public static final int ssc_elfec_switch_thumb_activated_holo_light=0x7f0200c4;
-        public static final int ssc_elfec_switch_thumb_disabled_holo_light=0x7f0200c5;
-        public static final int ssc_elfec_switch_thumb_holo_light=0x7f0200c6;
-        public static final int ssc_elfec_switch_thumb_pressed_holo_light=0x7f0200c7;
-        public static final int ssc_elfec_switch_track_holo_light=0x7f0200c8;
-        public static final int ssc_elfec_tab_indicator_holo=0x7f0200c9;
-        public static final int ssc_elfec_tab_selected_focused_holo=0x7f0200ca;
-        public static final int ssc_elfec_tab_selected_holo=0x7f0200cb;
-        public static final int ssc_elfec_tab_selected_pressed_holo=0x7f0200cc;
-        public static final int ssc_elfec_tab_unselected_focused_holo=0x7f0200cd;
-        public static final int ssc_elfec_tab_unselected_holo=0x7f0200ce;
-        public static final int ssc_elfec_tab_unselected_pressed_holo=0x7f0200cf;
-        public static final int ssc_elfec_text_select_handle_left=0x7f0200d0;
-        public static final int ssc_elfec_text_select_handle_middle=0x7f0200d1;
-        public static final int ssc_elfec_text_select_handle_right=0x7f0200d2;
-        public static final int ssc_elfec_textfield_activated_holo_light=0x7f0200d3;
-        public static final int ssc_elfec_textfield_activated_holo_light2=0x7f0200d4;
-        public static final int ssc_elfec_textfield_default_holo_light=0x7f0200d5;
-        public static final int ssc_elfec_textfield_disabled_focused_holo_light=0x7f0200d6;
-        public static final int ssc_elfec_textfield_disabled_holo_light=0x7f0200d7;
-        public static final int ssc_elfec_textfield_focused_holo_light=0x7f0200d8;
-        public static final int tab_indicator_ab_ssc_elfec=0x7f0200d9;
-        public static final int tab_selected_focused_ssc_elfec=0x7f0200da;
-        public static final int tab_selected_pressed_ssc_elfec=0x7f0200db;
-        public static final int tab_selected_ssc_elfec=0x7f0200dc;
-        public static final int tab_unselected_focused_ssc_elfec=0x7f0200dd;
-        public static final int tab_unselected_pressed_ssc_elfec=0x7f0200de;
-        public static final int tab_unselected_ssc_elfec=0x7f0200df;
+        public static final int btn_square=0x7f02004e;
+        public static final int btn_square_disabled=0x7f02004f;
+        public static final int btn_square_normal=0x7f020050;
+        public static final int btn_square_pressed=0x7f020051;
+        public static final int cab_background_bottom_ssc_elfec=0x7f020052;
+        public static final int cab_background_top_ssc_elfec=0x7f020053;
+        public static final int custom_cursor=0x7f020054;
+        public static final int ic_launcher=0x7f020055;
+        public static final int list_focused_ssc_elfec=0x7f020056;
+        public static final int list_pressed_ssc_elfec=0x7f020057;
+        public static final int location_services=0x7f020058;
+        public static final int location_services_highlight=0x7f020059;
+        public static final int location_services_selector=0x7f02005a;
+        public static final int logo_elfec=0x7f02005b;
+        public static final int menu_dropdown_panel_ssc_elfec=0x7f02005c;
+        public static final int progress_bg_ssc_elfec=0x7f02005d;
+        public static final int progress_horizontal_ssc_elfec=0x7f02005e;
+        public static final int progress_primary_ssc_elfec=0x7f02005f;
+        public static final int progress_secondary_ssc_elfec=0x7f020060;
+        public static final int selectable_background_ssc_elfec=0x7f020061;
+        public static final int spinner_ab_default_ssc_elfec=0x7f020062;
+        public static final int spinner_ab_disabled_ssc_elfec=0x7f020063;
+        public static final int spinner_ab_focused_ssc_elfec=0x7f020064;
+        public static final int spinner_ab_pressed_ssc_elfec=0x7f020065;
+        public static final int spinner_background_ab_ssc_elfec=0x7f020066;
+        public static final int ssc_elfec_activated_background_holo_light=0x7f020067;
+        public static final int ssc_elfec_btn_check_holo_light=0x7f020068;
+        public static final int ssc_elfec_btn_check_off_disabled_focused_holo_light=0x7f020069;
+        public static final int ssc_elfec_btn_check_off_disabled_holo_light=0x7f02006a;
+        public static final int ssc_elfec_btn_check_off_focused_holo_light=0x7f02006b;
+        public static final int ssc_elfec_btn_check_off_holo_light=0x7f02006c;
+        public static final int ssc_elfec_btn_check_off_pressed_holo_light=0x7f02006d;
+        public static final int ssc_elfec_btn_check_on_disabled_focused_holo_light=0x7f02006e;
+        public static final int ssc_elfec_btn_check_on_disabled_holo_light=0x7f02006f;
+        public static final int ssc_elfec_btn_check_on_focused_holo_light=0x7f020070;
+        public static final int ssc_elfec_btn_check_on_holo_light=0x7f020071;
+        public static final int ssc_elfec_btn_check_on_pressed_holo_light=0x7f020072;
+        public static final int ssc_elfec_btn_default_disabled_focused_holo_light=0x7f020073;
+        public static final int ssc_elfec_btn_default_disabled_holo_light=0x7f020074;
+        public static final int ssc_elfec_btn_default_focused_holo_light=0x7f020075;
+        public static final int ssc_elfec_btn_default_holo_light=0x7f020076;
+        public static final int ssc_elfec_btn_default_normal_holo_light=0x7f020077;
+        public static final int ssc_elfec_btn_default_pressed_holo_light=0x7f020078;
+        public static final int ssc_elfec_btn_radio_holo_light=0x7f020079;
+        public static final int ssc_elfec_btn_radio_off_disabled_focused_holo_light=0x7f02007a;
+        public static final int ssc_elfec_btn_radio_off_disabled_holo_light=0x7f02007b;
+        public static final int ssc_elfec_btn_radio_off_focused_holo_light=0x7f02007c;
+        public static final int ssc_elfec_btn_radio_off_holo_light=0x7f02007d;
+        public static final int ssc_elfec_btn_radio_off_pressed_holo_light=0x7f02007e;
+        public static final int ssc_elfec_btn_radio_on_disabled_focused_holo_light=0x7f02007f;
+        public static final int ssc_elfec_btn_radio_on_disabled_holo_light=0x7f020080;
+        public static final int ssc_elfec_btn_radio_on_focused_holo_light=0x7f020081;
+        public static final int ssc_elfec_btn_radio_on_holo_light=0x7f020082;
+        public static final int ssc_elfec_btn_radio_on_pressed_holo_light=0x7f020083;
+        public static final int ssc_elfec_btn_rating_star_off_focused_holo_light=0x7f020084;
+        public static final int ssc_elfec_btn_rating_star_off_normal_holo_light=0x7f020085;
+        public static final int ssc_elfec_btn_rating_star_off_pressed_holo_light=0x7f020086;
+        public static final int ssc_elfec_btn_rating_star_on_focused_holo_light=0x7f020087;
+        public static final int ssc_elfec_btn_rating_star_on_normal_holo_light=0x7f020088;
+        public static final int ssc_elfec_btn_rating_star_on_pressed_holo_light=0x7f020089;
+        public static final int ssc_elfec_btn_toggle_holo_light=0x7f02008a;
+        public static final int ssc_elfec_btn_toggle_off_disabled_focused_holo_light=0x7f02008b;
+        public static final int ssc_elfec_btn_toggle_off_disabled_holo_light=0x7f02008c;
+        public static final int ssc_elfec_btn_toggle_off_focused_holo_light=0x7f02008d;
+        public static final int ssc_elfec_btn_toggle_off_normal_holo_light=0x7f02008e;
+        public static final int ssc_elfec_btn_toggle_off_pressed_holo_light=0x7f02008f;
+        public static final int ssc_elfec_btn_toggle_on_disabled_focused_holo_light=0x7f020090;
+        public static final int ssc_elfec_btn_toggle_on_disabled_holo_light=0x7f020091;
+        public static final int ssc_elfec_btn_toggle_on_focused_holo_light=0x7f020092;
+        public static final int ssc_elfec_btn_toggle_on_normal_holo_light=0x7f020093;
+        public static final int ssc_elfec_btn_toggle_on_pressed_holo_light=0x7f020094;
+        public static final int ssc_elfec_edit_text_holo_light=0x7f020095;
+        public static final int ssc_elfec_fastscroll_thumb_default_holo=0x7f020096;
+        public static final int ssc_elfec_fastscroll_thumb_holo=0x7f020097;
+        public static final int ssc_elfec_fastscroll_thumb_pressed_holo=0x7f020098;
+        public static final int ssc_elfec_ic_navigation_drawer=0x7f020099;
+        public static final int ssc_elfec_item_background_holo_light=0x7f02009a;
+        public static final int ssc_elfec_list_activated_holo=0x7f02009b;
+        public static final int ssc_elfec_list_focused_holo=0x7f02009c;
+        public static final int ssc_elfec_list_longpressed_holo=0x7f02009d;
+        public static final int ssc_elfec_list_pressed_holo_light=0x7f02009e;
+        public static final int ssc_elfec_list_selector_background_transition_holo_light=0x7f02009f;
+        public static final int ssc_elfec_list_selector_disabled_holo_light=0x7f0200a0;
+        public static final int ssc_elfec_list_selector_holo_light=0x7f0200a1;
+        public static final int ssc_elfec_progress_bg_holo_light=0x7f0200a2;
+        public static final int ssc_elfec_progress_horizontal_holo_light=0x7f0200a3;
+        public static final int ssc_elfec_progress_indeterminate_horizontal_holo_light=0x7f0200a4;
+        public static final int ssc_elfec_progress_primary_holo_light=0x7f0200a5;
+        public static final int ssc_elfec_progress_secondary_holo_light=0x7f0200a6;
+        public static final int ssc_elfec_progressbar_indeterminate_holo1=0x7f0200a7;
+        public static final int ssc_elfec_progressbar_indeterminate_holo2=0x7f0200a8;
+        public static final int ssc_elfec_progressbar_indeterminate_holo3=0x7f0200a9;
+        public static final int ssc_elfec_progressbar_indeterminate_holo4=0x7f0200aa;
+        public static final int ssc_elfec_progressbar_indeterminate_holo5=0x7f0200ab;
+        public static final int ssc_elfec_progressbar_indeterminate_holo6=0x7f0200ac;
+        public static final int ssc_elfec_progressbar_indeterminate_holo7=0x7f0200ad;
+        public static final int ssc_elfec_progressbar_indeterminate_holo8=0x7f0200ae;
+        public static final int ssc_elfec_rate_star_big_half_holo_light=0x7f0200af;
+        public static final int ssc_elfec_rate_star_big_off_holo_light=0x7f0200b0;
+        public static final int ssc_elfec_rate_star_big_on_holo_light=0x7f0200b1;
+        public static final int ssc_elfec_rate_star_small_half_holo_light=0x7f0200b2;
+        public static final int ssc_elfec_rate_star_small_off_holo_light=0x7f0200b3;
+        public static final int ssc_elfec_rate_star_small_on_holo_light=0x7f0200b4;
+        public static final int ssc_elfec_ratingbar_full_empty_holo_light=0x7f0200b5;
+        public static final int ssc_elfec_ratingbar_full_filled_holo_light=0x7f0200b6;
+        public static final int ssc_elfec_ratingbar_full_holo_light=0x7f0200b7;
+        public static final int ssc_elfec_ratingbar_holo_light=0x7f0200b8;
+        public static final int ssc_elfec_ratingbar_small_holo_light=0x7f0200b9;
+        public static final int ssc_elfec_scrubber_control_disabled_holo=0x7f0200ba;
+        public static final int ssc_elfec_scrubber_control_focused_holo=0x7f0200bb;
+        public static final int ssc_elfec_scrubber_control_normal_holo=0x7f0200bc;
+        public static final int ssc_elfec_scrubber_control_pressed_holo=0x7f0200bd;
+        public static final int ssc_elfec_scrubber_control_selector_holo_light=0x7f0200be;
+        public static final int ssc_elfec_scrubber_primary_holo=0x7f0200bf;
+        public static final int ssc_elfec_scrubber_progress_horizontal_holo_light=0x7f0200c0;
+        public static final int ssc_elfec_scrubber_secondary_holo=0x7f0200c1;
+        public static final int ssc_elfec_scrubber_track_holo_light=0x7f0200c2;
+        public static final int ssc_elfec_spinner_background_holo_light=0x7f0200c3;
+        public static final int ssc_elfec_spinner_default_holo_light=0x7f0200c4;
+        public static final int ssc_elfec_spinner_disabled_holo_light=0x7f0200c5;
+        public static final int ssc_elfec_spinner_focused_holo_light=0x7f0200c6;
+        public static final int ssc_elfec_spinner_pressed_holo_light=0x7f0200c7;
+        public static final int ssc_elfec_switch_bg_disabled_holo_light=0x7f0200c8;
+        public static final int ssc_elfec_switch_bg_focused_holo_light=0x7f0200c9;
+        public static final int ssc_elfec_switch_bg_holo_light=0x7f0200ca;
+        public static final int ssc_elfec_switch_inner_holo_light=0x7f0200cb;
+        public static final int ssc_elfec_switch_thumb_activated_holo_light=0x7f0200cc;
+        public static final int ssc_elfec_switch_thumb_disabled_holo_light=0x7f0200cd;
+        public static final int ssc_elfec_switch_thumb_holo_light=0x7f0200ce;
+        public static final int ssc_elfec_switch_thumb_pressed_holo_light=0x7f0200cf;
+        public static final int ssc_elfec_switch_track_holo_light=0x7f0200d0;
+        public static final int ssc_elfec_tab_indicator_holo=0x7f0200d1;
+        public static final int ssc_elfec_tab_selected_focused_holo=0x7f0200d2;
+        public static final int ssc_elfec_tab_selected_holo=0x7f0200d3;
+        public static final int ssc_elfec_tab_selected_pressed_holo=0x7f0200d4;
+        public static final int ssc_elfec_tab_unselected_focused_holo=0x7f0200d5;
+        public static final int ssc_elfec_tab_unselected_holo=0x7f0200d6;
+        public static final int ssc_elfec_tab_unselected_pressed_holo=0x7f0200d7;
+        public static final int ssc_elfec_text_select_handle_left=0x7f0200d8;
+        public static final int ssc_elfec_text_select_handle_middle=0x7f0200d9;
+        public static final int ssc_elfec_text_select_handle_right=0x7f0200da;
+        public static final int ssc_elfec_textfield_activated_holo_light=0x7f0200db;
+        public static final int ssc_elfec_textfield_activated_holo_light2=0x7f0200dc;
+        public static final int ssc_elfec_textfield_default_holo_light=0x7f0200dd;
+        public static final int ssc_elfec_textfield_disabled_focused_holo_light=0x7f0200de;
+        public static final int ssc_elfec_textfield_disabled_holo_light=0x7f0200df;
+        public static final int ssc_elfec_textfield_focused_holo_light=0x7f0200e0;
+        public static final int tab_indicator_ab_ssc_elfec=0x7f0200e1;
+        public static final int tab_selected_focused_ssc_elfec=0x7f0200e2;
+        public static final int tab_selected_pressed_ssc_elfec=0x7f0200e3;
+        public static final int tab_selected_ssc_elfec=0x7f0200e4;
+        public static final int tab_unselected_focused_ssc_elfec=0x7f0200e5;
+        public static final int tab_unselected_pressed_ssc_elfec=0x7f0200e6;
+        public static final int tab_unselected_ssc_elfec=0x7f0200e7;
     }
     public static final class id {
         public static final int action_bar=0x7f060046;
@@ -1988,7 +2025,7 @@ containing a value of this type.
         public static final int action_mode_bar=0x7f060043;
         public static final int action_mode_bar_stub=0x7f060042;
         public static final int action_mode_close_button=0x7f060035;
-        public static final int action_settings=0x7f06005a;
+        public static final int action_settings=0x7f06005f;
         public static final int activity_chooser_view_content=0x7f060036;
         public static final int adp_alertTitle=0x7f060023;
         public static final int adp_button1=0x7f06002c;
@@ -2026,10 +2063,12 @@ containing a value of this type.
          */
         public static final int adp_topPanel=0x7f06001f;
         public static final int always=0x7f06000d;
+        public static final int base_button=0x7f06005c;
         public static final int beginning=0x7f060012;
-        public static final int body=0x7f060059;
-        public static final int button1=0x7f060055;
-        public static final int button2=0x7f060058;
+        public static final int body=0x7f06005b;
+        public static final int btn_icon=0x7f06005d;
+        public static final int button1=0x7f060057;
+        public static final int button2=0x7f06005a;
         public static final int checkbox=0x7f06003e;
         public static final int collapseActionView=0x7f06000f;
         public static final int decor_content_parent=0x7f060044;
@@ -2037,8 +2076,8 @@ containing a value of this type.
         public static final int dialog=0x7f060010;
         public static final int disableHome=0x7f06000a;
         public static final int dropdown=0x7f060011;
-        public static final int editText1=0x7f060056;
-        public static final int editText2=0x7f060057;
+        public static final int editText1=0x7f060058;
+        public static final int editText2=0x7f060059;
         public static final int edit_query=0x7f060048;
         public static final int end=0x7f060014;
         public static final int expand_activities_button=0x7f060037;
@@ -2048,12 +2087,15 @@ containing a value of this type.
         public static final int icon=0x7f06003b;
         public static final int ifRoom=0x7f06000c;
         public static final int image=0x7f060038;
+        public static final int imgLogoElfec=0x7f060054;
+        public static final int lbl_app_title=0x7f060055;
         public static final int listMode=0x7f060002;
         public static final int list_item=0x7f06003a;
         public static final int middle=0x7f060013;
         public static final int never=0x7f06000b;
         public static final int none=0x7f060004;
         public static final int normal=0x7f060001;
+        public static final int principal_text=0x7f06005e;
         public static final int progress_circular=0x7f06001c;
         public static final int progress_horizontal=0x7f06001d;
         public static final int radio=0x7f060040;
@@ -2074,7 +2116,7 @@ containing a value of this type.
         public static final int split_action_bar=0x7f060019;
         public static final int submit_area=0x7f060051;
         public static final int tabMode=0x7f060003;
-        public static final int textView1=0x7f060054;
+        public static final int textView1=0x7f060056;
         public static final int title=0x7f06003c;
         public static final int up=0x7f060016;
         public static final int useLogo=0x7f060005;
@@ -2133,18 +2175,21 @@ containing a value of this type.
         public static final int abc_search_dropdown_item_icons_2line=0x7f030014;
         public static final int abc_search_view=0x7f030015;
         public static final int abc_simple_dropdown_hint=0x7f030016;
-        public static final int activity_view_accounts=0x7f030017;
-        public static final int adp_alert_dialog_material=0x7f030018;
-        public static final int adp_progress_dialog_horizontal_material=0x7f030019;
-        public static final int adp_progress_dialog_material=0x7f03001a;
-        public static final int adp_select_dialog_item_material=0x7f03001b;
-        public static final int adp_select_dialog_material=0x7f03001c;
-        public static final int adp_select_dialog_multichoice_material=0x7f03001d;
-        public static final int adp_select_dialog_singlechoice_material=0x7f03001e;
-        public static final int support_simple_spinner_dropdown_item=0x7f03001f;
+        public static final int activity_main_menu=0x7f030017;
+        public static final int activity_view_accounts=0x7f030018;
+        public static final int adp_alert_dialog_material=0x7f030019;
+        public static final int adp_progress_dialog_horizontal_material=0x7f03001a;
+        public static final int adp_progress_dialog_material=0x7f03001b;
+        public static final int adp_select_dialog_item_material=0x7f03001c;
+        public static final int adp_select_dialog_material=0x7f03001d;
+        public static final int adp_select_dialog_multichoice_material=0x7f03001e;
+        public static final int adp_select_dialog_singlechoice_material=0x7f03001f;
+        public static final int square_button=0x7f030020;
+        public static final int support_simple_spinner_dropdown_item=0x7f030021;
     }
     public static final class menu {
-        public static final int view_accounts=0x7f0d0000;
+        public static final int main_menu=0x7f0d0000;
+        public static final int view_accounts=0x7f0d0001;
     }
     public static final class string {
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
@@ -2203,9 +2248,26 @@ containing a value of this type.
         /**  Content description for the Toolbar icon used to collapse an expanded action mode. [CHAR LIMIT=NONE] 
          */
         public static final int abc_toolbar_collapse_description=0x7f0b0004;
+        public static final int account_sample=0x7f0b0015;
         public static final int action_settings=0x7f0b0011;
         public static final int app_name=0x7f0b0010;
+        /**  Main Menu 
+         */
+        public static final int app_title=0x7f0b0017;
+        public static final int btn_accounts=0x7f0b0019;
+        public static final int btn_contacts=0x7f0b001c;
+        public static final int btn_location_services=0x7f0b001a;
+        public static final int btn_notifications=0x7f0b001b;
+        public static final int btn_register=0x7f0b0016;
         public static final int hello_world=0x7f0b0012;
+        /**  Image captions 
+         */
+        public static final int logo_elfec_caption=0x7f0b001d;
+        public static final int nus_sample=0x7f0b0014;
+        /**  Register Account 
+         */
+        public static final int register_account_title=0x7f0b0013;
+        public static final int welcome=0x7f0b0018;
     }
     public static final class style {
         public static final int ActionBar_Solid_Ssc_elfec=0x7f0c0110;
@@ -4775,6 +4837,61 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
           @attr name com.elfec.ssc:spinnerMode
         */
         public static final int Spinner_spinnerMode = 8;
+        /** Attributes that can be used with a SquareButtonOptions.
+           <p>Includes the following attributes:</p>
+           <table>
+           <colgroup align="left" />
+           <colgroup align="left" />
+           <tr><th>Attribute</th><th>Description</th></tr>
+           <tr><td><code>{@link #SquareButtonOptions_buttonBackground com.elfec.ssc:buttonBackground}</code></td><td></td></tr>
+           <tr><td><code>{@link #SquareButtonOptions_buttonIcon com.elfec.ssc:buttonIcon}</code></td><td></td></tr>
+           <tr><td><code>{@link #SquareButtonOptions_buttonText com.elfec.ssc:buttonText}</code></td><td></td></tr>
+           </table>
+           @see #SquareButtonOptions_buttonBackground
+           @see #SquareButtonOptions_buttonIcon
+           @see #SquareButtonOptions_buttonText
+         */
+        public static final int[] SquareButtonOptions = {
+            0x7f0100c0, 0x7f0100c1, 0x7f0100c2
+        };
+        /**
+          <p>This symbol is the offset where the {@link com.elfec.ssc.R.attr#buttonBackground}
+          attribute's value can be found in the {@link #SquareButtonOptions} array.
+
+
+          <p>Must be a reference to another resource, in the form "<code>@[+][<i>package</i>:]<i>type</i>:<i>name</i></code>"
+or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>".
+          @attr name com.elfec.ssc:buttonBackground
+        */
+        public static final int SquareButtonOptions_buttonBackground = 2;
+        /**
+          <p>This symbol is the offset where the {@link com.elfec.ssc.R.attr#buttonIcon}
+          attribute's value can be found in the {@link #SquareButtonOptions} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.elfec.ssc:buttonIcon
+        */
+        public static final int SquareButtonOptions_buttonIcon = 1;
+        /**
+          <p>This symbol is the offset where the {@link com.elfec.ssc.R.attr#buttonText}
+          attribute's value can be found in the {@link #SquareButtonOptions} array.
+
+
+          <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.
+<p>This may also be a reference to a resource (in the form
+"<code>@[<i>package</i>:]<i>type</i>:<i>name</i></code>") or
+theme attribute (in the form
+"<code>?[<i>package</i>:][<i>type</i>:]<i>name</i></code>")
+containing a value of this type.
+          @attr name com.elfec.ssc:buttonText
+        */
+        public static final int SquareButtonOptions_buttonText = 0;
         /** Attributes that can be used with a SwitchCompat.
            <p>Includes the following attributes:</p>
            <table>

@@ -3,4 +3,7 @@
     <color name="ssc_elfec_color">#006086</color>
     <color name="light_text_color">#2196F3</color>
     <color name="background_soft_gray">#E7E8EA</color>
+    <color name="dark_gray">#4C5656</color>
+    <color name="btn_disabled_gray">#D9D9D9</color>
+    <color name="ssc_elfec_color_pressed">#004C6A</color>
 </resources>

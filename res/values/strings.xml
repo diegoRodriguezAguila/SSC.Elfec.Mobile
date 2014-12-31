@@ -4,5 +4,21 @@
     <string name="app_name">SSC Elfec</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-
+    
+    <!-- Register Account -->
+	<string name="register_account_title">Registrar cuenta</string>
+	<string name="nus_sample">261724</string>
+	<string name="account_sample">34-453-321-65</string>
+	<string name="btn_register">Registrar</string>
+	
+	<!-- Main Menu -->
+	<string name="app_title">Sistema de Servicios al Cliente</string>
+	<string name="welcome">Bienvenido(a)</string>
+	<string name="btn_accounts">Cuentas</string>
+	<string name="btn_location_services">Puntos de pago</string>
+	<string name="btn_notifications">Notificaciones</string>
+	<string name="btn_contacts">Contactos</string>
+	
+	<!-- Image captions -->
+	<string name="logo_elfec_caption">Logo Elfec</string>
 </resources>

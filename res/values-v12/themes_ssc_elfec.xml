@@ -4,7 +4,7 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="ssc_elfec" parent="@style/_ssc_elfec" />
-
+    
     <style name="_ssc_elfec" parent="Theme.AppCompat.Light.DarkActionBar">
         
         <item name="colorPrimary">#3F51B5</item>

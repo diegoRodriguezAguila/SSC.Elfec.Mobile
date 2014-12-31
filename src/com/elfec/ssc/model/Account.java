@@ -31,7 +31,8 @@ public class Account extends Model {
     @Column(name = "UpdateDate")
     private DateTime UpdateDate;
     
-	
+	//#region Getters y Setters
+
 	public int getClientId() {
 		return ClientId;
 	}
@@ -74,5 +75,6 @@ public class Account extends Model {
 		UpdateDate = updateDate;
 	}
     
-    
+    //#endregion
+
 }
