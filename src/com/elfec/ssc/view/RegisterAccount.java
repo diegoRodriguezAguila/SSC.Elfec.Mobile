@@ -1,7 +1,6 @@
 package com.elfec.ssc.view;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
 import com.elfec.ssc.R;
 
 import android.support.v7.app.ActionBarActivity;
@@ -9,13 +8,19 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.EditText;
 
 public class RegisterAccount extends ActionBarActivity {
 
+	EditText txtNUS;
+	EditText txtAccountNumber;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_account);
+		txtNUS = (EditText) findViewById(R.id.txt_nus);
+		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
 	}
 	
 	@Override

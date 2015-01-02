@@ -1,4 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom_edit="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,15 +11,17 @@
 
     
     <EditText
-        android:id="@+id/txtNus"
+        android:id="@+id/txt_nus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/txtAccountNumber"
-        android:layout_alignLeft="@+id/txtAccountNumber"
-        android:layout_alignRight="@+id/txtAccountNumber"
-        android:layout_alignStart="@+id/txtAccountNumber"
-        android:layout_alignEnd="@+id/txtAccountNumber"
+        android:layout_above="@+id/txt_accountNumber"
+        android:layout_alignLeft="@+id/txt_accountNumber"
+        android:layout_alignRight="@+id/txt_accountNumber"
+        android:layout_alignStart="@+id/txt_accountNumber"
+        android:layout_alignEnd="@+id/txt_accountNumber"
         android:ems="10"
+        android:hint="@string/nus_sample"
+        android:textAppearance="@style/TextAppearance.CustomFont.EditText"
         android:layout_marginBottom="5dp"
         android:inputType="number" />
     
@@ -35,8 +38,8 @@
         android:layout_centerHorizontal="true"
         android:textAppearance="@style/TextAppearance.CustomFont.Title"  />
 
-    <EditText
-        android:id="@+id/txtAccountNumber"
+    <br.com.sapereaude.maskedEditText.MaskedEditText 
+        android:id="@+id/txt_accountNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -47,17 +50,22 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        custom_edit:mask="@string/account_mask"
+        android:hint="@string/account_sample"
+        android:textAppearance="@style/TextAppearance.CustomFont.EditText"
         android:inputType="number" />
+    
+
 
     <Button
-        android:id="@+id/btnRegisterAccount"
+        android:id="@+id/btn_register_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txtAccountNumber"
-        android:layout_alignLeft="@+id/txtAccountNumber"
-        android:layout_alignRight="@+id/txtAccountNumber"
-        android:layout_alignStart="@+id/txtAccountNumber"
-        android:layout_alignEnd="@+id/txtAccountNumber"
+        android:layout_below="@+id/txt_accountNumber"
+        android:layout_alignLeft="@+id/txt_accountNumber"
+        android:layout_alignRight="@+id/txt_accountNumber"
+        android:layout_alignStart="@+id/txt_accountNumber"
+        android:layout_alignEnd="@+id/txt_accountNumber"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
         android:text="@string/btn_register" />

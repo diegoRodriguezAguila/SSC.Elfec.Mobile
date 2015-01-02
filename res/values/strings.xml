@@ -8,8 +8,9 @@
     <!-- Register Account -->
     <string name="register_account_title">Registrar cuenta</string>
     <string name="nus_sample">261724</string>
-    <string name="account_sample">34#8211;453#8211;321#8211;65</string>
+    <string name="account_sample">34-453-321-65</string>
     <string name="btn_register">Registrar</string>
+    <string name="account_mask">##-###-###-##</string>
 
     <!-- Main Menu -->
     <string name="app_title">Sistema de Servicios al Cliente</string>

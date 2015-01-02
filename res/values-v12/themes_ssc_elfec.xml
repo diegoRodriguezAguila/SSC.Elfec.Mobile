@@ -36,6 +36,7 @@
 
         <item name="android:textCursorDrawable">@drawable/custom_cursor</item>
         <item name="editTextBackground">@drawable/ssc_elfec_edit_text_holo_light</item>
+        <item name="android:editTextStyle">@style/EditTextssc_elfec</item>
         <item name="android:editTextBackground">@drawable/ssc_elfec_edit_text_holo_light</item>
         <item name="android:textColorHighlight">#99006086</item>
         <item name="android:textSelectHandleLeft">@drawable/ssc_elfec_text_select_handle_left</item>

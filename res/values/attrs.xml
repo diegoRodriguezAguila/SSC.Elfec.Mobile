@@ -5,6 +5,5 @@
         <attr name="buttonIcon" format="string" localization="suggested" />
         <attr name="buttonBackground" format="reference" localization="suggested" />
     </declare-styleable>
-    
 </resources>
 
