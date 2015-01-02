@@ -28,11 +28,7 @@
             android:name="AA_SERIALIZERS"
             android:value="com.elfec.ssc.model.serializers.JodaDateTimeSerializer" />
 
-        <activity
-            android:name=".view.ViewAccounts"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
+         <activity
             android:name=".view.MainMenu"
             android:label="@string/app_name" >
             <intent-filter>
@@ -40,6 +36,16 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        
+        <activity
+            android:name=".view.ViewAccounts"
+            android:label="@string/app_name" >
+        </activity>
+       
+        <activity
+            android:name=".view.RegisterAccount"
+            android:label="@string/app_name" >
         </activity>
     </application>
 

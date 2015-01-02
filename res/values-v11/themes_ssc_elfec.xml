@@ -7,11 +7,15 @@
 
     <style name="_ssc_elfec" parent="Theme.AppCompat.Light.DarkActionBar">
         
+        <!-- Textview with customfont -->
+        <item name="android:textViewStyle">@style/CustomFontStyle.Ssc_elfecc</item>
+        
         <item name="colorPrimary">#3F51B5</item>
 	    <item name="colorPrimaryDark">#303F9F</item>
 	    <item name="colorAccent">#FF4081</item>
 	    <item name="alertDialogProTheme">@style/Theme.FlavoredMaterialLight</item>
         
+	    <item name="android:windowIsTranslucent">true</item>
         <item name="android:homeAsUpIndicator">@null</item>
         <item name="homeAsUpIndicator">@null</item>
         <item name="android:windowContentOverlay">@null</item>

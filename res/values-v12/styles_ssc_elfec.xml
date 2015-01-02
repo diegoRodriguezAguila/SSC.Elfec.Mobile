@@ -3,6 +3,16 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     
+    <style name="TextAppearance.CustomFont.Title" parent="android:TextAppearance">
+        <!-- Custom Attr-->
+        <item name="fontPath">fonts/segoe_ui_light.ttf</item>
+        <item name="android:textSize">25sp</item>
+    </style>
+    
+    <style name="CustomFontStyle.Ssc_elfecc" parent="android:Widget.TextView" >
+        <item name="fontPath">fonts/segoe_ui.ttf</item>
+    </style>
+    
     <style name="Theme.FlavoredMaterialLight" parent="Theme.AlertDialogPro.Material.Light">
         <item name="colorPrimary">@color/ssc_elfec_color</item>
         <item name="colorPrimaryDark">@color/ssc_elfec_color</item>
@@ -10,14 +20,28 @@
         <item name="android:windowTitleStyle">@style/AdpTitleStyle</item>
         <item name="adpButtonBarNegativeButtonStyle">@style/AdpNormalButtonStyle</item>
         <item name="adpButtonBarNeutralButtonStyle">@style/AdpNormalButtonStyle</item>
+        <item name="adpButtonBarPositiveButtonStyle">@style/AdpPositiveButtonStyle</item>
+        <item name="adpMessageTextAppearance">@style/AdpMessageTextAppearance</item>
     </style>
 
     <style name="AdpTitleStyle" parent="DialogWindowTitle.AlertDialogPro.Material.Light">
         <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
     </style>
 
     <style name="AdpNormalButtonStyle" parent="Widget.AlertDialogPro.Material.Light.Button">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
+    </style>
+    
+    <style name="AdpPositiveButtonStyle" parent="Widget.AlertDialogPro.Material.Light.Button">
+        <item name="android:textColor">?attr/colorAccent</item>
+        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
+    </style>
+    
+     <style name="AdpMessageTextAppearance" parent="android:Widget.TextView" >
+        <item name="fontPath">fonts/segoe_ui.ttf</item>
+        <item name="android:textSize">16sp</item>
     </style>
     
 	<style name="ActionBar.Solid.Ssc_elfec" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
@@ -79,12 +103,14 @@
   <style name="Buttonssc_elfec" parent="android:Widget.Holo.Light.Button">
 	  <item name="android:background">@drawable/ssc_elfec_btn_default_holo_light</item>
 	  <item name="android:textColor">#ffffff</item>
+	  <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
   </style>
   
   <style name="Button_mahapp" parent="android:Widget.Holo.Light.Button">
 	  <item name="android:background">@drawable/btn_mahapps</item>
 	  <item name="android:textColor">@color/light_text_color</item>
 	  <item name="textAllCaps">true</item>
+	  <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
   </style>
 
   <style name="ImageButtonssc_elfec" parent="android:Widget.Holo.Light.ImageButton">

@@ -1,11 +1,15 @@
 package com.elfec.ssc.view;
 
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -22,6 +26,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         presenter = new ViewAccountsPresenter(this);
     }
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -43,4 +51,17 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 		}).setNegativeButton("Cancelar", null).setNeutralButton("Ignorar", null)
         .show();
     }
+    
+    public void btnRegisterAccountClick(View view)
+    {
+    	Intent i = new Intent(ViewAccounts.this, RegisterAccount.class);
+		startActivity(i);
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+    }
+    
+    @Override
+	public void onBackPressed() {
+	    finish();//go back to the previous Activity
+	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
+	}
 }
