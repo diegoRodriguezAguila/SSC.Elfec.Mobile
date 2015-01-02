@@ -64,4 +64,19 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	    finish();//go back to the previous Activity
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
+
+	@Override
+	public void show(String message) {
+		(new AlertDialogPro.Builder(this)).setTitle("CUADRO DE DIÁLOGO")
+        .setMessage(message)
+        .setPositiveButton("Aceptar", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				presenter.invokeAccountWS();
+			}
+		}).setNegativeButton("Cancelar", null).setNeutralButton("Ignorar", null)
+        .show();
+ 	
+	}
 }

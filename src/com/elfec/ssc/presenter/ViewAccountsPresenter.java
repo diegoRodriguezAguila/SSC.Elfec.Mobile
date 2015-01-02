@@ -1,6 +1,10 @@
 package com.elfec.ssc.presenter;
 
+import java.util.List;
+
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
+import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 
 public class ViewAccountsPresenter {
@@ -16,7 +20,25 @@ public class ViewAccountsPresenter {
 	{
 		view.equals(null);
 		AccountWS accountWS = new AccountWS();
-		accountWS.registerAccount("12345", "654321", "jarry@gmail.com", "72993222", "Samsung", 
-				"Galaxy S3", "333255112223", "1a2b3c4d5e6e7f8g9h10i");
+		accountWS.getAllAccounts("1", new IWSFinishEvent<List<Account>>() {
+			
+			@Override
+			public void executeOnFinished(List<Account> result) {
+			
+				view.show(result.get(0).getNUS());
+				
+			}
+		});
+		/*accountWS.registerAccount("12345", "654321", "jarry@gmail.com", "72993222", "Samsung", 
+				"Galaxy S3", "333255112223", "1a2b3c4d5e6e7f8g9h10i", new IWSFinishEvent<List<Integer>>() {
+					
+					@Override
+					public void executeOnFinished(List<Integer> result) {
+						
+						
+					}
+				});*/
+		
 	}
+	
 }
