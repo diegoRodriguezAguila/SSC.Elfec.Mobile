@@ -5,10 +5,9 @@ import java.util.List;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.webservices.GetAllAccountsWSConverter;
-import com.elfec.ssc.model.webservices.IWSResultConverter;
-import com.elfec.ssc.model.webservices.RegisterAccountWSConverter;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
+import com.elfec.ssc.model.webservices.converters.RegisterAccountWSConverter;
 /**
  * Se encarga de la conexión a los servicios web para cuentas
  * @author Diego
@@ -39,6 +38,8 @@ public class AccountWS
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
 		return null;
 	}
+	
+	
 	public void getAllAccounts(String gmail, IWSFinishEvent<List<Account>> eventHandler)
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 

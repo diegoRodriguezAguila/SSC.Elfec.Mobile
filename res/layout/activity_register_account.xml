@@ -9,23 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_top_margin"
     tools:context=".RegisterAccount" >
 
-    
-    <EditText
-        android:id="@+id/txt_nus"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/txt_accountNumber"
-        android:layout_alignLeft="@+id/txt_accountNumber"
-        android:layout_alignRight="@+id/txt_accountNumber"
-        android:layout_alignStart="@+id/txt_accountNumber"
-        android:layout_alignEnd="@+id/txt_accountNumber"
-        android:ems="10"
-        android:hint="@string/nus_sample"
-        android:textAppearance="@style/TextAppearance.CustomFont.EditText"
-        android:layout_marginBottom="5dp"
-        android:inputType="number" />
-    
-    <TextView
+   <TextView
         android:id="@+id/register_account_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -36,39 +20,88 @@
         android:layout_alignParentTop="true"
         android:text="@string/register_account_title"
         android:layout_centerHorizontal="true"
-        android:textAppearance="@style/TextAppearance.CustomFont.Title"  />
-
-    <br.com.sapereaude.maskedEditText.MaskedEditText 
-        android:id="@+id/txt_accountNumber"
+        android:textAppearance="@style/TextAppearance.CustomFont.Title"  />   
+    
+   <LinearLayout
+        android:id="@+id/nus_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
         android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_centerInParent="true"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/account_layout"
+        android:layout_marginEnd="20dp">
+    
+    <ImageView
+        android:id="@+id/nus_mini_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ssc_elfec_color"
+        android:contentDescription="@string/account_img"
+        android:padding="8dp"
+        android:src="@drawable/nus_mini" />
+    <EditText
+        android:id="@+id/txt_nus"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:maxLength="10"
+        android:hint="@string/nus_sample"
+        android:inputType="number"
+        android:textAppearance="@style/TextAppearance.CustomFont.EditText" >
+    </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/account_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_alignParentLeft="true"
+        android:orientation="horizontal"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginEnd="20dp">
+    <ImageView
+        android:id="@+id/account_mini_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ssc_elfec_color"
+        android:padding="8dp"
+        android:contentDescription="@string/account_img"
+        android:src="@drawable/account_mini" />
+    
+    <br.com.sapereaude.maskedEditText.MaskedEditText 
+        android:id="@+id/txt_accountNumber"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
         custom_edit:mask="@string/account_mask"
         android:hint="@string/account_sample"
         android:textAppearance="@style/TextAppearance.CustomFont.EditText"
         android:inputType="number" />
-    
-
-
+            
+    </LinearLayout>
     <Button
         android:id="@+id/btn_register_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_accountNumber"
-        android:layout_alignLeft="@+id/txt_accountNumber"
-        android:layout_alignRight="@+id/txt_accountNumber"
-        android:layout_alignStart="@+id/txt_accountNumber"
-        android:layout_alignEnd="@+id/txt_accountNumber"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="@string/btn_register" />
-
+        android:layout_alignEnd="@+id/account_layout"
+        android:layout_alignLeft="@+id/account_layout"
+        android:layout_alignRight="@+id/account_layout"
+        android:layout_alignStart="@+id/account_layout"
+        android:layout_below="@+id/account_layout"
+        android:layout_marginTop="10dp"
+        android:text="@string/btn_register"
+        android:onClick="btnRegisterAccountClick" />
 
 </RelativeLayout>

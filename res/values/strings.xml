@@ -10,6 +10,7 @@
     <string name="nus_sample">261724</string>
     <string name="account_sample">34-453-321-65</string>
     <string name="btn_register">Registrar</string>
+    <string name="account_img">Cuenta</string>
     <string name="account_mask">##-###-###-##</string>
 
     <!-- Main Menu -->
