@@ -10,7 +10,7 @@ import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
-import com.elfec.ssc.model.events.WSFinishEvent;
+import com.elfec.ssc.model.events.IWSFinishEvent;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -27,7 +27,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	private String soapAction; //= "";  
 	private String namespace;// = "http://DefaultNamespace";
 	private String methodName;
-	private WSFinishEvent<TResult> onFinishedEvent;
+	private IWSFinishEvent<TResult> onFinishedEvent;
 	private IWSResultConverter<TResult> converter;
 	
 	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, IWSResultConverter<TResult> converter) 
@@ -41,8 +41,8 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	}
 	
 	
-	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, 
-			WSFinishEvent<TResult> onFinishedEvent, IWSResultConverter<TResult> converter) 
+	public WebServiceConnector(String url, String soapAction, String namespace, String methodName 
+			, IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
 	{
 		super();
 		this.url = url;
