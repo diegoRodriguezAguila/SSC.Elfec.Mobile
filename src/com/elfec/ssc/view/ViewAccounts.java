@@ -1,5 +1,6 @@
 package com.elfec.ssc.view;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -12,6 +13,10 @@ import com.google.android.gms.common.AccountPicker;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -44,7 +49,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         getMenuInflater().inflate(R.menu.view_accounts, menu);
         return true;
     }
-    
     public void showDialog(View v)
     {
     	AccountManager am = AccountManager.get(this);
@@ -56,7 +60,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
             //add only google accounts
             if(ac.type.equals("com.google")) {
                 googleAccounts.add(ac.name);
-                Log.d("CUENTAS GOOGLE", "accountInfo: " + acname + ":" + actype);
             }
         }
         googleAccounts.add("Agregar cuenta");
@@ -64,10 +67,32 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
          .setPositiveButton("Aceptar", new OnClickListener() {
  			
  			@Override
- 			public void onClick(DialogInterface dialog, int which) {
+ 			public void onClick(DialogInterface dialog, int which) {		
+ 				AccountManagerCallback<Bundle> callback = new AccountManagerCallback<Bundle>(){
+
+					@Override
+					public void run(AccountManagerFuture<Bundle> future) {
+						Bundle res;
+						try {
+							res = future.getResult();
+							String gmailNuevo = res.getString(AccountManager.KEY_ACCOUNT_NAME);
+						} catch (OperationCanceledException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (AuthenticatorException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+ 					
+ 				};
  				 AccountManager acm = AccountManager.get(getApplicationContext());
- 	             acm.addAccount("com.google", null, null, null, ViewAccounts.this, 
- 	             null, null);
+  				 acm.addAccount("com.google", null, null, null, ViewAccounts.this, 
+  	             callback, null);
+
  			}
  		}).setNegativeButton("Cancelar", null)
          .setSingleChoiceItems(googleAccounts.toArray(new String[googleAccounts.size()]),
