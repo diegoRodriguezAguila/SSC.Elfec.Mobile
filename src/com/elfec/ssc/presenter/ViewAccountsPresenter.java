@@ -24,9 +24,19 @@ public class ViewAccountsPresenter {
 			
 			@Override
 			public void executeOnFinished(List<Account> result) {
-			
-				view.show(result.get(0).getNUS());
-				
+				final List<Account> accounts=result;
+				Thread thread=new Thread(new Runnable() {
+					
+					@Override
+					public void run() {
+						for(Account account : accounts)
+						{
+							
+							account.save();
+						}
+					}
+				});
+				view.show(result);
 			}
 		});
 		/*accountWS.registerAccount("12345", "654321", "jarry@gmail.com", "72993222", "Samsung", 

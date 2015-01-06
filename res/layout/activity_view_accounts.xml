@@ -9,52 +9,54 @@
     tools:context=".ViewAccounts" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/view_accounts_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
-        android:layout_marginTop="94dp"
-        android:layout_toRightOf="@+id/textView1"
-        android:onClick="showDialog"
-        android:text="Apretar" />
-
-    <EditText
-        android:id="@+id/editText1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="34dp"
-        android:ems="10"
-        android:inputType="textPersonName" >
-        <requestFocus />
-    </EditText>
-
-    <EditText
-        android:id="@+id/editText2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editText1"
-        android:layout_marginTop="34dp"
-        android:layout_toRightOf="@+id/textView1"
-        android:ems="10"
-        android:inputType="textEmailAddress" />
+        android:text="@string/view_accounts_title"
+        android:textAppearance="@style/TextAppearance.CustomFont.Title" />
 
     <Button
         android:id="@+id/button2"
+        style="@style/Button_mahapp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/button1"
-        android:layout_below="@+id/textView1"
         android:layout_marginTop="34dp"
-        style="@style/Button_mahapp"
         android:onClick="btnRegisterAccountClick"
         android:text="ACEPTAR" />
+
+    <LinearLayout
+        android:id="@+id/nus_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/account_layout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/accounts_list"
+        android:layout_width="match_parent"
+        android:layout_height="43dp"
+        android:divider="@android:color/transparent"
+  		android:dividerHeight="3dp"
+        android:layout_alignLeft="@+id/button2"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@+id/button2" >
+
+    </ListView>
 
 </RelativeLayout>

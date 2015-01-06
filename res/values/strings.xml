@@ -27,7 +27,8 @@
     <string name="btn_location_services">Puntos de pago</string>
     <string name="btn_notifications">Notificaciones</string>
     <string name="btn_contacts">Contactos</string>
-
+	<!-- View Accounts -->
+	<string name="view_accounts_title">Cuentas</string>
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="title_activity_welcome">Welcome</string>

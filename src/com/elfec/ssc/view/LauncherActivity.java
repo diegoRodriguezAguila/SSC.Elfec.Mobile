@@ -10,7 +10,7 @@ public class LauncherActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent i;
-		if(true)
+		if(false)
 		{
 			i = new Intent(LauncherActivity.this, Welcome.class);
 			
