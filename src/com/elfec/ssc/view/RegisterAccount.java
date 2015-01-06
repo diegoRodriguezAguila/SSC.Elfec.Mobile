@@ -1,6 +1,5 @@
 package com.elfec.ssc.view;
 
-import java.util.ArrayList;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -10,11 +9,8 @@ import com.elfec.ssc.presenter.views.IRegisterAccount;
 
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
-import android.accounts.Account;
-import android.accounts.AccountManager;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -89,19 +85,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	
 	public void btnRegisterAccountClick(View view)
 	{
-		presenter.submitAccountData();
-		AccountManager am = AccountManager.get(this);
-        Account[] accounts = am.getAccounts();
-        ArrayList<String> googleAccounts = new ArrayList<String>();
-        for (Account ac : accounts) {
-            String acname = ac.name;
-            String actype = ac.type;
-            //add only google accounts
-            if(ac.type.equals("com.google")) {
-                googleAccounts.add(ac.name);
-                Log.d("CUENTAS GOOGLE", "accountInfo: " + acname + ":" + actype);
-            }
-        }
+		presenter.processAccountData();
 	}
 	
 }
