@@ -9,7 +9,6 @@ import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
-import com.google.android.gms.common.AccountPicker;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -22,9 +21,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 
@@ -55,9 +52,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         Account[] accounts = am.getAccounts();
         ArrayList<String> googleAccounts = new ArrayList<String>();
         for (Account ac : accounts) {
-            String acname = ac.name;
-            String actype = ac.type;
-            //add only google accounts
             if(ac.type.equals("com.google")) {
                 googleAccounts.add(ac.name);
             }
@@ -77,13 +71,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 							res = future.getResult();
 							String gmailNuevo = res.getString(AccountManager.KEY_ACCOUNT_NAME);
 						} catch (OperationCanceledException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (AuthenticatorException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						} catch (IOException e) {
-							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
 					}
