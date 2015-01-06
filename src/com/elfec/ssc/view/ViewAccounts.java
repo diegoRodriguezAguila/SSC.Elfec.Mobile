@@ -2,6 +2,7 @@ package com.elfec.ssc.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -9,6 +10,7 @@ import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
+import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -24,15 +26,19 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.View;
-
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
+	private ListView accounts;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
+        presenter.invokeAccountWS();
+        accounts=(ListView)findViewById(R.id.accounts_list);
     }
 
     @Override
@@ -110,17 +116,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	}
 
 	@Override
-	public void show(String message) {
-		(new AlertDialogPro.Builder(this)).setTitle("CUADRO DE DIÁLOGO")
-        .setMessage(message)
-        .setPositiveButton("Aceptar", new OnClickListener() {
-			
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				presenter.invokeAccountWS();
-			}
-		}).setNegativeButton("Cancelar", null).setNeutralButton("Ignorar", null)
-        .show();
- 	
+	public void show(List<com.elfec.ssc.model.Account> result) {
+		ViewAccountsAdapter adapter=new ViewAccountsAdapter(this, R.layout.simple_row, result);
+		accounts.setAdapter(adapter);
 	}
+
+	
 }
