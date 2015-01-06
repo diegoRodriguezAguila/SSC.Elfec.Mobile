@@ -13,7 +13,6 @@ public class GetAllAccountsWSConverter implements IWSResultConverter<List<Accoun
 		List<Account> accounts=new ArrayList<Account>();
 		Account account=new Account();
 		account.setAccountNumber("26");
-		account.setClientId(1);
 		account.setNUS(result);
 		accounts.add(account);
 		return accounts;

@@ -14,7 +14,8 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Accounts")
 public class Account extends Model {
 
-    private int ClientId;
+	@Column(name = "Client")
+    private Client Client;
     
     @Column(name = "AccountNumber")
     private String AccountNumber;
@@ -33,11 +34,11 @@ public class Account extends Model {
     
 	//#region Getters y Setters
 
-	public int getClientId() {
-		return ClientId;
+	public Client getClient() {
+		return Client;
 	}
-	public void setClientId(int clientId) {
-		ClientId = clientId;
+	public void setClient(Client client) {
+		Client = client;
 	}
 	
 	public String getAccountNumber() {

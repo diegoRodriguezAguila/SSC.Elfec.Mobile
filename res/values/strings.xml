@@ -2,13 +2,16 @@
 <resources>
 
     <string name="app_name">SSC Elfec</string>
-    <string name="about">Acerca de#8230;</string>
+    <string name="about">Acerca de&#8230;</string>
     <string name="hello_world">Hello world!</string>
+    
+    <!-- Welcome -->
+    <string name="welcome_to_app">Bienvenido(a) al</string>
 
     <!-- Register Account -->
     <string name="register_account_title">Registrar cuenta</string>
     <string name="nus_sample">261724</string>
-    <string name="account_sample">34-453-321-65</string>
+    <string name="account_sample">34&#8211;453&#8211;321&#8211;65</string>
     <string name="btn_register">Registrar</string>
     <string name="account_img">Cuenta</string>
     <string name="account_mask">##-###-###-##</string>
@@ -23,5 +26,7 @@
 
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
+    <string name="title_activity_welcome">Welcome</string>
+    <string name="action_settings">Settings</string>
 
 </resources>
