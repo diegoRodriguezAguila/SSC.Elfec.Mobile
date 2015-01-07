@@ -81,6 +81,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (HttpResponseException e) 
 		{
 			Log.d(methodName, e.toString());
+			resultWS.addError(e);
 		} 
 		catch (ConnectException e)
 		{
@@ -90,10 +91,12 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (IOException e) 
 		{
 			Log.d(methodName, e.toString());
+			resultWS.addError(e);
 		} 
 		catch (XmlPullParserException e) 
 		{
 			Log.d(methodName, e.toString());
+			resultWS.addError(e);
 		}
 		return converter.convert(resultWS.convertErrors(result));
 	}
