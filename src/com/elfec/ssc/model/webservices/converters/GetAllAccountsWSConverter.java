@@ -1,9 +1,10 @@
-package com.elfec.ssc.model.webservices;
+package com.elfec.ssc.model.webservices.converters;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.webservices.IWSResultConverter;
 
 
 public class GetAllAccountsWSConverter implements IWSResultConverter<List<Account>>  {

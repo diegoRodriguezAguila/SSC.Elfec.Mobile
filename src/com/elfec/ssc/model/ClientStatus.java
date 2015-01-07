@@ -10,11 +10,11 @@ public enum ClientStatus {
 	/**
 	 * Estado cuando un cliente fué registrado en la aplicación pero otro es el que esta activo
 	 */
-	Registrado, 
+	REGISTERED, 
 	/**
 	 * Estado cuando un cliente es el activo y que se utiliza para la aplicación
 	 */
-	Activo;
+	ACTIVE;
 	/**
 	 * Obtiene el estado del cliente equivalente al short provisto
 	 * @param status

@@ -15,6 +15,16 @@ import com.activeandroid.query.Select;
  */
 @Table(name = "Clients")
 public class Client extends Model {
+	
+	public Client() {
+		super();
+	}
+	
+	public Client(String gmail, ClientStatus status) {
+		super();
+		this.Gmail = gmail;
+		setStatus(status);
+	}
 
 	@Column(name = "Gmail")
 	private String Gmail;
@@ -90,7 +100,7 @@ public class Client extends Model {
 	public static Client getActiveClient()
 	{
 		return new Select()
-        .from(Client.class).where("Status=?", ClientStatus.Activo.toShort())
+        .from(Client.class).where("Status=?", ClientStatus.ACTIVE.toShort())
         .executeSingle();
 	}
 }

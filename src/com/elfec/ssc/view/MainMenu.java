@@ -1,35 +1,27 @@
 package com.elfec.ssc.view;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import com.alertdialogpro.AlertDialogPro;
-import com.elfec.ssc.R;
-import com.elfec.ssc.presenter.MainMenuPresenter;
-import com.elfec.ssc.presenter.views.IMainMenu;
-
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
-import android.accounts.AuthenticatorException;
-import android.accounts.OperationCanceledException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.alertdialogpro.AlertDialogPro;
+import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.presenter.MainMenuPresenter;
+import com.elfec.ssc.presenter.views.IMainMenu;
+import com.elfec.ssc.view.controls.AccountPickerDialogService;
+import com.elfec.ssc.view.controls.events.IAccountPicked;
+
 public class MainMenu extends ActionBarActivity implements IMainMenu {
 
-	@SuppressWarnings("unused")
 	private MainMenuPresenter presenter;
 	
 	@Override
@@ -67,9 +59,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	
 	public void btnAccountsClick(View view)
 	{
-		Intent i = new Intent(MainMenu.this, ViewAccounts.class);
-		startActivity(i);
-		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+		presenter.verifyAccountsRequirements();
 	}
 	
 	public void btnLocationServicesClick(View view)
@@ -86,54 +76,46 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	{
 		
 	}
+
+	//#region Interface Methods
 	
-	public void showDialog(View v)
-    {
-    	AccountManager am = AccountManager.get(this);
-        Account[] accounts = am.getAccounts();
-        ArrayList<String> googleAccounts = new ArrayList<String>();
-        for (Account ac : accounts) {
-            if(ac.type.equals("com.google")) {
-                googleAccounts.add(ac.name);
-            }
-        }
-        googleAccounts.add("Agregar cuenta");
-         (new AlertDialogPro.Builder(this)).setTitle("ELIGE UNA CUENTA")
-         .setPositiveButton("Aceptar", new OnClickListener() {
- 			
- 			@Override
- 			public void onClick(DialogInterface dialog, int which) {		
- 				AccountManagerCallback<Bundle> callback = new AccountManagerCallback<Bundle>(){
+	@Override
+	public void goToViewAccounts() {
+		Intent i = new Intent(MainMenu.this, ViewAccounts.class);
+		startActivity(i);
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+	}
 
-					@Override
-					public void run(AccountManagerFuture<Bundle> future) {
-						Bundle res;
-						try {
-							res = future.getResult();
-							String gmailNuevo = res.getString(AccountManager.KEY_ACCOUNT_NAME);
-						} catch (OperationCanceledException e) {
-							e.printStackTrace();
-						} catch (AuthenticatorException e) {
-							e.printStackTrace();
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					}
- 					
- 				};
- 				 AccountManager acm = AccountManager.get(getApplicationContext());
-  				 acm.addAccount("com.google", null, null, null, MainMenu.this, 
-  	             callback, null);
+	@Override
+	public PreferencesManager getPreferences() {
+		return new PreferencesManager(getApplicationContext());
+	}
 
- 			}
- 		}).setNegativeButton("Cancelar", null)
-         .setSingleChoiceItems(googleAccounts.toArray(new String[googleAccounts.size()]),
-                        0,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                
-                            }
-                        }).show();
-    }
+	@Override
+	public void warnUserHasNoAccounts() {
+		(new AlertDialogPro.Builder(this)).setTitle(R.string.no_gmail_account_title)
+		.setMessage(R.string.no_gmail_account_message)
+        .setPositiveButton(R.string.btn_ok, new OnClickListener() {		
+			@Override
+			public void onClick(DialogInterface dialog, int which) {	
+				showAccountPickerDialog();
+			}		
+		})
+		.setNegativeButton(R.string.btn_cancel, null)
+		.show();
+	}
+	
+	public void showAccountPickerDialog()
+	{
+		AccountPickerDialogService.instanceService(this, new IAccountPicked() {				
+			@Override
+			public void onAccountPicked(String gmail) {
+				presenter.handlePickedGmailAccount(gmail);
+			}
+			@Override
+			public void onPickedCanceled() {}		
+		}).show();
+	}
+	
+	//#endregion
 }

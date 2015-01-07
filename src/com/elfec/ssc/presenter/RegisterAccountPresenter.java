@@ -4,6 +4,7 @@ import java.util.List;
 
 import android.os.Build;
 
+import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.IWSFinishEvent;
@@ -26,11 +27,20 @@ public class RegisterAccountPresenter {
 	 */
 	public void processAccountData()
 	{
+		final Client client = Client.getActiveClient();
+		final Thread thread = new Thread(new Runnable() {		
+			@Override
+			public void run() {
+				ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
+			}
+		});
 		AccountWS accountWebService = new AccountWS();
-		accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), Client.getActiveClient().getGmail(), view.getPhoneNumber(), 
+		accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
 				Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<List<Integer>>() {		
 					@Override
-					public void executeOnFinished(List<Integer> result) {
+					public void executeOnFinished(List<Integer> result) 
+					{
+						thread.start();
 					}
 				});
 	}

@@ -7,9 +7,9 @@
     
     <!-- Welcome -->
     <string name="welcome_to_app">Bienvenido(a) al</string>
-	<string name="welcome_description">Para poder utilizar todas las funcionalidades del sistema, se necesita una cuenta de gmail</string>
+	<string name="welcome_description">Para poder utilizar todas las funcionalidades de la aplicación, se necesita una cuenta de Gmail</string>
 	<string name="welcome_create_gmail">desea seleccionar una cuenta?</string>
-	<string name="btn_create_account">SI</string>
+	<string name="btn_select_account">SI</string>
 	<string name="btn_decline_account">NO, POR AHORA</string>
 	
     <!-- Register Account -->
@@ -27,11 +27,25 @@
     <string name="btn_location_services">Puntos de pago</string>
     <string name="btn_notifications">Notificaciones</string>
     <string name="btn_contacts">Contactos</string>
+    
 	<!-- View Accounts -->
 	<string name="view_accounts_title">Cuentas</string>
     <!-- Image captions -->
+    
     <string name="logo_elfec_caption">Logo Elfec</string>
-    <string name="title_activity_welcome">Welcome</string>
     <string name="action_settings">Settings</string>
+    
+    <!-- Account Picker Dialog -->
+    <string name="account_picker_title">SELECCIONE UNA CUENTA</string>
+    
+    <!-- No Gmail Account Dialog -->
+    <string name="no_gmail_account_title">OPCIÓN NO DISPONIBLE</string>
+    <string name="no_gmail_account_message">Para utilizar esta opción es necesario que seleccione una cuenta de Gmail, desea hacerlo en este momento?</string>
+    
+    <!-- Botones Dialogos -->
+    <string name="btn_ok">Aceptar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_yes">Si</string>
+    <string name="btn_no">No</string>
 
 </resources>

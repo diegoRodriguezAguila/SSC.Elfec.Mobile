@@ -14,6 +14,20 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Accounts")
 public class Account extends Model {
 
+	public Account() {
+		super();
+	}
+	
+	public Account(Client ownerClient, String accountNumber, String nus)
+	{
+		super();
+		this.Client = ownerClient;
+		this.AccountNumber = accountNumber;
+		this.NUS = nus;
+		Status = 1;
+	}
+	
+	
 	@Column(name = "Client")
     private Client Client;
     

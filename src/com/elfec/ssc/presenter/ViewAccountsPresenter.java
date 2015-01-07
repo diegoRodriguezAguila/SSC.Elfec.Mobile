@@ -36,6 +36,7 @@ public class ViewAccountsPresenter {
 						}
 					}
 				});
+				//thread.start();
 				view.show(result);
 			}
 		});

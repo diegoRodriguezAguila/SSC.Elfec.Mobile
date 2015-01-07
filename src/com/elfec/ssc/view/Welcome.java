@@ -3,15 +3,20 @@ package com.elfec.ssc.view;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.presenter.WelcomePresenter;
 import com.elfec.ssc.presenter.views.IWelcome;
+import com.elfec.ssc.view.controls.AccountPickerDialogService;
+import com.elfec.ssc.view.controls.events.IAccountPicked;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 public class Welcome extends ActionBarActivity implements IWelcome {
 
@@ -53,4 +58,39 @@ public class Welcome extends ActionBarActivity implements IWelcome {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+	
+	public void btnSelectAccountClick(View view)
+	{
+		AccountPickerDialogService.instanceService(this, new IAccountPicked() {				
+			@Override
+			public void onAccountPicked(String gmail) {
+				presenter.handlePickedGmailAccount(gmail);
+			}
+			@Override
+			public void onPickedCanceled() {}		
+		}).show();
+	}
+	
+	public void btnDeclineAccountClick(View view)
+	{
+		goToMainMenu();
+		getPreferences().setAppAlreadyUsed();
+	}
+
+	//#region Interface Methods
+	
+	@Override
+	public void goToMainMenu() {
+		Intent i = new Intent(Welcome.this, MainMenu.class);
+		startActivity(i);
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+		Welcome.this.finish();
+	}
+
+	@Override
+	public PreferencesManager getPreferences() {
+		return new PreferencesManager(getApplicationContext());
+	}
+	
+	//#endregion
 }

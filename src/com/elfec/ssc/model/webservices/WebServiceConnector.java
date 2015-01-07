@@ -1,8 +1,12 @@
 package com.elfec.ssc.model.webservices;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.Proxy;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -60,19 +64,25 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		String result="";
 		for (int i = 0; i < params.length; i++) 
 		{
-				request.addProperty(params[i].getKey(), params[i].getValue());
+			request.addProperty(params[i].getKey(), params[i].getValue());
 		}
 		SoapSerializationEnvelope envelope = getSoapSerializationEnvelope(request);
 		HttpTransportSE ht = getHttpTransportSE();
 		try 
 		{
-			ht.call(soapAction, envelope);
+			List<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
+			headerPropertyArrayList.add(new HeaderProperty("Connection", "close"));
+			ht.call(soapAction, envelope, headerPropertyArrayList);
 			result = envelope.getResponse().toString();
 		} 
 		catch (HttpResponseException e) 
 		{
 			Log.d(methodName, e.toString());
 		} 
+		catch (ConnectException e)
+		{
+			Log.d(methodName, e.toString());
+		}
 		catch (IOException e) 
 		{
 			Log.d(methodName, e.toString());

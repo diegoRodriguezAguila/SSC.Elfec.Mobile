@@ -1,5 +1,7 @@
 package com.elfec.ssc.view;
 
+import com.elfec.ssc.helpers.PreferencesManager;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +12,7 @@ public class LauncherActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent i;
-		if(false)
+		if((new PreferencesManager(getApplicationContext())).isFirstAppUsage())
 		{
 			i = new Intent(LauncherActivity.this, Welcome.class);
 			
@@ -19,7 +21,6 @@ public class LauncherActivity extends Activity {
 		{
 			i = new Intent(LauncherActivity.this, MainMenu.class);
 		}
-		i.addFlags( Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_SINGLE_TOP);
 		startActivity(i);
 		LauncherActivity.this.finish();
 	}
