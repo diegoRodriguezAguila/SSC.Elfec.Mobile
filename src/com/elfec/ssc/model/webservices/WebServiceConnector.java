@@ -33,6 +33,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	private String methodName;
 	private IWSFinishEvent<TResult> onFinishedEvent;
 	private IWSResultConverter<TResult> converter;
+	private WSResponse<TResult> resultWS;
 	
 	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, IWSResultConverter<TResult> converter) 
 	{
@@ -42,6 +43,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		this.namespace = namespace;
 		this.methodName = methodName;
 		this.converter = converter;
+		this.resultWS = new WSResponse<TResult>();
 	}
 	
 	
@@ -55,11 +57,12 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		this.methodName = methodName;
 		this.onFinishedEvent = onFinishedEvent;
 		this.converter = converter;
+		this.resultWS = new WSResponse<TResult>();
 	}
 
 
 	@Override
-	protected TResult doInBackground(WSParam... params) {
+	protected  TResult doInBackground(WSParam... params) {
 		SoapObject request = new SoapObject(namespace, methodName);
 		String result="";
 		for (int i = 0; i < params.length; i++) 
@@ -82,6 +85,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (ConnectException e)
 		{
 			Log.d(methodName, e.toString());
+			resultWS.addError(e);
 		}
 		catch (IOException e) 
 		{
@@ -91,7 +95,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		{
 			Log.d(methodName, e.toString());
 		}
-		return converter.convert(result);
+		return converter.convert(resultWS.convertErrors(result));
 	}
 	
 	@Override
@@ -99,7 +103,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	{
 		if(onFinishedEvent!=null)
 		{
-			onFinishedEvent.executeOnFinished(result);
+			onFinishedEvent.executeOnFinished(resultWS.setResult(result));
 		}
 	}
 	

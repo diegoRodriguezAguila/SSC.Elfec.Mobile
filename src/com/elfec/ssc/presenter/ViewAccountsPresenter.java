@@ -5,6 +5,7 @@ import java.util.List;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 
 public class ViewAccountsPresenter {
@@ -23,8 +24,8 @@ public class ViewAccountsPresenter {
 		accountWS.getAllAccounts("1", new IWSFinishEvent<List<Account>>() {
 			
 			@Override
-			public void executeOnFinished(List<Account> result) {
-				final List<Account> accounts=result;
+			public void executeOnFinished(WSResponse<List<Account>> result) {
+				final List<Account> accounts=result.getResult();
 				Thread thread=new Thread(new Runnable() {
 					
 					@Override
@@ -36,8 +37,8 @@ public class ViewAccountsPresenter {
 						}
 					}
 				});
-				//thread.start();
-				view.show(result);
+				thread.start();
+				view.show(result.getResult());
 			}
 		});
 		/*accountWS.registerAccount("12345", "654321", "jarry@gmail.com", "72993222", "Samsung", 

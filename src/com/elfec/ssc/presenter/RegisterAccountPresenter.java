@@ -8,6 +8,7 @@ import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
 
 /**
@@ -38,7 +39,7 @@ public class RegisterAccountPresenter {
 		accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
 				Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<List<Integer>>() {		
 					@Override
-					public void executeOnFinished(List<Integer> result) 
+					public void executeOnFinished(WSResponse<List<Integer>> result) 
 					{
 						thread.start();
 					}
