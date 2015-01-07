@@ -33,13 +33,13 @@ public class WSResponse<TResult> {
 	{
 		try {
 			JSONObject mainObject = (JSONObject) new JSONObject(response);
-			JSONArray array = mainObject.getJSONArray("errors");
+			JSONArray array = mainObject.getJSONArray("Errors");
 			for(int i=0;i<array.length();i++)
 			{
 				JSONObject object = (JSONObject)array.get(i);
 				listOfErrors.add(new Exception(object.getString("message")));
 			}
-			return mainObject.get("response").toString();
+			return mainObject.get("Response").toString();
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
