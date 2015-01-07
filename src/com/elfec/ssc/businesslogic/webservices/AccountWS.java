@@ -43,7 +43,7 @@ public class AccountWS
 	public void getAllAccounts(String gmail, IWSFinishEvent<List<Account>> eventHandler)
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 
-				new WebServiceConnector<List<Account>>("http://192.168.12.81/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
+				new WebServiceConnector<List<Account>>("http://192.168.12.82/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
 						"ssc_elfec", "GetAllAccounts", new GetAllAccountsWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("GMail", gmail));
 	}
