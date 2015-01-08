@@ -1,7 +1,5 @@
 package com.elfec.ssc.presenter;
 
-import java.util.List;
-
 import android.os.Build;
 
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
@@ -37,9 +35,9 @@ public class RegisterAccountPresenter {
 		});
 		AccountWS accountWebService = new AccountWS();
 		accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
-				Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<List<Integer>>() {		
+				Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<Boolean>() {		
 					@Override
-					public void executeOnFinished(WSResponse<List<Integer>> result) 
+					public void executeOnFinished(WSResponse<Boolean> result) 
 					{
 						thread.start();
 					}

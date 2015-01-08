@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 public class Welcome extends ActionBarActivity implements IWelcome {
 
@@ -28,6 +30,17 @@ public class Welcome extends ActionBarActivity implements IWelcome {
 		presenter = new WelcomePresenter(this);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.hide();
+		Animation slideRight = AnimationUtils.loadAnimation(this,R.anim.slide_right_welcome);
+		Animation slideLeft = AnimationUtils.loadAnimation(this,R.anim.slide_left_welcome);
+		Animation slideBottom =  AnimationUtils.loadAnimation(this,R.anim.abc_slide_in_bottom);
+		findViewById(R.id.imgSSCLogo).startAnimation(slideRight);
+		findViewById(R.id.lbl_app_title).startAnimation(slideRight);
+		findViewById(R.id.welcome_description).startAnimation(slideRight);
+		findViewById(R.id.welcome_logo_elfec).startAnimation(slideLeft);
+		findViewById(R.id.welcome_create_gmail).startAnimation(slideLeft);
+		findViewById(R.id.btn_select_account).startAnimation(slideBottom);
+		findViewById(R.id.btn_decline_account).startAnimation(slideBottom);
+		findViewById(R.id.welcome_to_app).startAnimation( AnimationUtils.loadAnimation(this,R.anim.abc_slide_in_top));
 	}
 	
 	@Override

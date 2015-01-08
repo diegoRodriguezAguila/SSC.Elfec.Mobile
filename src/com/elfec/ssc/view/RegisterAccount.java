@@ -9,6 +9,7 @@ import com.elfec.ssc.presenter.views.IRegisterAccount;
 
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
+import android.text.Html;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
@@ -28,6 +29,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		setContentView(R.layout.activity_register_account);
 		presenter = new RegisterAccountPresenter(this);
 		txtNUS = (EditText) findViewById(R.id.txt_nus);
+		txtNUS.setError(Html.fromHtml("<font color='#006086'><b>● Error 1<br/>● Error 2</b></font>"));
 		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
 	}
 	
@@ -66,7 +68,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 
 	@Override
 	public String getAccountNumber() {
-		return txtAccountNumber.getText().toString();
+		return txtAccountNumber.getText().toString().replace("-", "").trim();
 	}
 	
 

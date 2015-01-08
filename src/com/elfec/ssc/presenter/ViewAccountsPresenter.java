@@ -2,8 +2,11 @@ package com.elfec.ssc.presenter;
 
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
@@ -19,28 +22,29 @@ public class ViewAccountsPresenter {
 	
 	public void invokeAccountWS()
 	{
-		view.equals(null);
-		AccountWS accountWS = new AccountWS();
-		accountWS.getAllAccounts("1", new IWSFinishEvent<List<Account>>() {
-			
+		Thread thread=new Thread(new Runnable() {			
 			@Override
-			public void executeOnFinished(WSResponse<List<Account>> result) {
-				final List<Account> accounts=result.getResult();
-				Thread thread=new Thread(new Runnable() {
-					
-					@Override
-					public void run() {
-						for(Account account : accounts)
+			public void run() 
+			{
+				AccountWS accountWS = new AccountWS();
+				accountWS.getAllAccounts(Client.getActiveClient().getGmail(), new IWSFinishEvent<List<Account>>() 
 						{
-							
-							account.save();
-						}
-					}
-				});
-				thread.start();
-				view.show(result.getResult());
+							@Override
+							public void executeOnFinished(WSResponse<List<Account>> result) 
+							{
+								final List<Account> accounts=result.getResult();
+										for(Account account : accounts)
+										{
+											account.setInsertDate(DateTime.now());
+											//account.save();
+											view.show(result.getResult());
+										}
+							}
+
+						});
 			}
 		});
+		thread.start();
 		/*accountWS.registerAccount("12345", "654321", "jarry@gmail.com", "72993222", "Samsung", 
 				"Galaxy S3", "333255112223", "1a2b3c4d5e6e7f8g9h10i", new IWSFinishEvent<List<Integer>>() {
 					

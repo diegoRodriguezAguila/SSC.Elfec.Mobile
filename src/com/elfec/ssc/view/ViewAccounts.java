@@ -25,8 +25,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
-        presenter.invokeAccountWS();
         accounts=(ListView)findViewById(R.id.accounts_list);
+        presenter.invokeAccountWS();
     }
 
     @Override
