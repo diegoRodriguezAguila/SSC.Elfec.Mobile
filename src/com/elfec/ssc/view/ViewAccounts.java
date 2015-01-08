@@ -7,11 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
@@ -26,6 +32,17 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
         accounts=(ListView)findViewById(R.id.accounts_list);
+        accounts.setOnItemLongClickListener(new OnItemLongClickListener() {
+
+			@Override
+			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+					int position, long arg3) {
+				Account account=(Account)accounts.getAdapter().getItem(position);
+				presenter.invokeRemoveAccountWS(account.getNUS());
+				return false;
+			}
+        }); 
+      //  accounts.setFastScrollEnabled(true);
         presenter.invokeAccountWS();
     }
 
@@ -33,7 +50,12 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
-
+    
+    @Override
+	public String getIMEI() {
+		return ((TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
+	}
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -55,9 +77,35 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	}
 
 	@Override
-	public void show(List<com.elfec.ssc.model.Account> result) {
-		ViewAccountsAdapter adapter=new ViewAccountsAdapter(this, R.layout.simple_row, result);
-		accounts.setAdapter(adapter);
+	public void show(final List<com.elfec.ssc.model.Account> result) {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.simple_row, result);
+				accounts.setAdapter(adapter);
+
+			}
+		});
+	}
+
+	@Override
+	public PreferencesManager getPreferences() {
+		return new PreferencesManager(getApplicationContext());
+	}
+
+	@Override
+	public void refreshAccounts() {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+
+				Toast.makeText(getApplicationContext(), "En teoria esta borrado",
+						   Toast.LENGTH_LONG).show();
+	
+			}
+		});
 	}
 
 	
