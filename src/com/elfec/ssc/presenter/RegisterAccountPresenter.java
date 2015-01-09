@@ -44,14 +44,23 @@ public class RegisterAccountPresenter {
 					final Client client = Client.getActiveClient();
 					if(!client.hasAccount(view.getNUS(), view.getAccountNumber()))
 					{
+						view.showWSWaiting();
 						AccountWS accountWebService = new AccountWS();
 						accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
 								Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<Boolean>() {		
 								@Override
 								public void executeOnFinished(WSResponse<Boolean> result) 
 								{
+									view.hideWSWaiting();
 									if(result.getResult())
+									{
 										ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
+										view.notifyAccountSuccessfulyRegistered();
+									}
+									else
+									{
+										view.showRegistrationErrors(result.getErrors());;
+									}
 								}
 							});
 					}

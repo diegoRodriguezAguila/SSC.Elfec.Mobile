@@ -6,6 +6,7 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import com.alertdialogpro.AlertDialogPro;
+import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
@@ -13,6 +14,7 @@ import com.elfec.ssc.presenter.views.IRegisterAccount;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.text.Html;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
@@ -20,12 +22,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
 
 	private RegisterAccountPresenter presenter;
 	private EditText txtNUS;
 	private EditText txtAccountNumber;
+	private AlertDialog waitingWSDialog;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +108,8 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	{
 		StringBuilder str = new StringBuilder("<font color='#006086'><b>");
 		int size = validationErrors.size();
+		if(size==1)
+			return str.append(validationErrors.get(0)).append("</b></font>").toString();
 		for (int i = 0; i < size; i++) {
 			str.append("● ").append(validationErrors.get(i));
 			str.append((i<size-1?"<br/>":""));
@@ -171,6 +177,42 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		return txtAccountNumber.getTag().toString();
 	}
 	
+	@Override
+	public void notifyAccountSuccessfulyRegistered() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				Toast.makeText(RegisterAccount.this, R.string.account_successfully_reg, Toast.LENGTH_LONG).show();
+				onBackPressed();
+			}
+		});
+	}
+	
+	@Override
+	public void showWSWaiting() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run(){
+				waitingWSDialog = new ProgressDialogPro(RegisterAccount.this, R.style.Theme_FlavoredMaterialLight);
+				waitingWSDialog.setMessage(RegisterAccount.this.getResources().getString(R.string.waiting_msg));
+				waitingWSDialog.setCancelable(false);
+				waitingWSDialog.setCanceledOnTouchOutside(false);
+				waitingWSDialog.show();
+			}
+		});
+	}
+
+	@Override
+	public void hideWSWaiting() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(waitingWSDialog!=null)
+					waitingWSDialog.dismiss();
+			}
+		});
+	}
+	
 
 	@Override
 	public void notifyAccountAlreadyRegistered() {
@@ -180,7 +222,31 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(RegisterAccount.this);
 				builder.setTitle(R.string.account_already_reg_title)
 				.setMessage(R.string.account_already_reg_msg)
-				.setIcon(android.R.drawable.stat_sys_warning)
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
+			}
+		});
+	}
+	
+	@Override
+	public void showRegistrationErrors(final List<Exception> errors) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				StringBuilder msg = new StringBuilder();
+				int size = errors.size();
+				if(size==1)
+					msg.append(errors.get(0).getMessage()).toString();
+				else
+				{
+					for (int i = 0; i < size; i++) {
+						msg.append("● ").append(errors.get(i).getMessage());
+						msg.append((i<size-1?"\n":""));
+					}
+				}
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(RegisterAccount.this);
+				builder.setTitle(R.string.errors_on_register_title)
+				.setMessage(msg)
 				.setPositiveButton(R.string.btn_ok, null)
 				.show();
 			}
@@ -193,5 +259,4 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	{
 		presenter.processAccountData();
 	}
-	
 }

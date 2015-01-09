@@ -19,9 +19,14 @@ public class ElfecAccountsManager {
 	 * @param nus
 	 */
 	public static void RegisterAccount(Client ownerClient, String accountNumber,String nus) {
-		Account account = new Account(ownerClient, accountNumber, nus);
-		account.setInsertDate(DateTime.now());
-		account.save();
+		Account newAccount = Account.findAccount(ownerClient.getGmail(), nus, accountNumber);
+		if(newAccount==null)
+		{
+			newAccount = new Account(ownerClient, accountNumber, nus);
+			newAccount.setInsertDate(DateTime.now());
+		}
+		else newAccount.setStatus((short) 1);
+		newAccount.save();
 	}
 
 }

@@ -3,6 +3,7 @@ package com.elfec.ssc.model.webservices;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Proxy;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,8 +88,13 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (ConnectException e)
 		{
 			Log.d(methodName, e.toString());
-			resultWS.addError(new ConnectException("Chupe bola jefe"));
+			resultWS.addError(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
 			
+		}
+		catch (SocketTimeoutException e)
+		{
+			Log.d(methodName, e.toString());
+			resultWS.addError(new SocketTimeoutException("No fue posible conectarse con el servidor, puede que el servidor se encuentre no disponible temporalmente, porfavor verifique su conexión a internet"));
 		}
 		catch (IOException e) 
 		{
@@ -124,7 +130,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	}
 	
 	private HttpTransportSE getHttpTransportSE() {
-	    HttpTransportSE ht = new HttpTransportSE(Proxy.NO_PROXY, url, 15000);
+	    HttpTransportSE ht = new HttpTransportSE(Proxy.NO_PROXY, url, 10000);
 	    ht.debug = true;
 	    ht.setXmlVersionTag("<!--?xml version=\"1.0\" encoding= \"UTF-8\" ?-->");
 	    return ht;

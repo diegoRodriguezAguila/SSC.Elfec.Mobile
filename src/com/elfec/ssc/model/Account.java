@@ -97,12 +97,18 @@ public class Account extends Model {
 	 * @return boolean, true si se logro eliminar
 	 */
 	public static boolean deleteAccount(String gmail,String nus)
-	{
-	
+	{	
 		Account account= new Select()
         .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("NUS=? AND Gmail=?", nus,gmail)
         .executeSingle();
 		account.Status=0;
 		return account.save()>0;
+	}
+	
+	public static Account findAccount(String gmail,String nus, String accountNumber)
+	{
+		return new Select()
+        .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("NUS=? AND AccountNumber=? AND Gmail=?", nus, accountNumber, gmail)
+        .executeSingle();
 	}
 }

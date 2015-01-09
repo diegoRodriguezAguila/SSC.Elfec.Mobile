@@ -117,7 +117,7 @@ public class Client extends Model {
 	}
 	
 	/**
-	 * Retorna true si es que el usuario tiene una cuenta con el nus y numero provistos
+	 * Retorna true si es que el usuario tiene una cuenta con el nus y numero provistos, y en estado activo = 1
 	 * @param nus
 	 * @param accountNumber
 	 * @return

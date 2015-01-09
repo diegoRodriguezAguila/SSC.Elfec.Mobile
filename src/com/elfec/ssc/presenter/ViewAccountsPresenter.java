@@ -6,6 +6,8 @@ import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
+import com.elfec.ssc.helpers.ActiveClientThreadMutex;
+import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.IWSFinishEvent;
@@ -51,9 +53,13 @@ public class ViewAccountsPresenter {
 		});
 		thread.start();
 	}
+	
+	/**
+	 * Obtiene las cuentas del cliente tanto remota como localmente
+	 */
 	public void invokeAccountWS()
 	{
-		Thread thread=new Thread(new Runnable() {			
+		final Thread thread=new Thread(new Runnable() {			
 			@Override
 			public void run() 
 			{
@@ -80,7 +86,14 @@ public class ViewAccountsPresenter {
 				Looper.loop();
 			}
 		});
-		thread.start();
+		if(ActiveClientThreadMutex.isFree())
+			thread.start();
+		else ActiveClientThreadMutex.addOnThreadReleasedEvent(new OnReleaseThread() {
+			@Override
+			public void threadReleased() {
+				thread.start();
+			}
+		});
 	}
 	
 }

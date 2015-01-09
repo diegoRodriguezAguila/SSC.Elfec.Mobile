@@ -44,7 +44,6 @@ public class WSResponse<TResult> {
 			}
 			return mainObject.get("Response").toString();
 		} catch (JSONException e) {
-			e.printStackTrace();
 		}
 		return null;
 	}
