@@ -15,4 +15,5 @@ public interface IViewAccounts {
 	public PreferencesManager getPreferences();
 	public String getIMEI();
 	public void refreshAccounts();
+	public void displayErrors(List<Exception> errors);
 }

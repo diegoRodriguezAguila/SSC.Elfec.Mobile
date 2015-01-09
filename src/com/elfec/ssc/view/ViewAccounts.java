@@ -39,6 +39,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
 				Account account=(Account)accounts.getAdapter().getItem(position);
+				
 				presenter.invokeRemoveAccountWS(account.getNUS());
 				return false;
 			}
@@ -107,6 +108,27 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	
 			}
 		});
+	}
+
+	@Override
+	public void displayErrors(List<Exception> errors) {
+		 String result="";
+		for(Exception error : errors)
+		{
+			result+=error.getMessage()+"\n";
+		}
+		final String exceptions=result;
+			runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+
+				Toast.makeText(getApplicationContext(), exceptions,
+						   Toast.LENGTH_LONG).show();
+	
+			}
+		});
+		
 	}
 
 	

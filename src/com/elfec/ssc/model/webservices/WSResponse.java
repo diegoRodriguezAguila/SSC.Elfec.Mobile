@@ -23,7 +23,10 @@ public class WSResponse<TResult> {
 	public WSResponse() {
 		listOfErrors = new ArrayList<Exception>();
 	}
-	
+	public List<Exception> getErrors()
+	{
+		return listOfErrors;
+	}
 	public void addError(Exception e)
 	{
 		listOfErrors.add(e);
@@ -56,7 +59,7 @@ public class WSResponse<TResult> {
 	{
 		return this.result;
 	}
-	
+//	
 	public boolean hasErrors()
 	{
 		return listOfErrors.size() > 0;

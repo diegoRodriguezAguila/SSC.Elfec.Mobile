@@ -37,8 +37,13 @@ public class ViewAccountsPresenter {
 						if(result.getResult())
 						{
 							Account.deleteAccount(client.getGmail(), nus);
+							view.refreshAccounts();
 						}
-						view.refreshAccounts();
+						else
+						{
+							view.displayErrors(result.getErrors());
+						}
+						
 					}
 				});				
 				Looper.loop();

@@ -81,12 +81,14 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (HttpResponseException e) 
 		{
 			Log.d(methodName, e.toString());
+		
 			resultWS.addError(e);
 		} 
 		catch (ConnectException e)
 		{
 			Log.d(methodName, e.toString());
-			resultWS.addError(e);
+			resultWS.addError(new ConnectException("Chupe bola jefe"));
+			
 		}
 		catch (IOException e) 
 		{
