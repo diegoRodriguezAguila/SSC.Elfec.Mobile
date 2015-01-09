@@ -19,6 +19,8 @@
     <string name="btn_register">Registrar</string>
     <string name="account_img">Cuenta</string>
     <string name="account_mask">##-###-###-##</string>
+    <string name="account_already_reg_title">CUENTA YA REGISTRADA</string>
+    <string name="account_already_reg_msg">La información que proporcionó corresponde a una cuenta que ya tiene registrada</string>
 
     <!-- Main Menu -->
     <string name="app_title">Sistema de Servicios al Cliente</string>

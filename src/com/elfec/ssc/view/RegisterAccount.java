@@ -5,6 +5,7 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
@@ -168,6 +169,22 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	@Override
 	public String getAccountNumberValidationRules() {
 		return txtAccountNumber.getTag().toString();
+	}
+	
+
+	@Override
+	public void notifyAccountAlreadyRegistered() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(RegisterAccount.this);
+				builder.setTitle(R.string.account_already_reg_title)
+				.setMessage(R.string.account_already_reg_msg)
+				.setIcon(android.R.drawable.stat_sys_warning)
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
+			}
+		});
 	}
 	
 	//#endregion

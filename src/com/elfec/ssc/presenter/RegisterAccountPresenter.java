@@ -42,16 +42,23 @@ public class RegisterAccountPresenter {
 				if(nusIsValid && accountNumberIsValid)
 				{
 					final Client client = Client.getActiveClient();
-					AccountWS accountWebService = new AccountWS();
-					accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
-							Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<Boolean>() {		
-							@Override
-							public void executeOnFinished(WSResponse<Boolean> result) 
-							{
-								if(result.getResult())
-									ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
-							}
-						});
+					if(!client.hasAccount(view.getNUS(), view.getAccountNumber()))
+					{
+						AccountWS accountWebService = new AccountWS();
+						accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
+								Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<Boolean>() {		
+								@Override
+								public void executeOnFinished(WSResponse<Boolean> result) 
+								{
+									if(result.getResult())
+										ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
+								}
+							});
+					}
+					else
+					{
+						view.notifyAccountAlreadyRegistered();
+					}
 				}
 				Looper.loop();
 
