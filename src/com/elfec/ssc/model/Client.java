@@ -111,9 +111,23 @@ public class Client extends Model {
 	public List<Account> getActiveAccounts()
 	{
 		return  new Select()
-        .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("a.Status=1 AND Gmail=?",this.Gmail)
+        .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("a.Status=1 AND c.Gmail=?",this.Gmail)
         .execute();
 		
+	}
+	
+	/**
+	 * Retorna true si es que el usuario tiene una cuenta con el nus y numero provistos
+	 * @param nus
+	 * @param accountNumber
+	 * @return
+	 */
+	public boolean hasAccount(String nus, String accountNumber)
+	{
+		return  new Select()
+        .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("a.Status=1 AND a.NUS=? AND a.AccountNumber=? AND c.Gmail=?",
+        		nus, accountNumber, this.Gmail)
+        .executeSingle()!=null;
 	}
 	
 }

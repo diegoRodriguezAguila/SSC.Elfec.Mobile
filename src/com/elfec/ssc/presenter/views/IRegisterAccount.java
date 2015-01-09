@@ -16,4 +16,5 @@ public interface IRegisterAccount {
 	public void setAccountNumberErrors(List<String> validationErrors);
 	public String getIMEI();
 	public String getPhoneNumber();
+	public void notifyAccountAlreadyRegistered();
 }
