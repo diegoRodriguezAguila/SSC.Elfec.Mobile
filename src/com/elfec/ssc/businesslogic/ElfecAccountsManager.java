@@ -23,4 +23,5 @@ public class ElfecAccountsManager {
 		account.setInsertDate(DateTime.now());
 		account.save();
 	}
+
 }

@@ -54,6 +54,7 @@
         android:maxLength="10"
         android:hint="@string/nus_sample"
         android:inputType="number"
+        android:tag="NotNullOrEmpty; MinLenght, 4"
         android:textAppearance="@style/TextAppearance.CustomFont.EditText" >
     </EditText>
     </LinearLayout>
@@ -87,6 +88,7 @@
         android:ems="10"
         custom_edit:mask="@string/account_mask"
         android:hint="@string/account_sample"
+        android:tag="NotNullOrEmpty; MinLenght, 10"
         android:textAppearance="@style/TextAppearance.CustomFont.EditText"
         android:inputType="number" />
             

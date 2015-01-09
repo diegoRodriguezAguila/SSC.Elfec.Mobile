@@ -1,6 +1,8 @@
 package com.elfec.ssc.view;
 
 
+import java.util.List;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import com.elfec.ssc.R;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 
 public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
@@ -28,9 +31,9 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_account);
 		presenter = new RegisterAccountPresenter(this);
-		txtNUS = (EditText) findViewById(R.id.txt_nus);
-		txtNUS.setError(Html.fromHtml("<font color='#006086'><b>● Error 1<br/>● Error 2</b></font>"));
+		txtNUS = (EditText) findViewById(R.id.txt_nus);		
 		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
+		setOnFocusChangedListeners();
 	}
 	
 	@Override
@@ -59,8 +62,82 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 	}
     
+    /**
+     * Asigna los onFocusChange listeners del txtNus y el txtAccountNumber
+     */
+    public void setOnFocusChangedListeners()
+    {
+    	Thread thread = new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				txtNUS.setOnFocusChangeListener(new OnFocusChangeListener() {		
+					@Override
+					public void onFocusChange(View v, boolean gotFocus) {
+						if(!gotFocus)
+						{
+							presenter.validateNUS();
+						}
+					}
+				});
+				txtAccountNumber.setOnFocusChangeListener(new OnFocusChangeListener() {		
+					@Override
+					public void onFocusChange(View v, boolean gotFocus) {
+						if(!gotFocus)
+						{
+							presenter.validateAccountNumber();
+						}
+					}
+				});
+			}
+		});
+    	thread.start();
+    }
+
+    /**
+     * Convierte una lista de errores en el formato html
+     * necesario para mostrarlo en el metodo setError
+     * @param validationErrors
+     * @return
+     */
+	public String getHTMLListFromErrors(List<String> validationErrors)
+	{
+		StringBuilder str = new StringBuilder("<font color='#006086'><b>");
+		int size = validationErrors.size();
+		for (int i = 0; i < size; i++) {
+			str.append("● ").append(validationErrors.get(i));
+			str.append((i<size-1?"<br/>":""));
+		}
+		str.append("</b></font>");
+		return str.toString();
+	}
+
+    
     //#region  Interface IRegisterAccount methods
 
+	@Override
+	public void setNUSErrors(final List<String> validationErrors) {
+		runOnUiThread(new Runnable() {		
+			@Override
+			public void run() {
+				if(validationErrors.size()>0)
+					txtNUS.setError(Html.fromHtml(getHTMLListFromErrors(validationErrors)));
+				else txtNUS.setError(null);
+			}
+		});		
+	}
+	
+	@Override
+	public void setAccountNumberErrors(final List<String> validationErrors) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				if(validationErrors.size()>0)
+					txtAccountNumber.setError(Html.fromHtml(getHTMLListFromErrors(validationErrors)));
+				else txtAccountNumber.setError(null);
+			}
+		});		
+	}
+	
 	@Override
 	public String getNUS() {
 		return txtNUS.getText().toString();
@@ -81,6 +158,16 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	public String getPhoneNumber() {
 		String phoneNumber = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE)).getLine1Number();
 		return phoneNumber==null?"":phoneNumber;
+	}
+	
+	@Override
+	public String getNUSValidationRules() {
+		return txtNUS.getTag().toString();
+	}
+
+	@Override
+	public String getAccountNumberValidationRules() {
+		return txtAccountNumber.getTag().toString();
 	}
 	
 	//#endregion

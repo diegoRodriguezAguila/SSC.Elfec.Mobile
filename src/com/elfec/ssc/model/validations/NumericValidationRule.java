@@ -8,7 +8,7 @@ package com.elfec.ssc.model.validations;
 public class NumericValidationRule implements IValidationRule<String> {
 
 	@Override
-	public boolean IsValid(String objectToValidate) {
+	public boolean isValid(String objectToValidate, String... params) {
 		try
 		{
 			Integer.parseInt(objectToValidate);
@@ -18,6 +18,11 @@ public class NumericValidationRule implements IValidationRule<String> {
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public String getErrorMessage(String fieldName, boolean isMaleGender) {
+		return (isMaleGender?"El ":"La ")+fieldName+" tiene que ser "+(isMaleGender?"numérico-":"numérica.");
 	}
 
 }

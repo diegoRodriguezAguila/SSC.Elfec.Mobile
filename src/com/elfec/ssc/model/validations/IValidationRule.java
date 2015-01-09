@@ -13,5 +13,14 @@ public interface IValidationRule<T> {
 	 * @param objectToValidate
 	 * @return
 	 */
-	public boolean IsValid(T objectToValidate);
+	public boolean isValid(T objectToValidate, String... params);
+	
+	/**
+	 * Devuelve una cadena que describe el error en caso de incumplimiento de la regla de validación
+	 * utilizando el <b>fieldName</b> como parámetro
+	 * @param fieldName
+	 * @param isMaleGender sirve para mostrar el mensaje correcto según el género
+	 * @return
+	 */
+	public String getErrorMessage(String fieldName, boolean isMaleGender);
 }

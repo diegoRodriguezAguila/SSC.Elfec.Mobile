@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import android.os.Looper;
+
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
@@ -26,35 +28,25 @@ public class ViewAccountsPresenter {
 			@Override
 			public void run() 
 			{
+				Looper.prepare();
 				AccountWS accountWS = new AccountWS();
 				accountWS.getAllAccounts(Client.getActiveClient().getGmail(), new IWSFinishEvent<List<Account>>() 
 						{
 							@Override
-							public void executeOnFinished(WSResponse<List<Account>> result) 
-							{
-								final List<Account> accounts=result.getResult();
-										for(Account account : accounts)
-										{
-											account.setInsertDate(DateTime.now());
-											//account.save();
-											view.show(result.getResult());
-										}
+							public void executeOnFinished(WSResponse<List<Account>> result) {
+								List<Account> accounts = result.getResult();
+								for (Account account : accounts) {
+									account.setInsertDate(DateTime.now());
+									account.save();
+								}
+								view.show(result.getResult());
 							}
 
 						});
+				Looper.loop();
 			}
 		});
 		thread.start();
-		/*accountWS.registerAccount("12345", "654321", "jarry@gmail.com", "72993222", "Samsung", 
-				"Galaxy S3", "333255112223", "1a2b3c4d5e6e7f8g9h10i", new IWSFinishEvent<List<Integer>>() {
-					
-					@Override
-					public void executeOnFinished(List<Integer> result) {
-						
-						
-					}
-				});*/
-		
 	}
 	
 }

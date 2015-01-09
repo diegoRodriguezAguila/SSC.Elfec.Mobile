@@ -6,24 +6,18 @@ package com.elfec.ssc.model.validations;
  * @author Diego
  *
  */
-public class MaxLenghtValidationRule implements IValidationRule<String> {
+public class MaxLenghtValidationRule implements IValidationRule<String> {	
 
-	private int maxLenght;
-	
-	public MaxLenghtValidationRule(int maxLenght) {
-		this.maxLenght = maxLenght;
-	}
-	
-	public int getMaxLenght() {
-		return maxLenght;
-	}
-	public void setMaxLenght(int maxLenght) {
-		this.maxLenght = maxLenght;
-	}
-	
+	private int maxLenght = 0;
 	@Override
-	public boolean IsValid(String objectToValidate) {
+	public boolean isValid(String objectToValidate, String... params) {
+		maxLenght = Integer.parseInt(params[0]);
 		return objectToValidate!=null && objectToValidate.length()<=maxLenght;
+	}
+
+	@Override
+	public String getErrorMessage(String fieldName, boolean isMaleGender) {
+		return (isMaleGender?"El ":"La ")+fieldName+" tiene que tener menos de "+maxLenght+" caracteres.";
 	}
 
 }

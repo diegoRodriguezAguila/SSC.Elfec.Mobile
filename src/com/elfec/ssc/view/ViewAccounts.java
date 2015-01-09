@@ -55,9 +55,14 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	}
 
 	@Override
-	public void show(List<com.elfec.ssc.model.Account> result) {
-		ViewAccountsAdapter adapter=new ViewAccountsAdapter(this, R.layout.simple_row, result);
-		accounts.setAdapter(adapter);
+	public void show(final List<com.elfec.ssc.model.Account> result) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.simple_row, result);
+				accounts.setAdapter(adapter);
+			}
+		});
 	}
 
 	
