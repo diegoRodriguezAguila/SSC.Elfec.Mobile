@@ -1,10 +1,12 @@
 package com.elfec.ssc.businesslogic;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.ClientStatus;
-
+import com.elfec.ssc.model.Account;;
 /**
  * Se encarga de las distintas operaciones relacionadas con los clientes
  * @author Diego
@@ -21,5 +23,14 @@ public class ClientManager {
 		Client client = new Client(gmail, ClientStatus.ACTIVE);
 		client.setInsertDate(DateTime.now());
 		client.save();
+	}
+	public static void RegisterClientAccounts(final List<Account> accounts)
+	{
+		for(Account account : accounts)
+		{
+			account.setAccountNumber(account.getAccountNumber());
+			account.setInsertDate(DateTime.now());
+			account.save();
+		}
 	}
 }

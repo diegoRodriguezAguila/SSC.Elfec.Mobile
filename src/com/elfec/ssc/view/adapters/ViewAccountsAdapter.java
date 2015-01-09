@@ -16,7 +16,7 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 	private List<Account> accounts;
 	private static LayoutInflater inflater = null;
 	public ViewAccountsAdapter(Context context, int resource,
-			List<Account> accounts) {
+			final List<Account> accounts) {
 		super(context, resource, accounts);
 		try {
 			this.accounts = accounts;
