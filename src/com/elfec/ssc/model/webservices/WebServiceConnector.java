@@ -6,7 +6,6 @@ import java.net.Proxy;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -16,6 +15,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.exceptions.ServerSideException;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -94,7 +94,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (SocketTimeoutException e)
 		{
 			Log.d(methodName, e.toString());
-			resultWS.addError(new SocketTimeoutException("No fue posible conectarse con el servidor, puede que el servidor se encuentre no disponible temporalmente, porfavor verifique su conexión a internet"));
+			resultWS.addError(new SocketTimeoutException("No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexión a internet"));
 		}
 		catch (IOException e) 
 		{
@@ -104,7 +104,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (XmlPullParserException e) 
 		{
 			Log.d(methodName, e.toString());
-			resultWS.addError(e);
+			resultWS.addError(new ServerSideException());
 		}
 		return converter.convert(resultWS.convertErrors(result));
 	}
