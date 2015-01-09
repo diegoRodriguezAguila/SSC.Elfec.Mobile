@@ -83,7 +83,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	public void goToViewAccounts() {
 		Intent i = new Intent(MainMenu.this, ViewAccounts.class);
 		startActivity(i);
-		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 	}
 
 	@Override
