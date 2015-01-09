@@ -32,6 +32,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
         accounts=(ListView)findViewById(R.id.accounts_list);
+        
         accounts.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
