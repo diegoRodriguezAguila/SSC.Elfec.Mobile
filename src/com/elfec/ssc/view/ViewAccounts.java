@@ -26,6 +26,13 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
 	private ListView accounts;
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+	      presenter.invokeAccountWS();
+	      
+	}
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,6 +105,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	@Override
 	public void refreshAccounts() {
+	      presenter.invokeAccountWS();
+
 		runOnUiThread(new Runnable() {
 			
 			@Override
