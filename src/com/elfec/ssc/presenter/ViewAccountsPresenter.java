@@ -31,11 +31,15 @@ public class ViewAccountsPresenter {
 			{
 				Looper.prepare();
 				AccountWS accountWS = new AccountWS();
-				Client client=Client.getActiveClient();
+				final Client client=Client.getActiveClient();
 				accountWS.removeAccount(client.getGmail(), nus, imei, new IWSFinishEvent<Boolean>() {
 					
 					@Override
 					public void executeOnFinished(WSResponse<Boolean> result) {
+						if(result.getResult())
+						{
+							Account.deleteAccount(client.getGmail(), nus);
+						}
 						view.refreshAccounts();
 					}
 				});				
@@ -69,7 +73,7 @@ public class ViewAccountsPresenter {
 						});
 				}
 				else
-					view.show(client.getAccounts());
+					view.show(client.getActiveAccounts());
 				Looper.loop();
 			}
 		});

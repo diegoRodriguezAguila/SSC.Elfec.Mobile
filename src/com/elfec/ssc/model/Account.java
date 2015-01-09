@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 /**
  * Abstracción de las cuentas de usuario
@@ -91,5 +92,17 @@ public class Account extends Model {
 	}
     
     //#endregion
-
+	/**
+	 * Actualiza la cuenta eliminada con el nus y cliente especificados
+	 * @return boolean, true si se logro eliminar
+	 */
+	public static boolean deleteAccount(String gmail,String nus)
+	{
+	
+		Account account= new Select()
+        .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("NUS=? AND Gmail=?", nus,gmail)
+        .executeSingle();
+		account.Status=0;
+		return account.save()>0;
+	}
 }

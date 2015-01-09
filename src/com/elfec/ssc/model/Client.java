@@ -102,5 +102,18 @@ public class Client extends Model {
 		return new Select()
         .from(Client.class).where("Status=?", ClientStatus.ACTIVE.toShort())
         .executeSingle();
+		
 	}
+	/**
+	 * Obtiene el cliente que tenga estado activo
+	 * @return el cliente activo, null si es que no se registró ningun cliente aún
+	 */
+	public List<Account> getActiveAccounts()
+	{
+		return  new Select()
+        .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("a.Status=1 AND Gmail=?",this.Gmail)
+        .execute();
+		
+	}
+	
 }
