@@ -85,13 +85,12 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		                SupportMapFragment mapFragment = SupportMapFragment
 		                        .newInstance(options);
         				waitingMapDialog.dismiss();
-		                fm.beginTransaction().replace(R.id.google_map_container, mapFragment).commit();
+		                fm.beginTransaction().add(R.id.google_map_container, mapFragment).commit();
 		                mapFragment.getMapAsync(
 		        				new OnMapReadyCallback() {					
 		        			@Override
 		        			public void onMapReady(GoogleMap obtainedMap) {
 		        				map = obtainedMap;
-
 		        			}
 		        		});
 		            }
