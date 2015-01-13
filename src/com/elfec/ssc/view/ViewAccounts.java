@@ -4,6 +4,8 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -15,6 +17,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.model.Account;
@@ -45,9 +48,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
 					int position, long arg3) {
-				Account account=(Account)accounts.getAdapter().getItem(position);
-				
-				presenter.invokeRemoveAccountWS(account.getNUS());
+				dialogRemove(position);
 				return false;
 			}
         }); 
@@ -139,6 +140,20 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 		});
 		
 	}
-
 	
+	public void dialogRemove(final int position)
+    {
+    	(new AlertDialogPro.Builder(this)).setTitle("Eliminar")
+        .setMessage("Esta seguro que desea eliminar esta cuenta?")
+        .setPositiveButton("Si", new OnClickListener() {
+			
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				Account account=(Account)accounts.getAdapter().getItem(position);
+				presenter.invokeRemoveAccountWS(account.getNUS());
+				
+			}
+		}).setNegativeButton("No", null).show();
+    }
+
 }
