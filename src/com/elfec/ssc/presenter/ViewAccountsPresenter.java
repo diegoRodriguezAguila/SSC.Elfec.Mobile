@@ -68,7 +68,7 @@ public class ViewAccountsPresenter {
 				Client client=Client.getActiveClient();
 				if(view.getPreferences().isFirstLoadAccounts())
 				{
-				accountWS.getAllAccounts(client.getGmail(), new IWSFinishEvent<List<Account>>() 
+					accountWS.getAllAccounts(client.getGmail(), new IWSFinishEvent<List<Account>>() 
 						{
 							@Override
 							public void executeOnFinished(WSResponse<List<Account>> result) 
@@ -87,6 +87,7 @@ public class ViewAccountsPresenter {
 				Looper.loop();
 			}
 		});
+		if(view.getPreferences().isFirstLoadAccounts())
 		view.ShowWaitingWS();
 		if(ActiveClientThreadMutex.isFree())
 			thread.start();
