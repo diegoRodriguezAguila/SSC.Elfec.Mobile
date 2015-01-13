@@ -39,7 +39,11 @@ public class AccountWS
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
 	}
 	
-	
+	/**
+	 * Obtiene todas las cuentas que se hayan asignado a un gmail determinado
+	 * @param gmail
+	 * @param eventHandler
+	 */
 	public void getAllAccounts(String gmail, IWSFinishEvent<List<Account>> eventHandler)
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 
@@ -47,6 +51,14 @@ public class AccountWS
 						"ssc_elfec", "GetAllAccounts", new GetAllAccountsWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("GMail", gmail));
 	}
+	
+	/**
+	 * Elimina la cuenta que corresponde a los parametros, por medio de servicios web
+	 * @param gmail
+	 * @param nus
+	 * @param imei
+	 * @param eventHandler
+	 */
 	public void removeAccount(String gmail,String nus,String imei,IWSFinishEvent<Boolean> eventHandler)
 	{
 		WebServiceConnector<Boolean> accountWSConnector = 

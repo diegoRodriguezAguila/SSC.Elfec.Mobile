@@ -21,6 +21,7 @@
     <style name="Theme.FlavoredMaterialLight" parent="Theme.AlertDialogPro.Material.Light">
         <item name="colorPrimary">@color/ssc_elfec_color</item>
         <item name="colorPrimaryDark">@color/ssc_elfec_color</item>
+        <item name="colorControlActivated">@color/ssc_elfec_color</item>
         <item name="colorAccent">@color/light_text_color</item>
         <item name="android:windowTitleStyle">@style/AdpTitleStyle</item>
         <item name="adpButtonBarNegativeButtonStyle">@style/AdpNormalButtonStyle</item>

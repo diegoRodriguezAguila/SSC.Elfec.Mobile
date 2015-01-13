@@ -25,7 +25,7 @@ public class Account extends Model {
 		this.Client = ownerClient;
 		this.AccountNumber = accountNumber;
 		this.NUS = nus;
-		Status = 1;
+		this.Status = 1;
 	}
 	
 	

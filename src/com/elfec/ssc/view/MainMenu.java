@@ -64,7 +64,9 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	
 	public void btnLocationServicesClick(View view)
 	{
-		
+		Intent i = new Intent(MainMenu.this, LocationServices.class);
+		startActivity(i);
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 	}
 	
 	public void btnNotificationsClick(View view)
