@@ -16,4 +16,7 @@ public interface IViewAccounts {
 	public String getIMEI();
 	public void refreshAccounts();
 	public void displayErrors(List<Exception> errors);
+	public void dialogRemove(int position); 
+	public void ShowWaitingWS();
+	public void hideWSWaiting();
 }

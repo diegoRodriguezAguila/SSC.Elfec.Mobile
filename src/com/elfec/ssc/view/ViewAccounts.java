@@ -3,6 +3,7 @@ package com.elfec.ssc.view;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -18,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alertdialogpro.AlertDialogPro;
+import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.model.Account;
@@ -29,11 +31,13 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
 	private ListView accounts;
+	private AlertDialog waitingWSDialog;
+	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
-	      presenter.invokeAccountWS();
+	     presenter.invokeAccountWS();
 	      
 	}
     @Override
@@ -52,8 +56,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				return false;
 			}
         }); 
-      //  accounts.setFastScrollEnabled(true);
-        presenter.invokeAccountWS();
     }
 
     @Override
@@ -141,9 +143,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 		
 	}
 	
+	@Override
 	public void dialogRemove(final int position)
     {
-    	(new AlertDialogPro.Builder(this)).setTitle("Eliminar")
+    	(new AlertDialogPro.Builder(this)).setTitle("ELIMINAR CUENTA")
         .setMessage("Esta seguro que desea eliminar esta cuenta?")
         .setPositiveButton("Si", new OnClickListener() {
 			
@@ -155,5 +158,28 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			}
 		}).setNegativeButton("No", null).show();
     }
-
+	@Override
+	public void ShowWaitingWS() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run(){
+				waitingWSDialog = new ProgressDialogPro(ViewAccounts.this, R.style.Theme_FlavoredMaterialLight);
+				waitingWSDialog.setMessage(ViewAccounts.this.getResources().getString(R.string.waiting_msg));
+				waitingWSDialog.setCancelable(false);
+				waitingWSDialog.setCanceledOnTouchOutside(false);
+				waitingWSDialog.show();
+			}
+		});
+	}
+	@Override
+	public void hideWSWaiting() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if(waitingWSDialog!=null)
+					waitingWSDialog.dismiss();
+			}
+		});
+	}
+	
 }

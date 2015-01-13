@@ -68,6 +68,7 @@ public class ViewAccountsPresenter {
 				Client client=Client.getActiveClient();
 				if(view.getPreferences().isFirstLoadAccounts())
 				{
+				view.ShowWaitingWS();
 				accountWS.getAllAccounts(client.getGmail(), new IWSFinishEvent<List<Account>>() 
 						{
 							@Override
@@ -77,6 +78,7 @@ public class ViewAccountsPresenter {
 								ClientManager.RegisterClientAccounts(accounts);
 								view.show(accounts);
 								view.getPreferences().setLoadAccountsAlreadyUsed();
+								view.hideWSWaiting();
 							}
 
 						});
