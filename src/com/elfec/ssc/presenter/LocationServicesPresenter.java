@@ -12,10 +12,14 @@ import com.elfec.ssc.presenter.views.ILocationServices;
 
 public class LocationServicesPresenter {
 
-	@SuppressWarnings("unused")
 	private ILocationServices view;
-	
+	private List<LocationPoint> points;
+	public List<LocationPoint> getPoints()
+	{
+		return points;
+	}
 	public LocationServicesPresenter(ILocationServices view) {
+		points=null;
 		this.view = view;
 	}
 	public void loadLocations()
@@ -49,7 +53,7 @@ public class LocationServicesPresenter {
 	}
 	private void showLocationPoints(
 			WSResponse<List<LocationPoint>> result) {
-		List<LocationPoint> points=result.getResult();
+		points=result.getResult();
 		for(LocationPoint point : points)
 		{
 			view.setPoint(point);
