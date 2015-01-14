@@ -7,6 +7,7 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationButtonClickListener;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -30,7 +31,6 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	
 	@SuppressWarnings("unused")
 	private LocationServicesPresenter presenter;
-	@SuppressWarnings("unused")
 	private GoogleMap map;
 	
 	@Override
@@ -91,6 +91,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        			@Override
 		        			public void onMapReady(GoogleMap obtainedMap) {
 		        				map = obtainedMap;
+		        				map.setMyLocationEnabled(true);
 		        			}
 		        		});
 		            }
