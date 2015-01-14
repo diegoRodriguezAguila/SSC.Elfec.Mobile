@@ -63,6 +63,7 @@
 
 	<style name="actionbar_title_style" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
     <item name="android:textColor">@color/ssc_elfec_color</item>
+    <item name="fontPath">fonts/segoe_ui_light.ttf</item>
 	</style>
     
     <style name="ActionBar.Transparent.Ssc_elfec" parent="@style/Widget.AppCompat.ActionBar">
