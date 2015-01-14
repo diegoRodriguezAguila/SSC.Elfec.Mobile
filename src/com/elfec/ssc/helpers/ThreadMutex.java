@@ -7,8 +7,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 
 /**
- * Esta clase sirve para controlar el acceso a Client.getActiveClient() y porporciona métodos para
- * ocupar o liberar el recurso 
+ * Esta clase sirve coordinar el acceso a recursos entre hilos
+ * organizados segun una clave (key)
  * @author Diego
  *
  */
@@ -16,28 +16,38 @@ public class ThreadMutex {
 
 	private static ConcurrentHashMap<String,ThreadMutex> instances;
 	private boolean isFree = true;
+	private String keyOnDictionary;
 	private List<OnReleaseThread> onReleaseEvents = new ArrayList<OnReleaseThread>();
-	private ThreadMutex()
-	{
-		
+	
+	/**
+	 * Constructor privado, solo se puede instanciar con el metodo <b>instance(key)</b>
+	 */
+	private ThreadMutex(String keyOnDictionary)
+	{	
+		this.keyOnDictionary = keyOnDictionary;
 	}
 	
 	static {
 		instances=new ConcurrentHashMap<String,ThreadMutex>();
 	}
+	/**
+	 * Devuelve la instancia actual de un mutex segun su key
+	 * @param key
+	 * @return
+	 */
 	public static ThreadMutex instance(String key)
 	{
 		ThreadMutex mutex=instances.get(key);
 		if(mutex==null)
 		{
-			mutex=new ThreadMutex();
+			mutex=new ThreadMutex(key);
 			instances.put(key, mutex);
 		}
 		return mutex;
 	}
 	
 	/**
-	 * Indica si es que se puede utilizar el cliente activo actual
+	 * Indica si es que se puede utilizar el recurso compartido, si es que el hilo está libre
 	 * @return
 	 */
 	public boolean isFree()
@@ -46,7 +56,7 @@ public class ThreadMutex {
 	}
 	
 	/**
-	 * Asigna el estado de ocupado al cliente activo actual
+	 * Asigna el estado de ocupado al recurso compartido
 	 */
 	public void setBusy()
 	{
@@ -54,9 +64,9 @@ public class ThreadMutex {
 	}
 	
 	/**
-	 * Libera el recurso del cliente activo y ejecuta los eventos para notificar a
+	 * Libera el recurso compartido y ejecuta los eventos para notificar a
 	 * aquellos que hayan estado esperando a que se libere siempre y cuando ninguno
-	 * de ellos haya vuelto a ocupar el recurso
+	 * de ellos haya vuelto a ocuparlo
 	 */
 	public void setFree()
 	{
@@ -68,11 +78,12 @@ public class ThreadMutex {
 			onReleased.threadReleased();
 		}
 		onReleaseEvents.clear();
+		ThreadMutex.instances.remove(keyOnDictionary);
 	}
 	
 	/**
 	 * Añade un evento a la lista de eventos que se ejecutaran en cuanto se libere el hilo que 
-	 * ocupa el recurso del cliente activo
+	 * ocupa un recurso compartido
 	 * @param onReleaseEvent
 	 */
 	public void addOnThreadReleasedEvent(OnReleaseThread onReleaseEvent)
