@@ -5,8 +5,8 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.ClientStatus;
-import com.elfec.ssc.model.Account;;
+import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.enums.ClientStatus;
 /**
  * Se encarga de las distintas operaciones relacionadas con los clientes
  * @author Diego

@@ -5,13 +5,14 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.elfec.ssc.model.enums.LocationPointType;
 
 /**
  * Guarda la información de los puntos de pago para mostrarlos en el mapa
  * @author Diego
  */
-@Table(name = "PayPoints")
-public class PayPoint extends Model {
+@Table(name = "LocationPoints")
+public class LocationPoint extends Model {
 	
 	@Column(name = "Address", notNull = true)
 	private String Address;
@@ -31,6 +32,12 @@ public class PayPoint extends Model {
 	@Column(name = "Longitude", notNull = true)
 	private double Longitude;
 	
+	/**
+	 * Los diferentes tipos de puntos de ubicación según {@link LocationPointType} representados en enteros
+	 */
+	@Column(name = "Type", notNull = true)
+	private short Type;
+	
 	@Column(name = "Status", notNull = true)
 	private short Status;
 
@@ -41,7 +48,7 @@ public class PayPoint extends Model {
 	private DateTime UpdateDate;
 
 	
-	public PayPoint() {
+	public LocationPoint() {
 		super();
 	}
 	
@@ -54,7 +61,7 @@ public class PayPoint extends Model {
 	 * @param latitude
 	 * @param longitude
 	 */
-	public PayPoint(String address, String phone, String startAttention,
+	public LocationPoint(String address, String phone, String startAttention,
 			String endAttention, double latitude, double longitude) {
 		super();
 		this.Address = address;
@@ -113,6 +120,14 @@ public class PayPoint extends Model {
 
 	public void setLongitude(double longitude) {
 		Longitude = longitude;
+	}
+	
+	public LocationPointType getType() {
+		return LocationPointType.get(Type);
+	}
+
+	public void setType(LocationPointType type) {
+		Type = type.toShort();
 	}
 
 	public short getStatus() {

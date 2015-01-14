@@ -1,4 +1,4 @@
-package com.elfec.ssc.model;
+package com.elfec.ssc.model.enums;
 
 /**
  * Representa los distintos estados de un cliente a nivel local
