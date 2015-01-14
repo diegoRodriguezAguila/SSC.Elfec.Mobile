@@ -1,7 +1,7 @@
 package com.elfec.ssc.presenter;
 
 import com.elfec.ssc.businesslogic.ClientManager;
-import com.elfec.ssc.helpers.ActiveClientThreadMutex;
+import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.presenter.views.IWelcome;
 
 public class WelcomePresenter {
@@ -20,10 +20,10 @@ public class WelcomePresenter {
 			public void run() {
 				view.getPreferences().setAppAlreadyUsed().setHasOneGmailAccount();
 				ClientManager.RegisterClient(gmail);
-				ActiveClientThreadMutex.setFree();
+				ThreadMutex.instance("ActiveClient").setFree();
 			}
 		});
-		ActiveClientThreadMutex.setBusy();
+		ThreadMutex.instance("ActiveClient").setBusy();
 		thread.start();
 		view.goToMainMenu();
 	}

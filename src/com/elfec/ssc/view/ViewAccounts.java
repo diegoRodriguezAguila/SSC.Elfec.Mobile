@@ -181,5 +181,29 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			}
 		});
 	}
+	@Override
+	public void showViewAccountsErrors(final List<Exception> errors) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				StringBuilder msg = new StringBuilder();
+				int size = errors.size();
+				if(size==1)
+					msg.append(errors.get(0).getMessage()).toString();
+				else
+				{
+					for (int i = 0; i < size; i++) {
+						msg.append("● ").append(errors.get(i).getMessage());
+						msg.append((i<size-1?"\n":""));
+					}
+				}
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(ViewAccounts.this);
+				builder.setTitle(R.string.errors_on_download_accounts_title)
+				.setMessage(msg)
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
+			}
+		});
+	}
 	
 }

@@ -4,6 +4,8 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.ThreadMutex;
+import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.google.android.gms.maps.GoogleMap;
@@ -12,6 +14,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
@@ -40,6 +43,8 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		presenter = new LocationServicesPresenter(this);
 		showWaitingDialog();
 		setDefaultZoomView();
+		ThreadMutex.instance("LoadMap").setBusy();
+		presenter.loadLocations();
 	}
 
 	@Override
@@ -91,11 +96,25 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        			@Override
 		        			public void onMapReady(GoogleMap obtainedMap) {
 		        				map = obtainedMap;
+		        				ThreadMutex.instance("LoadMap").setFree();
 		        			}
 		        		});
 		            }
 		        }
 		    }, 500);
+	}
+
+	@Override
+	public void setPoint(final LocationPoint point) {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+				 map.addMarker(new MarkerOptions()
+			        .position(new LatLng(point.getLatitude(), point.getLongitude()))
+			        .title(".|."));
+			}
+		});
 	}
 	
 }

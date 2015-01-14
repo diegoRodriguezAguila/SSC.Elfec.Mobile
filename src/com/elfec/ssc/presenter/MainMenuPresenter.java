@@ -1,7 +1,7 @@
 package com.elfec.ssc.presenter;
 
 import com.elfec.ssc.businesslogic.ClientManager;
-import com.elfec.ssc.helpers.ActiveClientThreadMutex;
+import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.presenter.views.IMainMenu;
 
 public class MainMenuPresenter {
@@ -26,14 +26,14 @@ public class MainMenuPresenter {
 	
 	public void handlePickedGmailAccount(final String gmail)
 	{
-		ActiveClientThreadMutex.setBusy();
+		ThreadMutex.instance("ActiveClient").setBusy();
 		Thread thread = new Thread(new Runnable() {			
 			@Override
 			public void run() {
 
 				ClientManager.RegisterClient(gmail);
 				view.getPreferences().setHasOneGmailAccount();
-				ActiveClientThreadMutex.setFree();
+				ThreadMutex.instance("ActiveClient").setFree();
 			}
 		});
 		thread.start();

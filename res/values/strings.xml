@@ -34,7 +34,7 @@
 
     <!-- View Accounts -->
     <string name="view_accounts_title">Cuentas</string>
-    
+    <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
     <!-- Location Services -->
     <string name="location_services_title">Puntos de pago</string>
     <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>

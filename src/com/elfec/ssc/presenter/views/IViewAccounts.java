@@ -19,4 +19,5 @@ public interface IViewAccounts {
 	public void dialogRemove(int position); 
 	public void ShowWaitingWS();
 	public void hideWSWaiting();
+	public void showViewAccountsErrors(List<Exception> errors);
 }

@@ -14,7 +14,7 @@ public class PreferencesManager {
 	private final String FIRST_APP_USAGE = "FirstAppUsage";
 	private final String HAS_ONE_GMAIL_ACCOUNT = "HasAtLeastOneGmailAccount";
 	private final String FIRST_LOAD_ACCOUNTS = "FirstLoadAccounts";
-	
+	private final String FIRST_LOAD_LOCATIONS="FirstLoadLocations";
 	private SharedPreferences preferences;
 	
 	public PreferencesManager(Context context)
@@ -48,7 +48,23 @@ public class PreferencesManager {
 	{
 		return preferences.getBoolean(FIRST_LOAD_ACCOUNTS, true);
 	}
-	
+	/**
+	 * Verifica si es que es la primera vez que se descarga las ubicaciones
+	 * @return true si es que es la primera vez
+	 */
+	public boolean isFirstLoadLocations()
+	{
+		return preferences.getBoolean(FIRST_LOAD_LOCATIONS, true);
+	}
+	/**
+	 * Asigna que la aplicación ya descargo las localizaciones
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setLoadLocationsAlreadyUsed()
+	{
+		preferences.edit().putBoolean(FIRST_LOAD_LOCATIONS, false).commit();
+		return this;
+	}
 	/**
 	 * Asigna que la aplicación ya descargo las cuentas para un usuario
 	 * @return la instancia actual de PreferencesManager

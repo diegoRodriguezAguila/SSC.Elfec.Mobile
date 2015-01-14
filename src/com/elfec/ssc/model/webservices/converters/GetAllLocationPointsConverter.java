@@ -22,7 +22,7 @@ public class GetAllLocationPointsConverter implements
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject object = (JSONObject) array.get(i);
 					payPoints.add(new LocationPoint(object.getString("address"), object.getString("phone"), object.getString("start_attention"), 
-							object.getString("end_attention"), object.getDouble("latitude"), object.getDouble("longitude")));
+							object.getString("end_attention"), object.getDouble("latitude"), object.getDouble("longitude"),Short.parseShort(object.getString("type"))));
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();

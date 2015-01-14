@@ -6,7 +6,7 @@ import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
-import com.elfec.ssc.helpers.ActiveClientThreadMutex;
+import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
@@ -73,10 +73,17 @@ public class ViewAccountsPresenter {
 							@Override
 							public void executeOnFinished(WSResponse<List<Account>> result) 
 							{
-								final List<Account> accounts=result.getResult();
-								ClientManager.RegisterClientAccounts(accounts);
-								view.show(accounts);
-								view.getPreferences().setLoadAccountsAlreadyUsed();
+								if(result.getErrors().size()==0)
+								{
+									final List<Account> accounts=result.getResult();
+									ClientManager.RegisterClientAccounts(accounts);
+									view.show(accounts);
+									view.getPreferences().setLoadAccountsAlreadyUsed();
+								}
+								else
+								{
+									view.showViewAccountsErrors(result.getErrors());
+								}
 								view.hideWSWaiting();
 							}
 
@@ -89,9 +96,9 @@ public class ViewAccountsPresenter {
 		});
 		if(view.getPreferences().isFirstLoadAccounts())
 		view.ShowWaitingWS();
-		if(ActiveClientThreadMutex.isFree())
+		if(ThreadMutex.instance("ActiveClient").isFree())
 			thread.start();
-		else ActiveClientThreadMutex.addOnThreadReleasedEvent(new OnReleaseThread() {
+		else ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(new OnReleaseThread() {
 			@Override
 			public void threadReleased() {
 				thread.start();

@@ -59,7 +59,7 @@ public class RegisterAccountPresenter {
 									}
 									else
 									{
-										view.showRegistrationErrors(result.getErrors());;
+										view.showRegistrationErrors(result.getErrors());
 									}
 								}
 							});

@@ -2,6 +2,7 @@ package com.elfec.ssc.helpers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 
@@ -11,16 +12,35 @@ import com.elfec.ssc.helpers.threading.OnReleaseThread;
  * @author Diego
  *
  */
-public class ActiveClientThreadMutex {
+public class ThreadMutex {
 
-	private static boolean isFree = true;
-	private static List<OnReleaseThread> onReleaseEvents = new ArrayList<OnReleaseThread>();
+	private static ConcurrentHashMap<String,ThreadMutex> instances;
+	private boolean isFree = true;
+	private List<OnReleaseThread> onReleaseEvents = new ArrayList<OnReleaseThread>();
+	private ThreadMutex()
+	{
+		
+	}
+	
+	static {
+		instances=new ConcurrentHashMap<String,ThreadMutex>();
+	}
+	public static ThreadMutex instance(String key)
+	{
+		ThreadMutex mutex=instances.get(key);
+		if(mutex==null)
+		{
+			mutex=new ThreadMutex();
+			instances.put(key, mutex);
+		}
+		return mutex;
+	}
 	
 	/**
 	 * Indica si es que se puede utilizar el cliente activo actual
 	 * @return
 	 */
-	public static boolean isFree()
+	public boolean isFree()
 	{
 		return isFree;
 	}
@@ -28,7 +48,7 @@ public class ActiveClientThreadMutex {
 	/**
 	 * Asigna el estado de ocupado al cliente activo actual
 	 */
-	public static void setBusy()
+	public void setBusy()
 	{
 		isFree = false;
 	}
@@ -38,7 +58,7 @@ public class ActiveClientThreadMutex {
 	 * aquellos que hayan estado esperando a que se libere siempre y cuando ninguno
 	 * de ellos haya vuelto a ocupar el recurso
 	 */
-	public static void setFree()
+	public void setFree()
 	{
 		isFree = true;
 		for(OnReleaseThread onReleased : onReleaseEvents)
@@ -55,7 +75,7 @@ public class ActiveClientThreadMutex {
 	 * ocupa el recurso del cliente activo
 	 * @param onReleaseEvent
 	 */
-	public static void addOnThreadReleasedEvent(OnReleaseThread onReleaseEvent)
+	public void addOnThreadReleasedEvent(OnReleaseThread onReleaseEvent)
 	{
 		onReleaseEvents.add(onReleaseEvent);
 	}

@@ -62,7 +62,7 @@ public class LocationPoint extends Model {
 	 * @param longitude
 	 */
 	public LocationPoint(String address, String phone, String startAttention,
-			String endAttention, double latitude, double longitude) {
+			String endAttention, double latitude, double longitude,short type) {
 		super();
 		this.Address = address;
 		this.Phone = phone;
@@ -70,6 +70,7 @@ public class LocationPoint extends Model {
 		this.EndAttention = endAttention;
 		this.Latitude = latitude;
 		this.Longitude = longitude;
+		this.Type=type;
 		this.Status = 1;
 	}
 
