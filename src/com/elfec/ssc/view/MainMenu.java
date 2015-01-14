@@ -3,8 +3,8 @@ package com.elfec.ssc.view;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -19,6 +19,8 @@ import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.IAccountPicked;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 
 public class MainMenu extends ActionBarActivity implements IMainMenu {
 
@@ -71,7 +73,8 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	
 	public void btnNotificationsClick(View view)
 	{
-		
+		SuperToast.create(this, R.string.account_successfully_reg, SuperToast.Duration.SHORT, 
+			    Style.getStyle(Style.BLUE, SuperToast.Animations.SCALE)).show();
 	}
 	
 	public void btnContactsClick(View view)
