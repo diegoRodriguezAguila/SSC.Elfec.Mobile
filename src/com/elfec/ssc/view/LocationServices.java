@@ -20,8 +20,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings.Global;
 import android.view.Menu;
 
 public class LocationServices extends ActionBarActivity implements ILocationServices {
@@ -109,9 +112,11 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 			
 			@Override
 			public void run() {
+				Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),
+                        R.drawable.welcome_ssc_elfec);
 				 map.addMarker(new MarkerOptions()
 			        .position(new LatLng(point.getLatitude(), point.getLongitude()))
-			        .title(".|."));
+			        .title(".|.").snippet("kdfjfkdjkgjdfg"));
 			}
 		});
 	}
