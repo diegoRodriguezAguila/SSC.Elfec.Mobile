@@ -31,9 +31,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	private final float DEFAULT_ZOOM = 13.5f;
 	private AlertDialog waitingMapDialog;
 	
-	@SuppressWarnings("unused")
 	private LocationServicesPresenter presenter;
-	@SuppressWarnings("unused")
 	private GoogleMap map;
 	
 	@Override
@@ -97,6 +95,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        			public void onMapReady(GoogleMap obtainedMap) {
 		        				map = obtainedMap;
 		        				ThreadMutex.instance("LoadMap").setFree();
+		        				map.setMyLocationEnabled(true);
 		        			}
 		        		});
 		            }

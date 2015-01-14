@@ -2,6 +2,8 @@ package com.elfec.ssc.model;
 
 import org.joda.time.DateTime;
 
+import android.location.Location;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -72,6 +74,19 @@ public class LocationPoint extends Model {
 		this.Longitude = longitude;
 		this.Type=type;
 		this.Status = 1;
+	}
+	
+	/**
+	 * Calcula la distancia en metros desde una ubicación de gps y este punto de ubicación
+	 * @param location
+	 * @return
+	 */
+	public double distanceFrom(Location location)
+	{
+		Location thisLocation = new Location(Address);
+		thisLocation.setLatitude(Latitude);
+		thisLocation.setLongitude(Longitude);
+		return location.distanceTo(thisLocation);
 	}
 
 	//#region Getters y Setters
