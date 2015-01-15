@@ -42,16 +42,7 @@ public class LocationServicesPresenter {
 						{
 							LocationManager.RegisterLocations(result.getResult());
 							view.getPreferences().setLoadLocationsAlreadyUsed();
-							if(ThreadMutex.instance("LoadMap").isFree())
-								showLocationPoints(result.getResult());
-							else
-								ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
-									
-									@Override
-									public void threadReleased() {
-										showLocationPoints(result.getResult());
-									}
-								});
+							verifyShowLocationPoints(result.getResult());
 						}
 						else
 						{
@@ -64,7 +55,16 @@ public class LocationServicesPresenter {
 			}
 			else
 			{
-				final List<LocationPoint> points= LocationPoint.getAll(LocationPoint.class);
+				verifyShowLocationPoints(LocationPoint.getAll(LocationPoint.class));
+			}
+			Looper.loop();
+			}
+		/**
+		 * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
+		 * @param points
+		 */
+			private void verifyShowLocationPoints(
+					final List<LocationPoint> points) {
 				if(ThreadMutex.instance("LoadMap").isFree())
 					showLocationPoints(points);
 				else
@@ -76,11 +76,13 @@ public class LocationServicesPresenter {
 						}
 					});
 			}
-			Looper.loop();
-			}
 		});
 		thread.start();
 	}
+	/**
+	 * Muestra los puntos en el mapa
+	 * @param result
+	 */
 	private void showLocationPoints(
 			List<LocationPoint> result) {
 		points=result;
