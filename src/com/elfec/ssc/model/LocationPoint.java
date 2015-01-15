@@ -16,6 +16,9 @@ import com.elfec.ssc.model.enums.LocationPointType;
 @Table(name = "LocationPoints")
 public class LocationPoint extends Model {
 	
+	@Column(name = "InstitutionName", notNull = true)
+	private String InstitutionName;
+	
 	@Column(name = "Address", notNull = true)
 	private String Address;
 	
@@ -63,9 +66,10 @@ public class LocationPoint extends Model {
 	 * @param latitude
 	 * @param longitude
 	 */
-	public LocationPoint(String address, String phone, String startAttention,
+	public LocationPoint(String institutionName, String address, String phone, String startAttention,
 			String endAttention, double latitude, double longitude,short type) {
 		super();
+		this.InstitutionName = institutionName;
 		this.Address = address;
 		this.Phone = phone;
 		this.StartAttention = startAttention;
@@ -90,6 +94,15 @@ public class LocationPoint extends Model {
 	}
 
 	//#region Getters y Setters
+	public String getInstitutionName() {
+		return InstitutionName;
+	}
+
+	public void setInstitutionName(String institutionName) {
+		InstitutionName = institutionName;
+	}
+
+	
 	public String getAddress() {
 		return Address;
 	}

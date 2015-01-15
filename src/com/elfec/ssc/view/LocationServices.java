@@ -116,7 +116,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 						.position(
 								new LatLng(point.getLatitude(), point
 										.getLongitude()))
-						.title(point.getType().toString() + "\nElfec Central")
+						.title(point.getType().toString() + "\n"+point.getInstitutionName())
 						.snippet(
 								"Dirección: " + point.getAddress() + "\n"
 								+ (point.getPhone() != null ? ("Teléfono: "+point.getPhone() + "\n"):"") 
