@@ -6,12 +6,15 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
+import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -20,11 +23,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
-import android.provider.Settings.Global;
 import android.view.Menu;
 
 public class LocationServices extends ActionBarActivity implements ILocationServices {
@@ -98,6 +98,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        			public void onMapReady(GoogleMap obtainedMap) {
 		        				map = obtainedMap;
 		        				ThreadMutex.instance("LoadMap").setFree();
+		        				map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
 		        				map.setMyLocationEnabled(true);
 		        			}
 		        		});
@@ -108,15 +109,21 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 
 	@Override
 	public void setPoint(final LocationPoint point) {
-		runOnUiThread(new Runnable() {
-			
+		runOnUiThread(new Runnable() {	
 			@Override
 			public void run() {
-				Bitmap icon = BitmapFactory.decodeResource(getApplicationContext().getResources(),
-                        R.drawable.welcome_ssc_elfec);
-				 map.addMarker(new MarkerOptions()
-			        .position(new LatLng(point.getLatitude(), point.getLongitude()))
-			        .title(".|.").snippet("kdfjfkdjkgjdfg"));
+				map.addMarker(new MarkerOptions()
+						.position(
+								new LatLng(point.getLatitude(), point
+										.getLongitude()))
+						.title(point.getType().toString() + "\nElfec Central")
+						.snippet(
+								"Dirección: " + point.getAddress() + "\n"
+								+ (point.getPhone() != null ? ("Teléfono: "+point.getPhone() + "\n"):"") 
+								+ (point.getStartAttention() != null ? ("Horario de atención: "+point.getStartAttention()+"-"+point.getEndAttention()):""))
+						.icon(BitmapDescriptorFactory.fromResource(point
+								.getType() == LocationPointType.OFFICE ? R.drawable.office_marker
+								: R.drawable.paypoint_marker)));
 			}
 		});
 	}

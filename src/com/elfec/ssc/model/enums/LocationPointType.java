@@ -9,11 +9,11 @@ public enum LocationPointType {
 	/**
 	 * Tipo de punto de ubicación de una oficina
 	 */
-	OFFICE, 
+	OFFICE("Oficina"), 
 	/**
 	 * Tipo de punto de ubicación de un punto de pago
 	 */
-	PAYPOINT;
+	PAYPOINT("Punto de pago");
 	/**
 	 * Obtiene el tipo del punto de ubicación equivalente al short provisto
 	 * @param type
@@ -23,6 +23,17 @@ public enum LocationPointType {
 	{
 		return LocationPointType.values()[type];
 	}
+	
+	private String string;
+	private LocationPointType(String string)
+	{
+		this.string = string;
+	}
+	
+	@Override
+	public String toString() {
+	       return string;
+	   }
 	
 	/**
 	 * Convierte el tipo de punto de ubicación actual a su short equivalente
