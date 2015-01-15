@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
 import com.elfec.ssc.R;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
@@ -34,7 +35,6 @@ public class MarkerPopupAdapter implements InfoWindowAdapter {
 		txtTitle.setText(typeAndTitle[1]);
 		txtTitle = (TextView) popup.findViewById(R.id.marker_snippet);
 		txtTitle.setText(marker.getSnippet());
-
 		return (popup);
 	}
 

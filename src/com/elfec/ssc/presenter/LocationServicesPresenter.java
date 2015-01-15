@@ -2,6 +2,8 @@ package com.elfec.ssc.presenter;
 
 import java.util.List;
 
+import android.os.Looper;
+
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
@@ -28,6 +30,7 @@ public class LocationServicesPresenter {
 			
 			@Override
 			public void run() {
+				Looper.prepare();
 				LocationPointWS pointWS=new LocationPointWS();
 				pointWS.getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
 					
@@ -47,6 +50,7 @@ public class LocationServicesPresenter {
 
 
 				});
+				Looper.loop();
 			}
 		});
 		thread.start();

@@ -11,12 +11,14 @@ import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import android.support.v4.app.FragmentManager;
@@ -36,6 +38,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	
 	private LocationServicesPresenter presenter;
 	private GoogleMap map;
+	private Marker lastOpenedMarker;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +65,16 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	
 	@Override
 	public void onBackPressed() {
-	    finish();//go back to the previous Activity
-	    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
+		if(lastOpenedMarker!=null && lastOpenedMarker.isInfoWindowShown())
+		{
+			lastOpenedMarker.hideInfoWindow();
+			lastOpenedMarker = null;
+		}
+		else
+		{
+		    finish();//go back to the previous Activity
+		    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
+		}
 	}
 	
 
@@ -100,6 +111,14 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        				ThreadMutex.instance("LoadMap").setFree();
 		        				map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
 		        				map.setMyLocationEnabled(true);
+		        				map.setOnMarkerClickListener(new OnMarkerClickListener() {
+									
+									@Override
+									public boolean onMarkerClick(Marker marker) {
+										lastOpenedMarker = marker;
+										return false;
+									}
+								});
 		        			}
 		        		});
 		            }
