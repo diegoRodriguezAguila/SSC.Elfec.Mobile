@@ -1,9 +1,5 @@
 package com.elfec.ssc.view;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -19,7 +15,6 @@ import android.view.View;
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
-import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;

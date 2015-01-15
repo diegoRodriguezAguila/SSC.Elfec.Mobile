@@ -1,7 +1,5 @@
 package com.elfec.ssc.model;
 
-import java.util.List;
-
 import org.joda.time.DateTime;
 
 import android.location.Location;
@@ -9,7 +7,6 @@ import android.location.Location;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.LocationPointType;
 
 /**
