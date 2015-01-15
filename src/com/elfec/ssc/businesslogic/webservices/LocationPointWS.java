@@ -22,7 +22,7 @@ public class LocationPointWS {
 	{
 		WebServiceConnector<List<LocationPoint>> paypointWSConnector = 
 				new WebServiceConnector<List<LocationPoint>>("http://192.168.12.81/SSC.Elfec/web_services/LocationPointWS.php?wsdl", "", 
-						"ssc_elfec", "GetAllPayPoints", new GetAllLocationPointsConverter(), eventHandler);
+						"ssc_elfec", "GetAllLocationPoints", new GetAllLocationPointsConverter(), eventHandler);
 		paypointWSConnector.execute();
 	}
 }

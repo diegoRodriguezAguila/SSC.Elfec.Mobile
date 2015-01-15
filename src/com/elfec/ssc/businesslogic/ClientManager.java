@@ -28,7 +28,7 @@ public class ClientManager {
 	{
 		for(Account account : accounts)
 		{
-			account.setAccountNumber(account.getAccountNumber());
+			//account.setAccountNumber(account.getAccountNumber());
 			account.setInsertDate(DateTime.now());
 			account.save();
 		}

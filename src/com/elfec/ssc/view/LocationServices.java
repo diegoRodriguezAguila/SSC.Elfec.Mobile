@@ -1,9 +1,13 @@
 package com.elfec.ssc.view;
 
+import java.util.List;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
+import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationPointType;
@@ -118,14 +122,43 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 										.getLongitude()))
 						.title(point.getType().toString() + "\n"+point.getInstitutionName())
 						.snippet(
-								"Dirección: " + point.getAddress() + "\n"
-								+ (point.getPhone() != null ? ("Teléfono: "+point.getPhone() + "\n"):"") 
-								+ (point.getStartAttention() != null ? ("Horario de atención: "+point.getStartAttention()+"-"+point.getEndAttention()):""))
+								"DirecciÃ³n: " + point.getAddress() + "\n"
+								+ (point.getPhone() != null ? ("TelÃ©fono: "+point.getPhone() + "\n"):"") 
+								+ (point.getStartAttention() != null ? ("Horario de atenciÃ³n: "+point.getStartAttention()+"-"+point.getEndAttention()):""))
 						.icon(BitmapDescriptorFactory.fromResource(point
 								.getType() == LocationPointType.OFFICE ? R.drawable.office_marker
 								: R.drawable.paypoint_marker)));
 			}
 		});
 	}
-	
+	@Override
+	public PreferencesManager getPreferences() {
+		return new PreferencesManager(getApplicationContext());
+	}
+
+	@Override
+	public void showLocationServicesErrors(final List<Exception> errors) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				StringBuilder msg = new StringBuilder();
+				int size = errors.size();
+				if(size==1)
+					msg.append(errors.get(0).getMessage()).toString();
+				else
+				{
+					for (int i = 0; i < size; i++) {
+						msg.append("â— ").append(errors.get(i).getMessage());
+						msg.append((i<size-1?"\n":""));
+					}
+				}
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(LocationServices.this);
+				builder.setTitle(R.string.errors_on_download_accounts_title)
+				.setMessage(msg)
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
+			}
+		});
+	}
+
 }

@@ -1,5 +1,7 @@
 package com.elfec.ssc.model;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import android.location.Location;
@@ -7,6 +9,7 @@ import android.location.Location;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.LocationPointType;
 
 /**
@@ -77,7 +80,7 @@ public class LocationPoint extends Model {
 		this.Latitude = latitude;
 		this.Longitude = longitude;
 		this.Type=type;
-		this.Status = 1;
+		this.Status = (short)1;
 	}
 	
 	/**
@@ -92,7 +95,7 @@ public class LocationPoint extends Model {
 		thisLocation.setLongitude(Longitude);
 		return location.distanceTo(thisLocation);
 	}
-
+	
 	//#region Getters y Setters
 	public String getInstitutionName() {
 		return InstitutionName;
