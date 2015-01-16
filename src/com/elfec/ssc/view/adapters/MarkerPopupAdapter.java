@@ -29,12 +29,11 @@ public class MarkerPopupAdapter implements InfoWindowAdapter {
 		}
 		String markerTitle = marker.getTitle();
 		String[] typeAndTitle = markerTitle.split("\n");
-		TextView txtLocationType = (TextView) popup.findViewById(R.id.marker_location_type);
-		txtLocationType.setText(typeAndTitle[0]);
-		TextView txtTitle = (TextView) popup.findViewById(R.id.marker_title);
-		txtTitle.setText(typeAndTitle[1]);
-		txtTitle = (TextView) popup.findViewById(R.id.marker_snippet);
-		txtTitle.setText(marker.getSnippet());
+		((TextView) popup.findViewById(R.id.marker_location_type)).setText(typeAndTitle[0]);
+		((TextView) popup.findViewById(R.id.marker_title)).setText(typeAndTitle[1]);
+		
+		//txtTitle = (TextView) popup.findViewById(R.id.marker_snippet);
+		//txtTitle.setText(marker.getSnippet());
 		return (popup);
 	}
 

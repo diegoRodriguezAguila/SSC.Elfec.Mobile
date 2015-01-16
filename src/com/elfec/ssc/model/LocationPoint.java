@@ -40,7 +40,7 @@ public class LocationPoint extends Model {
 	/**
 	 * Los diferentes tipos de puntos de ubicación según {@link LocationPointType} representados en enteros
 	 */
-	@Column(name = "Type", notNull = true)
+	@Column(name = "Type", notNull = true, index = true)
 	private short Type;
 	
 	@Column(name = "Status", notNull = true)
