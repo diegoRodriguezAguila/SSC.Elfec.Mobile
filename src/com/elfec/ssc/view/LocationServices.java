@@ -131,7 +131,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        }
 		    }, 500);
 	}
-
+//#region Interface Methods
 	@Override
 	public void setPoints(final List<LocationPoint> points) {
 		runOnUiThread(new Runnable() {	
@@ -141,23 +141,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 				for(LocationPoint point : points)
 				{
 					addMarker(point);
-				}
-				
-			}
-
-			private void addMarker(LocationPoint point) {
-				map.addMarker(new MarkerOptions()
-						.position(
-								new LatLng(point.getLatitude(), point
-										.getLongitude()))
-						.title(point.getType().toString() + "\n"+point.getInstitutionName())
-						.snippet(
-								"Dirección: " + point.getAddress() + "\n"
-								+ (point.getPhone() != null ? ("Teléfono: "+point.getPhone() + "\n"):"") 
-								+ (point.getStartAttention() != null ? ("Horario de atención: "+point.getStartAttention()+"-"+point.getEndAttention()):""))
-						.icon(BitmapDescriptorFactory.fromResource(point
-								.getType() == LocationPointType.OFFICE ? R.drawable.office_marker
-								: R.drawable.paypoint_marker)));
+				}	
 			}
 		});
 	}
@@ -190,6 +174,26 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 			}
 		});
 	}
+	
+	//#endregion
+	
+	/**
+	 * Añade un marker al mapa
+	 * @param point
+	 */
+	private void addMarker(LocationPoint point) {
+		map.addMarker(new MarkerOptions()
+				.position(
+						new LatLng(point.getLatitude(), point
+								.getLongitude()))
+				.title(point.getType().toString() + "\n"+point.getInstitutionName())
+				.snippet(point.getAddress() + "\n" + point.getPhone()
+						+ ((point.getStartAttention() != null) ? ("\n"+point.getStartAttention()+" - "+point.getEndAttention()):""))
+				.icon(BitmapDescriptorFactory.fromResource(point
+						.getType() == LocationPointType.OFFICE ? R.drawable.office_marker
+						: R.drawable.paypoint_marker)));
+	}
+	
 	public void rbtnShowOfficesClick(View view)
 	{
 		RadioButton offices=(RadioButton) view;

@@ -3,6 +3,7 @@ package com.elfec.ssc.view.adapters;
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
@@ -28,12 +29,36 @@ public class MarkerPopupAdapter implements InfoWindowAdapter {
 			popup = inflater.inflate(R.layout.marker_popup, null);
 		}
 		String markerTitle = marker.getTitle();
+		String markerSnippet = marker.getSnippet();
 		String[] typeAndTitle = markerTitle.split("\n");
+		String[] addressPhoneAndHours = markerSnippet.split("\n");
+		
 		((TextView) popup.findViewById(R.id.marker_location_type)).setText(typeAndTitle[0]);
 		((TextView) popup.findViewById(R.id.marker_title)).setText(typeAndTitle[1]);
 		
-		//txtTitle = (TextView) popup.findViewById(R.id.marker_snippet);
-		//txtTitle.setText(marker.getSnippet());
+		((TextView) popup.findViewById(R.id.txt_marker_address)).setText(addressPhoneAndHours[0]);
+		TextView txtPhone = (TextView) popup.findViewById(R.id.txt_marker_phone);
+		txtPhone.setOnClickListener(new OnClickListener() {			
+			@Override
+			public void onClick(View v) {
+				//TODO invocar telefono
+			}
+		});
+		txtPhone.setText(addressPhoneAndHours[1]);
+		
+		TextView txtHours = (TextView) popup.findViewById(R.id.txt_marker_bussines_hours);
+		TextView lblHours = (TextView) popup.findViewById(R.id.lbl_marker_bussines_hours);
+		if(addressPhoneAndHours.length==3)
+		{
+			txtHours.setText(addressPhoneAndHours[2]);
+			txtHours.setVisibility(View.VISIBLE);
+			lblHours.setVisibility(View.VISIBLE);
+		}
+		else
+		{
+			txtHours.setVisibility(View.GONE);
+			lblHours.setVisibility(View.GONE);
+		}
 		return (popup);
 	}
 

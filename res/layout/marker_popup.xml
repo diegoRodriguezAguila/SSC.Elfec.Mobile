@@ -9,14 +9,12 @@
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Oficina"
         android:textColor="@color/light_text_color"
         android:textSize="12sp"/>
     
     <TextView
         android:id="@+id/marker_title"
         android:layout_marginTop="-8dp"
-        android:text="Elfec Central"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -31,39 +29,38 @@
         android:textSize="14sp"/> 
     <TextView
         android:id="@+id/txt_marker_address"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="-8dp"
+        android:layout_width="220dp"
         android:layout_height="wrap_content"
-        android:text="av. Heroínas y c. 25 de Mayo"
         android:textSize="16sp"/>
     
     <TextView
         android:id="@+id/lbl_marker_phone"
-        android:layout_marginTop="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/lbl_marker_phone"
         android:textSize="14sp"/>   
     <TextView
         android:id="@+id/txt_marker_phone"
+        android:layout_marginTop="-8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/marker_phone_txt_color"
-        android:text="800 109 299"
         android:clickable="true"
+        android:focusable="true"
         android:textSize="16sp"/>
     
      <TextView
-        android:id="@+id/lbl_bussines_hours"
-        android:layout_marginTop="5dp"
+        android:id="@+id/lbl_marker_bussines_hours"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/lbl_bussines_hours"
+        android:text="@string/lbl_marker_bussines_hours"
         android:textSize="14sp"/>   
     <TextView
-        android:id="@+id/txt_bussines_hours"
+        android:id="@+id/txt_marker_bussines_hours"
+        android:layout_marginTop="-8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="08:00 - 16:00"
         android:textSize="16sp"/>
 
 </LinearLayout>

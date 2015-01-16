@@ -41,7 +41,7 @@
     	<!-- Location Services: Markers -->
     	<string name="lbl_marker_address">Dirección:</string>
     	<string name="lbl_marker_phone">Teléfono:</string>
-    	<string name="lbl_bussines_hours">Horario de atención:</string>
+    	<string name="lbl_marker_bussines_hours">Horario de atención:</string>
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="action_settings">Settings</string>
