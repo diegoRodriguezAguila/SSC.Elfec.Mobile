@@ -78,16 +78,25 @@ public class ThreadMutex {
 			onReleased.threadReleased();
 		}
 		onReleaseEvents.clear();
+	}
+	
+	/**
+	 * Elimina el mutex del diccionario para liberar memoria
+	 */
+	public void dispose()
+	{
 		ThreadMutex.instances.remove(keyOnDictionary);
 	}
 	
 	/**
 	 * Añade un evento a la lista de eventos que se ejecutaran en cuanto se libere el hilo que 
-	 * ocupa un recurso compartido
+	 * ocupa un recurso compartido, si el hilo ya se encuentra libre lo ejecuta directamente
 	 * @param onReleaseEvent
 	 */
 	public void addOnThreadReleasedEvent(OnReleaseThread onReleaseEvent)
 	{
-		onReleaseEvents.add(onReleaseEvent);
+		if(isFree)
+			onReleaseEvent.threadReleased();
+		else onReleaseEvents.add(onReleaseEvent);
 	}
 }

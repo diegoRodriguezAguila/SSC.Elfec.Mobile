@@ -96,9 +96,7 @@ public class ViewAccountsPresenter {
 		});
 		if(view.getPreferences().isFirstLoadAccounts())
 		view.ShowWaitingWS();
-		if(ThreadMutex.instance("ActiveClient").isFree())
-			thread.start();
-		else ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(new OnReleaseThread() {
+		ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(new OnReleaseThread() {
 			@Override
 			public void threadReleased() {
 				thread.start();

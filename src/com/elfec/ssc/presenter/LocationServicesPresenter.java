@@ -65,11 +65,7 @@ public class LocationServicesPresenter {
 		 */
 			private void verifyShowLocationPoints(
 					final List<LocationPoint> points) {
-				if(ThreadMutex.instance("LoadMap").isFree())
-					showLocationPoints(points);
-				else
-					ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
-						
+					ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
 						@Override
 						public void threadReleased() {
 							showLocationPoints(points);
