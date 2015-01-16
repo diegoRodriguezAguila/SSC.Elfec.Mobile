@@ -32,6 +32,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.View;
+import android.widget.RadioButton;
 
 public class LocationServices extends ActionBarActivity implements ILocationServices {
 
@@ -131,10 +133,19 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	}
 
 	@Override
-	public void setPoint(final LocationPoint point) {
+	public void setPoints(final List<LocationPoint> points) {
 		runOnUiThread(new Runnable() {	
 			@Override
 			public void run() {
+				map.clear();
+				for(LocationPoint point : points)
+				{
+					addMarker(point);
+				}
+				
+			}
+
+			private void addMarker(LocationPoint point) {
 				map.addMarker(new MarkerOptions()
 						.position(
 								new LatLng(point.getLatitude(), point
@@ -178,6 +189,24 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 				.show();
 			}
 		});
+	}
+	public void rbtnShowOfficesClick(View view)
+	{
+		RadioButton offices=(RadioButton) view;
+		if(offices.isChecked())
+			presenter.setSelectedType(LocationPointType.OFFICE);
+	}
+	public void rbtnShowPayPointsClick(View view)
+	{
+		RadioButton payPoints=(RadioButton) view;
+		if(payPoints.isChecked())
+			presenter.setSelectedType(LocationPointType.PAYPOINT);
+	}
+	public void rbtnShowAllClick(View view)
+	{
+		RadioButton all=(RadioButton) view;
+		if(all.isChecked())
+			presenter.setSelectedType(LocationPointType.ALL);
 	}
 
 }

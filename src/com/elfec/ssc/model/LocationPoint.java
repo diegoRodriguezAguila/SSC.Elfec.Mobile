@@ -1,5 +1,7 @@
 package com.elfec.ssc.model;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import android.location.Location;
@@ -7,6 +9,7 @@ import android.location.Location;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.LocationPointType;
 
 /**
@@ -78,6 +81,11 @@ public class LocationPoint extends Model {
 		this.Longitude = longitude;
 		this.Type=type;
 		this.Status = (short)1;
+	}
+	
+	public static List<LocationPoint> getPointsByType(LocationPointType type)
+	{
+		return new Select().from(LocationPoint.class).where("Type=?",type.toShort()).execute();
 	}
 	
 	/**
