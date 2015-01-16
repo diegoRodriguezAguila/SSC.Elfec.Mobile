@@ -22,46 +22,34 @@
         android:textSize="18sp"/>
 
     <TextView
-        android:id="@+id/lbl_marker_address"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lbl_marker_address"
-        android:textSize="14sp"/> 
-    <TextView
         android:id="@+id/txt_marker_address"
-        android:layout_marginTop="-8dp"
+        android:drawableLeft="@drawable/marker_address"
+        android:drawableStart="@drawable/marker_address"
+        android:layout_marginTop="-6dp"
         android:layout_width="220dp"
-        android:lineSpacingExtra="-2dp"
+        android:lineSpacingExtra="-4dp"
+        android:gravity="top"
         android:layout_height="wrap_content"
         android:textSize="16sp"/>
-    
-    <TextView
-        android:id="@+id/lbl_marker_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lbl_marker_phone"
-        android:textSize="14sp"/>   
+
     <TextView
         android:id="@+id/txt_marker_phone"
-        android:layout_marginTop="-8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:focusable="true"
-        android:duplicateParentState="true"
-        android:textSize="16sp"/>
-    
-     <TextView
-        android:id="@+id/lbl_marker_bussines_hours"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/lbl_marker_bussines_hours"
-        android:textSize="14sp"/>   
+         android:lineSpacingExtra="-4dp"
+        android:gravity="top"
+        android:drawableLeft="@drawable/marker_phone"
+        android:drawableStart="@drawable/marker_phone"
+        android:textSize="16sp" />
+	        
     <TextView
         android:id="@+id/txt_marker_bussines_hours"
-        android:layout_marginTop="-8dp"
         android:layout_width="wrap_content"
+         android:lineSpacingExtra="-4dp"
+        android:gravity="top"
         android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/marker_bussines_hours"
+        android:drawableStart="@drawable/marker_bussines_hours"
         android:textSize="16sp"/>
 
 </LinearLayout>

@@ -116,41 +116,48 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        			@Override
 		        			public void onMapReady(GoogleMap obtainedMap) {
 		        					map = obtainedMap;
-			        				ThreadMutex.instance("LoadMap").setFree();
-			        				map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
-			        				map.setMyLocationEnabled(true);
-			        				map.setOnMarkerClickListener(new OnMarkerClickListener() {
-										
-										@Override
-										public boolean onMarkerClick(Marker marker) {
-											lastOpenedMarker = marker;
-											return false;
-										}
-									});
+			        				initializeMapOptions();
 		        				
-		        			}
+		        			}					
 		        		});
 		            }
 		        }
 		    }, 500);
 	}
+	
+	/**
+	 * Inicializa los adapters y distintas funciones del mapa, debe llamarse
+	 * cuando el mapa ya se ha cargado
+	 */
+	private void initializeMapOptions() {
+		ThreadMutex.instance("LoadMap").setFree();
+		map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
+		map.setMyLocationEnabled(true);
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {
+			
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				lastOpenedMarker = marker;
+				return false;
+			}
+		});
+	}
+	
 //#region Interface Methods
 	@Override
-	public void setPoints(final List<LocationPoint> points) {
+	public void showLocationPoints(final List<LocationPoint> points) {
 		ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
 			
 			@Override
 			public void threadReleased() {
 				runOnUiThread(new Runnable() {	
 					@Override
-					public void run() {
-						
+					public void run() {	
 							map.clear();
 							for(LocationPoint point : points)
 							{
 								addMarker(point);
-							}
-						
+							}						
 					}
 				});
 			}
@@ -185,6 +192,12 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 				.show();
 			}
 		});
+	}
+	
+
+	@Override
+	public Location getCurrentLocation() {
+		return map.getMyLocation();
 	}
 	
 	//#endregion
@@ -229,18 +242,12 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	{
 		RadioButton all=(RadioButton) view;
 		if(all.isChecked())
-		presenter.setSelectedDistance(LocationDistance.All);
+		presenter.setSelectedDistance(LocationDistance.ALL);
 	}
 	public void rbtnShowNearestClick(View view)
 	{
 		RadioButton near=(RadioButton) view;
 		if(near.isChecked())
-		presenter.setSelectedDistance(LocationDistance.Near);
+		presenter.setSelectedDistance(LocationDistance.NEAR);
 	}
-
-	@Override
-	public Location getCurrentLocation() {
-		return map.getMyLocation();
-	}
-
 }

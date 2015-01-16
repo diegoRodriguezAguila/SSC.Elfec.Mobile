@@ -1,14 +1,20 @@
 package com.elfec.ssc.model.enums;
 
+/**
+ * Enum que sirve para diferenciar los distintos tipos de puntos de ubicación
+ * según la proximidad al cliente
+ * @author Diego
+ *
+ */
 public enum LocationDistance {
 	/**
 	 * Tipo de punto que especifica los puntos cercanos
 	 */
-	Near("Cercanos"), 
+	NEAR("Cercanos"), 
 	/**
 	 * Tipo de punto indefinido
 	 */
-	All("Todos");
+	ALL("Todos");
 	private String string;
 	private LocationDistance(String string)
 	{

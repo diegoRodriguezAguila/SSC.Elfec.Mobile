@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -59,16 +60,25 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	private long lastClickTime = 0;
+	
 	public void btnAccountsClick(View view)
 	{
-		presenter.verifyAccountsRequirements();
+		if (SystemClock.elapsedRealtime() - lastClickTime > 600){
+			presenter.verifyAccountsRequirements();
+        }
+        lastClickTime = SystemClock.elapsedRealtime();
+
 	}
 	
 	public void btnLocationServicesClick(View view)
 	{
-		Intent i = new Intent(MainMenu.this, LocationServices.class);
-		startActivity(i);
-		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			Intent i = new Intent(MainMenu.this, LocationServices.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
 	}
 	
 	public void btnNotificationsClick(View view)

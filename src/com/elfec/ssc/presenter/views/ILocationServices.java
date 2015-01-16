@@ -9,7 +9,7 @@ import com.elfec.ssc.model.LocationPoint;
 
 public interface ILocationServices {
 	public PreferencesManager getPreferences();
-	public void setPoints(List<LocationPoint> point);
+	public void showLocationPoints(List<LocationPoint> point);
 	public void showLocationServicesErrors(List<Exception> errors);
 	public Location getCurrentLocation();
 }

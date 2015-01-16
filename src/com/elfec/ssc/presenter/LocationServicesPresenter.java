@@ -20,10 +20,27 @@ public class LocationServicesPresenter {
 	private ILocationServices view;
 	private List<LocationPoint> points;
 	private LocationDistance lastSelected;
+	
+	
+	public LocationServicesPresenter(ILocationServices view) {
+		points=null;
+		lastSelected=LocationDistance.ALL;
+		this.view = view;
+	}
+	
+	/**
+	 * Obtiene la lista de puntos
+	 * @return
+	 */
 	public List<LocationPoint> getPoints()
 	{
 		return points;
 	}
+	
+	/**
+	 * Filtra la lista de puntos según el tipo de punto
+	 * @param selectedType
+	 */
 	public void setSelectedType(LocationPointType selectedType)
 	{
 		if(selectedType==LocationPointType.ALL)
@@ -32,25 +49,21 @@ public class LocationServicesPresenter {
 			points=LocationPoint.getPointsByType(selectedType);
 		setSelectedDistance(lastSelected);
 	}
+	
+	/**
+	 * Filtra la lista de puntos según el tipo de proximidad definido
+	 * @param distance
+	 */
 	public void setSelectedDistance(LocationDistance distance)
 	{
-		if(distance==LocationDistance.Near)
-		{
-			lastSelected=LocationDistance.Near;
-			showLocationPoints(LocationManager.getNearestPoints(points, view.getCurrentLocation(), 200));
-		}
-		else
-		{
-			lastSelected=LocationDistance.All;
-			showLocationPoints(points);
-		}
-	}
-	public LocationServicesPresenter(ILocationServices view) {
-		points=null;
-		lastSelected=LocationDistance.All;
-		this.view = view;
+		lastSelected = distance;
+		view.showLocationPoints((distance==LocationDistance.ALL)?
+				points:LocationManager.getNearestPoints(points, view.getCurrentLocation(), 1000));
 	}
 	
+	/**
+	 * Obtiene la lista de puntos de ubicación en un hilo
+	 */
 	public void loadLocations()
 	{
 		Thread thread=new Thread(new Runnable() {
@@ -86,30 +99,21 @@ public class LocationServicesPresenter {
 			}
 			Looper.loop();
 			}
-		/**
-		 * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
-		 * @param points
-		 */
-			private void verifyShowLocationPoints(
-					final List<LocationPoint> result) {
-					ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
-						@Override
-						public void threadReleased() {
-							points=result;
-							showLocationPoints(points);
-						}
-					});
-			}
 		});
 		thread.start();
 	}
+	
 	/**
-	 * Muestra los puntos en el mapa
-	 * @param result
+	 * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
+	 * @param points
 	 */
-	private void showLocationPoints(
-			List<LocationPoint> result) {
-		view.setPoints(result);
-		
-	}
+		private void verifyShowLocationPoints(final List<LocationPoint> result) {
+				ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
+					@Override
+					public void threadReleased() {
+						points=result;
+						view.showLocationPoints(points);
+					}
+				});
+		}
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.utils.PhoneFormatter;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
@@ -36,21 +37,17 @@ public class MarkerPopupAdapter implements InfoWindowAdapter {
 		((TextView) popup.findViewById(R.id.marker_title)).setText(typeAndTitle[1]);
 		
 		((TextView) popup.findViewById(R.id.txt_marker_address)).setText(addressPhoneAndHours[0]);
-		TextView txtPhone = (TextView) popup.findViewById(R.id.txt_marker_phone);
-		txtPhone.setText(addressPhoneAndHours[1]);
+		((TextView) popup.findViewById(R.id.txt_marker_phone)).setText(PhoneFormatter.formatPhone(addressPhoneAndHours[1]));
 		
 		TextView txtHours = (TextView) popup.findViewById(R.id.txt_marker_bussines_hours);
-		TextView lblHours = (TextView) popup.findViewById(R.id.lbl_marker_bussines_hours);
 		if(addressPhoneAndHours.length==3)
 		{
 			txtHours.setText(addressPhoneAndHours[2]);
 			txtHours.setVisibility(View.VISIBLE);
-			lblHours.setVisibility(View.VISIBLE);
 		}
 		else
 		{
 			txtHours.setVisibility(View.GONE);
-			lblHours.setVisibility(View.GONE);
 		}
 		return (popup);
 	}
