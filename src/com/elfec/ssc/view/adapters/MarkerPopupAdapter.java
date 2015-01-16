@@ -3,7 +3,6 @@ package com.elfec.ssc.view.adapters;
 import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
@@ -16,7 +15,7 @@ public class MarkerPopupAdapter implements InfoWindowAdapter {
     private LayoutInflater inflater=null;
 
     public MarkerPopupAdapter(LayoutInflater inflater) {
-       this.inflater=inflater;
+        this.inflater=inflater;
     }
 	@Override
 	public View getInfoWindow(Marker marker) {
@@ -31,19 +30,13 @@ public class MarkerPopupAdapter implements InfoWindowAdapter {
 		String markerTitle = marker.getTitle();
 		String markerSnippet = marker.getSnippet();
 		String[] typeAndTitle = markerTitle.split("\n");
-		String[] addressPhoneAndHours = markerSnippet.split("\n");
+		final String[] addressPhoneAndHours = markerSnippet.split("\n");
 		
 		((TextView) popup.findViewById(R.id.marker_location_type)).setText(typeAndTitle[0]);
 		((TextView) popup.findViewById(R.id.marker_title)).setText(typeAndTitle[1]);
 		
 		((TextView) popup.findViewById(R.id.txt_marker_address)).setText(addressPhoneAndHours[0]);
 		TextView txtPhone = (TextView) popup.findViewById(R.id.txt_marker_phone);
-		txtPhone.setOnClickListener(new OnClickListener() {			
-			@Override
-			public void onClick(View v) {
-				//TODO invocar telefono
-			}
-		});
 		txtPhone.setText(addressPhoneAndHours[1]);
 		
 		TextView txtHours = (TextView) popup.findViewById(R.id.txt_marker_bussines_hours);
