@@ -9,7 +9,9 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.helpers.ThreadMutex;
+import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
@@ -29,6 +31,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
@@ -56,7 +59,6 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
 	}
-
 	@Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -113,18 +115,19 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        				new OnMapReadyCallback() {					
 		        			@Override
 		        			public void onMapReady(GoogleMap obtainedMap) {
-		        				map = obtainedMap;
-		        				ThreadMutex.instance("LoadMap").setFree();
-		        				map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
-		        				map.setMyLocationEnabled(true);
-		        				map.setOnMarkerClickListener(new OnMarkerClickListener() {
-									
-									@Override
-									public boolean onMarkerClick(Marker marker) {
-										lastOpenedMarker = marker;
-										return false;
-									}
-								});
+		        					map = obtainedMap;
+			        				ThreadMutex.instance("LoadMap").setFree();
+			        				map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
+			        				map.setMyLocationEnabled(true);
+			        				map.setOnMarkerClickListener(new OnMarkerClickListener() {
+										
+										@Override
+										public boolean onMarkerClick(Marker marker) {
+											lastOpenedMarker = marker;
+											return false;
+										}
+									});
+		        				
 		        			}
 		        		});
 		            }
@@ -134,16 +137,25 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 //#region Interface Methods
 	@Override
 	public void setPoints(final List<LocationPoint> points) {
-		runOnUiThread(new Runnable() {	
+		ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
+			
 			@Override
-			public void run() {
-				map.clear();
-				for(LocationPoint point : points)
-				{
-					addMarker(point);
-				}	
+			public void threadReleased() {
+				runOnUiThread(new Runnable() {	
+					@Override
+					public void run() {
+						
+							map.clear();
+							for(LocationPoint point : points)
+							{
+								addMarker(point);
+							}
+						
+					}
+				});
 			}
 		});
+		
 	}
 	@Override
 	public PreferencesManager getPreferences() {
@@ -199,6 +211,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		RadioButton offices=(RadioButton) view;
 		if(offices.isChecked())
 			presenter.setSelectedType(LocationPointType.OFFICE);
+		
 	}
 	public void rbtnShowPayPointsClick(View view)
 	{
@@ -211,6 +224,23 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		RadioButton all=(RadioButton) view;
 		if(all.isChecked())
 			presenter.setSelectedType(LocationPointType.ALL);
+	}
+	public void rbtnShowByDistanceAllClick(View view)
+	{
+		RadioButton all=(RadioButton) view;
+		if(all.isChecked())
+		presenter.setSelectedDistance(LocationDistance.All);
+	}
+	public void rbtnShowNearestClick(View view)
+	{
+		RadioButton near=(RadioButton) view;
+		if(near.isChecked())
+		presenter.setSelectedDistance(LocationDistance.Near);
+	}
+
+	@Override
+	public Location getCurrentLocation() {
+		return map.getMyLocation();
 	}
 
 }
