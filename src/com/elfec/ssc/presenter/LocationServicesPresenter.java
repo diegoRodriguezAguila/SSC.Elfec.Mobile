@@ -3,11 +3,13 @@ package com.elfec.ssc.presenter;
 import java.util.List;
 
 import android.os.Looper;
+
 import com.elfec.ssc.businesslogic.LocationManager;
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
@@ -20,10 +22,19 @@ public class LocationServicesPresenter {
 	{
 		return points;
 	}
+	public void setSelectedType(LocationPointType selectedType)
+	{
+		if(selectedType==LocationPointType.ALL)
+			points=LocationPoint.getAll(LocationPoint.class);
+		else
+			points=LocationPoint.getPointsByType(selectedType);
+		showLocationPoints(points);
+	}
 	public LocationServicesPresenter(ILocationServices view) {
 		points=null;
 		this.view = view;
 	}
+	
 	public void loadLocations()
 	{
 		Thread thread=new Thread(new Runnable() {
@@ -82,9 +93,7 @@ public class LocationServicesPresenter {
 	private void showLocationPoints(
 			List<LocationPoint> result) {
 		points=result;
-		for(LocationPoint point : points)
-		{
-			view.setPoint(point);
-		}
+		view.setPoints(points);
+		
 	}
 }

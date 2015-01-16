@@ -13,7 +13,11 @@ public enum LocationPointType {
 	/**
 	 * Tipo de punto de ubicación de un punto de pago
 	 */
-	PAYPOINT("Punto de pago");
+	PAYPOINT("Punto de pago"),
+	/**
+	 * Tipo de punto de ubicación indefinido
+	 */
+	ALL("Todos");
 	/**
 	 * Obtiene el tipo del punto de ubicación equivalente al short provisto
 	 * @param type

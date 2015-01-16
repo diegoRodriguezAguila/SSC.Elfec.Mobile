@@ -7,6 +7,6 @@ import com.elfec.ssc.model.LocationPoint;
 
 public interface ILocationServices {
 	public PreferencesManager getPreferences();
-	public void setPoint(LocationPoint point);
+	public void setPoints(List<LocationPoint> point);
 	public void showLocationServicesErrors(List<Exception> errors);
 }
