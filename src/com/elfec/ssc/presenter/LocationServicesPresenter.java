@@ -9,6 +9,7 @@ import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.webservices.WSResponse;
@@ -18,6 +19,7 @@ public class LocationServicesPresenter {
 
 	private ILocationServices view;
 	private List<LocationPoint> points;
+	private LocationDistance lastSelected;
 	public List<LocationPoint> getPoints()
 	{
 		return points;
@@ -28,10 +30,24 @@ public class LocationServicesPresenter {
 			points=LocationPoint.getAll(LocationPoint.class);
 		else
 			points=LocationPoint.getPointsByType(selectedType);
-		showLocationPoints(points);
+		setSelectedDistance(lastSelected);
+	}
+	public void setSelectedDistance(LocationDistance distance)
+	{
+		if(distance==LocationDistance.Near)
+		{
+			lastSelected=LocationDistance.Near;
+			showLocationPoints(LocationManager.getNearestPoints(points, view.getCurrentLocation(), 200));
+		}
+		else
+		{
+			lastSelected=LocationDistance.All;
+			showLocationPoints(points);
+		}
 	}
 	public LocationServicesPresenter(ILocationServices view) {
 		points=null;
+		lastSelected=LocationDistance.All;
 		this.view = view;
 	}
 	
@@ -75,10 +91,11 @@ public class LocationServicesPresenter {
 		 * @param points
 		 */
 			private void verifyShowLocationPoints(
-					final List<LocationPoint> points) {
+					final List<LocationPoint> result) {
 					ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
 						@Override
 						public void threadReleased() {
+							points=result;
 							showLocationPoints(points);
 						}
 					});
@@ -92,8 +109,7 @@ public class LocationServicesPresenter {
 	 */
 	private void showLocationPoints(
 			List<LocationPoint> result) {
-		points=result;
-		view.setPoints(points);
+		view.setPoints(result);
 		
 	}
 }

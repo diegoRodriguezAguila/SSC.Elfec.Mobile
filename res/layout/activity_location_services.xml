@@ -94,6 +94,7 @@
 			    android:layout_width="35dp"
 			    android:layout_height="35dp"
 			    android:background="@drawable/rbtn_square_show_all"
+			    android:onClick="rbtnShowByDistanceAllClick"
 			    android:button="@android:color/transparent" />
 			<RadioButton 
 			    android:id="@+id/rbtn_show_nearest"
@@ -102,6 +103,7 @@
 			    android:layout_marginLeft="2dp"
 			    android:layout_marginStart="2dp"
 			    android:background="@drawable/rbtn_square_show_nearest"
+			    android:onClick="rbtnShowNearestClick"
 			    android:button="@android:color/transparent" />
 		</RadioGroup>
 	 </LinearLayout>
