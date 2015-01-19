@@ -84,7 +84,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	public void btnNotificationsClick(View view)
 	{
 		SuperToast.create(this, R.string.account_successfully_reg, SuperToast.Duration.SHORT, 
-			    Style.getStyle(Style.BLUE, SuperToast.Animations.SCALE)).show();
+			    Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
 	}
 	
 	public void btnContactsClick(View view)

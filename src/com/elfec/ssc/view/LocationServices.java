@@ -16,11 +16,11 @@ import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
+import com.elfec.ssc.view.controls.GMapFragment;
+import com.elfec.ssc.view.controls.events.OnMapReadyCallback;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMapOptions;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
@@ -38,7 +38,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.RadioButton;
 
-public class LocationServices extends ActionBarActivity implements ILocationServices {
+public class LocationServices extends ActionBarActivity implements ILocationServices, OnMapReadyCallback {
 
 	private final double LAT_ELFEC = -17.3934795;
 	private final double LNG_ELFEC = -66.1651093;
@@ -53,9 +53,9 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_location_services);
-		presenter = new LocationServicesPresenter(this);
 		showWaitingDialog();
-		setDefaultZoomView();
+		presenter = new LocationServicesPresenter(this);
+		setupMap();
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
 	}
@@ -70,6 +70,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		getMenuInflater().inflate(R.menu.location_services, menu);
 		return true;
 	}
+	
 	
 	@Override
 	public void onBackPressed() {
@@ -93,33 +94,24 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		waitingMapDialog.setCanceledOnTouchOutside(false);
 		waitingMapDialog.show();
 	}
-
+	
 	/**
 	 * Asigna el nivel de zoom y centrea el mapa en la ciudad de cochabamba a elfec como centro
 	 */
-	private void setDefaultZoomView() {
+	private void setupMap() {
 		 new Handler().postDelayed(new Runnable() {
-		        @Override
-		        public void run() {		        	
+		       @Override
+		        public void run() {		    
 		            if (!isFinishing()) {
 		            	GoogleMapOptions options = new GoogleMapOptions();
-		            	options.rotateGesturesEnabled(false)
+		            	options.rotateGesturesEnabled(true)
 		            	.camera(new CameraPosition(new LatLng(LAT_ELFEC,LNG_ELFEC), DEFAULT_ZOOM, 0, 0))
-		                .tiltGesturesEnabled(false);
+		                .tiltGesturesEnabled(false).zoomControlsEnabled(false);
 		                FragmentManager fm = getSupportFragmentManager();
-		                SupportMapFragment mapFragment = SupportMapFragment
-		                        .newInstance(options);
-        				waitingMapDialog.dismiss();
+		                GMapFragment mapFragment = new GMapFragment(LocationServices.this, options);
+	    				waitingMapDialog.dismiss();
+	    				System.gc();
 		                fm.beginTransaction().add(R.id.google_map_container, mapFragment).commit();
-		                mapFragment.getMapAsync(
-		        				new OnMapReadyCallback() {					
-		        			@Override
-		        			public void onMapReady(GoogleMap obtainedMap) {
-		        					map = obtainedMap;
-			        				initializeMapOptions();
-		        				
-		        			}					
-		        		});
 		            }
 		        }
 		    }, 500);
@@ -226,28 +218,38 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 			presenter.setSelectedType(LocationPointType.OFFICE);
 		
 	}
+	
 	public void rbtnShowPayPointsClick(View view)
 	{
 		RadioButton payPoints=(RadioButton) view;
 		if(payPoints.isChecked())
 			presenter.setSelectedType(LocationPointType.PAYPOINT);
 	}
+	
 	public void rbtnShowAllClick(View view)
 	{
 		RadioButton all=(RadioButton) view;
 		if(all.isChecked())
 			presenter.setSelectedType(LocationPointType.ALL);
 	}
+	
 	public void rbtnShowByDistanceAllClick(View view)
 	{
 		RadioButton all=(RadioButton) view;
 		if(all.isChecked())
 		presenter.setSelectedDistance(LocationDistance.ALL);
 	}
+	
 	public void rbtnShowNearestClick(View view)
 	{
 		RadioButton near=(RadioButton) view;
 		if(near.isChecked())
 		presenter.setSelectedDistance(LocationDistance.NEAR);
+	}
+	
+	@Override
+	public void onMapReady(GoogleMap obtainedMap) {
+		map = obtainedMap;
+		initializeMapOptions();
 	}
 }
