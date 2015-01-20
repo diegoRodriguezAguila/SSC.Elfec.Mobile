@@ -19,12 +19,12 @@ public class LocationServicesPresenter {
 
 	private ILocationServices view;
 	private List<LocationPoint> points;
-	private LocationDistance lastSelected;
+	private LocationDistance lastSelectedDistance;
 	
 	
 	public LocationServicesPresenter(ILocationServices view) {
 		points=null;
-		lastSelected=LocationDistance.ALL;
+		lastSelectedDistance=LocationDistance.ALL;
 		this.view = view;
 	}
 	
@@ -47,7 +47,8 @@ public class LocationServicesPresenter {
 			points=LocationPoint.getAll(LocationPoint.class);
 		else
 			points=LocationPoint.getPointsByType(selectedType);
-		setSelectedDistance(lastSelected);
+		setSelectedDistance(lastSelectedDistance);
+		view.getPreferences().setSelectedLocationPointType(selectedType);
 	}
 	
 	/**
@@ -56,9 +57,10 @@ public class LocationServicesPresenter {
 	 */
 	public void setSelectedDistance(LocationDistance distance)
 	{
-		lastSelected = distance;
+		lastSelectedDistance = distance;
 		view.showLocationPoints((distance==LocationDistance.ALL)?
 				points:LocationManager.getNearestPoints(points, view.getCurrentLocation(), 1000));
+		view.getPreferences().setSelectedLocationPointDistance(distance);
 	}
 	
 	/**
@@ -112,7 +114,8 @@ public class LocationServicesPresenter {
 					@Override
 					public void threadReleased() {
 						points=result;
-						view.showLocationPoints(points);
+						lastSelectedDistance = view.getPreferences().getSelectedLocationPointDistance();
+						setSelectedType(view.getPreferences().getSelectedLocationPointType());
 					}
 				});
 		}

@@ -1,5 +1,8 @@
 package com.elfec.ssc.helpers;
 
+import com.elfec.ssc.model.enums.LocationDistance;
+import com.elfec.ssc.model.enums.LocationPointType;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -15,6 +18,9 @@ public class PreferencesManager {
 	private final String HAS_ONE_GMAIL_ACCOUNT = "HasAtLeastOneGmailAccount";
 	private final String FIRST_LOAD_ACCOUNTS = "FirstLoadAccounts";
 	private final String FIRST_LOAD_LOCATIONS="FirstLoadLocations";
+	private final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
+	private final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
+	
 	private SharedPreferences preferences;
 	
 	public PreferencesManager(Context context)
@@ -91,5 +97,41 @@ public class PreferencesManager {
 	{
 		preferences.edit().putBoolean(HAS_ONE_GMAIL_ACCOUNT, true).commit();
 		return this;
+	}
+	
+	/**
+	 * Obtiene el tipo de punto de ubicación que fué seleccionado en los radio buttons de locationservices
+	 * @return
+	 */
+	public LocationPointType getSelectedLocationPointType()
+	{
+		return LocationPointType.get(Short.parseShort(preferences.getString(SELECTED_LOCATION_POINT_TYPE, ""+LocationPointType.ALL.toShort())));
+	}
+	
+	/**
+	 * Guarda el tipo de punto de ubicación que fué seleccionado en los radio buttons de locationservices
+	 * @param type
+	 */
+	public void setSelectedLocationPointType(LocationPointType type)
+	{
+		preferences.edit().putString(SELECTED_LOCATION_POINT_TYPE, ""+type.toShort()).commit();
+	}
+	
+	/**
+	 * Obtiene el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio buttons de locationservices
+	 * @return
+	 */
+	public LocationDistance getSelectedLocationPointDistance()
+	{
+		return LocationDistance.get(Short.parseShort(preferences.getString(SELECTED_LOCATION_POINT_DISTANCE, ""+LocationDistance.ALL.toShort())));
+	}
+	
+	/**
+	 * Guarda el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio buttons de locationservices
+	 * @param distance
+	 */
+	public void setSelectedLocationPointDistance(LocationDistance distance)
+	{
+		preferences.edit().putString(SELECTED_LOCATION_POINT_DISTANCE, ""+distance.toShort()).commit();
 	}
 }

@@ -37,6 +37,7 @@ import android.os.Handler;
 import android.view.Menu;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 public class LocationServices extends ActionBarActivity implements ILocationServices, OnMapReadyCallback {
 
@@ -58,7 +59,9 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		setupMap();
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
+		setSelectedOptions();
 	}
+	
 	@Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
@@ -125,8 +128,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setFree();
 		map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
 		map.setMyLocationEnabled(true);
-		map.setOnMarkerClickListener(new OnMarkerClickListener() {
-			
+		map.setOnMarkerClickListener(new OnMarkerClickListener() {			
 			@Override
 			public boolean onMarkerClick(Marker marker) {
 				lastOpenedMarker = marker;
@@ -213,39 +215,92 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	
 	public void rbtnShowOfficesClick(View view)
 	{
-		RadioButton offices=(RadioButton) view;
-		if(offices.isChecked())
+		if(((RadioButton) view).isChecked())
 			presenter.setSelectedType(LocationPointType.OFFICE);
 		
 	}
 	
 	public void rbtnShowPayPointsClick(View view)
 	{
-		RadioButton payPoints=(RadioButton) view;
-		if(payPoints.isChecked())
+		if(((RadioButton) view).isChecked())
 			presenter.setSelectedType(LocationPointType.PAYPOINT);
 	}
 	
 	public void rbtnShowAllClick(View view)
 	{
-		RadioButton all=(RadioButton) view;
-		if(all.isChecked())
+		if(((RadioButton) view).isChecked())
 			presenter.setSelectedType(LocationPointType.ALL);
 	}
 	
 	public void rbtnShowByDistanceAllClick(View view)
 	{
-		RadioButton all=(RadioButton) view;
-		if(all.isChecked())
+		if(((RadioButton) view).isChecked())
 		presenter.setSelectedDistance(LocationDistance.ALL);
 	}
 	
 	public void rbtnShowNearestClick(View view)
 	{
-		RadioButton near=(RadioButton) view;
-		if(near.isChecked())
+		if(((RadioButton) view).isChecked())
 		presenter.setSelectedDistance(LocationDistance.NEAR);
 	}
+	
+	/**
+	 * Obtiene las preferencias guardadas de las opciones seleccionadas
+	 */
+	private void setSelectedOptions() {
+		setCheckedLocationType();
+		setCheckedLocationDistance();
+	}
+	
+	/**
+	 * Marca la opción seleccionada por ultima vez que se tenga guardada en las preferencias
+	 * en caso de no existir se muestran todos los tipos por defecto
+	 */
+	private void setCheckedLocationType()
+	{
+		RadioGroup mapShowType = ((RadioGroup)findViewById(R.id.map_show_type));
+		LocationPointType selectedType = getPreferences().getSelectedLocationPointType();
+		switch(selectedType)
+		{
+			case OFFICE:
+			{
+				mapShowType.check(R.id.rbtn_show_offices);
+				break;
+			}
+			case PAYPOINT:
+			{
+				mapShowType.check(R.id.rbtn_show_paypoints);
+				break;
+			}
+			default:
+			{
+				mapShowType.check(R.id.rbtn_show_both);
+				break;
+			}
+		}
+	}
+	/**
+	 * Marca la opción seleccionada por ultima vez que se tenga guardada en las preferencias
+	 * en caso de no existir se muestran todos los tipos por defecto
+	 */
+	private void setCheckedLocationDistance() {
+		LocationDistance selectedDistance = getPreferences().getSelectedLocationPointDistance();
+		RadioGroup mapShowDistance = ((RadioGroup)findViewById(R.id.map_show_distance));
+		switch(selectedDistance)
+		{
+			case NEAR:
+			{
+				mapShowDistance.check(R.id.rbtn_show_nearest);
+				break;
+			}
+			default:
+			{
+				mapShowDistance.check(R.id.rbtn_show_all);
+				break;
+			}
+		}
+	}
+	
 	
 	@Override
 	public void onMapReady(GoogleMap obtainedMap) {

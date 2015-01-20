@@ -20,6 +20,17 @@ public enum LocationDistance {
 	{
 		this.string = string;
 	}
+	
+	public static LocationDistance get(short type)
+	{
+		return LocationDistance.values()[type];
+	}
+	
+	public short toShort()
+	{
+		return (short)this.ordinal();
+	}
+	
 	@Override
 	public String toString() {
 	       return string;

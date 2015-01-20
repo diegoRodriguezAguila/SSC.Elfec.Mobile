@@ -82,7 +82,7 @@
 		</RadioGroup>
 		
 		<RadioGroup
-		    android:id="@+id/map_show_wide"
+		    android:id="@+id/map_show_distance"
 		    android:orientation="horizontal"
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content" 
