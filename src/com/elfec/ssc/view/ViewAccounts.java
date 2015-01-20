@@ -26,6 +26,8 @@ import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
+import com.elfec.ssc.view.controls.SetupDistanceDialogService;
+import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 
 public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
@@ -146,7 +148,14 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	@Override
 	public void dialogRemove(final int position)
     {
-    	(new AlertDialogPro.Builder(this)).setTitle("ELIMINAR CUENTA")
+		SetupDistanceDialogService.instanceService(this, new OnDistanceSetup() {
+			
+			@Override
+			public void onDistanceSelected(int selectedDistance) {
+				
+			}
+		}).show();
+		/*(new AlertDialogPro.Builder(this)).setTitle("ELIMINAR CUENTA")
         .setMessage("Esta seguro que desea eliminar esta cuenta?")
         .setPositiveButton("Si", new OnClickListener() {
 			
@@ -156,7 +165,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				presenter.invokeRemoveAccountWS(account.getNUS());
 				
 			}
-		}).setNegativeButton("No", null).show();
+		}).setNegativeButton("No", null).show();*/
     }
 	@Override
 	public void ShowWaitingWS() {

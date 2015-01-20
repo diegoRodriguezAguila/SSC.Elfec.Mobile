@@ -52,7 +52,9 @@
     <!-- No Gmail Account Dialog -->
     <string name="no_gmail_account_title">OPCIÓN NO DISPONIBLE</string>
     <string name="no_gmail_account_message">Para utilizar esta opción es necesario que seleccione una cuenta de Gmail, desea hacerlo en este momento?</string>
-
+	<!-- Setup Distance Layout -->
+    <string name="minimun_distance">MIN</string>
+    <string name="maximun_distance">MAX</string>
     
     
     <!-- Botones Dialogos -->
