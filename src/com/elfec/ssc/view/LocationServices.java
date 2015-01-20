@@ -200,9 +200,14 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 
 	@Override
 	public Location getCurrentLocation() {
-		if(map.isMyLocationEnabled())
-		return map.getMyLocation();
-		else return new Location("gps");
+		try
+		{
+			return map.getMyLocation();
+		}
+		catch(IllegalStateException e)
+		{
+			return new Location("gps");
+		}
 	}
 	
 	//#endregion
