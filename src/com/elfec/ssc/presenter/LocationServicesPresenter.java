@@ -21,12 +21,14 @@ public class LocationServicesPresenter {
 	private ILocationServices view;
 	private List<LocationPoint> points;
 	private LocationDistance lastSelectedDistance;
+	private int maxDistance;
 	
 	
 	public LocationServicesPresenter(ILocationServices view) {
 		points=null;
 		lastSelectedDistance=LocationDistance.ALL;
 		this.view = view;
+		maxDistance=view.getPreferences().getMaxDistance();
 	}
 	
 	/**
@@ -36,6 +38,12 @@ public class LocationServicesPresenter {
 	public List<LocationPoint> getPoints()
 	{
 		return points;
+	}
+	
+	public void setMaxDistance(int distance)
+	{
+		maxDistance=distance;
+		view.getPreferences().setMaxDistance(maxDistance);
 	}
 	
 	/**
@@ -60,7 +68,7 @@ public class LocationServicesPresenter {
 	{
 		lastSelectedDistance = distance;
 		view.showLocationPoints((distance==LocationDistance.ALL)?
-				points:LocationManager.getNearestPoints(points, currentLocation, 1000));
+				points:LocationManager.getNearestPoints(points, currentLocation, maxDistance));
 		view.getPreferences().setSelectedLocationPointDistance(distance);
 	}
 	
