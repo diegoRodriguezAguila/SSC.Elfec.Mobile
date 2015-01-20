@@ -21,7 +21,7 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/background_soft_gray</item>
         <item name="icon">@drawable/actionbar_icon</item>
-        <item name="actionBarItemBackground">@drawable/selectable_background_ssc_elfec</item>
+        <item name="actionButtonStyle">@style/ActionButtonssc_elfec</item>
         <item name="popupMenuStyle">@style/PopupMenu.Ssc_elfec</item>
         <item name="dropDownListViewStyle">@style/DropDownListView.Ssc_elfec</item>
         <item name="actionBarTabStyle">@style/ActionBarTabStyle.Ssc_elfec</item>
