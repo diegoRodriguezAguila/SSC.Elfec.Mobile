@@ -2,6 +2,7 @@ package com.elfec.ssc.presenter;
 
 import java.util.List;
 
+import android.location.Location;
 import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.LocationManager;
@@ -52,15 +53,32 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Filtra la lista de puntos según el tipo de proximidad definido
+	 * Filtra la lista de puntos según el tipo de proximidad definido, usando el punto de locación exacto
+	 * @param distance
+	 */
+	public void setSelectedDistance(LocationDistance distance, Location currentLocation)
+	{
+		lastSelectedDistance = distance;
+		view.showLocationPoints((distance==LocationDistance.ALL)?
+				points:LocationManager.getNearestPoints(points, currentLocation, 1000));
+		view.getPreferences().setSelectedLocationPointDistance(distance);
+	}
+	
+	/**
+	 * Filtra la lista de puntos según el tipo de proximidad definido, obteniendo la locación de la vista
 	 * @param distance
 	 */
 	public void setSelectedDistance(LocationDistance distance)
 	{
-		lastSelectedDistance = distance;
-		view.showLocationPoints((distance==LocationDistance.ALL)?
-				points:LocationManager.getNearestPoints(points, view.getCurrentLocation(), 1000));
-		view.getPreferences().setSelectedLocationPointDistance(distance);
+		setSelectedDistance(distance, view.getCurrentLocation()==null?(new Location("gps")):view.getCurrentLocation());
+	}
+	
+	/**
+	 * Updatea
+	 */
+	public void updateSelectedDistancePoints(Location recievedLocation)
+	{
+		setSelectedDistance(lastSelectedDistance, recievedLocation);
 	}
 	
 	/**

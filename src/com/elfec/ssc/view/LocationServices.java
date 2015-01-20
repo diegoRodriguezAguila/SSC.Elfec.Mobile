@@ -20,6 +20,7 @@ import com.elfec.ssc.view.controls.GMapFragment;
 import com.elfec.ssc.view.controls.events.OnMapReadyCallback;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
+import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -89,7 +90,9 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		}
 	}
 	
-
+	/**
+	 * Muestra un diálogo de espera mientras carga el mapa
+	 */
 	private void showWaitingDialog() {
 		waitingMapDialog = new ProgressDialogPro(this, R.style.Theme_FlavoredMaterialLight);
 		waitingMapDialog.setMessage(this.getResources().getString(R.string.waiting_map_msg));
@@ -107,7 +110,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		        public void run() {		    
 		            if (!isFinishing()) {
 		            	GoogleMapOptions options = new GoogleMapOptions();
-		            	options.rotateGesturesEnabled(true)
+		            	options.rotateGesturesEnabled(false)
 		            	.camera(new CameraPosition(new LatLng(LAT_ELFEC,LNG_ELFEC), DEFAULT_ZOOM, 0, 0))
 		                .tiltGesturesEnabled(false).zoomControlsEnabled(false);
 		                FragmentManager fm = getSupportFragmentManager();
@@ -128,6 +131,12 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setFree();
 		map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
 		map.setMyLocationEnabled(true);
+		map.setOnMyLocationChangeListener(new OnMyLocationChangeListener() {			
+			@Override
+			public void onMyLocationChange(Location recievedLocation) {
+				presenter.updateSelectedDistancePoints(recievedLocation);
+			}
+		});
 		map.setOnMarkerClickListener(new OnMarkerClickListener() {			
 			@Override
 			public boolean onMarkerClick(Marker marker) {
@@ -191,7 +200,9 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 
 	@Override
 	public Location getCurrentLocation() {
+		if(map.isMyLocationEnabled())
 		return map.getMyLocation();
+		else return new Location("gps");
 	}
 	
 	//#endregion
