@@ -74,11 +74,12 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Updatea
+	 * Actualiza el filtro de ubicación si cuando la ubicación cambia o se obtiene una nueva ubicación
 	 */
 	public void updateSelectedDistancePoints(Location recievedLocation)
 	{
-		setSelectedDistance(lastSelectedDistance, recievedLocation);
+		if(lastSelectedDistance==LocationDistance.NEAR)
+			setSelectedDistance(lastSelectedDistance, recievedLocation);
 	}
 	
 	/**
