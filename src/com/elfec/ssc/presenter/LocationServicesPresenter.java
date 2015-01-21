@@ -21,14 +21,14 @@ public class LocationServicesPresenter {
 	private ILocationServices view;
 	private List<LocationPoint> points;
 	private LocationDistance lastSelectedDistance;
-	private int maxDistance;
+	private int distanceRange;
 	
 	
 	public LocationServicesPresenter(ILocationServices view) {
 		points=null;
 		lastSelectedDistance=LocationDistance.ALL;
 		this.view = view;
-		maxDistance=view.getPreferences().getMaxDistance();
+		distanceRange=view.getPreferences().getConfiguredDistance();
 	}
 	
 	/**
@@ -40,10 +40,21 @@ public class LocationServicesPresenter {
 		return points;
 	}
 	
-	public void setMaxDistance(int distance)
+	/**
+	 * Asigna la distancia en metros para realizar la filtración de puntos, cuando la opción
+	 * de más cercanos es seleccionada
+	 * @param distance
+	 */
+	public void setDistanceRange(int distance)
 	{
-		maxDistance=distance;
-		view.getPreferences().setMaxDistance(maxDistance);
+		if(distance != distanceRange)
+		{
+			distanceRange = distance;
+			if(lastSelectedDistance==LocationDistance.NEAREST)
+			{
+				setSelectedDistance(lastSelectedDistance);
+			}
+		}
 	}
 	
 	/**
@@ -68,7 +79,7 @@ public class LocationServicesPresenter {
 	{
 		lastSelectedDistance = distance;
 		view.showLocationPoints((distance==LocationDistance.ALL)?
-				points:LocationManager.getNearestPoints(points, currentLocation, maxDistance));
+				points:LocationManager.getNearestPoints(points, currentLocation, distanceRange));
 		view.getPreferences().setSelectedLocationPointDistance(distance);
 	}
 	
@@ -86,7 +97,7 @@ public class LocationServicesPresenter {
 	 */
 	public void updateSelectedDistancePoints(Location recievedLocation)
 	{
-		if(lastSelectedDistance==LocationDistance.NEAR)
+		if(lastSelectedDistance==LocationDistance.NEAREST)
 			setSelectedDistance(lastSelectedDistance, recievedLocation);
 	}
 	
@@ -136,14 +147,15 @@ public class LocationServicesPresenter {
 	 * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
 	 * @param points
 	 */
-		private void verifyShowLocationPoints(final List<LocationPoint> result) {
-				ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
-					@Override
-					public void threadReleased() {
-						points=result;
-						lastSelectedDistance = view.getPreferences().getSelectedLocationPointDistance();
-						setSelectedType(view.getPreferences().getSelectedLocationPointType());
-					}
-				});
-		}
+	private void verifyShowLocationPoints(final List<LocationPoint> result) {
+			ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
+				@Override
+				public void threadReleased() {
+					points=result;
+					lastSelectedDistance = view.getPreferences().getSelectedLocationPointDistance();
+					setSelectedType(view.getPreferences().getSelectedLocationPointType());
+				}
+			});
+	}
+	
 }

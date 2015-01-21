@@ -20,7 +20,7 @@ public class PreferencesManager {
 	private final String FIRST_LOAD_LOCATIONS="FirstLoadLocations";
 	private final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
 	private final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
-	private final String MAX_DISTANCE = "MaxDistance";
+	private final String SETUP_DISTANCE = "SetupDistance";
 	
 	private SharedPreferences preferences;
 	
@@ -117,23 +117,7 @@ public class PreferencesManager {
 	{
 		preferences.edit().putString(SELECTED_LOCATION_POINT_TYPE, ""+type.toShort()).commit();
 	}
-	/**
-	 * Obtiene la distancia maxima seleccionada por el cliente
-	 * @return
-	 */
-	public int getMaxDistance()
-	{
-		return preferences.getInt(MAX_DISTANCE, 1000);
-	}
 	
-	/**
-	 * Guarda la distancia maxima seleccionada por el cliente
-	 * @param type
-	 */
-	public void setMaxDistance(int distance)
-	{
-		preferences.edit().putInt(MAX_DISTANCE, distance).commit();
-	}
 	/**
 	 * Obtiene el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio buttons de locationservices
 	 * @return
@@ -150,5 +134,23 @@ public class PreferencesManager {
 	public void setSelectedLocationPointDistance(LocationDistance distance)
 	{
 		preferences.edit().putString(SELECTED_LOCATION_POINT_DISTANCE, ""+distance.toShort()).commit();
+	}
+
+	/**
+	 * Obtiene la distancia configurada por el cliente para los servicios de ubicación
+	 * @return
+	 */
+	public int getConfiguredDistance()
+	{
+		return preferences.getInt(SETUP_DISTANCE, 1000);
+	}
+	
+	/**
+	 * Guarda la distancia configurada por el cliente para los servicios de ubicación
+	 * @param type
+	 */
+	public void setConfiguredDistance(int distance)
+	{
+		preferences.edit().putInt(SETUP_DISTANCE, distance).commit();
 	}
 }

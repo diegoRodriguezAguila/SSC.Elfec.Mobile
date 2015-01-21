@@ -8,6 +8,7 @@
         android:orderInCategory="100"
         android:title="@string/setup_distance"
         android:icon="@drawable/setup_distance"
+        android:onClick="menuItemSetupDistanceClick"
         app:showAsAction="always"/>
 
 </menu>

@@ -10,7 +10,7 @@ public enum LocationDistance {
 	/**
 	 * Tipo de punto que especifica los puntos cercanos
 	 */
-	NEAR("Cercanos"), 
+	NEAREST("Cercanos"), 
 	/**
 	 * Tipo de punto indefinido
 	 */

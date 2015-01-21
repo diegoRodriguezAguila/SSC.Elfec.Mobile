@@ -17,6 +17,8 @@ import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
 import com.elfec.ssc.view.controls.GMapFragment;
+import com.elfec.ssc.view.controls.SetupDistanceDialogService;
+import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 import com.elfec.ssc.view.controls.events.OnMapReadyCallback;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
@@ -36,6 +38,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -49,6 +52,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	
 	private LocationServicesPresenter presenter;
 	private GoogleMap map;
+	private MenuItem menuItemSetupDistance;
 	private Marker lastOpenedMarker;
 	
 	@Override
@@ -72,6 +76,9 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.location_services, menu);
+		menuItemSetupDistance = menu.findItem(R.id.setup_distance);
+		if(getPreferences().getSelectedLocationPointDistance()!=LocationDistance.NEAREST)
+			menuItemSetupDistance.setVisible(false);
 		return true;
 	}
 	
@@ -251,13 +258,19 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	public void rbtnShowByDistanceAllClick(View view)
 	{
 		if(((RadioButton) view).isChecked())
-		presenter.setSelectedDistance(LocationDistance.ALL);
+		{
+			menuItemSetupDistance.setVisible(false);
+			presenter.setSelectedDistance(LocationDistance.ALL);
+		}
 	}
 	
 	public void rbtnShowNearestClick(View view)
 	{
 		if(((RadioButton) view).isChecked())
-		presenter.setSelectedDistance(LocationDistance.NEAR);
+		{
+			menuItemSetupDistance.setVisible(true);
+			presenter.setSelectedDistance(LocationDistance.NEAREST);
+		}
 	}
 	
 	/**
@@ -304,7 +317,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		RadioGroup mapShowDistance = ((RadioGroup)findViewById(R.id.map_show_distance));
 		switch(selectedDistance)
 		{
-			case NEAR:
+			case NEAREST:
 			{
 				mapShowDistance.check(R.id.rbtn_show_nearest);
 				break;
@@ -317,6 +330,15 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		}
 	}
 	
+	public void menuItemSetupDistanceClick(MenuItem item)
+	{
+		SetupDistanceDialogService.instanceService(this, new OnDistanceSetup() {			
+			@Override
+			public void onDistanceSelected(int selectedDistance) {
+				presenter.setDistanceRange(selectedDistance);
+			}
+		}).show();
+	}
 	
 	@Override
 	public void onMapReady(GoogleMap obtainedMap) {
