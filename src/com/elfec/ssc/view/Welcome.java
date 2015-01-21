@@ -30,6 +30,7 @@ public class Welcome extends ActionBarActivity implements IWelcome {
 		presenter = new WelcomePresenter(this);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.hide();
+		presenter.insertContact();
 		Animation slideRight = AnimationUtils.loadAnimation(this,R.anim.slide_right_welcome);
 		Animation slideLeft = AnimationUtils.loadAnimation(this,R.anim.slide_left_welcome);
 		Animation slideBottom =  AnimationUtils.loadAnimation(this,R.anim.abc_slide_in_bottom);
