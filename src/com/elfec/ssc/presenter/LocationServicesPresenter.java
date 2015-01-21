@@ -21,7 +21,9 @@ public class LocationServicesPresenter {
 	private ILocationServices view;
 	private List<LocationPoint> points;
 	private LocationDistance lastSelectedDistance;
+	private Location currentLocation;
 	private int distanceRange;
+	private final int MIN_DISTANCE_DIFFERENCE = 250;
 	
 	
 	public LocationServicesPresenter(ILocationServices view) {
@@ -97,8 +99,12 @@ public class LocationServicesPresenter {
 	 */
 	public void updateSelectedDistancePoints(Location recievedLocation)
 	{
-		if(lastSelectedDistance==LocationDistance.NEAREST)
+		if(lastSelectedDistance==LocationDistance.NEAREST && 
+				(currentLocation==null || (recievedLocation.distanceTo(currentLocation)>MIN_DISTANCE_DIFFERENCE)))
+		{
+			currentLocation = recievedLocation;
 			setSelectedDistance(lastSelectedDistance, recievedLocation);
+		}
 	}
 	
 	/**
