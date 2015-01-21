@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -6,19 +6,45 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
+    android:orientation="vertical"
     tools:context="com.elfec.ssc.view.Contacts" >
 
     <TextView
         android:id="@+id/contacts_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-
         android:text="@string/contacts_title"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
 
-</RelativeLayout>
+    <ImageView
+        android:id="@+id/img_logo_elfec"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/logo_elfec_caption"
+        android:src="@drawable/elfec_vertical_logo" />
+    
+    <TextView
+        android:id="@+id/txt_marker_address"
+        android:drawableLeft="@drawable/marker_address"
+        android:drawableStart="@drawable/marker_address"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/txt_marker_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/marker_phone"
+        android:drawableStart="@drawable/marker_phone"
+        android:textSize="20sp" />
+	        
+    <TextView
+        android:id="@+id/txt_marker_bussines_hours"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/marker_bussines_hours"
+        android:drawableStart="@drawable/marker_bussines_hours"
+        android:textSize="20sp"/>
+
+</LinearLayout>
