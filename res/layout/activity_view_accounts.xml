@@ -17,7 +17,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
         android:text="@string/view_accounts_title"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
 
@@ -28,13 +27,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="34dp"
         android:onClick="btnRegisterAccountClick"
-        android:text="ACEPTAR" />
+        android:text="@string/btn_ok" />
 
     <LinearLayout
         android:id="@+id/nus_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/account_layout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerHorizontal="true"

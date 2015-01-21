@@ -89,6 +89,12 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	
 	public void btnContactsClick(View view)
 	{
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			Intent i = new Intent(MainMenu.this, Contacts.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
 	}
 
 	//#region Interface Methods

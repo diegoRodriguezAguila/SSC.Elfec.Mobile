@@ -35,13 +35,18 @@
     <!-- View Accounts -->
     <string name="view_accounts_title">Cuentas</string>
     <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
+    
     <!-- Location Services -->
     <string name="location_services_title">Servicios de ubicación</string>
     <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>
-    	<!-- Location Services: Markers -->
-    	<string name="lbl_marker_address">Dirección:</string>
-    	<string name="lbl_marker_phone">Teléfono:</string>
-    	<string name="lbl_marker_bussines_hours">Horario de atención:</string>
+    <!-- Location Services: Markers -->
+    <string name="lbl_marker_address">Dirección:</string>
+    <string name="lbl_marker_phone">Teléfono:</string>
+    <string name="lbl_marker_bussines_hours">Horario de atención:</string>
+    
+    <!-- Contacts -->
+    <string name="contacts_title">Contactos</string>
+    
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="setup_distance">Configurar distancia</string>
@@ -52,18 +57,19 @@
     <!-- No Gmail Account Dialog -->
     <string name="no_gmail_account_title">OPCIÓN NO DISPONIBLE</string>
     <string name="no_gmail_account_message">Para utilizar esta opción es necesario que seleccione una cuenta de Gmail, desea hacerlo en este momento?</string>
-	
-	<!-- Setup Distance Layout -->
-	<string name="setup_distance_title">CONFIGURE LA DISTANCIA</string>
-	<string name="lbl_meters">metros</string>
+
+    <!-- Setup Distance Layout -->
+    <string name="setup_distance_title">CONFIGURE LA DISTANCIA</string>
+    <string name="lbl_meters">metros</string>
     <string name="minimun_distance">500</string>
     <string name="maximun_distance">10000</string>
-    
-    
+
     <!-- Botones Dialogos -->
     <string name="btn_ok">Aceptar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
+    <string name="title_activity_contacts">Contacts</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
