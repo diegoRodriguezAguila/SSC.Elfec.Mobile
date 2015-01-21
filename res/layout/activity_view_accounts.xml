@@ -52,6 +52,7 @@
         android:divider="@android:color/transparent"
   		android:dividerHeight="3dp"
         android:layout_alignLeft="@+id/button2"
+        android:layout_alignStart="@+id/button2" 
         android:layout_alignParentBottom="true"
         android:fastScrollEnabled="true"
         android:layout_below="@+id/button2" >
