@@ -5,6 +5,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 /**
  * Guarda la información del contacto de la aplicacion
@@ -41,6 +42,11 @@ public class Contact extends Model{
 		this.Email=Email;
 		this.WebPage=WebPage;
 		this.Facebook=Facebook;
+		this.InsertDate=DateTime.now();
+	}
+	public static Contact getDefaultContact()
+	{
+		return new Select().from(Contact.class).executeSingle();
 	}
 	//#region getters and setters
 	public DateTime getInsertDate() {
