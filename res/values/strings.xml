@@ -46,6 +46,7 @@
     
     <!-- Contacts -->
     <string name="contacts_title">Contactos</string>
+    <string name="lbl_visit_us_facebook">Visítanos en facebook</string>
     
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>

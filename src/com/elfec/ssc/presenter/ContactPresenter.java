@@ -18,12 +18,12 @@ public class ContactPresenter {
 			
 			@Override
 			public void threadReleased() {
-				Thread thread=new Thread(new Runnable() {
-					
+				Thread thread=new Thread(new Runnable() {				
 					@Override
 					public void run() {
-						Contact defaultContact=Contact.getDefaultContact();
-						view.setData(defaultContact.getPhone(), defaultContact.getAddress(), defaultContact.getEmail(), defaultContact.getWebPage(), defaultContact.getFacebook());
+						Contact defaultContact = Contact.getDefaultContact();
+						view.setData(defaultContact.getPhone(), defaultContact.getAddress(), defaultContact.getEmail(), defaultContact.getWebPage(), defaultContact.getFacebook(),
+								defaultContact.getFacebookId());
 					}
 				});
 				thread.start();

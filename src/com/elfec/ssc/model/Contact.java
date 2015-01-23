@@ -13,6 +13,18 @@ import com.activeandroid.query.Select;
  */
 @Table(name = "Contacts")
 public class Contact extends Model{
+	
+	private static final String PHONE="176";
+	private static final String ADDRESS="Av. Heroinas entre C. Suipacha y C. Costanera #686";
+	private static final String EMAIL="elfec@elfec.com";
+	private static final String WEB_PAGE="www.elfec.bo";
+	private static final String FACEBOOK="touch.facebook.com/ende.elfec";
+	/**
+	 * Sirve para invocar la página de facebook con la app respectiva,
+	 * se lo saca entrando a graph.facebook.com/<usuario>
+	 */
+	private static final String FACEBOOK_ID="1451525075080740";
+	
 	@Column(name = "Phone")
 	private String Phone;
 	@Column(name = "Address")
@@ -23,6 +35,8 @@ public class Contact extends Model{
 	private String WebPage;
 	@Column(name = "Facebook")
 	private String Facebook;
+	@Column(name = "FacebookId")
+	private String FacebookId;
 	@Column(name = "InsertDate", notNull = true)
 	private DateTime InsertDate;
 	
@@ -34,16 +48,28 @@ public class Contact extends Model{
 	{
 		super();
 	}
-	public Contact(String Phone,String Address,String Email,String WebPage,String Facebook)
+	public Contact(String phone,String address,String email,String webPage,String facebook, String facebookId)
 	{
 		super();
-		this.Phone=Phone;
-		this.Address=Address;
-		this.Email=Email;
-		this.WebPage=WebPage;
-		this.Facebook=Facebook;
+		this.Phone=phone;
+		this.Address=address;
+		this.Email=email;
+		this.WebPage=webPage;
+		this.Facebook=facebook;
+		this.FacebookId = facebookId;
 		this.InsertDate=DateTime.now();
 	}
+	
+	/**
+	 * Crea y guarda el contacto por defecto con los valores estáticos predefinidos
+	 */
+	public static Contact createDefaultContact()
+	{
+		Contact defaultContact=new Contact(PHONE, ADDRESS, EMAIL, WEB_PAGE, FACEBOOK, FACEBOOK_ID);
+		defaultContact.save();
+		return defaultContact;
+	}
+	
 	public static Contact getDefaultContact()
 	{
 		return new Select().from(Contact.class).executeSingle();
@@ -91,6 +117,13 @@ public class Contact extends Model{
 	public void setFacebook(String facebook) {
 		Facebook = facebook;
 	}
+	public String getFacebookId() {
+		return FacebookId;
+	}
+	public void setFacebookId(String facebookId) {
+		FacebookId = facebookId;
+	}
+	
 	//#endregion
 	
 }
