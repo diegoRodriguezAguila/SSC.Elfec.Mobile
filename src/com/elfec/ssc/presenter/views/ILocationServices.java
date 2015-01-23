@@ -12,4 +12,5 @@ public interface ILocationServices {
 	public void showLocationPoints(List<LocationPoint> point);
 	public void showLocationServicesErrors(List<Exception> errors);
 	public Location getCurrentLocation();
+	public void showDetailMessage(String message);
 }

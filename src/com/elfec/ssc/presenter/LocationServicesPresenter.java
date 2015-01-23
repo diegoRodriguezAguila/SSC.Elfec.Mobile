@@ -9,6 +9,7 @@ import com.elfec.ssc.businesslogic.LocationManager;
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
+import com.elfec.ssc.helpers.utils.LocationServicesMessages;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
@@ -20,6 +21,7 @@ public class LocationServicesPresenter {
 
 	private ILocationServices view;
 	private List<LocationPoint> points;
+	private LocationPointType lastSelectedType;
 	private LocationDistance lastSelectedDistance;
 	private Location currentLocation;
 	private int distanceRange;
@@ -29,6 +31,7 @@ public class LocationServicesPresenter {
 	public LocationServicesPresenter(ILocationServices view) {
 		points=null;
 		lastSelectedDistance=LocationDistance.ALL;
+		lastSelectedType=LocationPointType.BOTH;
 		this.view = view;
 		distanceRange=view.getPreferences().getConfiguredDistance();
 	}
@@ -65,12 +68,14 @@ public class LocationServicesPresenter {
 	 */
 	public void setSelectedType(LocationPointType selectedType)
 	{
-		if(selectedType==LocationPointType.ALL)
+		lastSelectedType = selectedType;
+		if(selectedType==LocationPointType.BOTH)
 			points=LocationPoint.getAll(LocationPoint.class);
 		else
 			points=LocationPoint.getPointsByType(selectedType);
 		setSelectedDistance(lastSelectedDistance);
 		view.getPreferences().setSelectedLocationPointType(selectedType);
+		view.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
 	}
 	
 	/**
@@ -83,6 +88,7 @@ public class LocationServicesPresenter {
 		view.showLocationPoints((distance==LocationDistance.ALL)?
 				points:LocationManager.getNearestPoints(points, currentLocation, distanceRange));
 		view.getPreferences().setSelectedLocationPointDistance(distance);
+		view.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
 	}
 	
 	/**

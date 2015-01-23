@@ -50,6 +50,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	private final double LAT_ELFEC = -17.3934795;
 	private final double LNG_ELFEC = -66.1651093;
 	private final float DEFAULT_ZOOM = 13.5f;
+	private Style croutonStyle;
 	private AlertDialog waitingMapDialog;
 	
 	private LocationServicesPresenter presenter;
@@ -67,6 +68,8 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
 		setSelectedOptions();
+		croutonStyle =  new Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
+				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color)).build();
 	}
 	
 	@Override
@@ -219,6 +222,12 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		}
 	}
 	
+	@Override
+	public void showDetailMessage(String message) {
+		Crouton.clearCroutonsForActivity(this);
+		Crouton.makeText(this, message, croutonStyle).show();
+	}
+	
 	//#endregion
 	
 	/**
@@ -254,11 +263,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	public void rbtnShowAllClick(View view)
 	{
 		if(((RadioButton) view).isChecked())
-			presenter.setSelectedType(LocationPointType.ALL);
-		Crouton.makeText(this, "Mostrando crouton", new Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf")
-				.setTextSize(16)
-		  .setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color))
-		  .build()).show();
+			presenter.setSelectedType(LocationPointType.BOTH);
 	}
 	
 	public void rbtnShowByDistanceAllClick(View view)

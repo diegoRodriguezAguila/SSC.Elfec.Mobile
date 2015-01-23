@@ -106,7 +106,7 @@ public class PreferencesManager {
 	 */
 	public LocationPointType getSelectedLocationPointType()
 	{
-		return LocationPointType.get(Short.parseShort(preferences.getString(SELECTED_LOCATION_POINT_TYPE, ""+LocationPointType.ALL.toShort())));
+		return LocationPointType.get(Short.parseShort(preferences.getString(SELECTED_LOCATION_POINT_TYPE, ""+LocationPointType.BOTH.toShort())));
 	}
 	
 	/**
