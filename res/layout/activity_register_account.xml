@@ -109,4 +109,16 @@
         android:text="@string/btn_register"
         android:onClick="btnRegisterAccountClick" />
 
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/nus_layout"
+        android:layout_alignLeft="@+id/nus_layout"
+        android:layout_marginBottom="71dp"
+        android:contentDescription="123123"
+        android:layout_marginLeft="97dp"
+        android:background="@color/ssc_elfec_color"
+        android:src="@drawable/add_account_mini" />
+
 </RelativeLayout>
