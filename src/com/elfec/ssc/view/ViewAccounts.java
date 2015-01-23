@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alertdialogpro.AlertDialogPro;
@@ -96,7 +97,18 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public void run() {
 				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.simple_row, result);
 				accounts.setAdapter(adapter);
-
+				if(result.size()>0)
+				{
+					((TextView) findViewById(R.id.no_accounts_text_view_1)).setVisibility(View.GONE);
+					((TextView) findViewById(R.id.no_accounts_text_view_2)).setVisibility(View.GONE);
+					((ListView) findViewById(R.id.accounts_list)).setVisibility(View.VISIBLE);
+				}
+				else
+				{
+					((TextView) findViewById(R.id.no_accounts_text_view_1)).setVisibility(View.VISIBLE);
+					((TextView) findViewById(R.id.no_accounts_text_view_2)).setVisibility(View.VISIBLE);
+					((ListView) findViewById(R.id.accounts_list)).setVisibility(View.GONE);
+				}
 			}
 		});
 	}
