@@ -67,9 +67,6 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
 		setSelectedOptions();
-		Crouton.makeText(this, "Mostrando crouton", new Style.Builder()
-		  .setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color))
-		  .build()).show();
 	}
 	
 	@Override
@@ -258,6 +255,10 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	{
 		if(((RadioButton) view).isChecked())
 			presenter.setSelectedType(LocationPointType.ALL);
+		Crouton.makeText(this, "Mostrando crouton", new Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf")
+				.setTextSize(16)
+		  .setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color))
+		  .build()).show();
 	}
 	
 	public void rbtnShowByDistanceAllClick(View view)
