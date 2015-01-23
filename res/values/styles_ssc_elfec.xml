@@ -161,6 +161,8 @@
 
   <style name="ImageButtonssc_elfec" parent="android:Widget.ImageButton">
 	  <item name="android:background">@drawable/ssc_elfec_btn_default_holo_light</item>
+	  <item name="android:minHeight">40dip</item>
+	  <item name="android:minWidth">40dip</item>
   </style>
 
   <style name="Spinnerssc_elfec" parent="android:Widget.Spinner">
