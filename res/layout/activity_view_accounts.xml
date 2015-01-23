@@ -47,11 +47,11 @@
              android:layout_width="wrap_content"
              android:layout_height="match_parent"
              android:paddingLeft="5dp"
+             android:textSize="18dp"
              android:text="Actualmente no tiene cuentas registradas" 
              />
 			 
     </LinearLayout>
-	
     <TextView
 	    android:id="@+id/no_accounts_text_view_2"
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
         android:layout_below="@+id/view_accounts_title_layout" 
         android:textAppearance="@style/TextAppearance.CustomFont.Title"
  		android:textSize="18dp"
-        android:text="Utilice el boton + para agregar una nueva cuenta"/>
+        android:text="Utilice el boton      para agregar una nueva cuenta"/>
 	    
     
     <ListView
@@ -79,5 +79,17 @@
         android:layout_below="@+id/view_accounts_title_layout" >
 
     </ListView>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/no_accounts_text_view_2"
+        android:layout_centerHorizontal="true"
+        android:background="@color/ssc_elfec_color"
+         android:layout_below="@+id/view_accounts_title_layout" 
+         
+        android:contentDescription="123123"
+        android:src="@drawable/add_account_mini" />
 
 </RelativeLayout>
