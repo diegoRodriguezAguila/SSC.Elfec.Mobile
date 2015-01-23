@@ -30,6 +30,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.app.AlertDialog;
@@ -65,6 +67,9 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
 		setSelectedOptions();
+		Crouton.makeText(this, "Mostrando crouton", new Style.Builder()
+		  .setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color))
+		  .build()).show();
 	}
 	
 	@Override
