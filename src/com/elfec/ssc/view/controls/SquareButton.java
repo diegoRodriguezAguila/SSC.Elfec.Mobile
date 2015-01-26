@@ -43,7 +43,8 @@ public class SquareButton extends LinearLayout{
 		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		    LinearLayout layoutButton = (LinearLayout) inflater.inflate(R.layout.square_button, this, true);
 		    text = (TextView) layoutButton.findViewById(R.id.principal_text);
-		    text.setText(textPrincipal);		    
+		    if(!isInEditMode())
+		    	text.setText(textPrincipal);		    
 		    icon = (ImageView) layoutButton.findViewById(R.id.btn_icon);
 		    icon.setImageDrawable(buttonIcon);    
 		    baseButton = (RelativeLayout)layoutButton.findViewById(R.id.base_button);
