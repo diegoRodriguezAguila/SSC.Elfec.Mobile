@@ -19,7 +19,7 @@
     <string name="account_img">Cuenta</string>
     <string name="account_mask">##-###-###-##</string>
     <string name="waiting_msg">Porfavor espere, se esta procesando su solicitud&#8230;</string>
-    <string name="account_successfully_reg">La cuenta fue registrada exitosamente!</string>
+    <string name="account_successfully_reg">¡La cuenta fue registrada exitosamente!</string>
     <string name="account_already_reg_title">CUENTA YA REGISTRADA</string>
     <string name="account_already_reg_msg">La información que proporcionó corresponde a una cuenta que ya tiene registrada</string>
     <string name="errors_on_register_title">ERROR AL REGISTRAR LA CUENTA</string>
@@ -34,7 +34,15 @@
 
     <!-- View Accounts -->
     <string name="view_accounts_title">Cuentas</string>
+    <string name="no_accounts_registered">Actualmente no tiene cuentas registradas</string>
+    <string name="use_button_add">Utilice el botón</string>
+    <string name="lbl_for_register">para agregar</string>
+    <string name="lbl_an_account">una cuenta</string>
     <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
+    	<!-- View Accounts: Delete Account -->
+    	<string name="delete_account_title">ELIMINAR CUENTA</string>
+    	<string name="delete_account_msg">¿Esta seguro que desea eliminar esta cuenta?</string>
+    	<string name="account_successfully_deleted">¡La cuenta se eliminó exitosamente!</string>
     
     <!-- Location Services -->
     <string name="location_services_title">Servicios de ubicación</string>

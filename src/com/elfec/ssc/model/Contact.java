@@ -15,7 +15,7 @@ import com.activeandroid.query.Select;
 public class Contact extends Model{
 	
 	private static final String PHONE="176";
-	private static final String ADDRESS="Av. Heroinas entre C. Suipacha y C. Costanera #686";
+	private static final String ADDRESS="Av. Heroinas entre c. Falsuri y c. Costanera #686";
 	private static final String EMAIL="elfec@elfec.com";
 	private static final String WEB_PAGE="www.elfec.bo";
 	private static final String FACEBOOK="touch.facebook.com/ende.elfec";

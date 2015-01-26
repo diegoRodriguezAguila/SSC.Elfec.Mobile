@@ -16,7 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alertdialogpro.AlertDialogPro;
@@ -27,11 +26,13 @@ import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 
 public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
-	private ListView accounts;
+	private ListView accountsListView;
 	private AlertDialog waitingWSDialog;
 	
 	@Override
@@ -46,12 +47,12 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
-        accounts=(ListView)findViewById(R.id.accounts_list);
+        accountsListView=(ListView)findViewById(R.id.accounts_list);
         
-        accounts.setOnItemLongClickListener(new OnItemLongClickListener() {
+        accountsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 
 			@Override
-			public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
+			public boolean onItemLongClick(AdapterView<?> adapter, View view,
 					int position, long arg3) {
 				dialogRemove(position);
 				return false;
@@ -96,18 +97,20 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			@Override
 			public void run() {
 				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.simple_row, result);
-				accounts.setAdapter(adapter);
+				accountsListView.setAdapter(adapter);
 				if(result.size()>0)
 				{
-					((TextView) findViewById(R.id.no_accounts_text_view_1)).setVisibility(View.GONE);
-					((TextView) findViewById(R.id.no_accounts_text_view_2)).setVisibility(View.GONE);
-					((ListView) findViewById(R.id.accounts_list)).setVisibility(View.VISIBLE);
+					findViewById(R.id.layout_how_to_add_accounts).setVisibility(View.GONE);
+					findViewById(R.id.lbl_an_account).setVisibility(View.GONE);
+					findViewById(R.id.lbl_no_accounts_registered).setVisibility(View.GONE);
+					accountsListView.setVisibility(View.VISIBLE);
 				}
 				else
 				{
-					((TextView) findViewById(R.id.no_accounts_text_view_1)).setVisibility(View.VISIBLE);
-					((TextView) findViewById(R.id.no_accounts_text_view_2)).setVisibility(View.VISIBLE);
-					((ListView) findViewById(R.id.accounts_list)).setVisibility(View.GONE);
+					findViewById(R.id.layout_how_to_add_accounts).setVisibility(View.VISIBLE);
+					findViewById(R.id.lbl_an_account).setVisibility(View.VISIBLE);
+					findViewById(R.id.lbl_no_accounts_registered).setVisibility(View.VISIBLE);
+					accountsListView.setVisibility(View.GONE);
 				}
 			}
 		});
@@ -126,10 +129,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			
 			@Override
 			public void run() {
-
-				Toast.makeText(getApplicationContext(), "En teoria esta borrado",
-						   Toast.LENGTH_LONG).show();
-	
+				SuperToast.create(ViewAccounts.this, R.string.account_successfully_deleted, SuperToast.Duration.LONG, 
+					    Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();	
 			}
 		});
 	}
@@ -158,17 +159,17 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	@Override
 	public void dialogRemove(final int position)
     {
-		(new AlertDialogPro.Builder(this)).setTitle("ELIMINAR CUENTA")
-        .setMessage("Esta seguro que desea eliminar esta cuenta?")
-        .setPositiveButton("Si", new OnClickListener() {
+		(new AlertDialogPro.Builder(this)).setTitle(R.string.delete_account_title)
+        .setMessage(R.string.delete_account_msg)
+        .setPositiveButton(R.string.btn_yes, new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				Account account=(Account)accounts.getAdapter().getItem(position);
+				Account account=(Account)accountsListView.getAdapter().getItem(position);
 				presenter.invokeRemoveAccountWS(account.getNUS());
 				
 			}
-		}).setNegativeButton("No", null).show();
+		}).setNegativeButton(R.string.btn_no, null).show();
     }
 	@Override
 	public void ShowWaitingWS() {

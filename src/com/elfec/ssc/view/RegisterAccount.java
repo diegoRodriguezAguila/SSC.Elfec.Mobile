@@ -10,6 +10,8 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
@@ -22,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
-import android.widget.Toast;
 
 public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
 
@@ -182,7 +183,8 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(RegisterAccount.this, R.string.account_successfully_reg, Toast.LENGTH_LONG).show();
+				SuperToast.create(RegisterAccount.this, R.string.account_successfully_reg, SuperToast.Duration.LONG, 
+					    Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
 				onBackPressed();
 			}
 		});

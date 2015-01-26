@@ -6,7 +6,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
-    tools:context=".ViewAccounts" >
+    tools:context=".ViewAccounts"
+    tools:ignore="RtlSymmetry" >
 
     <TextView
         android:id="@+id/view_accounts_title"
@@ -20,77 +21,107 @@
         android:text="@string/view_accounts_title"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
 
-   
-
     <LinearLayout
         android:id="@+id/view_accounts_title_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"   
-        android:gravity="top"
+        android:gravity="center_vertical"
         android:layout_below="@+id/view_accounts_title"    
         android:orientation="horizontal" >
+        
         <ImageButton
-        android:id="@+id/btn_add_account"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="0dp"
-        android:onClick="btnRegisterAccountClick"
-        android:contentDescription="@string/register_account_title"
-        android:src="@drawable/add_account" />
+	        android:id="@+id/btn_add_account"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:padding="0dp"
+	        android:onClick="btnRegisterAccountClick"
+	        android:contentDescription="@string/register_account_title"
+	        android:src="@drawable/add_account" />
         
          <TextView
-             android:id="@+id/no_accounts_text_view_1"
+             android:id="@+id/lbl_no_accounts_registered"
              android:layout_width="wrap_content"
-             android:layout_height="match_parent"
-             android:paddingLeft="5dp"
-             android:paddingStart="5dp"
+             android:layout_height="wrap_content"
+             android:layout_marginLeft="12dp"
+             android:layout_marginStart="12dp"
+             android:lineSpacingExtra="-3dp"
+             android:paddingBottom="7dp"
              android:textSize="18sp"
-             android:text="Actualmente no tiene cuentas registradas" 
-             />
+             android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+             android:text="@string/no_accounts_registered" />
 			 
     </LinearLayout>
-    <TextView
-	    android:id="@+id/no_accounts_text_view_2"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-       	android:layout_alignLeft="@+id/view_accounts_title_layout"
-        android:layout_alignStart="@+id/view_accounts_title_layout" 
-        android:layout_alignParentBottom="true"
-        android:layout_below="@+id/view_accounts_title_layout" 
-        android:textAppearance="@style/TextAppearance.CustomFont.Title"
- 		android:textSize="18dp"
-        android:text="Utilice el boton      para agregar una nueva cuenta"/>
-	    
     
-    <ListView
-        android:id="@+id/accounts_list"
+    <LinearLayout
+        android:id="@+id/layout_how_to_add_accounts"
         android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:divider="@android:color/transparent"
-  		android:dividerHeight="3dp"
-        android:layout_alignLeft="@+id/view_accounts_title_layout"
-        android:layout_alignStart="@+id/view_accounts_title_layout" 
-        android:layout_alignParentBottom="true"
-        android:fastScrollEnabled="true"
-        android:visibility="gone"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:layout_below="@+id/view_accounts_title_layout" >
 
-    </ListView>
+        <TextView
+            android:id="@+id/use_button_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/use_button_add"
+            android:textAppearance="@style/TextAppearance.CustomFont.Title"
+            android:textSize="20sp" />
 
-    <ImageView
-        android:id="@+id/imageView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/no_accounts_text_view_2"
-        android:layout_centerHorizontal="true"
-        android:background="@color/ssc_elfec_color"
-         android:layout_below="@+id/view_accounts_title_layout" 
-         
-        android:contentDescription="123123"
-        android:src="@drawable/add_account_mini" />
-
+        <ImageView
+            android:id="@+id/mini_add_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/ssc_elfec_color"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:contentDescription="@string/register_account_title"
+            android:src="@drawable/add_account_mini" />
+        
+        <TextView
+            android:id="@+id/lbl_for"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginStart="5dp"
+            android:text="@string/lbl_for_register"
+            android:textAppearance="@style/TextAppearance.CustomFont.Title"
+            android:textSize="20sp" />
+        
+    </LinearLayout>
+    <TextView
+            android:id="@+id/lbl_an_account"
+            android:layout_below="@+id/layout_how_to_add_accounts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/lbl_an_account"
+            android:layout_marginTop="-8dp"
+            android:textAppearance="@style/TextAppearance.CustomFont.Title"
+            android:textSize="20sp" />
+    
+	<ListView
+	        android:id="@+id/accounts_list"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentStart="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentEnd="true"
+	        android:layout_alignParentBottom="true"
+	        android:layout_marginTop="8dp"
+	        android:visibility="gone"
+	        android:layout_below="@+id/view_accounts_title_layout"
+	        android:fastScrollEnabled="true"
+	        android:divider="@android:color/transparent"
+	  		android:dividerHeight="3dp" >	
+	    </ListView>
+    
 </RelativeLayout>

@@ -3,6 +3,10 @@
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
     
+    <style name="TextAppearance.CustomFont.Semilight" parent="android:TextAppearance">
+        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
+    </style>
+    
     <style name="TextAppearance.CustomFont.Title" parent="android:TextAppearance">
         <!-- Custom Attr-->
         <item name="fontPath">fonts/segoe_ui_light.ttf</item>
