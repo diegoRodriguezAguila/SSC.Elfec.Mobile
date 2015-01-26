@@ -4,7 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical"
-    tools:context="com.elfec.ssc.view.MainMenu" >
+    tools:context="com.elfec.ssc.view.MainMenu"
+    tools:ignore="NestedWeights" >
 
     <RelativeLayout
 	        android:layout_width="fill_parent"
