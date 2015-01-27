@@ -15,6 +15,11 @@ import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+/**
+ * Se encarga de procesar el mensaje recibido por el GCMBroadcastReceiver
+ * @author Zuki
+ *
+ */
 public class GcmMessageHandler extends IntentService {
 
      String mes;
@@ -43,7 +48,6 @@ public class GcmMessageHandler extends IntentService {
        mes=extras.getString("message");
        showToast();
        Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
-
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
     }
@@ -65,13 +69,12 @@ public class GcmMessageHandler extends IntentService {
                  getApplicationContext(),0, notificationIntent,0);
                  NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                  Notification notify=(new NotificationCompat.Builder(getApplicationContext())).setContentIntent(pending)
-                		    .setSmallIcon(R.drawable.logo_elfec)
+                		    .setSmallIcon(R.drawable.elfec_notification)
                 		    .setTicker(body)
                 		    .setWhen(System.currentTimeMillis())
                 		    .setContentTitle(tit)
                 		    .setContentText(body).build();
                  NM.notify(0, notify);
-           //     Toast.makeText(getApplicationContext(),mes , Toast.LENGTH_LONG).show();
             }
             }
          });
