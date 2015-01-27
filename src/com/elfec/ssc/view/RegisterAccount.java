@@ -15,6 +15,7 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -26,6 +27,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
 import android.widget.EditText;
 
 public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
@@ -33,6 +35,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	private RegisterAccountPresenter presenter;
 	private EditText txtNUS;
 	private EditText txtAccountNumber;
+	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	private AlertDialog waitingWSDialog;
 	private String PROJECT_NUMBER="605802902678";
 	@Override
@@ -42,6 +45,8 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		presenter = new RegisterAccountPresenter(this);
 		txtNUS = (EditText) findViewById(R.id.txt_nus);		
 		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
+		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
+				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color)).build();
 		setOnFocusChangedListeners();
 	}
 	
@@ -219,6 +224,18 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	}
 	
 
+
+	@Override
+	public void notifyErrorsInFields() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				Crouton.clearCroutonsForActivity(RegisterAccount.this);
+				Crouton.makeText(RegisterAccount.this, R.string.errors_in_fields, croutonStyle, (ViewGroup)findViewById(R.id.croutonview)).show();
+			}
+		});
+	}
+	
 	@Override
 	public void notifyAccountAlreadyRegistered() {
 		runOnUiThread(new Runnable() {
