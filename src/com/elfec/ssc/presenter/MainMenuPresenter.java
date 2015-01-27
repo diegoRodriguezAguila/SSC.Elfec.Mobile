@@ -1,8 +1,11 @@
 package com.elfec.ssc.presenter;
 
+import java.io.IOException;
+
 import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.presenter.views.IMainMenu;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 public class MainMenuPresenter {
 
@@ -24,6 +27,9 @@ public class MainMenuPresenter {
 		}
 	}
 	
+	
+
+	
 	public void handlePickedGmailAccount(final String gmail)
 	{
 		ThreadMutex.instance("ActiveClient").setBusy();
@@ -32,6 +38,7 @@ public class MainMenuPresenter {
 			public void run() {
 
 				ClientManager.RegisterClient(gmail);
+				
 				view.getPreferences().setHasOneGmailAccount();
 				ThreadMutex.instance("ActiveClient").setFree();
 			}

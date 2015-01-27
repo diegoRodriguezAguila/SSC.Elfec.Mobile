@@ -1,6 +1,7 @@
 package com.elfec.ssc.view;
 
 
+import java.io.IOException;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -12,12 +13,14 @@ import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +34,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	private EditText txtNUS;
 	private EditText txtAccountNumber;
 	private AlertDialog waitingWSDialog;
-	
+	private String PROJECT_NUMBER="605802902678";
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -260,5 +263,32 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	public void btnRegisterAccountClick(View view)
 	{
 		presenter.processAccountData();
+	}
+
+	@Override
+	public String getGCM() {
+	
+	     new AsyncTask<Void, Void, String>() {
+	            @Override
+	            protected String doInBackground(Void... params) {
+	            	String regid=null;
+	                try {
+	                    GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
+	                     regid = gcm.register(PROJECT_NUMBER);
+	     	           
+	                }
+	           
+	                catch (IOException ex) {
+	           
+	                }
+	           return regid;
+	            }
+
+	            @Override
+	            protected void onPostExecute(String msg) {
+	               // etRegId.setText(msg + "\n");
+	            }
+	        }.execute(null, null, null);
+		   	        return null;
 	}
 }

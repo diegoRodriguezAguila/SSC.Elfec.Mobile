@@ -45,9 +45,10 @@ public class RegisterAccountPresenter {
 					if(!client.hasAccount(view.getNUS(), view.getAccountNumber()))
 					{
 						view.showWSWaiting();
+						
 						AccountWS accountWebService = new AccountWS();
 						accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
-								Build.BRAND , Build.MODEL, view.getIMEI(), "2131f1dsa13ffsddgh31vvasd", new IWSFinishEvent<Boolean>() {		
+								Build.BRAND , Build.MODEL, view.getIMEI(), view.getGCM(), new IWSFinishEvent<Boolean>() {		
 								@Override
 								public void executeOnFinished(WSResponse<Boolean> result) 
 								{

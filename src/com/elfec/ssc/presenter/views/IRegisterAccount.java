@@ -16,6 +16,7 @@ public interface IRegisterAccount {
 	public void setAccountNumberErrors(List<String> validationErrors);
 	public String getIMEI();
 	public String getPhoneNumber();
+	public String getGCM();
 	public void notifyAccountSuccessfulyRegistered();
 	public void showWSWaiting();
 	public void hideWSWaiting();
