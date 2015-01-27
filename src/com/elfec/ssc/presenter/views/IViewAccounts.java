@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 
 public interface IViewAccounts {
 	//temporal
@@ -20,4 +21,9 @@ public interface IViewAccounts {
 	public void ShowWaitingWS();
 	public void hideWSWaiting();
 	public void showViewAccountsErrors(List<Exception> errors);
+	/**
+	 * Obtiene el GCMTokenRequester con el contexto de la actividad actual
+	 * @return
+	 */
+	public GCMTokenRequester getGCMTokenRequester();
 }

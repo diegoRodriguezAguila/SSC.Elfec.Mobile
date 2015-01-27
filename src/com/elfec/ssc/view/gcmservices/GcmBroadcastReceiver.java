@@ -1,4 +1,4 @@
-package com.elfec.ssc.view;
+package com.elfec.ssc.view.gcmservices;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;

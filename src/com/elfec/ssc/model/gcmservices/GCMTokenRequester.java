@@ -37,7 +37,7 @@ public class GCMTokenRequester extends AsyncTask<Void, Void, String> {
 	           
         } 
         catch (IOException ex) {
-        	Log.d("GCM Token Request", ex.getMessage());
+        	Log.e("GCM Token Request", ex.getMessage());
         }
         return deviceToken;
 	}

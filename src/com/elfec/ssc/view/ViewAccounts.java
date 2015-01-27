@@ -23,6 +23,7 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
@@ -50,7 +51,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         accountsListView=(ListView)findViewById(R.id.accounts_list);
         
         accountsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
-
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapter, View view,
 					int position, long arg3) {
@@ -92,8 +92,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	@Override
 	public void show(final List<com.elfec.ssc.model.Account> result) {
-		runOnUiThread(new Runnable() {
-			
+		runOnUiThread(new Runnable() {		
 			@Override
 			public void run() {
 				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.simple_row, result);
@@ -124,9 +123,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	@Override
 	public void refreshAccounts() {
 	      presenter.invokeAccountWS();
-
-		runOnUiThread(new Runnable() {
-			
+		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
 				SuperToast.create(ViewAccounts.this, R.string.account_successfully_deleted, SuperToast.Duration.LONG, 
@@ -143,11 +140,9 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			result+=error.getMessage()+"\n";
 		}
 		final String exceptions=result;
-			runOnUiThread(new Runnable() {
-			
+			runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-
 				Toast.makeText(getApplicationContext(), exceptions,
 						   Toast.LENGTH_LONG).show();
 	
@@ -217,6 +212,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				.show();
 			}
 		});
+	}
+	@Override
+	public GCMTokenRequester getGCMTokenRequester() {
+		return new GCMTokenRequester(this);
 	}
 	
 }

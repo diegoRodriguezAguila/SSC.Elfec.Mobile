@@ -1,7 +1,10 @@
 package com.elfec.ssc.presenter;
 
+import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Build;
 import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.ClientManager;
@@ -10,7 +13,9 @@ import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
+import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 
@@ -64,30 +69,32 @@ public class ViewAccountsPresenter {
 			public void run() 
 			{
 				Looper.prepare();
-				AccountWS accountWS = new AccountWS();
-				Client client=Client.getActiveClient();
+				final Client client=Client.getActiveClient();
 				if(view.getPreferences().isFirstLoadAccounts())
 				{
-					accountWS.getAllAccounts(client.getGmail(), new IWSFinishEvent<List<Account>>() 
-						{
+					if(view.getPreferences().getGCMToken()==null)
+					{
+						GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
+						gcmTokenRequester.setCallback(new GCMTokenReceivedCallback() {								
 							@Override
-							public void executeOnFinished(WSResponse<List<Account>> result) 
-							{
-								if(result.getErrors().size()==0)
+							public void onGCMTokenReceived(String deviceToken) {
+								if(deviceToken==null)
 								{
-									final List<Account> accounts=result.getResult();
-									ClientManager.RegisterClientAccounts(accounts);
-									view.show(accounts);
-									view.getPreferences().setLoadAccountsAlreadyUsed();
+									view.hideWSWaiting();
+									List<Exception> errorsToShow = new ArrayList<Exception>();
+									errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
+									view.showViewAccountsErrors(errorsToShow);
 								}
 								else
 								{
-									view.showViewAccountsErrors(result.getErrors());
+									view.getPreferences().setGCMToken(deviceToken);
+									callGetAllAccountsWebService(client);
 								}
-								view.hideWSWaiting();
 							}
-
 						});
+						gcmTokenRequester.execute((Void[])null);
+					}
+					else callGetAllAccountsWebService(client);
 				}
 				else
 					view.show(client.getActiveAccounts());
@@ -95,13 +102,43 @@ public class ViewAccountsPresenter {
 			}
 		});
 		if(view.getPreferences().isFirstLoadAccounts())
-		view.ShowWaitingWS();
+			view.ShowWaitingWS();
 		ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(new OnReleaseThread() {
 			@Override
 			public void threadReleased() {
 				thread.start();
 			}
 		});
+	}
+	
+	/**
+	 * Invoca a las clases necesarias para obtener las cuentas del cliente via web services
+	 * @param accountWS
+	 * @param client
+	 */
+	private void callGetAllAccountsWebService(Client client) {
+		AccountWS accountWS = new AccountWS();
+		accountWS.getAllAccounts(client.getGmail(), Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(), 
+				new IWSFinishEvent<List<Account>>() 
+			{
+				@Override
+				public void executeOnFinished(WSResponse<List<Account>> result) 
+				{
+					if(result.getErrors().size()==0)
+					{
+						final List<Account> accounts=result.getResult();
+						ClientManager.RegisterClientAccounts(accounts);
+						view.show(accounts);
+						view.getPreferences().setLoadAccountsAlreadyUsed();
+					}
+					else
+					{
+						view.showViewAccountsErrors(result.getErrors());
+					}
+					view.hideWSWaiting();
+				}
+
+			});
 	}
 	
 }

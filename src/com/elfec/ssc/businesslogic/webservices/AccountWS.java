@@ -44,12 +44,14 @@ public class AccountWS
 	 * @param gmail
 	 * @param eventHandler
 	 */
-	public void getAllAccounts(String gmail, IWSFinishEvent<List<Account>> eventHandler)
+	public void getAllAccounts(String gmail, String deviceBrand, String deviceModel, String deviceIMEI,
+			String gCMtoken, IWSFinishEvent<List<Account>> eventHandler)
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 
 				new WebServiceConnector<List<Account>>("http://192.168.12.81/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
 						"ssc_elfec", "GetAllAccounts", new GetAllAccountsWSConverter(), eventHandler);
-		accountWSConnector.execute(new WSParam("GMail", gmail));
+		accountWSConnector.execute(new WSParam("GMail", gmail), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
+				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
 	}
 	
 	/**

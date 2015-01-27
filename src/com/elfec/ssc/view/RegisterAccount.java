@@ -126,6 +126,11 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		return str.toString();
 	}
 
+	
+	public void btnRegisterAccountClick(View view)
+	{
+		presenter.processAccountData();
+	}
     
     //#region  Interface IRegisterAccount methods
 
@@ -286,9 +291,4 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 
 	
 	//#endregion
-	
-	public void btnRegisterAccountClick(View view)
-	{
-		presenter.processAccountData();
-	}
 }

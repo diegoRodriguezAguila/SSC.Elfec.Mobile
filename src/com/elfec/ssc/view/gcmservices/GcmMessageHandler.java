@@ -1,6 +1,7 @@
-package com.elfec.ssc.view;
+package com.elfec.ssc.view.gcmservices;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.view.RegisterAccount;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.app.IntentService;
