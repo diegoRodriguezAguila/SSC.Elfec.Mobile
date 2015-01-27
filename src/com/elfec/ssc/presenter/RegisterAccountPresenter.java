@@ -1,15 +1,20 @@
 package com.elfec.ssc.presenter;
 
+import java.net.ConnectException;
+import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Build;
 import android.os.Looper;
 
+import com.activeandroid.util.Log;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.FieldValidator;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Client;
+import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.model.validations.ValidationRulesFactory;
 import com.elfec.ssc.model.validations.ValidationsAndParams;
 import com.elfec.ssc.model.webservices.WSResponse;
@@ -31,8 +36,7 @@ public class RegisterAccountPresenter {
 	 * Obtiene la información provista por el usuario y del dispositivo
 	 */
 	public void processAccountData()
-	{
-		
+	{		
 		Thread thread = new Thread(new Runnable() {		
 			@Override
 			public void run() {
@@ -44,26 +48,31 @@ public class RegisterAccountPresenter {
 					final Client client = Client.getActiveClient();
 					if(!client.hasAccount(view.getNUS(), view.getAccountNumber()))
 					{
-						view.showWSWaiting();
-						
-						AccountWS accountWebService = new AccountWS();
-						accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
-								Build.BRAND , Build.MODEL, view.getIMEI(), view.getGCM(), new IWSFinishEvent<Boolean>() {		
+						view.showWSWaiting();	
+						if(view.getPreferences().getGCMToken()==null)
+						{
+							GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
+							gcmTokenRequester.setCallback(new GCMTokenReceivedCallback() {								
 								@Override
-								public void executeOnFinished(WSResponse<Boolean> result) 
-								{
-									view.hideWSWaiting();
-									if(result.getResult())
+								public void onGCMTokenReceived(String deviceToken) {
+									if(deviceToken==null)
 									{
-										ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
-										view.notifyAccountSuccessfulyRegistered();
+										view.hideWSWaiting();
+										List<Exception> errorsToShow = new ArrayList<Exception>();
+										errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
+										view.showRegistrationErrors(errorsToShow);
 									}
 									else
 									{
-										view.showRegistrationErrors(result.getErrors());
+										view.getPreferences().setGCMToken(deviceToken);
+										Log.d("GCM TOKEN RECIBIDO", deviceToken);
+										callRegisterWebService(client);
 									}
 								}
 							});
+							gcmTokenRequester.execute((Void[])null);
+						}
+						else callRegisterWebService(client);
 					}
 					else
 					{
@@ -80,6 +89,31 @@ public class RegisterAccountPresenter {
 		});
 		thread.start();
 		
+	}
+	
+	/**
+	 * Invoca a las clases necesarias para registrar una cuenta via web services
+	 * @param client
+	 */
+	private void callRegisterWebService(final Client client) {
+		AccountWS accountWebService = new AccountWS();
+		accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
+				Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken() , new IWSFinishEvent<Boolean>() {		
+				@Override
+				public void executeOnFinished(WSResponse<Boolean> result) 
+				{
+					view.hideWSWaiting();
+					if(result.getResult())
+					{
+						ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
+						view.notifyAccountSuccessfulyRegistered();
+					}
+					else
+					{
+						view.showRegistrationErrors(result.getErrors());
+					}
+				}
+			});
 	}
 	
 	/**

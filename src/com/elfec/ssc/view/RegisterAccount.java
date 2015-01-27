@@ -1,34 +1,33 @@
 package com.elfec.ssc.view;
 
 
-import java.io.IOException;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
-
-import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.ProgressDialogPro;
-import com.elfec.ssc.R;
-import com.elfec.ssc.presenter.RegisterAccountPresenter;
-import com.elfec.ssc.presenter.views.IRegisterAccount;
-import com.github.johnpersano.supertoasts.SuperToast;
-import com.github.johnpersano.supertoasts.util.Style;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.text.Html;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.os.AsyncTask;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
 import android.view.ViewGroup;
 import android.widget.EditText;
+
+import com.alertdialogpro.AlertDialogPro;
+import com.alertdialogpro.ProgressDialogPro;
+import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
+import com.elfec.ssc.presenter.RegisterAccountPresenter;
+import com.elfec.ssc.presenter.views.IRegisterAccount;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
 
@@ -37,7 +36,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	private EditText txtAccountNumber;
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	private AlertDialog waitingWSDialog;
-	private String PROJECT_NUMBER="605802902678";
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -275,37 +274,21 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		});
 	}
 	
+	@Override
+	public PreferencesManager getPreferences() {
+		return new PreferencesManager(getApplicationContext());
+	}
+	
+	@Override
+	public GCMTokenRequester getGCMTokenRequester() {
+		return new GCMTokenRequester(this);
+	}
+
+	
 	//#endregion
 	
 	public void btnRegisterAccountClick(View view)
 	{
 		presenter.processAccountData();
-	}
-
-	@Override
-	public String getGCM() {
-	
-	     new AsyncTask<Void, Void, String>() {
-	            @Override
-	            protected String doInBackground(Void... params) {
-	            	String regid=null;
-	                try {
-	                    GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(getApplicationContext());
-	                     regid = gcm.register(PROJECT_NUMBER);
-	     	           
-	                }
-	           
-	                catch (IOException ex) {
-	           
-	                }
-	           return regid;
-	            }
-
-	            @Override
-	            protected void onPostExecute(String msg) {
-	               // etRegId.setText(msg + "\n");
-	            }
-	        }.execute(null, null, null);
-		   	        return null;
 	}
 }

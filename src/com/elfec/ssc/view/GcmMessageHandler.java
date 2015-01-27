@@ -2,6 +2,7 @@ package com.elfec.ssc.view;
 
 import com.elfec.ssc.R;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,8 +11,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 public class GcmMessageHandler extends IntentService {
 
@@ -52,26 +53,22 @@ public class GcmMessageHandler extends IntentService {
             	{
             	NotificationManager NM;
             	NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-            	 String title = tit;
-                 String subject = "Alerta";
+                 //String subject = "Alerta";
                  String body = mes;
-                 NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                 Notification notify=new Notification(R.drawable.logo_elfec
-                 ,title,System.currentTimeMillis());
-                 
                  Intent notificationIntent = new Intent(getApplicationContext(), RegisterAccount.class);
 
                  notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-
-                
-                
+                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);   
                  
                  PendingIntent pending=PendingIntent.getActivity(
                  getApplicationContext(),0, notificationIntent,0);
-                 notify.setLatestEventInfo(getApplicationContext(),subject,body,pending);
-                 notify.flags |= Notification.FLAG_AUTO_CANCEL;
-                 
+                 NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+                 Notification notify=(new NotificationCompat.Builder(getApplicationContext())).setContentIntent(pending)
+                		    .setSmallIcon(R.drawable.logo_elfec)
+                		    .setTicker(body)
+                		    .setWhen(System.currentTimeMillis())
+                		    .setContentTitle(tit)
+                		    .setContentText(body).build();
                  NM.notify(0, notify);
            //     Toast.makeText(getApplicationContext(),mes , Toast.LENGTH_LONG).show();
             }

@@ -21,6 +21,7 @@ public class PreferencesManager {
 	private final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
 	private final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
 	private final String SETUP_DISTANCE = "SetupDistance";
+	private final String GCM_TOKEN = "GCMToken";
 	
 	private SharedPreferences preferences;
 	
@@ -152,5 +153,23 @@ public class PreferencesManager {
 	public void setConfiguredDistance(int distance)
 	{
 		preferences.edit().putInt(SETUP_DISTANCE, distance).commit();
+	}
+	
+	/**
+	 * Obtiene el GCM token del dispositivo
+	 * @return
+	 */
+	public String getGCMToken()
+	{
+		return preferences.getString(GCM_TOKEN, null);
+	}
+	
+	/**
+	 * Guarda el GCM token del dispositivo
+	 * @param gcmToken
+	 */
+	public void setGCMToken(String gcmToken)
+	{
+		preferences.edit().putString(GCM_TOKEN, gcmToken).commit();
 	}
 }
