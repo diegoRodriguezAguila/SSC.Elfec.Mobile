@@ -69,6 +69,10 @@ public class RegisterAccountPresenter {
 						view.notifyAccountAlreadyRegistered();
 					}
 				}
+				else
+				{
+					view.notifyErrorsInFields();
+				}
 				Looper.loop();
 
 			}

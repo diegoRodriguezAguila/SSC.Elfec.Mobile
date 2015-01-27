@@ -20,5 +20,6 @@ public interface IRegisterAccount {
 	public void showWSWaiting();
 	public void hideWSWaiting();
 	public void notifyAccountAlreadyRegistered();
+	public void notifyErrorsInFields();
 	public void showRegistrationErrors(List<Exception> errors);
 }
