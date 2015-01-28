@@ -36,6 +36,14 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	private IWSResultConverter<TResult> converter;
 	private WSResponse<TResult> resultWS;
 	
+	/**
+	 * 
+	 * @param url
+	 * @param soapAction
+	 * @param namespace
+	 * @param methodName
+	 * @param converter
+	 */
 	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, IWSResultConverter<TResult> converter) 
 	{
 		super();
@@ -47,7 +55,15 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		this.resultWS = new WSResponse<TResult>();
 	}
 	
-	
+	/**
+	 * 
+	 * @param url
+	 * @param soapAction
+	 * @param namespace
+	 * @param methodName
+	 * @param converter
+	 * @param onFinishedEvent
+	 */
 	public WebServiceConnector(String url, String soapAction, String namespace, String methodName 
 			, IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
 	{

@@ -25,17 +25,17 @@ public class Contact extends Model{
 	 */
 	private static final String FACEBOOK_ID="1451525075080740";
 	
-	@Column(name = "Phone")
+	@Column(name = "Phone", notNull = true)
 	private String Phone;
-	@Column(name = "Address")
+	@Column(name = "Address", notNull = true)
 	private String Address;
-	@Column(name = "Email")
+	@Column(name = "Email", notNull = true)
 	private String Email;
-	@Column(name = "WebPage")
+	@Column(name = "WebPage", notNull = true)
 	private String WebPage;
-	@Column(name = "Facebook")
+	@Column(name = "Facebook", notNull = true)
 	private String Facebook;
-	@Column(name = "FacebookId")
+	@Column(name = "FacebookId", notNull = true)
 	private String FacebookId;
 	@Column(name = "InsertDate", notNull = true)
 	private DateTime InsertDate;
@@ -70,9 +70,30 @@ public class Contact extends Model{
 		return defaultContact;
 	}
 	
+	/**
+	 * Obtiene el contacto por defecto
+	 * @return el contacto por defecto
+	 */
 	public static Contact getDefaultContact()
 	{
 		return new Select().from(Contact.class).executeSingle();
+	}
+	
+	@Override
+	public boolean equals(Object other)
+	{
+		if ((other!=null) && (other instanceof Contact))
+		{
+			Contact otherContact = (Contact) other;
+		        return  (this.Phone==otherContact.getPhone()) &&
+						(this.Address==otherContact.getAddress()) &&
+						(this.Email==otherContact.getEmail()) &&
+						(this.WebPage==otherContact.getWebPage()) &&
+						(this.Facebook==otherContact.getFacebook()) &&
+						(this.FacebookId==otherContact.getFacebookId());
+		}
+		return false;
+				
 	}
 	//#region getters and setters
 	public DateTime getInsertDate() {

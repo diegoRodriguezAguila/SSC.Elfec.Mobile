@@ -72,29 +72,23 @@ public class ViewAccountsPresenter {
 				final Client client=Client.getActiveClient();
 				if(view.getPreferences().isFirstLoadAccounts())
 				{
-					if(view.getPreferences().getGCMToken()==null)
-					{
-						GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
-						gcmTokenRequester.setCallback(new GCMTokenReceivedCallback() {								
-							@Override
-							public void onGCMTokenReceived(String deviceToken) {
-								if(deviceToken==null)
-								{
-									view.hideWSWaiting();
-									List<Exception> errorsToShow = new ArrayList<Exception>();
-									errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
-									view.showViewAccountsErrors(errorsToShow);
-								}
-								else
-								{
-									view.getPreferences().setGCMToken(deviceToken);
-									callGetAllAccountsWebService(client);
-								}
+					GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
+					gcmTokenRequester.getTokenAsync(new GCMTokenReceivedCallback() {								
+						@Override
+						public void onGCMTokenReceived(String deviceToken) {
+							if(deviceToken==null)
+							{
+								view.hideWSWaiting();
+								List<Exception> errorsToShow = new ArrayList<Exception>();
+								errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
+								view.showViewAccountsErrors(errorsToShow);
 							}
-						});
-						gcmTokenRequester.execute((Void[])null);
-					}
-					else callGetAllAccountsWebService(client);
+							else
+							{
+								callGetAllAccountsWebService(client);
+							}
+						}
+					});
 				}
 				else
 					view.show(client.getActiveAccounts());

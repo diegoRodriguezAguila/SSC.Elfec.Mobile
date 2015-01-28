@@ -7,7 +7,6 @@ import java.util.List;
 import android.os.Build;
 import android.os.Looper;
 
-import com.activeandroid.util.Log;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.FieldValidator;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
@@ -48,31 +47,24 @@ public class RegisterAccountPresenter {
 					final Client client = Client.getActiveClient();
 					if(!client.hasAccount(view.getNUS(), view.getAccountNumber()))
 					{
-						view.showWSWaiting();	
-						if(view.getPreferences().getGCMToken()==null)
-						{
-							GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
-							gcmTokenRequester.setCallback(new GCMTokenReceivedCallback() {								
-								@Override
-								public void onGCMTokenReceived(String deviceToken) {
-									if(deviceToken==null)
-									{
-										view.hideWSWaiting();
-										List<Exception> errorsToShow = new ArrayList<Exception>();
-										errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
-										view.showRegistrationErrors(errorsToShow);
-									}
-									else
-									{
-										view.getPreferences().setGCMToken(deviceToken);
-										Log.d("GCM TOKEN RECIBIDO", deviceToken);
-										callRegisterWebService(client);
-									}
+						view.showWSWaiting();						
+						GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
+						gcmTokenRequester.getTokenAsync(new GCMTokenReceivedCallback() {								
+							@Override
+							public void onGCMTokenReceived(String deviceToken) {
+								if(deviceToken==null)
+								{
+									view.hideWSWaiting();
+									List<Exception> errorsToShow = new ArrayList<Exception>();
+									errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
+									view.showRegistrationErrors(errorsToShow);
 								}
-							});
-							gcmTokenRequester.execute((Void[])null);
-						}
-						else callRegisterWebService(client);
+								else
+								{
+									callRegisterWebService(client);
+								}
+							}
+						});
 					}
 					else
 					{
