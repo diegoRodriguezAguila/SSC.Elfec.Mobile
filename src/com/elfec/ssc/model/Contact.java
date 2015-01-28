@@ -70,9 +70,30 @@ public class Contact extends Model{
 		return defaultContact;
 	}
 	
+	/**
+	 * Obtiene el contacto por defecto
+	 * @return el contacto por defecto
+	 */
 	public static Contact getDefaultContact()
 	{
 		return new Select().from(Contact.class).executeSingle();
+	}
+	
+	@Override
+	public boolean equals(Object other)
+	{
+		if ((other!=null) && (other instanceof Contact))
+		{
+			Contact otherContact = (Contact) other;
+		        return  (this.Phone==otherContact.getPhone()) &&
+						(this.Address==otherContact.getAddress()) &&
+						(this.Email==otherContact.getEmail()) &&
+						(this.WebPage==otherContact.getWebPage()) &&
+						(this.Facebook==otherContact.getFacebook()) &&
+						(this.FacebookId==otherContact.getFacebookId());
+		}
+		return false;
+				
 	}
 	//#region getters and setters
 	public DateTime getInsertDate() {

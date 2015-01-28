@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.webservices.IWSResultConverter;
 
-public class GetAllLocationPointsConverter implements
+public class GetAllLocationPointsWSConverter implements
 		IWSResultConverter<List<LocationPoint>> {
 
 	@Override
