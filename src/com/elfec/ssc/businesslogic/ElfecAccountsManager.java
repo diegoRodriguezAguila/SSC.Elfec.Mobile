@@ -1,5 +1,7 @@
 package com.elfec.ssc.businesslogic;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.elfec.ssc.model.Account;
@@ -27,6 +29,9 @@ public class ElfecAccountsManager {
 		}
 		else newAccount.setStatus((short) 1);
 		newAccount.save();
+		List<Account> a=Account.getAll(Account.class);
+		int i=0;
+		i=i+1;
 	}
 
 }

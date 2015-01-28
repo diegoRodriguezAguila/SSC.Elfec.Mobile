@@ -35,15 +35,23 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	private ViewAccountsPresenter presenter;
 	private ListView accountsListView;
 	private AlertDialog waitingWSDialog;
-	
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
 	     presenter.invokeAccountWS();
-	      
 	}
-    @Override
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+	}
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+	}
+	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
@@ -76,6 +84,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         getMenuInflater().inflate(R.menu.view_accounts, menu);
         return true;
     }
+    
     
     public void btnRegisterAccountClick(View view)
     {

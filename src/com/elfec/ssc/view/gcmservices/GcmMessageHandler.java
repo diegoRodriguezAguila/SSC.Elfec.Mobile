@@ -1,9 +1,15 @@
 package com.elfec.ssc.view.gcmservices;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.businesslogic.ElfecAccountsManager;
+import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Client;
+import com.elfec.ssc.model.enums.ClientStatus;
 import com.elfec.ssc.view.RegisterAccount;
+import com.elfec.ssc.view.ViewAccounts;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import android.accounts.AccountManager;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -40,12 +46,14 @@ public class GcmMessageHandler extends IntentService {
         Bundle extras = intent.getExtras();
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        // The getMessageType() intent parameter must be the intent you received
-        // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
-
        tit = extras.getString("title");
        mes=extras.getString("message");
+       if(extras.getString("key").equals("NewAccount"))
+       {
+    	  
+    	   ElfecAccountsManager.RegisterAccount(Client.getClientByGmail(extras.getString("gmail")), extras.getString("number"), extras.getString("nus"));
+       }
        showToast();
        Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
         GcmBroadcastReceiver.completeWakefulIntent(intent);
@@ -60,7 +68,7 @@ public class GcmMessageHandler extends IntentService {
             	NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
                  //String subject = "Alerta";
                  String body = mes;
-                 Intent notificationIntent = new Intent(getApplicationContext(), RegisterAccount.class);
+                 Intent notificationIntent = new Intent(getApplicationContext(), ViewAccounts.class);
 
                  notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
                          | Intent.FLAG_ACTIVITY_SINGLE_TOP);   

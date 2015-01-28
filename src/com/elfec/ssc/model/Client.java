@@ -106,6 +106,17 @@ public class Client extends Model {
 		
 	}
 	/**
+	 * retorna un cliente en base a una direccion de correo electronico
+	 * @param gmail
+	 * @return Client
+	 */
+	public static Client getClientByGmail(String gmail)
+	{
+		return new Select()
+        .from(Client.class).where("Status=? AND Gmail=?", ClientStatus.ACTIVE.toShort(),gmail)
+        .executeSingle();
+	}
+	/**
 	 * Obtiene el cliente que tenga estado activo
 	 * @return el cliente activo, null si es que no se registró ningun cliente aún
 	 */
