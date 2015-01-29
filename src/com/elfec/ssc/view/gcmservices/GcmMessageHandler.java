@@ -1,25 +1,13 @@
 package com.elfec.ssc.view.gcmservices;
 
-import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.ElfecAccountsManager;
-import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.enums.ClientStatus;
-import com.elfec.ssc.view.RegisterAccount;
-import com.elfec.ssc.view.ViewAccounts;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import android.accounts.AccountManager;
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+
+import com.elfec.ssc.R;
 
 /**
  * Se encarga de procesar el mensaje recibido por el GCMBroadcastReceiver
@@ -28,64 +16,34 @@ import android.util.Log;
  */
 public class GcmMessageHandler extends IntentService {
 
-     String mes;
-     String tit;
-     private Handler handler;
     public GcmMessageHandler() {
         super("GcmMessageHandler");
     }
 
     @Override
     public void onCreate() {
-        // TODO Auto-generated method stub
         super.onCreate();
-        handler = new Handler();
-    }
-    @Override
-    protected void onHandleIntent(Intent intent) {
-        Bundle extras = intent.getExtras();
+	}
 
-        GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
-        String messageType = gcm.getMessageType(intent);
-       tit = extras.getString("title");
-       mes=extras.getString("message");
-       if(extras.getString("key").equals("NewAccount"))
-       {
-    	  
-    	   ElfecAccountsManager.RegisterAccount(Client.getClientByGmail(extras.getString("gmail")), extras.getString("number"), extras.getString("nus"));
-       }
-       showToast();
-       Log.i("GCM", "Received : (" +messageType+")  "+extras.getString("title"));
-        GcmBroadcastReceiver.completeWakefulIntent(intent);
+	@Override
+	protected void onHandleIntent(Intent intent) {
+		Bundle messageInfo = intent.getExtras();
+		IGCMHandler gcmHandler = GCMHandlerFactory.getGCMHandler(messageInfo.getString("key"));
+		if(gcmHandler!=null)
+		{
+			NotificationManager notifManager= (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
+            Intent notificationIntent = new Intent(getApplicationContext(), gcmHandler.getActivityClass());
+            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);   
+            PendingIntent pending = PendingIntent.getActivity(getApplicationContext(),0, notificationIntent,0);         
+            gcmHandler.handleGCMessage(messageInfo, notifManager, 
+            		(new NotificationCompat.Builder(getApplicationContext()))
+							   		    .setContentIntent(pending)
+							   		    .setContentTitle(messageInfo.getString("title"))
+										.setContentText(messageInfo.getString("message"))
+							   		    .setSmallIcon(R.drawable.elfec_notification));
+		}
+		GcmBroadcastReceiver.completeWakefulIntent(intent);
 
-    }
+	}
 
-    public void showToast(){
-        handler.post(new Runnable() {
-            public void run() {
-            	{
-            	NotificationManager NM;
-            	NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                 //String subject = "Alerta";
-                 String body = mes;
-                 Intent notificationIntent = new Intent(getApplicationContext(), ViewAccounts.class);
-
-                 notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-                         | Intent.FLAG_ACTIVITY_SINGLE_TOP);   
-                 
-                 PendingIntent pending=PendingIntent.getActivity(
-                 getApplicationContext(),0, notificationIntent,0);
-                 NM=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
-                 Notification notify=(new NotificationCompat.Builder(getApplicationContext())).setContentIntent(pending)
-                		    .setSmallIcon(R.drawable.elfec_notification)
-                		    .setTicker(body)
-                		    .setWhen(System.currentTimeMillis())
-                		    .setContentTitle(tit)
-                		    .setContentText(body).build();
-                 NM.notify(0, notify);
-            }
-            }
-         });
-
-    }
 }

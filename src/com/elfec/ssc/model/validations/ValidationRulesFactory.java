@@ -3,10 +3,15 @@ package com.elfec.ssc.model.validations;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
-
+/**
+ * Factory para la creación de reglas, nuevas reglas añadidas deben añadirse 
+ * en el constructor estático
+ * @author Diego
+ *
+ */
 public class ValidationRulesFactory {
 
-	private static Hashtable<String,Class<?>> registeredValidations = new Hashtable<String, Class<?>>();
+	private static Hashtable<String,Class<? extends IValidationRule<?>>> registeredValidations = new Hashtable<String, Class<? extends IValidationRule<?>>>();
 	static
 	{
 		registeredValidations.put("MaxLenght", MaxLenghtValidationRule.class);
@@ -18,13 +23,12 @@ public class ValidationRulesFactory {
 	public static IValidationRule<?> getValidationRule(String key)
 	{
 		try {
-			return (IValidationRule<?>) registeredValidations.get(key).newInstance();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		}
-		return null;
+			return registeredValidations.get(key).newInstance();
+		} 
+		catch (InstantiationException e) {}
+		catch (IllegalAccessException e) {}
+		catch(NullPointerException e) {}
+		return null;	
 	}
 	
 	/**

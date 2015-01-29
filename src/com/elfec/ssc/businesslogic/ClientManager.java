@@ -18,13 +18,13 @@ public class ClientManager {
 	 * con el estado activo por defecto
 	 * @param gmail
 	 */
-	public static void RegisterClient(String gmail)
+	public static void registerClient(String gmail)
 	{
 		Client client = new Client(gmail, ClientStatus.ACTIVE);
 		client.setInsertDate(DateTime.now());
 		client.save();
 	}
-	public static void RegisterClientAccounts(final List<Account> accounts)
+	public static void registerClientAccounts(final List<Account> accounts)
 	{
 		for(Account account : accounts)
 		{

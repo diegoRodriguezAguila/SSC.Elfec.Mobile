@@ -19,7 +19,7 @@ import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
-import com.elfec.ssc.view.controls.events.IAccountPicked;
+import com.elfec.ssc.view.controls.events.OnAccountPicked;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
 
@@ -127,7 +127,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	
 	public void showAccountPickerDialog()
 	{
-		AccountPickerDialogService.instanceService(this, new IAccountPicked() {				
+		AccountPickerDialogService.instanceService(this, new OnAccountPicked() {				
 			@Override
 			public void onAccountPicked(String gmail) {
 				presenter.handlePickedGmailAccount(gmail);

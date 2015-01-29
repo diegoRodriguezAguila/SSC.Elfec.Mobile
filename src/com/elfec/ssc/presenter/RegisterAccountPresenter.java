@@ -97,7 +97,7 @@ public class RegisterAccountPresenter {
 					view.hideWSWaiting();
 					if(result.getResult())
 					{
-						ElfecAccountsManager.RegisterAccount(client, view.getAccountNumber(), view.getNUS());
+						ElfecAccountsManager.registerAccount(client, view.getAccountNumber(), view.getNUS());
 						view.notifyAccountSuccessfulyRegistered();
 					}
 					else

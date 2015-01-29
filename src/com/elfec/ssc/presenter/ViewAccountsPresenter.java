@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.ClientManager;
+import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
@@ -43,7 +44,7 @@ public class ViewAccountsPresenter {
 					public void executeOnFinished(WSResponse<Boolean> result) {
 						if(result.getResult())
 						{
-							Account.deleteAccount(client.getGmail(), nus);
+							ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
 							view.refreshAccounts();
 						}
 						else
@@ -62,7 +63,7 @@ public class ViewAccountsPresenter {
 	/**
 	 * Obtiene las cuentas del cliente tanto remota como localmente
 	 */
-	public void invokeAccountWS()
+	public void gatherAccounts()
 	{
 		final Thread thread=new Thread(new Runnable() {			
 			@Override
@@ -121,7 +122,7 @@ public class ViewAccountsPresenter {
 					if(result.getErrors().size()==0)
 					{
 						final List<Account> accounts=result.getResult();
-						ClientManager.RegisterClientAccounts(accounts);
+						ClientManager.registerClientAccounts(accounts);
 						view.show(accounts);
 						view.getPreferences().setLoadAccountsAlreadyUsed();
 					}

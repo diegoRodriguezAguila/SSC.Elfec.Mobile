@@ -16,22 +16,22 @@ import android.os.Bundle;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.view.controls.events.IAccountPicked;
+import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
 public class AccountPickerDialogService {
 
 	private final String GOOGLE_ACCOUNT_TYPE = "com.google";
 	private AlertDialogPro.Builder dialogBuilder;
-	private IAccountPicked onAccountPicked;
+	private OnAccountPicked onAccountPicked;
 	private int selectedItem;
 	private  ArrayList<String> googleAccounts;
 	
-	public static AccountPickerDialogService instanceService(Activity activity, IAccountPicked onAccountPicked)
+	public static AccountPickerDialogService instanceService(Activity activity, OnAccountPicked onAccountPicked)
 	{
 		return new AccountPickerDialogService(activity, onAccountPicked);
 	}
 	
-	private AccountPickerDialogService(final Activity activity, IAccountPicked onAccountPicked)
+	private AccountPickerDialogService(final Activity activity, OnAccountPicked onAccountPicked)
 	{
 		this.onAccountPicked = onAccountPicked;
 		initializePickList(activity);

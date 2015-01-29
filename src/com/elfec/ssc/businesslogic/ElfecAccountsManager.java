@@ -1,7 +1,5 @@
 package com.elfec.ssc.businesslogic;
 
-import java.util.List;
-
 import org.joda.time.DateTime;
 
 import com.elfec.ssc.model.Account;
@@ -20,7 +18,7 @@ public class ElfecAccountsManager {
 	 * @param accountNumber
 	 * @param nus
 	 */
-	public static void RegisterAccount(Client ownerClient, String accountNumber,String nus) {
+	public static void registerAccount(Client ownerClient, String accountNumber,String nus) {
 		Account newAccount = Account.findAccount(ownerClient.getGmail(), nus, accountNumber);
 		if(newAccount==null)
 		{
@@ -29,9 +27,21 @@ public class ElfecAccountsManager {
 		}
 		else newAccount.setStatus((short) 1);
 		newAccount.save();
-		List<Account> a=Account.getAll(Account.class);
-		int i=0;
-		i=i+1;
+	}
+	
+	/**
+	 * Marca a la cuenta con el nus y cliente especificados como eliminada
+	 * @return boolean, true si se logro eliminar
+	 */
+	public static boolean deleteAccount(String gmail,String nus)
+	{	
+		Account account = Account.findAccount(gmail, nus);
+		if(account!=null)
+		{
+			account.setStatus((short) 0);
+			return account.save()>0;
+		}
+		return false;
 	}
 
 }

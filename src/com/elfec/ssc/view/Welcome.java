@@ -7,7 +7,7 @@ import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.presenter.WelcomePresenter;
 import com.elfec.ssc.presenter.views.IWelcome;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
-import com.elfec.ssc.view.controls.events.IAccountPicked;
+import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -71,7 +71,7 @@ public class Welcome extends ActionBarActivity implements IWelcome {
 	
 	public void btnSelectAccountClick(View view)
 	{
-		AccountPickerDialogService.instanceService(this, new IAccountPicked() {				
+		AccountPickerDialogService.instanceService(this, new OnAccountPicked() {				
 			@Override
 			public void onAccountPicked(String gmail) {
 				presenter.handlePickedGmailAccount(gmail);

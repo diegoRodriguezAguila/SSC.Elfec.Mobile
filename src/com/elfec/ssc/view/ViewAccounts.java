@@ -22,6 +22,7 @@ import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
@@ -39,7 +40,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	protected void onResume()
 	{
 		super.onResume();
-	     presenter.invokeAccountWS();
+		ViewPresenterManager.setPresenter(presenter);
+	    presenter.gatherAccounts();
 	}
 	@Override
 	protected void onStop()
@@ -50,6 +52,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	protected void onPause()
 	{
 		super.onPause();
+		ViewPresenterManager.setPresenter(null);
 	}
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,7 +60,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
         accountsListView=(ListView)findViewById(R.id.accounts_list);
-        
+        overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
         accountsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> adapter, View view,
@@ -131,10 +134,11 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	@Override
 	public void refreshAccounts() {
-	      presenter.invokeAccountWS();
+	      presenter.gatherAccounts();
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
+				SuperToast.cancelAllSuperToasts();
 				SuperToast.create(ViewAccounts.this, R.string.account_successfully_deleted, SuperToast.Duration.LONG, 
 					    Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();	
 			}

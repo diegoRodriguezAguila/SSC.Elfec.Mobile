@@ -31,7 +31,7 @@ public class MainMenuPresenter {
 		Thread thread = new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				ClientManager.RegisterClient(gmail);
+				ClientManager.registerClient(gmail);
 				view.getPreferences().setHasOneGmailAccount();
 				ThreadMutex.instance("ActiveClient").setFree();
 			}

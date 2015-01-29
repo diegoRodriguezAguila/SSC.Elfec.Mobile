@@ -92,19 +92,28 @@ public class Account extends Model {
 	}
     
     //#endregion
+
+	
 	/**
-	 * Actualiza la cuenta eliminada con el nus y cliente especificados
-	 * @return boolean, true si se logro eliminar
+	 * Busca una cuenta que coincida con los parámetros
+	 * @param gmail
+	 * @param nus
+	 * @return
 	 */
-	public static boolean deleteAccount(String gmail,String nus)
-	{	
-		Account account= new Select()
+	public static Account findAccount(String gmail,String nus)
+	{
+		return new Select()
         .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("NUS=? AND Gmail=?", nus,gmail)
         .executeSingle();
-		account.Status=0;
-		return account.save()>0;
 	}
 	
+	/**
+	 * Busca una cuenta que coincida con los parámetros
+	 * @param gmail
+	 * @param nus
+	 * @param accountNumber
+	 * @return
+	 */
 	public static Account findAccount(String gmail,String nus, String accountNumber)
 	{
 		return new Select()

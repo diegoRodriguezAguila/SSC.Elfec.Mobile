@@ -10,7 +10,7 @@ import android.location.Location;
 import com.elfec.ssc.model.LocationPoint;;
 
 public class LocationManager {
-	public static void RegisterLocations(final List<LocationPoint> points)
+	public static void registerLocations(final List<LocationPoint> points)
 	{
 		for(LocationPoint point : points)
 		{

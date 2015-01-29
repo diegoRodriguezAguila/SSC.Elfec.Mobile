@@ -132,7 +132,7 @@ public class LocationServicesPresenter {
 					public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
 						if(result.getErrors().size()==0)
 						{
-							LocationManager.RegisterLocations(result.getResult());
+							LocationManager.registerLocations(result.getResult());
 							view.getPreferences().setLoadLocationsAlreadyUsed();
 							verifyShowLocationPoints(result.getResult());
 						}
