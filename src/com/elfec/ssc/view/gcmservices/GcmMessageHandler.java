@@ -4,6 +4,7 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
@@ -37,6 +38,7 @@ public class GcmMessageHandler extends IntentService {
             PendingIntent pending = PendingIntent.getActivity(getApplicationContext(),0, notificationIntent,0);         
             gcmHandler.handleGCMessage(messageInfo, notifManager, 
             		(new NotificationCompat.Builder(getApplicationContext()))
+            							.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 							   		    .setContentIntent(pending)
 							   		    .setContentTitle(messageInfo.getString("title"))
 										.setContentText(messageInfo.getString("message"))
