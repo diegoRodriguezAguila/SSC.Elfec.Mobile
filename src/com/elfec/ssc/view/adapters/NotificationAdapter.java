@@ -1,7 +1,6 @@
 package com.elfec.ssc.view.adapters;
 
 import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,28 +9,28 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Notification;
 
-public class ViewAccountsAdapter extends ArrayAdapter<Account> {
-	private List<Account> accounts;
+public class NotificationAdapter extends ArrayAdapter<Notification> {
+
+	private List<Notification> notifications;
 	private int resource;
 	private LayoutInflater inflater = null;
-	public ViewAccountsAdapter(Context context, int resource,
-			final List<Account> accounts) {
-		super(context, resource, accounts);
-		this.accounts = accounts;
+	public NotificationAdapter(Context context, int resource,
+			List<Notification> notifications) {
+		super(context, resource, notifications);
+		this.notifications = notifications;
 		this.resource = resource;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
-	
 	@Override
 	public int getCount() {
-		return accounts.size();
+		return notifications.size();
 	}
 
 	@Override
-	public Account getItem(int position) {
-		return accounts.get(position);
+	public Notification getItem(int position) {
+		return notifications.get(position);
 	}
 
 	@Override
@@ -43,13 +42,10 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
-		Account dispositivoBluetooth = accounts.get(position);
-		((TextView) convertView.findViewById(R.id.rowTextView1)).setText(""
-				+ dispositivoBluetooth.getAccountNumber());
-		((TextView) convertView.findViewById(R.id.rowTextView2))
-				.setText(dispositivoBluetooth.getNUS());
+		Notification notification = notifications.get(position);
+		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(notification.getTitle());
+		((TextView) convertView.findViewById(R.id.list_item_notification_message)).setText(notification.getContent());
 		return convertView;
 	}
-	
 
 }

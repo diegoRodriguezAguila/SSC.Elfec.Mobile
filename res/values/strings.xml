@@ -60,6 +60,8 @@
     <!-- Notificaciones -->
     
     <string name="notifications_title">Notificaciones</string>
+    <string name="outage_group">Cortes</string>
+    <string name="accounts_group">Cuentas</string>
 
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>

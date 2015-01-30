@@ -70,7 +70,7 @@ public class Notification extends Model {
         .from(Notification.class).as("n").where("n.Type=1")
         .execute();
 	}
-	public static List<Notification> getCutNotifications()
+	public static List<Notification> getOutageNotifications()
 	{
 		return  new Select()
         .from(Notification.class).as("n").where("n.Type=0")

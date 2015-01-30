@@ -107,7 +107,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 		runOnUiThread(new Runnable() {		
 			@Override
 			public void run() {
-				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.simple_row, result);
+				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.view_accounts_row, result);
 				accountsListView.setAdapter(adapter);
 				if(result.size()>0)
 				{
