@@ -4,11 +4,13 @@ public class AdapterItemWrapper<T> {
 	private T wrappedObject;
 	private boolean isExpanded;
 	private int expandedSize;
+	private int imageResourceId;
 	
-	public AdapterItemWrapper(T wrappedObject) {
+	public AdapterItemWrapper(T wrappedObject, int imageResourceId) {
 		super();
 		this.wrappedObject = wrappedObject;
 		this.isExpanded = false;
+		this.imageResourceId = imageResourceId;
 	}
 	
 	public T getWrappedObject() {
@@ -30,6 +32,14 @@ public class AdapterItemWrapper<T> {
 
 	public void setExpandedSize(int expandedSize) {
 		this.expandedSize = expandedSize;
+	}
+
+	public int getImageResourceId() {
+		return imageResourceId;
+	}
+
+	public void setImageResourceId(int imageResourceId) {
+		this.imageResourceId = imageResourceId;
 	}
 
 }
