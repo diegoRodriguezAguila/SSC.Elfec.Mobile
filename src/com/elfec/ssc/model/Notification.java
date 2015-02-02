@@ -8,9 +8,13 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.elfec.ssc.model.enums.NotificationKey;
+import com.elfec.ssc.model.enums.NotificationType;
 
 @Table(name = "Notifications")
 public class Notification extends Model {
+	@Column(name = "Key")
+	private short Key;
 	@Column(name = "Title")
     private String Title;
 	@Column(name = "Content")
@@ -25,14 +29,22 @@ public class Notification extends Model {
 	{
 		super();
 	}
-	public Notification(String Title,String Content,short Type)
+	public Notification(String title,String content,NotificationType type, NotificationKey key)
 	{
 		super();
-		this.Title=Title;
-		this.Content=Content;
-		this.Type=Type;
+		this.Title=title;
+		this.Content=content;
+		this.setType(type);
+		this.setKey(key);
 	}
 	//#region getters and setters
+	
+	public NotificationKey getKey() {
+		return NotificationKey.get(Key);
+	}
+	public void setKey(NotificationKey key) {
+		Key = key.toShort();
+	}
 	public String getTitle() {
 		return Title;
 	}
@@ -45,11 +57,11 @@ public class Notification extends Model {
 	public void setContent(String content) {
 		Content = content;
 	}
-	public Short getType() {
-		return Type;
+	public NotificationType getType() {
+		return NotificationType.get(Type);
 	}
-	public void setType(Short type) {
-		Type = type;
+	public void setType(NotificationType type) {
+		Type = type.toShort();
 	}
 	public DateTime getInsertDate() {
 		return InsertDate;
@@ -67,13 +79,13 @@ public class Notification extends Model {
 	public static List<Notification> getAccountNotifications()
 	{
 		return  new Select()
-        .from(Notification.class).as("n").where("n.Type=1")
+        .from(Notification.class).where("Type=?", NotificationType.ACCOUNT)
         .execute();
 	}
 	public static List<Notification> getOutageNotifications()
 	{
 		return  new Select()
-        .from(Notification.class).as("n").where("n.Type=0")
+        .from(Notification.class).where("Type=?", NotificationType.OUTAGE)
         .execute();
 	}
 }

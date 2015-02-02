@@ -1,8 +1,11 @@
 package com.elfec.ssc.view.gcmservices;
 
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
+import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
+import com.elfec.ssc.model.enums.NotificationKey;
+import com.elfec.ssc.model.enums.NotificationType;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.view.ViewAccounts;
 
@@ -27,6 +30,8 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 			boolean res = ElfecAccountsManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
 			if(res)
 			{
+				ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("content"),
+						NotificationType.get(messageInfo.getShort("type")), NotificationKey.get(messageInfo.getString("key")));
 				ViewAccountsPresenter presenter = ViewPresenterManager
 						.getPresenter();
 				if (presenter != null)

@@ -1,7 +1,5 @@
 package com.elfec.ssc.view.gcmservices;
 
-import org.joda.time.DateTime;
-
 import android.app.IntentService;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -11,7 +9,6 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.model.Notification;
 
 /**
  * Se encarga de procesar el mensaje recibido por el GCMBroadcastReceiver
@@ -28,20 +25,7 @@ public class GcmMessageHandler extends IntentService {
     public void onCreate() {
         super.onCreate();
 	}
-
-    private void SaveNotification(final String title,final String content,final short type)
-    {
-    	Thread thread=new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				Notification notification=new Notification(title,content,type);
-				notification.setInsertDate(DateTime.now());
-				notification.save();
-			}
-		});
-    	thread.start();
-    }
+    
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		Bundle messageInfo = intent.getExtras();
@@ -59,7 +43,6 @@ public class GcmMessageHandler extends IntentService {
 							   		    .setContentTitle(messageInfo.getString("title"))
 										.setContentText(messageInfo.getString("message"))
 							   		    .setSmallIcon(R.drawable.elfec_notification));
-            	SaveNotification(messageInfo.getString("title"),messageInfo.getString("message"),(short)1);
 		}
 		
 		GcmBroadcastReceiver.completeWakefulIntent(intent);
