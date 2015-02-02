@@ -6,20 +6,17 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.activeandroid.util.Log;
-import com.elfec.ssc.businesslogic.ElfecAccountsManager;
-import com.elfec.ssc.businesslogic.LocationManager;
-import com.elfec.ssc.helpers.ViewPresenterManager;
-import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.LocationPoint;
-import com.elfec.ssc.presenter.LocationServicesPresenter;
-import com.elfec.ssc.presenter.ViewAccountsPresenter;
-import com.elfec.ssc.view.LocationServices;
-
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
+
+import com.activeandroid.util.Log;
+import com.elfec.ssc.businesslogic.LocationManager;
+import com.elfec.ssc.helpers.ViewPresenterManager;
+import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.presenter.LocationServicesPresenter;
+import com.elfec.ssc.view.LocationServices;
 
 public class UpdatePointsGCMHandler implements IGCMHandler {
 	//private final int NOTIF_ID = 3;

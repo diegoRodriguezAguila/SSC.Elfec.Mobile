@@ -31,9 +31,8 @@
             android:layout_toRightOf="@+id/notification_image"
             android:layout_toStartOf="@+id/notification_image"
             android:layout_toLeftOf="@+id/list_item_notification_datetime"
-            android:layout_toEndOf="@+id/list_item_notification_datetime"
-           
-            android:text="Cuenta eliminada"
+            android:layout_toEndOf="@+id/list_item_notification_datetime"          
+            android:text="@string/account_deleted_sample"
             android:textAppearance="@style/TextAppearance.CustomFont.EditText"
             android:textSize="18sp" />
 
@@ -53,7 +52,7 @@
                 android:id="@+id/list_item_notification_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="06 Ago 2014"
+                android:text="@string/date_sample"
                 android:textAppearance="@style/TextAppearance.CustomFont.EditText"
                 android:textColor="@color/light_text_color"
                 android:textSize="12sp" />
@@ -62,7 +61,7 @@
                 android:id="@+id/list_item_notification_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="19:03"
+                android:text="@string/time_sample"
                 android:textColor="@color/light_text_color"
                 android:textAppearance="@style/TextAppearance.CustomFont.EditText"
                 android:textSize="13sp" />
@@ -78,7 +77,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:text="Se eliminó la cuenta con el nus: 22322"
+        android:text="@string/notification_message_sample"
         android:textAppearance="@style/TextAppearance.CustomFont.EditText"
         android:textSize="15sp" />
 

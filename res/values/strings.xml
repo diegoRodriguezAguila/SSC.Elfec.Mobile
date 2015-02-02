@@ -85,4 +85,8 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
+    <string name="account_deleted_sample">Cuenta eliminada</string>
+    <string name="date_sample">06 Ago 2014</string>
+    <string name="time_sample">19:03</string>
+    <string name="notification_message_sample">Se eliminó la cuenta con el nus: 22322</string>
 </resources>
