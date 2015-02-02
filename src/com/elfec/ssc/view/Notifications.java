@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
+import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.view.adapters.NotificationAdapter;
 import com.elfec.ssc.view.animations.HeightAnimation;
@@ -116,7 +118,14 @@ public class Notifications extends ActionBarActivity {
 		changeListViewHeight(outageListView, outageStatus);
 		changeListViewHeight(accountsListView, accountsStatus);
 	}
-
+	public void deleteOutageNotifications(View view)
+	{
+		ElfecNotificationManager.removeAllNotifications((short)1);
+		List<Notification> notifs = Notification.getAccountNotifications();
+		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
+		
+		
+	}
 	public void changeListViewHeight(ListView wichList, ExpandStatus expandSize) {
 		int selectedSize = -1;
 		if (expandSize == ExpandStatus.COLLAPSED)

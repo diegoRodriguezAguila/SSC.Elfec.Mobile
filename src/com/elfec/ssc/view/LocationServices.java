@@ -9,6 +9,7 @@ import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.helpers.ThreadMutex;
+import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
@@ -71,7 +72,17 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		croutonStyle =  new Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color)).build();
 	}
-	
+	protected void onResume()
+	{
+		super.onResume();
+		ViewPresenterManager.setPresenter(presenter);
+	}
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		ViewPresenterManager.setPresenter(null);
+	}
 	@Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
