@@ -24,7 +24,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		this.notifications = new ArrayList<AdapterItemWrapper<Notification>>();
 		for(Notification notif : notifications)
 		{
-			this.notifications.add(new AdapterItemWrapper<Notification>(notif));
+			this.notifications.add(new AdapterItemWrapper<Notification>(notif,R.drawable.notif_account_deleted));
 		}
 		
 		this.resource = resource;
@@ -51,9 +51,6 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		if(convertView==null)
 		{
 			convertView = inflater.inflate(resource, null);
-			View innerView = convertView.findViewById(R.id.linear_row_notif);
-			int totalHeight = convertView.getHeight();
-			(((LinearLayout.LayoutParams)innerView.findViewById(R.id.linear_row_notif).getLayoutParams())).bottomMargin=(-1)*(totalHeight-20);
 		}
 		Notification notification = wrappedNotif.getWrappedObject();
 		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(notification.getTitle());
