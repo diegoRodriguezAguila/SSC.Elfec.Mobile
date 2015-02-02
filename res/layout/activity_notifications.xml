@@ -39,10 +39,12 @@
 <ListView
         android:id="@+id/outage_listview"
         android:layout_height="0dp"
+        android:background="@android:color/white"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:fastScrollEnabled="true"
         android:layout_below="@+id/outage_group"
         android:layout_width="match_parent"/>
 <CheckBox
@@ -66,11 +68,13 @@
 <ListView
         android:id="@+id/accounts_listview"
         android:layout_height="0dp"
+        android:background="@android:color/white"
         android:layout_below="@+id/accounts_group"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:fastScrollEnabled="true"
         android:layout_width="match_parent"/>
     
 </RelativeLayout>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal" >
@@ -8,10 +8,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:contentDescription ="@string/notifications_title"
-        android:padding="10dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="10dp"
+        android:layout_ma
         android:src="@drawable/accounts" />
     <LinearLayout
-       android:layout_width="wrap_content"
+       android:id="@+id/linear_row_notif"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:paddingLeft="5dp"
        android:paddingStart="5dp"
@@ -23,8 +27,7 @@
 	        android:layout_height="wrap_content"
 	        android:textSize="17sp"
 	        android:paddingTop="5dp"
-	        android:paddingBottom="5dp" 
-	           android:textStyle="bold"	     
+	        android:paddingBottom="5dp"  
 	        android:textAppearance="@style/TextAppearance.CustomFont.EditText"
 	        android:text="sdasd"
 	        />
@@ -40,4 +43,4 @@
 	        android:text="sdasd"
 	        />
 	</LinearLayout>
-</LinearLayout>
+</RelativeLayout>
