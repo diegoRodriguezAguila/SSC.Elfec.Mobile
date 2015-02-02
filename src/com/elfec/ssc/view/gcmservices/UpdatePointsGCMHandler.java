@@ -12,6 +12,7 @@ import com.elfec.ssc.businesslogic.LocationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.view.LocationServices;
 
@@ -21,7 +22,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
 
 public class UpdatePointsGCMHandler implements IGCMHandler {
-	private final int NOTIF_ID = 3;
+	//private final int NOTIF_ID = 3;
 	@Override
 	public void handleGCMessage(Bundle messageInfo,
 			NotificationManager notifManager, Builder builder) {
@@ -38,6 +39,12 @@ public class UpdatePointsGCMHandler implements IGCMHandler {
 			}
 			
 			LocationManager.registerLocations(points);
+			LocationServicesPresenter presenter = ViewPresenterManager
+					.getPresenter();
+			if (presenter != null)
+			{
+				presenter.loadLocations();
+			}
 		}
 		catch(Exception ex)
 		{
