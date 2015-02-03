@@ -30,8 +30,8 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 			boolean res = ElfecAccountsManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
 			if(res)
 			{
-				ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("content"),
-						NotificationType.get(messageInfo.getShort("type")), NotificationKey.get(messageInfo.getString("key")));
+				ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
+						NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
 				ViewAccountsPresenter presenter = ViewPresenterManager
 						.getPresenter();
 				if (presenter != null)

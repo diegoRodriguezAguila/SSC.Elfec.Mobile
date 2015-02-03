@@ -89,4 +89,12 @@
     <string name="date_sample">06 Ago 2014</string>
     <string name="time_sample">19:03</string>
     <string name="notification_message_sample">Se eliminó la cuenta con el nus: 22322</string>
+    
+    <!-- XListView -->
+     <string name="xlistview_header_hint_normal">Actualizar</string>
+    <string name="xlistview_header_hint_ready">Suelte para actualizar</string>
+    <string name="xlistview_header_hint_loading">Actualizando&#8230;</string>
+    <string name="xlistview_header_last_time">Actualizado a las: </string>
+    <string name="xlistview_footer_hint_normal">Ver más notificaciones</string>
+    <string name="xlistview_footer_hint_ready">Suelte para cargar notificaciones más antiguas</string>
 </resources>

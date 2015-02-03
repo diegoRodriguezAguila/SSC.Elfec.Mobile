@@ -82,7 +82,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	public void btnNotificationsClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			Intent i = new Intent(MainMenu.this, Notifications.class);
+			Intent i = new Intent(MainMenu.this, ViewNotifications.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		}

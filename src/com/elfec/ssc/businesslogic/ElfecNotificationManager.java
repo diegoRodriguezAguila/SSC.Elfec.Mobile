@@ -1,9 +1,9 @@
 package com.elfec.ssc.businesslogic;
 
 import org.joda.time.DateTime;
+
 import com.activeandroid.query.Delete;
 import com.elfec.ssc.model.Notification;
-
 import com.elfec.ssc.model.enums.NotificationKey;
 import com.elfec.ssc.model.enums.NotificationType;
 
@@ -35,9 +35,9 @@ public class ElfecNotificationManager {
     	thread.start();
     }
 
-	public static void removeAllNotifications(short type)
+	public static void removeAllNotifications(NotificationType type)
 	{
-		new Delete().from(Notification.class).where("Type=?",type).execute();
+		new Delete().from(Notification.class).where("Type=?",type.toShort()).execute();
 	}
 
 

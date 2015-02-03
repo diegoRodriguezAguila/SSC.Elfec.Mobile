@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
-    tools:context="com.elfec.ssc.view.Notifications" >
+    tools:context="com.elfec.ssc.view.ViewNotifications" >
 <TextView
         android:id="@+id/notifications_title"
         android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="X"
+
         android:padding="5dp"
         android:clickable="true"
         android:onClick="deleteOutageNotifications"
@@ -82,7 +82,7 @@
         android:layout_marginTop="5dp"
         android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
-<ListView
+ <com.elfec.ssc.view.xlistview.XListView
         android:id="@+id/accounts_listview"
         android:layout_height="0dp"
         android:background="@android:color/white"

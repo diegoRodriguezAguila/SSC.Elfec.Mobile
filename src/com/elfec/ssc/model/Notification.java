@@ -20,7 +20,7 @@ public class Notification extends Model {
 	@Column(name = "Content")
     private String Content;
 	@Column(name = "Type", notNull = true)
-    private Short Type;
+    private short Type;
 	@Column(name = "InsertDate", notNull=true)
 	private DateTime InsertDate;    
 	@Column(name = "UpdateDate")
@@ -79,13 +79,13 @@ public class Notification extends Model {
 	public static List<Notification> getAccountNotifications()
 	{
 		return  new Select()
-        .from(Notification.class).where("Type=?", NotificationType.ACCOUNT)
+        .from(Notification.class).where("Type=?", NotificationType.ACCOUNT.toShort()).orderBy("InsertDate DESC")
         .execute();
 	}
 	public static List<Notification> getOutageNotifications()
 	{
 		return  new Select()
-        .from(Notification.class).where("Type=?", NotificationType.OUTAGE)
+        .from(Notification.class).where("Type=?", NotificationType.OUTAGE.toShort()).orderBy("InsertDate DESC")
         .execute();
 	}
 }

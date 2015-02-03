@@ -11,6 +11,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -18,10 +19,13 @@ import android.widget.TextView;
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.model.Notification;
+import com.elfec.ssc.model.enums.NotificationType;
 import com.elfec.ssc.view.adapters.NotificationAdapter;
 import com.elfec.ssc.view.animations.HeightAnimation;
+import com.elfec.ssc.view.xlistview.XListView;
+import com.elfec.ssc.view.xlistview.XListView.IXListViewListener;
 
-public class Notifications extends ActionBarActivity {
+public class ViewNotifications extends ActionBarActivity {
 
 	public enum ExpandStatus {
 		COLLAPSED, HALF, FULL
@@ -35,7 +39,7 @@ public class Notifications extends ActionBarActivity {
 	private CheckBox outageGroup;
 	private ListView outageListView;
 	private CheckBox accountsGroup;
-	private ListView accountsListView;
+	private XListView accountsListView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +49,7 @@ public class Notifications extends ActionBarActivity {
 		outageGroup = (CheckBox) findViewById(R.id.outage_group);
 		outageListView = (ListView) findViewById(R.id.outage_listview);
 		accountsGroup = (CheckBox) findViewById(R.id.accounts_group);
-		accountsListView = (ListView) findViewById(R.id.accounts_listview);
+		accountsListView = (XListView) findViewById(R.id.accounts_listview);
 		outageGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView,
@@ -63,8 +67,21 @@ public class Notifications extends ActionBarActivity {
 		outageStatus = ExpandStatus.COLLAPSED;
 		accountsStatus = ExpandStatus.COLLAPSED;
 		List<Notification> notifs = Notification.getAccountNotifications();
+		accountsListView.setPullLoadEnable(true);
 		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
 		accountsListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
+		accountsListView.setXListViewListener(new IXListViewListener() {
+			
+			@Override
+			public void onRefresh() {
+				Toast.makeText(ViewNotifications.this, "Refresheando wn", Toast.LENGTH_SHORT).show();
+			}
+			
+			@Override
+			public void onLoadMore() {
+				Toast.makeText(ViewNotifications.this, "Cargando mas wn", Toast.LENGTH_SHORT).show();
+			}
+		});
 	}
 
 	@Override
@@ -120,11 +137,9 @@ public class Notifications extends ActionBarActivity {
 	}
 	public void deleteOutageNotifications(View view)
 	{
-		ElfecNotificationManager.removeAllNotifications((short)1);
+		ElfecNotificationManager.removeAllNotifications(NotificationType.OUTAGE);
 		List<Notification> notifs = Notification.getAccountNotifications();
-		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
-		
-		
+		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));		
 	}
 	public void changeListViewHeight(ListView wichList, ExpandStatus expandSize) {
 		int selectedSize = -1;

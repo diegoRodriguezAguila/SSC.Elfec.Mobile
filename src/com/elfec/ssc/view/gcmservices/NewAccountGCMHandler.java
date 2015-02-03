@@ -33,8 +33,8 @@ public class NewAccountGCMHandler implements IGCMHandler {
 		if(ownerClient != null)
 		{
 			ElfecAccountsManager.registerAccount(ownerClient, messageInfo.getString("number"), messageInfo.getString("nus"));
-			ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("content"),
-					NotificationType.get(messageInfo.getShort("type")), NotificationKey.get(messageInfo.getString("key")));
+			ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
+					NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
 			ViewAccountsPresenter presenter = ViewPresenterManager
 					.getPresenter();
 			if (presenter != null)

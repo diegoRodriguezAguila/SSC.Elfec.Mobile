@@ -6,11 +6,15 @@ import java.util.List;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.MeasureSpec;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
 import com.elfec.ssc.R;
 import com.elfec.ssc.model.Notification;
+import com.elfec.ssc.view.animations.HeightAnimation;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
@@ -25,7 +29,6 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		{
 			this.notifications.add(new AdapterItemWrapper<Notification>(notif,R.drawable.notif_account_deleted));
 		}
-		
 		this.resource = resource;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}
@@ -50,12 +53,40 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		if(convertView==null)
 		{
 			convertView = inflater.inflate(resource, null);
+			setClickListenerToItem(wrappedNotif, convertView,
+					((TextView) convertView.findViewById(R.id.list_item_notification_message)), position);
 		}
 		Notification notification = wrappedNotif.getWrappedObject();
 		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(notification.getTitle());
 		((TextView) convertView.findViewById(R.id.list_item_notification_message)).setText(notification.getContent());
+		((TextView) convertView.findViewById(R.id.list_item_notification_date)).setText(notification.getInsertDate().toString("dd MMM yyyy"));
+		((TextView) convertView.findViewById(R.id.list_item_notification_time)).setText(notification.getInsertDate().toString("HH:mm"));
 
 		return convertView;
+	}
+	
+	private void setClickListenerToItem(
+			final AdapterItemWrapper<Notification> wrappedNotif,
+			final View convertView, final TextView txtNotifMessage, final int pos) {		
+				txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,MeasureSpec.UNSPECIFIED);
+				wrappedNotif.setExpandedSize(txtNotifMessage.getMeasuredHeight());
+				convertView.setOnClickListener(new OnClickListener() {				
+					@Override
+					public void onClick(View v) {
+						int initSize = 0;
+						int endSize = wrappedNotif.getExpandedSize();
+						if(wrappedNotif.isExpanded())
+						{
+							initSize = wrappedNotif.getExpandedSize();
+							endSize = 0;
+						}
+						wrappedNotif.setExpanded(!wrappedNotif.isExpanded());
+						HeightAnimation heightAnim = new HeightAnimation(txtNotifMessage,
+								initSize, endSize);
+						heightAnim.setDuration(250);
+						txtNotifMessage.startAnimation(heightAnim);
+					}
+				});
 	}
 
 }
