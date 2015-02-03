@@ -37,7 +37,7 @@ public class ViewNotifications extends ActionBarActivity {
 	private int fullSize = -1;
 	private TextView titleNotifications;
 	private CheckBox outageGroup;
-	private ListView outageListView;
+	private XListView outageListView;
 	private CheckBox accountsGroup;
 	private XListView accountsListView;
 
@@ -47,7 +47,7 @@ public class ViewNotifications extends ActionBarActivity {
 		setContentView(R.layout.activity_notifications);
 		titleNotifications = (TextView) findViewById(R.id.notifications_title);
 		outageGroup = (CheckBox) findViewById(R.id.outage_group);
-		outageListView = (ListView) findViewById(R.id.outage_listview);
+		outageListView = (XListView) findViewById(R.id.outage_listview);
 		accountsGroup = (CheckBox) findViewById(R.id.accounts_group);
 		accountsListView = (XListView) findViewById(R.id.accounts_listview);
 		outageGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -67,6 +67,7 @@ public class ViewNotifications extends ActionBarActivity {
 		outageStatus = ExpandStatus.COLLAPSED;
 		accountsStatus = ExpandStatus.COLLAPSED;
 		List<Notification> notifs = Notification.getAccountNotifications();
+		outageListView.setPullLoadEnable(true);
 		accountsListView.setPullLoadEnable(true);
 		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
 		accountsListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
