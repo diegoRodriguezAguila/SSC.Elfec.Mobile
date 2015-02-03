@@ -53,24 +53,32 @@
         android:onClick="deleteOutageNotifications"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
 </RelativeLayout>
-<com.elfec.ssc.view.xlistview.XListView
-        android:id="@+id/outage_listview"
-        android:layout_height="0dp"
-        android:background="@android:color/white"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:fastScrollEnabled="true"
-        android:layout_below="@+id/outage_layout"
-        android:layout_width="match_parent"/>
+<LinearLayout
+    android:id="@+id/outage_listlayout" 
+    android:orientation="vertical"
+    android:layout_height="0dp"
+    android:layout_below="@+id/outage_layout"
+    android:layout_width="match_parent"
+    android:background="@android:color/white"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true">
+	<com.elfec.ssc.view.xlistview.XListView
+	        android:id="@+id/outage_listview"
+	        android:layout_height="0dp"
+            android:layout_weight="1"
+	        android:background="@android:color/white"
+	        android:fastScrollEnabled="true"
+	        android:layout_width="match_parent"/>
+</LinearLayout>
 <CheckBox
         android:id="@+id/accounts_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/accounts_group"
         android:gravity="center_vertical"
-        android:layout_below="@+id/outage_listview"
+        android:layout_below="@+id/outage_listlayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
@@ -82,16 +90,24 @@
         android:layout_marginTop="5dp"
         android:textColor="@android:color/white"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
- <com.elfec.ssc.view.xlistview.XListView
-        android:id="@+id/accounts_listview"
-        android:layout_height="0dp"
-        android:background="@android:color/white"
-        android:layout_below="@+id/accounts_group"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:fastScrollEnabled="true"
-        android:layout_width="match_parent"/>
-    
+<LinearLayout 
+    android:id="@+id/accounts_listlayout"
+    android:orientation="vertical"
+    android:layout_height="0dp"
+    android:layout_width="match_parent"
+    android:layout_below="@+id/accounts_group"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true"
+    android:layout_alignParentRight="true"
+    android:layout_alignParentEnd="true"
+    android:background="@android:color/white">
+	
+	 <com.elfec.ssc.view.xlistview.XListView
+	        android:id="@+id/accounts_listview"
+	        android:layout_height="0dp"
+            android:layout_weight="1"
+	        android:background="@android:color/white"
+	        android:fastScrollEnabled="true"
+	        android:layout_width="match_parent"/>
+</LinearLayout>
 </RelativeLayout>

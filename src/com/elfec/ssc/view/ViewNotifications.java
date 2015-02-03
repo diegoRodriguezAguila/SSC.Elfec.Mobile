@@ -9,12 +9,14 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.ElfecNotificationManager;
@@ -40,6 +42,9 @@ public class ViewNotifications extends ActionBarActivity {
 	private XListView outageListView;
 	private CheckBox accountsGroup;
 	private XListView accountsListView;
+	
+	private LinearLayout outageLayout;
+	private LinearLayout accountsLayout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,9 +71,11 @@ public class ViewNotifications extends ActionBarActivity {
 		});
 		outageStatus = ExpandStatus.COLLAPSED;
 		accountsStatus = ExpandStatus.COLLAPSED;
+		outageLayout = (LinearLayout) findViewById(R.id.outage_listlayout);
+		accountsLayout = (LinearLayout) findViewById(R.id.accounts_listlayout);
 		List<Notification> notifs = Notification.getAccountNotifications();
-		outageListView.setPullLoadEnable(true);
-		accountsListView.setPullLoadEnable(true);
+		outageListView.setPullLoadEnable(false);
+		accountsListView.setPullLoadEnable(false);
 		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
 		accountsListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));
 		accountsListView.setXListViewListener(new IXListViewListener() {
@@ -96,6 +103,9 @@ public class ViewNotifications extends ActionBarActivity {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
 
+	/**
+	 * Define las constantes de halfSize y fullSize para las listas
+	 */
 	private void defineSizes() {
 		if (halfSize == -1 || fullSize == -1) {
 			DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
@@ -115,6 +125,9 @@ public class ViewNotifications extends ActionBarActivity {
 		}
 	}
 
+	/**
+	 * según los checkbox marcados distribuye enl a pantalla las dos listas de notificaciones
+	 */
 	public void redefineViewSizes() {
 		defineSizes();
 		if (outageGroup.isChecked() && accountsGroup.isChecked()) {
@@ -133,8 +146,8 @@ public class ViewNotifications extends ActionBarActivity {
 			outageStatus = ExpandStatus.COLLAPSED;
 			accountsStatus = ExpandStatus.COLLAPSED;
 		}
-		changeListViewHeight(outageListView, outageStatus);
-		changeListViewHeight(accountsListView, accountsStatus);
+		changeLinearLayoutHeight(outageLayout, outageStatus, outageListView);
+		changeLinearLayoutHeight(accountsLayout, accountsStatus, accountsListView);
 	}
 	public void deleteOutageNotifications(View view)
 	{
@@ -142,7 +155,7 @@ public class ViewNotifications extends ActionBarActivity {
 		List<Notification> notifs = Notification.getAccountNotifications();
 		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));		
 	}
-	public void changeListViewHeight(ListView wichList, ExpandStatus expandSize) {
+	public void changeLinearLayoutHeight(final LinearLayout wichLayout, final ExpandStatus expandSize, final XListView concordantListView) {
 		int selectedSize = -1;
 		if (expandSize == ExpandStatus.COLLAPSED)
 			selectedSize = 0;
@@ -150,10 +163,38 @@ public class ViewNotifications extends ActionBarActivity {
 			selectedSize = halfSize;
 		if (expandSize == ExpandStatus.FULL)
 			selectedSize = fullSize;
-		HeightAnimation heightAnim = new HeightAnimation(wichList,
-				wichList.getHeight(), selectedSize);
+		HeightAnimation heightAnim = new HeightAnimation(wichLayout,
+				wichLayout.getHeight(), selectedSize);
 		heightAnim.setDuration(500);
-		wichList.startAnimation(heightAnim);
+		heightAnim.setAnimationListener(new AnimationListener() {			
+			@Override
+			public void onAnimationStart(Animation anim) {}		
+			@Override
+			public void onAnimationRepeat(Animation anim) {}			
+			@Override
+			public void onAnimationEnd(Animation anim) {
+				if (expandSize != ExpandStatus.COLLAPSED)
+				{
+					validateLoadMoreOption(concordantListView);
+				}
+			}
+		});
+		wichLayout.startAnimation(heightAnim);
 	}
-
+	/**
+	 * Valida si es que es necesario habilitar o deshabilitar el boton de cargar mas dependiendo
+	 * si es que todos los items caben en la pantalla o no
+	 * @param concordantListView
+	 */
+	private void validateLoadMoreOption(
+			final XListView concordantListView) {
+		int firstVisible = concordantListView.getFirstVisiblePosition();
+		int lastVisible = concordantListView.getLastVisiblePosition();
+		int listLastVisible = concordantListView.getAdapter().getCount();
+		if(firstVisible==0 && lastVisible+1==listLastVisible)
+		{
+			concordantListView.setPullLoadEnable(false);
+		}
+		else concordantListView.setPullLoadEnable(true);
+	}
 }
