@@ -66,6 +66,7 @@
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="setup_distance">Configurar distancia</string>
+    <string name="delete_notifications_caption">Eliminar notificaciones</string>
 
     <!-- Account Picker Dialog -->
     <string name="account_picker_title">SELECCIONE UNA CUENTA</string>

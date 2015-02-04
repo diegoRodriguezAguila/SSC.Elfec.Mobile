@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.From;
 import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.NotificationKey;
 import com.elfec.ssc.model.enums.NotificationType;
@@ -76,16 +77,30 @@ public class Notification extends Model {
 		UpdateDate = updateDate;
 	}
 	//#endregion
-	public static List<Notification> getAccountNotifications()
+	
+	/**
+	 * Obtiene las notificaciones ordenadas en orden de fechas
+	 * que correspondan al tipo indicado
+	 * @param type
+	 * @return
+	 */
+	public static List<Notification> getNotificationsByType(NotificationType type)
 	{
-		return  new Select()
-        .from(Notification.class).where("Type=?", NotificationType.ACCOUNT.toShort()).orderBy("InsertDate DESC")
-        .execute();
+		return getNotificationsByType(type, -1);
 	}
-	public static List<Notification> getOutageNotifications()
+	/**
+	 * Obtiene las notificaciones ordenadas en orden de fechas, con el numero maximo de notificaciones indicado y
+	 * que correspondan al tipo indicado
+	 * @param type
+	 * @param limit si el limite es -1 devuelve todas las cuentas
+	 * @return
+	 */
+	public static List<Notification> getNotificationsByType(NotificationType type, int limit)
 	{
-		return  new Select()
-        .from(Notification.class).where("Type=?", NotificationType.OUTAGE.toShort()).orderBy("InsertDate DESC")
-        .execute();
+		From query =  new Select()
+        .from(Notification.class).where("Type=?", type.toShort()).orderBy("InsertDate DESC");
+		if(limit>0)
+			query.limit(limit);
+        return query.execute();
 	}
 }
