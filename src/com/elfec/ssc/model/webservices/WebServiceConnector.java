@@ -115,7 +115,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		catch (IOException e) 
 		{
 			Log.d(methodName, e.toString());
-			resultWS.addError(e);
+			resultWS.addError(new ConnectException("Ocurrio un problema al conectarse con el servidor, porfavor revise su conexión a internet"));
 		} 
 		catch (XmlPullParserException e) 
 		{

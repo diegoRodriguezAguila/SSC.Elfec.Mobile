@@ -35,6 +35,10 @@ public class ElfecNotificationManager {
     	thread.start();
     }
 
+	/**
+	 * Elimina todas las notificaciones del tipo designado
+	 * @param type
+	 */
 	public static void removeAllNotifications(NotificationType type)
 	{
 		new Delete().from(Notification.class).where("Type=?",type.toShort()).execute();

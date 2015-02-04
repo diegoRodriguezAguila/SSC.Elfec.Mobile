@@ -9,19 +9,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Animation.AnimationListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.model.Notification;
-import com.elfec.ssc.model.enums.NotificationType;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
 import com.elfec.ssc.presenter.views.IViewNotifications;
 import com.elfec.ssc.view.adapters.NotificationAdapter;
@@ -45,6 +39,9 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 	private XListView outageListView;
 	private CheckBox accountsGroup;
 	private XListView accountsListView;
+	
+	private NotificationAdapter outagesAdapter;
+	private NotificationAdapter accountsAdapter;
 	
 	private LinearLayout outageLayout;
 	private LinearLayout accountsLayout;
@@ -157,12 +154,16 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		changeLinearLayoutHeight(accountsLayout, accountsStatus, accountsListView);
 	}
 	
-	public void deleteOutageNotifications(View view)
+	public void btndeleteOutageNotificationsClick(View view)
 	{
-		ElfecNotificationManager.removeAllNotifications(NotificationType.OUTAGE);
-		List<Notification> notifs = Notification.getNotificationsByType(NotificationType.ACCOUNT);
-		outageListView.setAdapter(new NotificationAdapter(this, R.layout.notification_list_item, notifs));		
+		presenter.clearOutageNotifications();	
 	}
+	
+	public void btndeleteAccountNotificationsClick(View view)
+	{
+		presenter.clearAccountNotifications();	
+	}
+
 	
 	/**
 	 * Crea una animación para el layout del parámetro
@@ -181,98 +182,104 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		HeightAnimation heightAnim = new HeightAnimation(wichLayout,
 				wichLayout.getHeight(), selectedSize);
 		heightAnim.setDuration(500);
-		heightAnim.setAnimationListener(new AnimationListener() {			
-			@Override
-			public void onAnimationStart(Animation anim) {}		
-			@Override
-			public void onAnimationRepeat(Animation anim) {}			
-			@Override
-			public void onAnimationEnd(Animation anim) {
-				if (expandSize != ExpandStatus.COLLAPSED)
-				{
-					validateLoadMoreOption(concordantListView);
-				}
-			}
-		});
 		wichLayout.startAnimation(heightAnim);
 	}
 	
 	/**
-	 * Valida si es que es necesario habilitar o deshabilitar el boton de cargar mas dependiendo
-	 * si es que todos los items caben en la pantalla o no
-	 * @param concordantListView
-	 */
-	private void validateLoadMoreOption(
-			final XListView concordantListView) {
-		int firstVisible = concordantListView.getFirstVisiblePosition();
-		int lastVisible = concordantListView.getLastVisiblePosition();
-		int listLastVisible = concordantListView.getAdapter().getCount();
-		if(firstVisible==0 && lastVisible+1==listLastVisible)
-		{
-			concordantListView.setPullLoadEnable(false);
-		}
-		else concordantListView.setPullLoadEnable(true);
-	}
-
-	/**
 	 * Asigna los refresh y load more listeners para ambas listas
 	 */
 	private void setOnRefreshAndLoadListeners() {
-		outageListView.setXListViewListener(new IXListViewListener() {
-			
+		outageListView.setXListViewListener(new IXListViewListener() {			
 			@Override
 			public void onRefresh() {
-				Toast.makeText(ViewNotifications.this, "Refresheando wn", Toast.LENGTH_SHORT).show();
+				presenter.refreshOutageNotifications();
 			}
 			
 			@Override
 			public void onLoadMore() {
-				Toast.makeText(ViewNotifications.this, "Cargando mas wn", Toast.LENGTH_SHORT).show();
+				presenter.loadMoreOutageNotifications();
 			}
 		});
 		accountsListView.setXListViewListener(new IXListViewListener() {
 			
 			@Override
 			public void onRefresh() {
-				Toast.makeText(ViewNotifications.this, "Refresheando wn", Toast.LENGTH_SHORT).show();
+				presenter.refreshAccountNotifications();
 			}
 			
 			@Override
 			public void onLoadMore() {
-				Toast.makeText(ViewNotifications.this, "Cargando mas wn", Toast.LENGTH_SHORT).show();
+				presenter.loadMoreAccountNotifications();
 			}
 		});
 	}
 	
 	//#region Interface Methods
 	@Override
-	public void showOutageList(final List<Notification> outageNotifications) {
+	public void setOutageList(final List<Notification> outageNotifications) {
 		runOnUiThread(new Runnable() {		
 			@Override
 			public void run() {
-				outageListView.setAdapter(new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, outageNotifications));	
+				outagesAdapter = new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, outageNotifications);
+				outageListView.setAdapter(outagesAdapter);	
 			}
 		});
 	}
 
 	@Override
-	public void showAccountsList(final List<Notification> accountNotifications) {
+	public void setAccountsList(final List<Notification> accountNotifications) {
 		runOnUiThread(new Runnable() {		
 			@Override
 			public void run() {
-				accountsListView.setAdapter(new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, accountNotifications));	
+				accountsAdapter = new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, accountNotifications);
+				accountsListView.setAdapter(accountsAdapter);	
+			}
+		});
+	}
+	
+	
+	@Override
+	public void addOutageNotifications(final List<Notification> outageNotifications) {
+		runOnUiThread(new Runnable() {		
+			@Override
+			public void run() {
+				if(outagesAdapter==null)
+					setOutageList(outageNotifications);
+				else outagesAdapter.addAll(outageNotifications);
 			}
 		});
 	}
 
 	@Override
-	public void setMoreOutageNotificationsEnabled(boolean enabled) {
-		outageListView.setPullLoadEnable(enabled);
+	public void addAccountNotifications(final List<Notification> accountNotifications) {
+		runOnUiThread(new Runnable() {		
+			@Override
+			public void run() {
+				if(accountsAdapter==null)
+					setAccountsList(accountNotifications);
+				else accountsAdapter.addAll(accountNotifications);
+			}
+		});
 	}
 
 	@Override
-	public void setMoreAcccountNotificationsEnabled(boolean enabled) {
-		accountsListView.setPullLoadEnable(enabled);
+	public void setMoreOutageNotificationsEnabled(final boolean enabled) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				outageListView.setPullLoadEnable(enabled);
+			}
+		});
+	}
+
+	@Override
+	public void setMoreAcccountNotificationsEnabled(final boolean enabled) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				accountsListView.setPullLoadEnable(enabled);
+			}
+		});
 	}
 
 	@Override
@@ -297,6 +304,26 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 			}
 		});
 		System.gc();
+	}
+
+	@Override
+	public void hideOutageList() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				outageGroup.setChecked(false);
+			}
+		});
+	}
+
+	@Override
+	public void hideAccountsList() {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				accountsGroup.setChecked(false);
+			}
+		});
 	}
 	
 	//#endregion
