@@ -37,7 +37,7 @@ public class UpdatePointsGCMHandler implements IGCMHandler {
 			
 			LocationManager.registerLocations(points);
 			LocationServicesPresenter presenter = ViewPresenterManager
-					.getPresenter();
+					.getPresenter(LocationServicesPresenter.class);
 			if (presenter != null)
 			{
 				presenter.loadLocations();

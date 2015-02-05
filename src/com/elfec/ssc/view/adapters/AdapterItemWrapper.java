@@ -13,6 +13,13 @@ public class AdapterItemWrapper<T> {
 		this.imageResourceId = imageResourceId;
 	}
 	
+	public AdapterItemWrapper(T wrappedObject, boolean isExpanded, int imageResourceId) {
+		super();
+		this.wrappedObject = wrappedObject;
+		this.isExpanded = isExpanded;
+		this.imageResourceId = imageResourceId;
+	}
+	
 	public T getWrappedObject() {
 		return wrappedObject;
 	}

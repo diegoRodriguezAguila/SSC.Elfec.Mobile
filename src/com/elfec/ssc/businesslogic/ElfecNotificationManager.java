@@ -16,23 +16,18 @@ public class ElfecNotificationManager {
 
 
 	/**
-	 * Guarda una notificación, ejecutando el proceso en un hilo
+	 * Guarda una notificación
 	 * @param title
 	 * @param content
 	 * @param type
+	 * @return Notification
 	 */
-	public static void SaveNotification(final String title, final String content, final NotificationType type, final NotificationKey key)
+	public static Notification SaveNotification(final String title, final String content, final NotificationType type, final NotificationKey key)
     {
-    	Thread thread=new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				Notification notification=new Notification(title,content,type, key);
-				notification.setInsertDate(DateTime.now());
-				notification.save();
-			}
-		});
-    	thread.start();
+		Notification notification=new Notification(title,content,type, key);
+		notification.setInsertDate(DateTime.now());
+		notification.save();
+		return notification;
     }
 
 	/**

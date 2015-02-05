@@ -46,11 +46,14 @@ public class ViewAccountsPresenter {
 						{
 							ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
 							view.refreshAccounts();
+							view.hideWSWaiting();
 						}
 						else
 						{
+							view.hideWSWaiting();
 							view.displayErrors(result.getErrors());
 						}
+						
 						
 					}
 				});				

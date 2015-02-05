@@ -19,7 +19,7 @@ public class ContactWS {
 	public void getContactUpdate(IWSFinishEvent<Contact> eventHandler)
 	{
 		WebServiceConnector<Contact> accountWSConnector = 
-				new WebServiceConnector<Contact>("http://192.168.12.81/SSC.Elfec/web_services/ContactWS.php?wsdl", "", 
+				new WebServiceConnector<Contact>("ContactWS.php?wsdl", "", 
 						"ssc_elfec", "GetContactUpdate", new GetContactUpdateWSConverter(), eventHandler);
 		accountWSConnector.execute();
 	}

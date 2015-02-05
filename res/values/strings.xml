@@ -44,14 +44,17 @@
     <string name="delete_account_title">ELIMINAR CUENTA</string>
     <string name="delete_account_msg">¿Esta seguro que desea eliminar esta cuenta?</string>
     <string name="account_successfully_deleted">¡La cuenta se eliminó exitosamente!</string>
+    <string name="errors_on_delete_account_title">ERROR AL ELIMINAR LA CUENTA</string>
 
     <!-- Location Services -->
     <string name="location_services_title">Servicios de ubicación</string>
     <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>
+    <string name="errors_on_get_points_title">ERROR AL OBTENER PUNTOS DE UBICACIÓN</string>
     <!-- Location Services: Markers -->
     <string name="lbl_marker_address">Dirección:</string>
     <string name="lbl_marker_phone">Teléfono:</string>
     <string name="lbl_marker_bussines_hours">Horario de atención:</string>
+    
 
     <!-- Contacts -->
     <string name="contacts_title">Contactos</string>
@@ -62,7 +65,9 @@
     <string name="notifications_title">Notificaciones</string>
     <string name="outage_group">Cortes</string>
     <string name="accounts_group">Cuentas</string>
-
+    <string name="delete_notifications_title">ELIMINAR NOTIFICACIONES</string>
+    <string name="delete_outage_notifications_msg">Está apunto de eliminar las notificaciones de cortes, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
+	<string name="delete_account_notifications_msg">Está apunto de eliminar las notificaciones de cuentas, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="setup_distance">Configurar distancia</string>
@@ -89,7 +94,7 @@
     <string name="account_deleted_sample">Cuenta eliminada</string>
     <string name="date_sample">06 Ago 2014</string>
     <string name="time_sample">19:03</string>
-    <string name="notification_message_sample">Se eliminó la cuenta con el nus: 22322</string>
+    <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
     
     <!-- XListView -->
      <string name="xlistview_header_hint_normal">Actualizar</string>

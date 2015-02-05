@@ -4,6 +4,8 @@ import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
@@ -14,7 +16,10 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
 import com.elfec.ssc.presenter.views.IViewNotifications;
@@ -51,7 +56,6 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notifications);
 		presenter = new ViewNotificationsPresenter(this);
-		
 		titleNotifications = (TextView) findViewById(R.id.notifications_title);
 		outageGroup = (CheckBox) findViewById(R.id.outage_group);
 		outageListView = (XListView) findViewById(R.id.outage_listview);
@@ -64,7 +68,6 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		outageListView.setPullLoadEnable(false);
 		accountsListView.setPullLoadEnable(false);
 		initializeListListeners();
-		presenter.loadNotifications();
 	}
 
 	@Override
@@ -76,6 +79,21 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 	@Override
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+	}
+	
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		ViewPresenterManager.setPresenter(null);
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		presenter.loadNotifications();
+		ViewPresenterManager.setPresenter(presenter);
 	}
 
 	/**
@@ -156,12 +174,30 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 	
 	public void btndeleteOutageNotificationsClick(View view)
 	{
-		presenter.clearOutageNotifications();	
+		(new AlertDialogPro.Builder(this))
+		.setTitle(R.string.delete_notifications_title)
+		.setMessage(R.string.delete_outage_notifications_msg)
+		.setPositiveButton(R.string.btn_ok, new OnClickListener() {			
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				presenter.clearOutageNotifications();	
+			}
+		})
+		.setNegativeButton(R.string.btn_cancel, null).show();
 	}
 	
 	public void btndeleteAccountNotificationsClick(View view)
 	{
-		presenter.clearAccountNotifications();	
+		(new AlertDialogPro.Builder(this))
+		.setTitle(R.string.delete_notifications_title)
+		.setMessage(R.string.delete_account_notifications_msg)
+		.setPositiveButton(R.string.btn_ok, new OnClickListener() {			
+			@Override
+			public void onClick(DialogInterface dialog, int arg1) {
+				presenter.clearAccountNotifications();	
+			}
+		})
+		.setNegativeButton(R.string.btn_cancel, null).show();
 	}
 
 	
@@ -322,6 +358,26 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 			@Override
 			public void run() {
 				accountsGroup.setChecked(false);
+			}
+		});
+	}
+
+	@Override
+	public void showNewOutageNotificationUpdate(final Notification notif, final boolean removeLast) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				outagesAdapter.addNewNotificationUpdate(notif, removeLast);
+			}
+		});
+	}
+
+	@Override
+	public void showNewAccountNotificationUpdate(final Notification notif, final boolean removeLast) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				accountsAdapter.addNewNotificationUpdate(notif, removeLast);
 			}
 		});
 	}

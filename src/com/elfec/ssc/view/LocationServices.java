@@ -212,7 +212,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 					}
 				}
 				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(LocationServices.this);
-				builder.setTitle(R.string.errors_on_download_accounts_title)
+				builder.setTitle(R.string.errors_on_get_points_title)
 				.setMessage(msg)
 				.setPositiveButton(R.string.btn_ok, null)
 				.show();

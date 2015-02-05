@@ -21,14 +21,14 @@ public class ViewPresenterManager {
 	
 	/**
 	 * obtiene el presenter actual
+	 * @param type
 	 * @return
 	 */
-	@SuppressWarnings("unchecked")
-	public static <T> T getPresenter()
+	public static <T> T getPresenter(Class<T> type)
 	{
 		try
 		{
-			return (T) currentPresenter;
+			return type.cast(currentPresenter);
 		}
 		catch(ClassCastException e)
 		{

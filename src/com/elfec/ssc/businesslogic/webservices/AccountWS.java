@@ -32,7 +32,7 @@ public class AccountWS
 			String deviceBrand, String deviceModel, String deviceIMEI, String gCMtoken, IWSFinishEvent<Boolean> eventHandler )
 	{
 		WebServiceConnector<Boolean> accountWSConnector = 
-				new WebServiceConnector<Boolean>("http://192.168.12.81/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
+				new WebServiceConnector<Boolean>("AccountWS.php?wsdl", "", 
 						"ssc_elfec", "RegisterAccount", new RegisterAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("AccountNumber", accountNumber), new WSParam("NUS", nUS), new WSParam("GMail", gmail), 
 				new WSParam("PhoneNumber", phoneNumber), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
@@ -48,7 +48,7 @@ public class AccountWS
 			String gCMtoken, IWSFinishEvent<List<Account>> eventHandler)
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 
-				new WebServiceConnector<List<Account>>("http://192.168.12.81/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
+				new WebServiceConnector<List<Account>>("AccountWS.php?wsdl", "", 
 						"ssc_elfec", "GetAllAccounts", new GetAllAccountsWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("GMail", gmail), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
@@ -64,7 +64,7 @@ public class AccountWS
 	public void removeAccount(String gmail,String nus,String imei,IWSFinishEvent<Boolean> eventHandler)
 	{
 		WebServiceConnector<Boolean> accountWSConnector = 
-				new WebServiceConnector<Boolean>("http://192.168.12.81/SSC.Elfec/web_services/AccountWS.php?wsdl", "", 
+				new WebServiceConnector<Boolean>("AccountWS.php?wsdl", "", 
 						"ssc_elfec", "DeleteAccount", new RemoveAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("IMEI", imei),new WSParam("NUS", nus),new WSParam("GMail", gmail));
 

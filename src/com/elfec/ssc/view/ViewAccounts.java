@@ -16,8 +16,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
@@ -146,22 +144,28 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	}
 
 	@Override
-	public void displayErrors(List<Exception> errors) {
-		 String result="";
-		for(Exception error : errors)
-		{
-			result+=error.getMessage()+"\n";
-		}
-		final String exceptions=result;
-			runOnUiThread(new Runnable() {			
+	public void displayErrors(final List<Exception> errors) {
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				Toast.makeText(getApplicationContext(), exceptions,
-						   Toast.LENGTH_LONG).show();
-	
+				StringBuilder msg = new StringBuilder();
+				int size = errors.size();
+				if(size==1)
+					msg.append(errors.get(0).getMessage()).toString();
+				else
+				{
+					for (int i = 0; i < size; i++) {
+						msg.append("● ").append(errors.get(i).getMessage());
+						msg.append((i<size-1?"\n":""));
+					}
+				}
+				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(ViewAccounts.this);
+				builder.setTitle(R.string.errors_on_delete_account_title)
+				.setMessage(msg)
+				.setPositiveButton(R.string.btn_ok, null)
+				.show();
 			}
 		});
-		
 	}
 	
 	@Override
@@ -174,8 +178,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Account account=(Account)accountsListView.getAdapter().getItem(position);
+				ShowWaitingWS();
 				presenter.invokeRemoveAccountWS(account.getNUS());
-				
 			}
 		}).setNegativeButton(R.string.btn_no, null).show();
     }

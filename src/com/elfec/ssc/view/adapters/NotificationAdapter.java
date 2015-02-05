@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.utils.NotificationDrawablePicker;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.view.animations.HeightAnimation;
 
@@ -29,7 +30,8 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		this.notifications = new ArrayList<AdapterItemWrapper<Notification>>();
 		for(Notification notif : notifications)
 		{
-			this.notifications.add(new AdapterItemWrapper<Notification>(notif,R.drawable.notif_account_deleted));
+			this.notifications.add(new AdapterItemWrapper<Notification>(notif,
+					NotificationDrawablePicker.getDrawable(notif.getKey())));
 		}
 		this.resource = resource;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -48,12 +50,27 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 	public long getItemId(int position) {
 		return position;
 	}
+	
 	@Override
 	public void addAll(Collection<? extends Notification> collection) {
 		for(Notification notif : collection)
 		{
-			this.notifications.add(new AdapterItemWrapper<Notification>(notif,R.drawable.notif_new_account));
+			this.notifications.add(new AdapterItemWrapper<Notification>(notif,
+					NotificationDrawablePicker.getDrawable(notif.getKey())));
 		}
+		notifyDataSetChanged();
+	}
+	
+	/**
+	 * Agrega una notificación al frente y elimina la ultima
+	 * @param notification
+	 */
+	public void addNewNotificationUpdate(Notification notification, boolean removeLast)
+	{
+		this.notifications.add(0, new AdapterItemWrapper<Notification>(notification, 
+				NotificationDrawablePicker.getDrawable(notification.getKey())));
+		if(removeLast)
+			this.notifications.remove(this.notifications.size()-1);
 		notifyDataSetChanged();
 	}
 	
@@ -64,8 +81,11 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		{
 			convertView = inflater.inflate(resource, null);
 			convertView.setTag(position);
+			TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
 			setClickListenerToItem(wrappedNotif, convertView,
-					((TextView) convertView.findViewById(R.id.list_item_notification_message)), position);
+					txtNotifMessage, position);
+			txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,MeasureSpec.UNSPECIFIED);
+			wrappedNotif.setExpandedSize(txtNotifMessage.getMeasuredHeight());
 		}
 		TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
 		int endSize = 0;
@@ -88,8 +108,6 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 	private void setClickListenerToItem(
 			final AdapterItemWrapper<Notification> wrappedNotif,
 			final View convertView, final TextView txtNotifMessage, final int pos) {		
-				txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,MeasureSpec.UNSPECIFIED);
-				wrappedNotif.setExpandedSize(txtNotifMessage.getMeasuredHeight());
 				convertView.setOnClickListener(new OnClickListener() {				
 					@Override
 					public void onClick(View v) {

@@ -167,5 +167,37 @@ public class ViewNotificationsPresenter {
 		});
 		thread.start();
 	}
+	/**
+	 * Cuando llega una notificación de cortes y se quiere aumentar al principio de la lista
+	 * se debe utilizar este metodo
+	 * @param notif
+	 */
+	public void addNewOutageNotificationUpdate(Notification notif)
+	{
+		outageNotifications.add(0, notif);
+		int outSize = outageNotifications.size();
+		if(outSize>currentOutageLimit)
+		{
+			outageNotifications.remove(outSize-1);
+			view.setMoreOutageNotificationsEnabled(true);
+		}
+		view.showNewOutageNotificationUpdate(notif, outSize>currentOutageLimit);
+	}
+	/**
+	 * Cuando llega una notificación de cuentas y se quiere aumentar al principio de la lista
+	 * se debe utilizar este metodo
+	 * @param notif
+	 */
+	public void addNewAccountNotificationUpdate(Notification notif)
+	{
+		accountNotifications.add(0, notif);
+		int accSize = accountNotifications.size();
+		if(accSize>currentAccountsLimit)
+		{
+			accountNotifications.remove(accSize-1);
+			view.setMoreAcccountNotificationsEnabled(true);
+		}
+		view.showNewAccountNotificationUpdate(notif, accSize>currentAccountsLimit);
+	}
 
 }

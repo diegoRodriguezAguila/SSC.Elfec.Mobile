@@ -21,7 +21,7 @@ public class LocationPointWS {
 	public void getAllLocationPoints(IWSFinishEvent<List<LocationPoint>> eventHandler)
 	{
 		WebServiceConnector<List<LocationPoint>> paypointWSConnector = 
-				new WebServiceConnector<List<LocationPoint>>("http://192.168.12.81/SSC.Elfec/web_services/LocationPointWS.php?wsdl", "", 
+				new WebServiceConnector<List<LocationPoint>>("LocationPointWS.php?wsdl", "", 
 						"ssc_elfec", "GetAllLocationPoints", new GetAllLocationPointsWSConverter(), eventHandler);
 		paypointWSConnector.execute();
 	}

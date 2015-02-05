@@ -56,4 +56,14 @@ public interface IViewNotifications {
 	 * notificaciones de cuentas
 	 */
 	public void hideAccountsList();
+	/**
+	 * Muestra una notificación de cortes que acaba de llegar
+	 * @param notif
+	 */
+	public void showNewOutageNotificationUpdate(Notification notif, boolean removeLast);
+	/**
+	 * Muestra una notificación de cuentas que acaba de llegar
+	 * @param notif
+	 */
+	public void showNewAccountNotificationUpdate(Notification notif, boolean removeLast);
 }

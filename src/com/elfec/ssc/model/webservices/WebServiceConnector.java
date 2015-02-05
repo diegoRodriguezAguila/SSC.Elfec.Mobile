@@ -28,6 +28,7 @@ import android.util.Log;
  */
 public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TResult>
 {
+	private final String WS_SERVER="http://192.168.50.56/SSC.Elfec/web_services/";
 	private String url;// = "http://192.168.30.44:8080/ws_lecturas.cfc?wsdl";
 	private String soapAction; //= "";  
 	private String namespace;// = "http://DefaultNamespace";
@@ -47,7 +48,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, IWSResultConverter<TResult> converter) 
 	{
 		super();
-		this.url = url;
+		this.url = WS_SERVER+url;
 		this.soapAction = soapAction;
 		this.namespace = namespace;
 		this.methodName = methodName;
@@ -68,7 +69,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 			, IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
 	{
 		super();
-		this.url = url;
+		this.url = WS_SERVER+url;
 		this.soapAction = soapAction;
 		this.namespace = namespace;
 		this.methodName = methodName;
