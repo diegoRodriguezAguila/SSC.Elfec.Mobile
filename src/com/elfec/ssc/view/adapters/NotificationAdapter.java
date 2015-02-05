@@ -3,17 +3,17 @@ package com.elfec.ssc.view.adapters;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.utils.NotificationDrawablePicker;
 import com.elfec.ssc.model.Notification;
@@ -76,16 +76,28 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		AdapterItemWrapper<Notification> wrappedNotif = notifications.get(position);
+		final AdapterItemWrapper<Notification> wrappedNotif = notifications.get(position);
 		if(convertView==null || Integer.parseInt(convertView.getTag().toString())!=position)
 		{
 			convertView = inflater.inflate(resource, null);
 			convertView.setTag(position);
-			TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
+			final TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
 			setClickListenerToItem(wrappedNotif, convertView,
 					txtNotifMessage, position);
 			txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,MeasureSpec.UNSPECIFIED);
-			wrappedNotif.setExpandedSize(txtNotifMessage.getMeasuredHeight());
+			txtNotifMessage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+                @SuppressLint("NewApi")
+				@SuppressWarnings("deprecation")
+				@Override
+                public void onGlobalLayout() {
+        			wrappedNotif.setExpandedSize(txtNotifMessage.getLineCount() * txtNotifMessage.getLineHeight());
+        			 if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN){
+        				 txtNotifMessage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+        			    }else{
+        			    	txtNotifMessage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+        			    }
+                }
+  });
 		}
 		TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
 		int endSize = 0;
