@@ -15,7 +15,11 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-
+/**
+ * Maneja las notificaciones de eliminación de cuentas
+ * @author drodriguez
+ *
+ */
 public class AccountDeletedGCMHandler implements IGCMHandler {
 
 	private final int NOTIF_ID = 2;
@@ -44,7 +48,7 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 						.getPresenter(ViewNotificationsPresenter.class);
 				if (notifPresenter != null)
 					notifPresenter.addNewAccountNotificationUpdate(notif);
-				notifManager.notify(NOTIF_ID, builder.build());
+				notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
 			}
 		}
 	}

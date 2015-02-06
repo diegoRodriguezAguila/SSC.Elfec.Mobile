@@ -29,7 +29,7 @@ public enum NotificationKey {
 	/**
 	 * Key de Notificación indefinido
 	 */
-	UNDEFINDED_KEY("UndefinedKey");
+	MISCELLANEOUS("Miscellaneous");
 	
 	private String string;
 	
@@ -65,7 +65,7 @@ public enum NotificationKey {
 			if(notifKeys[i].toString().equals(keyAsString))
 				return notifKeys[i];
 		}
-		return NotificationKey.UNDEFINDED_KEY;
+		return NotificationKey.MISCELLANEOUS;
 	}
 	
 	/**

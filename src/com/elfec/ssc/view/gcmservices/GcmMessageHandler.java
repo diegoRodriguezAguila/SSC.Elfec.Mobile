@@ -33,13 +33,16 @@ public class GcmMessageHandler extends IntentService {
 		if(gcmHandler!=null)
 		{
 			NotificationManager notifManager= (NotificationManager)getSystemService(NOTIFICATION_SERVICE);
-            Intent notificationIntent = new Intent(getApplicationContext(), gcmHandler.getActivityClass());
-            notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);   
-            PendingIntent pending = PendingIntent.getActivity(getApplicationContext(),0, notificationIntent,0);         
+			NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
+			if(gcmHandler.getActivityClass()!=null)
+			{
+		        Intent notificationIntent = new Intent(getApplicationContext(), gcmHandler.getActivityClass());
+		        notificationIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);   
+		        PendingIntent pending = PendingIntent.getActivity(getApplicationContext(),0, notificationIntent,0);  
+		        builder.setContentIntent(pending);
+			}
             gcmHandler.handleGCMessage(messageInfo, notifManager, 
-            		(new NotificationCompat.Builder(getApplicationContext()))
-            							.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-							   		    .setContentIntent(pending)
+            		builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 							   		    .setContentTitle(messageInfo.getString("title"))
 										.setContentText(messageInfo.getString("message"))
 							   		    .setSmallIcon(R.drawable.elfec_notification));

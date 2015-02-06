@@ -12,13 +12,17 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
 
 import com.activeandroid.util.Log;
-import com.elfec.ssc.businesslogic.LocationManager;
+import com.elfec.ssc.businesslogic.LocationPointsManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.view.LocationServices;
-
-public class UpdatePointsGCMHandler implements IGCMHandler {
+/**
+ * Maneja las notificaciones de recepción de nuevos puntos de ubicación
+ * @author drodriguez
+ *
+ */
+public class PointsUpdateGCMHandler implements IGCMHandler {
 	//private final int NOTIF_ID = 3;
 	@Override
 	public void handleGCMessage(Bundle messageInfo,
@@ -35,7 +39,7 @@ public class UpdatePointsGCMHandler implements IGCMHandler {
 				points.add(new LocationPoint(point.getString("InstitutionName"), point.getString("Address"), point.getString("Phone"),point.getString("StartAttention"), point.getString("EndAttention"), point.getDouble("Latitude"), point.getDouble("Longitude"),(short) point.getInt("Type")));
 			}
 			
-			LocationManager.registerLocations(points);
+			LocationPointsManager.registerLocations(points);
 			LocationServicesPresenter presenter = ViewPresenterManager
 					.getPresenter(LocationServicesPresenter.class);
 			if (presenter != null)

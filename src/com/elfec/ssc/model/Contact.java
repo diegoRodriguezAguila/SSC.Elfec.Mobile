@@ -99,50 +99,58 @@ public class Contact extends Model{
 	public DateTime getInsertDate() {
 		return InsertDate;
 	}
-	public void setInsertDate(DateTime insertDate) {
+	public Contact setInsertDate(DateTime insertDate) {
 		InsertDate = insertDate;
+		return this;
 	}
 	public DateTime getUpdateDate() {
 		return UpdateDate;
 	}
-	public void setUpdateDate(DateTime updateDate) {
+	public Contact setUpdateDate(DateTime updateDate) {
 		UpdateDate = updateDate;
+		return this;
 	}
 	public String getPhone() {
 		return Phone;
 	}
-	public void setPhone(String phone) {
+	public Contact setPhone(String phone) {
 		Phone = phone;
+		return this;
 	}
 	public String getAddress() {
 		return Address;
 	}
-	public void setAddress(String address) {
+	public Contact setAddress(String address) {
 		Address = address;
+		return this;
 	}
 	public String getEmail() {
 		return Email;
 	}
-	public void setEmail(String email) {
+	public Contact setEmail(String email) {
 		Email = email;
+		return this;
 	}
 	public String getWebPage() {
 		return WebPage;
 	}
-	public void setWebPage(String webPage) {
+	public Contact setWebPage(String webPage) {
 		WebPage = webPage;
+		return this;
 	}
 	public String getFacebook() {
 		return Facebook;
 	}
-	public void setFacebook(String facebook) {
+	public Contact setFacebook(String facebook) {
 		Facebook = facebook;
+		return this;
 	}
 	public String getFacebookId() {
 		return FacebookId;
 	}
-	public void setFacebookId(String facebookId) {
+	public Contact setFacebookId(String facebookId) {
 		FacebookId = facebookId;
+		return this;
 	}
 	
 	//#endregion

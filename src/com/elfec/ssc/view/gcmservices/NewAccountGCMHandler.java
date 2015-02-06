@@ -47,7 +47,7 @@ public class NewAccountGCMHandler implements IGCMHandler {
 					.getPresenter(ViewNotificationsPresenter.class);
 			if (notifPresenter != null)
 				notifPresenter.addNewAccountNotificationUpdate(notif);
-			notifManager.notify(NOTIF_ID, builder.build());
+			notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
 		}
 	}
 

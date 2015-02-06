@@ -38,7 +38,7 @@ public class NotificationDrawablePicker {
 			{
 				
 			}
-			case UNDEFINDED_KEY:
+			case MISCELLANEOUS:
 			{
 				return R.drawable.add_account_mini;
 			}

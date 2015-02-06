@@ -5,7 +5,7 @@ import java.util.List;
 import android.location.Location;
 import android.os.Looper;
 
-import com.elfec.ssc.businesslogic.LocationManager;
+import com.elfec.ssc.businesslogic.LocationPointsManager;
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
@@ -86,7 +86,7 @@ public class LocationServicesPresenter {
 	{
 		lastSelectedDistance = distance;
 		view.showLocationPoints((distance==LocationDistance.ALL)?
-				points:LocationManager.getNearestPoints(points, currentLocation, distanceRange));
+				points:LocationPointsManager.getNearestPoints(points, currentLocation, distanceRange));
 		view.getPreferences().setSelectedLocationPointDistance(distance);
 		view.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
 	}
@@ -132,7 +132,7 @@ public class LocationServicesPresenter {
 					public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
 						if(result.getErrors().size()==0)
 						{
-							LocationManager.registerLocations(result.getResult());
+							LocationPointsManager.registerLocations(result.getResult());
 							view.getPreferences().setLoadLocationsAlreadyUsed();
 							verifyShowLocationPoints(result.getResult());
 						}

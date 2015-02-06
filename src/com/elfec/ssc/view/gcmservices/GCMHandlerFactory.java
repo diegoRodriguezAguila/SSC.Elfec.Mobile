@@ -13,7 +13,12 @@ public class GCMHandlerFactory {
 	{
 		gcmHandlers.put("NewAccount", NewAccountGCMHandler.class);
 		gcmHandlers.put("AccountDeleted", AccountDeletedGCMHandler.class);
-		gcmHandlers.put("UpdatePoints",UpdatePointsGCMHandler.class);
+		gcmHandlers.put("UpdatePoints",PointsUpdateGCMHandler.class);
+		gcmHandlers.put("ContactsUpdate", ContactsUpdateGCMHandler.class);
+		gcmHandlers.put("ScheduledOutage", OutageGCMHandler.class);
+		gcmHandlers.put("IncidentalOutage", OutageGCMHandler.class);
+		gcmHandlers.put("NonpaymentOutage", OutageGCMHandler.class);
+		gcmHandlers.put("Miscellaneous", MiscellaneousGCMHandler.class);
 	}
 	
 	/**

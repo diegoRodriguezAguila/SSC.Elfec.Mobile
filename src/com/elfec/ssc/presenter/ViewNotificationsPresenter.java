@@ -176,12 +176,13 @@ public class ViewNotificationsPresenter {
 	{
 		outageNotifications.add(0, notif);
 		int outSize = outageNotifications.size();
-		if(outSize>currentOutageLimit)
+		boolean hasToRemove = outSize>currentOutageLimit;
+		if(hasToRemove)
 		{
 			outageNotifications.remove(outSize-1);
 			view.setMoreOutageNotificationsEnabled(true);
 		}
-		view.showNewOutageNotificationUpdate(notif, outSize>currentOutageLimit);
+		view.showNewOutageNotificationUpdate(notif, hasToRemove);
 	}
 	/**
 	 * Cuando llega una notificación de cuentas y se quiere aumentar al principio de la lista
@@ -192,12 +193,13 @@ public class ViewNotificationsPresenter {
 	{
 		accountNotifications.add(0, notif);
 		int accSize = accountNotifications.size();
-		if(accSize>currentAccountsLimit)
+		boolean hasToRemove = accSize>currentAccountsLimit;
+		if(hasToRemove)
 		{
 			accountNotifications.remove(accSize-1);
 			view.setMoreAcccountNotificationsEnabled(true);
 		}
-		view.showNewAccountNotificationUpdate(notif, accSize>currentAccountsLimit);
+		view.showNewAccountNotificationUpdate(notif, hasToRemove);
 	}
 
 }
