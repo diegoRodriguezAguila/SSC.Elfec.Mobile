@@ -15,6 +15,14 @@ public enum NotificationKey {
 	 */
 	ACCOUNT_DELETED("AccountDeleted"),
 	/**
+	 * Notificación de que se añadieron puntos de ubicación
+	 */
+	POINTS_UPDATE("PointsUpdate"),
+	/**
+	 * Notificación de que se actualizaron los contactos de la empresa
+	 */
+	CONTACTS_UPDATE("ContactsUpdate"),
+	/**
 	 * Notificación de corte programado
 	 */
 	SCHEDULED_OUTAGE("ScheduledOutage"),
