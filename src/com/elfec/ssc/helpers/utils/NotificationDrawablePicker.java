@@ -28,15 +28,15 @@ public class NotificationDrawablePicker {
 			}
 			case SCHEDULED_OUTAGE:
 			{
-				
+				return R.drawable.notif_scheduled_outage;
 			}
 			case INCIDENTAL_OUTAGE:
 			{
-				
+				return R.drawable.notif_incidental_outage;
 			}
 			case NONPAYMENT_OUTAGE:
 			{
-				
+				return R.drawable.notif_nonpayment_outage;
 			}
 			case MISCELLANEOUS:
 			{
