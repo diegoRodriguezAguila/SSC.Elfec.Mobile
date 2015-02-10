@@ -10,6 +10,7 @@ import android.os.Looper;
 import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
+import com.elfec.ssc.helpers.DownloadHelper;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.Account;
@@ -74,7 +75,7 @@ public class ViewAccountsPresenter {
 			{
 				Looper.prepare();
 				final Client client=Client.getActiveClient();
-				if(view.getPreferences().isFirstLoadAccounts())
+				if(view.getPreferences().isFirstLoadAccounts() )
 				{
 					GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
 					gcmTokenRequester.getTokenAsync(new GCMTokenReceivedCallback() {								
@@ -108,7 +109,11 @@ public class ViewAccountsPresenter {
 			}
 		});
 	}
-	
+	public void getAllServiceAccounts()
+	{
+		Client client=Client.getActiveClient();
+		callGetAllAccountsWebService(client);
+	}
 	/**
 	 * Invoca a las clases necesarias para obtener las cuentas del cliente via web services
 	 * @param accountWS
@@ -126,8 +131,9 @@ public class ViewAccountsPresenter {
 					{
 						final List<Account> accounts=result.getResult();
 						ClientManager.registerClientAccounts(accounts);
-						view.show(accounts);
 						view.getPreferences().setLoadAccountsAlreadyUsed();
+						view.show(accounts);
+						
 					}
 					else
 					{

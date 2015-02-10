@@ -5,13 +5,12 @@
     android:background="#ffffff"
     android:orientation="vertical" >
      <TextView
-     android:id="@+id/rowTextView1"
+     android:id="@+id/row_account_value"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
      android:layout_marginLeft="20dp"
      android:layout_marginStart="20dp"
      android:textStyle="bold"
-     android:text="asdasd"
      android:textSize="20sp" />
      <LinearLayout
         android:id="@+id/account_layout"
@@ -24,7 +23,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp">
 		 <TextView 
-		 android:id="@+id/rowTextView22"   
+		 android:id="@+id/row_nus"   
 		 android:layout_width="fill_parent"   
 		 android:layout_height="wrap_content"  
 		 android:textSize="16sp" 
@@ -32,7 +31,7 @@
 		 android:text="NUS:"
 		 />
 		 <TextView 
-		 android:id="@+id/rowTextView2"   
+		 android:id="@+id/row_nus_value"   
 		 android:layout_width="fill_parent"   
 		 android:layout_height="wrap_content"  
 		 android:paddingLeft="5dp"  
@@ -52,7 +51,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp">
 		 <TextView 
-		 android:id="@+id/rowTextView5"   
+		 android:id="@+id/row_name"   
 		 android:layout_width="fill_parent"   
 		 android:layout_height="wrap_content"  
 		 android:textSize="16sp" 
@@ -60,7 +59,7 @@
 		 android:text="Nombre:"
 		 />
 		 <TextView 
-		 android:id="@+id/rowTextView6"   
+		 android:id="@+id/row_name_value"   
 		 android:layout_width="fill_parent"   
 		 android:layout_height="wrap_content"  
 		 android:paddingLeft="5dp"  

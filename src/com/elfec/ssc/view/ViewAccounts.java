@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.media.audiofx.AcousticEchoCanceler;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
@@ -16,6 +17,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ListView;
+
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
@@ -26,19 +28,24 @@ import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
+import com.elfec.ssc.view.controls.xlistview.XListView;
+import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
+import com.google.android.gms.maps.internal.l;
 
 public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
-	private ListView accountsListView;
+	private XListView accountsListView;
 	private AlertDialog waitingWSDialog;
+	private boolean isRefresh;
 	@Override
 	protected void onResume()
 	{
 		super.onResume();
 		ViewPresenterManager.setPresenter(presenter);
+		isRefresh=false;
 	    presenter.gatherAccounts();
 	}
 	@Override
@@ -57,7 +64,20 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
-        accountsListView=(ListView)findViewById(R.id.accounts_list);
+        accountsListView=(XListView)findViewById(R.id.accounts_list);
+        accountsListView.setPullLoadEnable(false);
+        accountsListView.setPullRefreshEnable(true);
+        accountsListView.setXListViewListener(new IXListViewListener() {			
+			@Override
+			public void onRefresh() {
+				presenter.getAllServiceAccounts();
+			}
+			
+			@Override
+			public void onLoadMore() {
+				
+			}
+		});
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
         accountsListView.setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
@@ -203,6 +223,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public void run() {
 				if(waitingWSDialog!=null)
 					waitingWSDialog.dismiss();
+				accountsListView.stopRefresh();
 			}
 		});
 	}
@@ -233,6 +254,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	@Override
 	public GCMTokenRequester getGCMTokenRequester() {
 		return new GCMTokenRequester(this);
+	}
+	@Override
+	public boolean isRefreshed() {
+		return isRefresh;
 	}
 	
 }

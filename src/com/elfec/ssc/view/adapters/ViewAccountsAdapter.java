@@ -44,9 +44,9 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
 		Account dispositivoBluetooth = accounts.get(position);
-		((TextView) convertView.findViewById(R.id.rowTextView1)).setText(""
+		((TextView) convertView.findViewById(R.id.row_account_value)).setText(""
 				+ dispositivoBluetooth.getAccountNumber());
-		((TextView) convertView.findViewById(R.id.rowTextView2))
+		((TextView) convertView.findViewById(R.id.row_nus_value))
 				.setText(dispositivoBluetooth.getNUS());
 		return convertView;
 	}

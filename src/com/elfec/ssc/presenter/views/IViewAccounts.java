@@ -20,6 +20,7 @@ public interface IViewAccounts {
 	public void dialogRemove(int position); 
 	public void ShowWaitingWS();
 	public void hideWSWaiting();
+	public boolean isRefreshed();
 	public void showViewAccountsErrors(List<Exception> errors);
 	/**
 	 * Obtiene el GCMTokenRequester con el contexto de la actividad actual
