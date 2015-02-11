@@ -40,6 +40,12 @@ public class Account extends Model {
     @Column(name = "NUS", index=true, notNull=true)
     private String NUS;
     
+    @Column(name = "AccountOwner")
+    private String AccountOwner;
+    
+    @Column(name = "Address")
+    private String Address;
+    
     @Column(name = "Status", notNull=true)
     private short Status;
     
