@@ -30,7 +30,7 @@ public class Debt extends Model {
 	@Column(name = "ReceiptNumber")
     private int ReceiptNumber;
 	
-	@Column(name = "ExpirationDate", notNull=true)
+	@Column(name = "ExpirationDate")
     private DateTime ExpirationDate;
 	
 	@Column(name = "Status", notNull=true)
