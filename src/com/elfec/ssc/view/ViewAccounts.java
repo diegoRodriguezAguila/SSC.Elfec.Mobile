@@ -8,7 +8,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
-import android.media.audiofx.AcousticEchoCanceler;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
@@ -16,7 +15,6 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ListView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
@@ -32,7 +30,6 @@ import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
-import com.google.android.gms.maps.internal.l;
 
 public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 

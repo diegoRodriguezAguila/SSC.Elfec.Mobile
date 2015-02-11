@@ -10,7 +10,6 @@ import android.os.Looper;
 import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
-import com.elfec.ssc.helpers.DownloadHelper;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.model.Account;

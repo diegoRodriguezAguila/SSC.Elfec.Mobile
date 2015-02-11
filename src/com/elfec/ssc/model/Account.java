@@ -1,5 +1,7 @@
 package com.elfec.ssc.model;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
@@ -93,6 +95,14 @@ public class Account extends Model {
     
     //#endregion
 
+	/**
+	 * Obtiene todas las deudas relacionadas a la cuenta
+	 * @return Lista de deudas relacionadas
+	 */
+	public List<Debt> getDebts() 
+	{
+		return getMany(Debt.class, "Account");
+	}
 	
 	/**
 	 * Busca una cuenta que coincida con los parámetros
