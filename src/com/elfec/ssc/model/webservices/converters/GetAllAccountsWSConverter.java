@@ -23,7 +23,7 @@ public class GetAllAccountsWSConverter implements IWSResultConverter<List<Accoun
 				Client ownerClient = Client.getActiveClient();
 				JSONArray array = new JSONArray(result);
 				for (int i = 0; i < array.length(); i++) {
-					JSONObject object = (JSONObject) array.get(i);
+					JSONObject object = array.getJSONObject(i);
 					Account account = new Account(ownerClient,
 							object.getString("account_number"),
 							object.getString("nus"));

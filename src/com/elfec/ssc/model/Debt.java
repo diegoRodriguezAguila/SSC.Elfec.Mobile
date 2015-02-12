@@ -1,5 +1,7 @@
 package com.elfec.ssc.model;
 
+import java.math.BigDecimal;
+
 import org.joda.time.DateTime;
 
 import com.activeandroid.Model;
@@ -19,7 +21,7 @@ public class Debt extends Model {
 	private Account Account;
 	
 	@Column(name = "Amount", notNull=true)
-	private String Amount;
+	private BigDecimal Amount;
 	
 	@Column(name = "Year", notNull=true)
     private int Year;
@@ -41,4 +43,99 @@ public class Debt extends Model {
     
     @Column(name = "UpdateDate")
     private DateTime UpdateDate;
+    
+    public Debt() {
+		super();
+	}
+
+	public Debt(Account fromAccount, BigDecimal amount, int year,
+			short month, int receiptNumber, DateTime expirationDate) {
+		super();
+		this.Account = fromAccount;
+		this.Amount = amount;
+		this.Year = year;
+		this.Month = month;
+		this.ReceiptNumber = receiptNumber;
+		this.ExpirationDate = expirationDate;
+		this.Status = 1;
+	}
+	
+	
+	//#region Getters y Setters
+	
+
+	public Account getAccount() {
+		return Account;
+	}
+
+	public void setAccount(Account account) {
+		Account = account;
+	}
+
+	public BigDecimal getAmount() {
+		return Amount;
+	}
+
+	public void setAmount(BigDecimal amount) {
+		Amount = amount;
+	}
+
+	public int getYear() {
+		return Year;
+	}
+
+	public void setYear(int year) {
+		Year = year;
+	}
+
+	public short getMonth() {
+		return Month;
+	}
+
+	public void setMonth(short month) {
+		Month = month;
+	}
+
+	public int getReceiptNumber() {
+		return ReceiptNumber;
+	}
+
+	public void setReceiptNumber(int receiptNumber) {
+		ReceiptNumber = receiptNumber;
+	}
+
+	public DateTime getExpirationDate() {
+		return ExpirationDate;
+	}
+
+	public void setExpirationDate(DateTime expirationDate) {
+		ExpirationDate = expirationDate;
+	}
+
+	public short getStatus() {
+		return Status;
+	}
+
+	public void setStatus(short status) {
+		Status = status;
+	}
+
+	public DateTime getInsertDate() {
+		return InsertDate;
+	}
+
+	public void setInsertDate(DateTime insertDate) {
+		InsertDate = insertDate;
+	}
+
+	public DateTime getUpdateDate() {
+		return UpdateDate;
+	}
+
+	public void setUpdateDate(DateTime updateDate) {
+		UpdateDate = updateDate;
+	}
+	//#endregion
+    
+    
 }

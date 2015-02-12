@@ -59,7 +59,7 @@
             android:value="SSC_ELFEC.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="9" />
+            android:value="12" />
         <meta-data
             android:name="AA_SERIALIZERS"
             android:value="com.elfec.ssc.model.serializers.JodaDateTimeSerializer" />

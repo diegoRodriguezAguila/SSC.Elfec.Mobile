@@ -10,6 +10,7 @@ import android.os.Looper;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.FieldValidator;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
+import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
@@ -90,14 +91,14 @@ public class RegisterAccountPresenter {
 	private void callRegisterWebService(final Client client) {
 		AccountWS accountWebService = new AccountWS();
 		accountWebService.registerAccount(view.getAccountNumber(), view.getNUS(), client.getGmail(), view.getPhoneNumber(), 
-				Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken() , new IWSFinishEvent<Boolean>() {		
+				Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken() , new IWSFinishEvent<Account>() {		
 				@Override
-				public void executeOnFinished(WSResponse<Boolean> result) 
+				public void executeOnFinished(WSResponse<Account> result) 
 				{
 					view.hideWSWaiting();
-					if(result.getResult())
+					if(result.getResult()!=null)
 					{
-						ElfecAccountsManager.registerAccount(client, view.getAccountNumber(), view.getNUS());
+						ElfecAccountsManager.registerAccount(result.getResult());
 						view.notifyAccountSuccessfulyRegistered();
 					}
 					else
