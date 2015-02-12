@@ -142,6 +142,14 @@ public class Account extends Model {
 		return Debts;
 	}
 	
+	public String getAccountOwner() {
+		return AccountOwner;
+	}
+
+	public void setAccountOwner(String accountOwner) {
+		AccountOwner = accountOwner;
+	}
+
 	/**
 	 * Agrega una nueva deuda siempre y cuando no exista ya en la lista de deudas
 	 * @param debt

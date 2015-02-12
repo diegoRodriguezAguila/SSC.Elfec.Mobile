@@ -10,6 +10,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.model.Account;
 
 public class ViewAccountsAdapter extends ArrayAdapter<Account> {
@@ -43,11 +44,14 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
-		Account dispositivoBluetooth = accounts.get(position);
+		Account account = accounts.get(position);
 		((TextView) convertView.findViewById(R.id.row_account_value)).setText(""
-				+ dispositivoBluetooth.getAccountNumber());
+				+ account.getAccountNumber());
 		((TextView) convertView.findViewById(R.id.row_nus_value))
-				.setText(dispositivoBluetooth.getNUS());
+				.setText(account.getNUS());
+		((TextView) convertView.findViewById(R.id.row_name_value))
+		.setText(TextFormater.capitalize(account.getAccountOwner()));
+
 		return convertView;
 	}
 	

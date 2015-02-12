@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.elfec.ssc.helpers.JsonToAccountConverter;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.webservices.IWSResultConverter;
@@ -23,11 +24,9 @@ public class GetAllAccountsWSConverter implements IWSResultConverter<List<Accoun
 				Client ownerClient = Client.getActiveClient();
 				JSONArray array = new JSONArray(result);
 				for (int i = 0; i < array.length(); i++) {
-					JSONObject object = array.getJSONObject(i);
-					Account account = new Account(ownerClient,
-							object.getString("account_number"),
-							object.getString("nus"));
-					accounts.add(account);
+					JSONObject accObj = array.getJSONObject(i);
+					
+					accounts.add(JsonToAccountConverter.convert(accObj));
 
 				}
 			} catch (JSONException e) {

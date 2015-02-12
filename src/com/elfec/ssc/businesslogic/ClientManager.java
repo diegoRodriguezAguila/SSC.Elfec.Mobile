@@ -29,7 +29,7 @@ public class ClientManager {
 		for(Account account : accounts)
 		{
 			//account.setAccountNumber(account.getAccountNumber());
-			ElfecAccountsManager.registerAccount(account.getClient(), account.getAccountNumber(),account.getNUS());
+			ElfecAccountsManager.registerAccount(account);
 		}
 	}
 }

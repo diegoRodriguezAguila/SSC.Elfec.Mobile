@@ -4,14 +4,57 @@
     android:layout_height="match_parent"
     android:background="#ffffff"
     android:orientation="vertical" >
+    <LinearLayout
+        android:id="@+id/account_number_layout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+         <TextView 
+		 android:id="@+id/row_nam3e_value"   
+		 android:layout_width="wrap_content"   
+		 android:layout_height="wrap_content"  
+		 android:paddingLeft="5dp"  
+		 android:paddingStart="5dp" 
+		 android:textSize="16sp" 
+		 android:text=""
+		 />
+    <LinearLayout
+        android:id="@+id/account_number_layout2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical">
+    
+    
+     <LinearLayout
+        android:id="@+id/account_number_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
+        android:gravity="center_vertical"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginEnd="20dp">
+	<ImageView
+        android:id="@+id/account_mini_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ssc_elfec_color"
+        android:padding="8dp"
+        android:contentDescription="@string/account_img"
+        android:src="@drawable/account_mini" />
      <TextView
      android:id="@+id/row_account_value"
      android:layout_width="fill_parent"
      android:layout_height="wrap_content"
-     android:layout_marginLeft="20dp"
-     android:layout_marginStart="20dp"
-     android:textStyle="bold"
+     android:paddingLeft="5dp"  
+	 android:paddingStart="5dp"
+	android:textStyle="bold"
      android:textSize="20sp" />
+    </LinearLayout>
      <LinearLayout
         android:id="@+id/account_layout"
         android:layout_width="wrap_content"
@@ -22,14 +65,14 @@
         android:gravity="center_vertical"
         android:layout_marginRight="20dp"
         android:layout_marginEnd="20dp">
-		 <TextView 
-		 android:id="@+id/row_nus"   
-		 android:layout_width="fill_parent"   
-		 android:layout_height="wrap_content"  
-		 android:textSize="16sp" 
-		 android:textStyle="bold"
-		 android:text="NUS:"
-		 />
+		 <ImageView
+        android:id="@+id/row_nus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/ssc_elfec_color"
+        android:contentDescription="@string/account_img"
+        android:padding="8dp"
+        android:src="@drawable/nus_mini" />
 		 <TextView 
 		 android:id="@+id/row_nus_value"   
 		 android:layout_width="fill_parent"   
@@ -69,4 +112,7 @@
 		 />
 </LinearLayout>
 
+</LinearLayout>
+
+</LinearLayout>
 </LinearLayout>
