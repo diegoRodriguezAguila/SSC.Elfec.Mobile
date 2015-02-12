@@ -29,10 +29,10 @@ public class AccountWS
 	 * @return
 	 */
 	public void registerAccount(String accountNumber, String nUS, String gmail, String phoneNumber, 
-			String deviceBrand, String deviceModel, String deviceIMEI, String gCMtoken, IWSFinishEvent<Boolean> eventHandler )
+			String deviceBrand, String deviceModel, String deviceIMEI, String gCMtoken, IWSFinishEvent<Account> eventHandler )
 	{
-		WebServiceConnector<Boolean> accountWSConnector = 
-				new WebServiceConnector<Boolean>("AccountWS.php?wsdl", "", 
+		WebServiceConnector<Account> accountWSConnector = 
+				new WebServiceConnector<Account>("AccountWS.php?wsdl", "", 
 						"ssc_elfec", "RegisterAccount", new RegisterAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("AccountNumber", accountNumber), new WSParam("NUS", nUS), new WSParam("GMail", gmail), 
 				new WSParam("PhoneNumber", phoneNumber), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),

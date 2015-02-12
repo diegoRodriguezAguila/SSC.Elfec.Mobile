@@ -1,9 +1,12 @@
 package com.elfec.ssc.businesslogic;
 
+import java.util.List;
+
 import org.joda.time.DateTime;
 
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
+import com.elfec.ssc.model.Debt;
 
 /**
  * Se encarga de las distintas operaciones relacionadas con las cuentas de elfec
@@ -26,6 +29,36 @@ public class ElfecAccountsManager {
 			newAccount.setInsertDate(DateTime.now());
 		}
 		else newAccount.setStatus((short) 1);
+		newAccount.save();
+	}
+	
+	/**
+	 * Registra una cuenta de elfec  en la base de datos asignando al ownerClient como dueño de la cuenta y 
+	 * con el nus y numero de cuentas proporcionados y con estado 1 por defecto
+	 * @param ownerClient
+	 * @param accountNumber
+	 * @param nus
+	 */
+	public static void registerAccount(Account account) {
+		Account newAccount = Account.findAccount(account.getClient().getGmail(), account.getNUS(), account.getAccountNumber());
+		if(newAccount==null)
+		{
+			newAccount = account;
+			newAccount.setInsertDate(DateTime.now());
+		}
+		else 
+		{
+			newAccount.addDebts(account.getDebts());
+			newAccount.setStatus((short) 1);
+			
+		}
+		List<Debt> accountDebts = newAccount.getDebts();
+		for(Debt debt : accountDebts)
+		{
+			if(debt.getInsertDate()==null)
+				debt.setInsertDate(DateTime.now());
+			debt.save();
+		}
 		newAccount.save();
 	}
 	

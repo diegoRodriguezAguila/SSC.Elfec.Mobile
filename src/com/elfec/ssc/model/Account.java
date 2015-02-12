@@ -1,5 +1,6 @@
 package com.elfec.ssc.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -31,6 +32,21 @@ public class Account extends Model {
 	}
 	
 	
+	
+	public Account(Client client, String accountNumber,
+			String nUS, String accountOwner, String address, short energySupplyStatus) {
+		super();
+		this.Client = client;
+		this.AccountNumber = accountNumber;
+		this.NUS = nUS;
+		this.AccountOwner = accountOwner;
+		this.Address = address;
+		this.EnergySupplyStatus = energySupplyStatus;
+		this.Status = 1;
+	}
+
+
+
 	@Column(name = "Client")
     private Client Client;
     
@@ -46,6 +62,9 @@ public class Account extends Model {
     @Column(name = "Address")
     private String Address;
     
+    @Column(name = "EnergySupplyStatus")
+    private short EnergySupplyStatus;
+    
     @Column(name = "Status", notNull=true)
     private short Status;
     
@@ -54,6 +73,8 @@ public class Account extends Model {
     
     @Column(name = "UpdateDate")
     private DateTime UpdateDate;
+    
+    private List<Debt> Debts;
     
 	//#region Getters y Setters
 
@@ -107,7 +128,45 @@ public class Account extends Model {
 	 */
 	public List<Debt> getDebts() 
 	{
-		return getMany(Debt.class, "Account");
+		if(Debts==null)
+		{
+			try
+			{
+				Debts = getMany(Debt.class, "Account");
+			}
+			catch(NullPointerException e)
+			{
+				Debts = new ArrayList<Debt>();
+			}
+		}
+		return Debts;
+	}
+	
+	/**
+	 * Agrega una nueva deuda siempre y cuando no exista ya en la lista de deudas
+	 * @param debt
+	 */
+	public void addDebt(Debt newDebt)
+	{
+		List<Debt> debts = getDebts();
+		for(Debt debt : debts)
+		{
+			if(debt.getReceiptNumber()==newDebt.getReceiptNumber())
+				return;
+		}
+		debts.add(newDebt);
+	}
+	
+	/**
+	 * Agrega una lista de deudas siempre y cuando cada una no exista ya en la lista de deudas
+	 * @param debt
+	 */
+	public void addDebts(List<Debt> newDebt)
+	{
+		for(Debt debt : newDebt)
+		{
+			this.addDebt(debt);
+		}
 	}
 	
 	/**
