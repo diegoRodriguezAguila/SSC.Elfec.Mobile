@@ -1,5 +1,8 @@
 package com.elfec.ssc.view.gcmservices;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
@@ -7,6 +10,7 @@ import android.support.v4.app.NotificationCompat;
 
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.ElfecNotificationManager;
+import com.elfec.ssc.helpers.JsonToAccountConverter;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Notification;
@@ -34,7 +38,11 @@ public class NewAccountGCMHandler implements IGCMHandler {
 		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
 		if(ownerClient != null)
 		{
-			ElfecAccountsManager.registerAccount(ownerClient, messageInfo.getString("number"), messageInfo.getString("nus"));
+			try {
+				ElfecAccountsManager.registerAccount(JsonToAccountConverter.convert(new JSONObject(messageInfo.getString("account"))));
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
 			Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
 					NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
 			//Si la vista de ver cuentas esta activa
