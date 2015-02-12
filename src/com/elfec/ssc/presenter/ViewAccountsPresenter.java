@@ -23,10 +23,12 @@ import com.elfec.ssc.presenter.views.IViewAccounts;
 public class ViewAccountsPresenter {
 
 	private IViewAccounts view;
+	private boolean isLoadingAccounts;
 	
 	public ViewAccountsPresenter(IViewAccounts view)
 	{
 		this.view = view;
+		isLoadingAccounts=false;
 	}
 	public void invokeRemoveAccountWS(final String nus)
 	{
@@ -119,29 +121,43 @@ public class ViewAccountsPresenter {
 	 * @param client
 	 */
 	private void callGetAllAccountsWebService(Client client) {
+		if(!isLoadingAccounts)
+		{
+		isLoadingAccounts=true;
 		AccountWS accountWS = new AccountWS();
 		accountWS.getAllAccounts(client.getGmail(), Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(), 
 				new IWSFinishEvent<List<Account>>() 
 			{
 				@Override
-				public void executeOnFinished(WSResponse<List<Account>> result) 
+				public void executeOnFinished(final WSResponse<List<Account>> result) 
 				{
-					if(result.getErrors().size()==0)
-					{
-						final List<Account> accounts=result.getResult();
-						ClientManager.registerClientAccounts(accounts);
-						view.getPreferences().setLoadAccountsAlreadyUsed();
-						view.show(accounts);
 						
-					}
-					else
-					{
-						view.showViewAccountsErrors(result.getErrors());
-					}
+					Thread thread=new Thread(new Runnable() {
+						
+						@Override
+						public void run() {
+							if(result.getErrors().size()==0)
+							{
+								final List<Account> accounts=result.getResult();
+								ClientManager.registerClientAccounts(accounts);
+								view.getPreferences().setLoadAccountsAlreadyUsed();
+								view.show(accounts);
+							}
+							else
+							{
+								view.showViewAccountsErrors(result.getErrors());
+							}
+							isLoadingAccounts=false;
+						}
+					});
 					view.hideWSWaiting();
-				}
+					
+					thread.start();
+					}
+				
 
 			});
+		}
 	}
 	
 }
