@@ -1,5 +1,6 @@
 package com.elfec.ssc.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,6 +77,16 @@ public class Account extends Model {
     
     private List<Debt> Debts;
     
+    
+    public BigDecimal totalDebt()
+    {
+    	BigDecimal total=BigDecimal.ZERO;
+    	for(Debt debt : Debts)
+    	{
+    		total.add(debt.getAmount());
+    	}
+    	return total;
+    }
 	//#region Getters y Setters
 
 	public Client getClient() {

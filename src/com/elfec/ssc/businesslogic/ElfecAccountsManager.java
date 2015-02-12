@@ -52,6 +52,7 @@ public class ElfecAccountsManager {
 			newAccount.setStatus((short) 1);
 			
 		}
+		newAccount.save();
 		List<Debt> accountDebts = newAccount.getDebts();
 		for(Debt debt : accountDebts)
 		{
@@ -59,7 +60,6 @@ public class ElfecAccountsManager {
 				debt.setInsertDate(DateTime.now());
 			debt.save();
 		}
-		newAccount.save();
 	}
 	
 	/**
