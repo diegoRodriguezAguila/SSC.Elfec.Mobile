@@ -78,12 +78,12 @@ public class Account extends Model {
     private List<Debt> Debts;
     
     
-    public BigDecimal totalDebt()
+    public BigDecimal getTotalDebt()
     {
     	BigDecimal total=BigDecimal.ZERO;
-    	for(Debt debt : Debts)
+    	for(Debt debt : getDebts())
     	{
-    		total.add(debt.getAmount());
+    		total=total.add(debt.getAmount());
     	}
     	return total;
     }

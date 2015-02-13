@@ -89,7 +89,6 @@
             android:layout_gravity="end|top"
             android:gravity="end|center"
             android:background="@drawable/ssc_elfec_btn_default_holo_light"
-            android:text="1.900 Bs." 
             android:textAppearance="@style/TextAppearance.CustomFont.Light"
             android:textColor="@color/white"
             android:textSize="24sp" />

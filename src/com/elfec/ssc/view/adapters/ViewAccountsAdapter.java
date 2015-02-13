@@ -53,6 +53,9 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 		((TextView) convertView.findViewById(R.id.row_name_value))
 		.setText(TextFormater.capitalize(account.getAccountOwner()));
 
+		((TextView) convertView.findViewById(R.id.total_amount))
+		.setText((account.getTotalDebt().toString()+" Bs."));
+
 		return convertView;
 	}
 	
