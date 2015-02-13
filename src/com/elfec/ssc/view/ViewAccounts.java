@@ -64,7 +64,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public boolean onItemLongClick(AdapterView<?> adapter, View view,
 					int position, long arg3) {
 				dialogRemove(position);
-				return false;
+				return true;
 			}
         }); 
         accountsListView.setOnItemClickListener(new OnItemClickListener() {
