@@ -54,20 +54,23 @@
     <string name="lbl_marker_address">Dirección:</string>
     <string name="lbl_marker_phone">Teléfono:</string>
     <string name="lbl_marker_bussines_hours">Horario de atención:</string>
-    
 
     <!-- Contacts -->
     <string name="contacts_title">Contactos</string>
     <string name="lbl_visit_us_facebook">Visítanos en facebook</string>
-    
+
     <!-- Notificaciones -->
-    
+
     <string name="notifications_title">Notificaciones</string>
     <string name="outage_group">Cortes</string>
     <string name="accounts_group">Cuentas</string>
     <string name="delete_notifications_title">ELIMINAR NOTIFICACIONES</string>
     <string name="delete_outage_notifications_msg">Está apunto de eliminar las notificaciones de cortes, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
-	<string name="delete_account_notifications_msg">Está apunto de eliminar las notificaciones de cuentas, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
+    <string name="delete_account_notifications_msg">Está apunto de eliminar las notificaciones de cuentas, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
+   
+    <!-- Información de cuenta -->
+    <string name="view_account_details_title">Información de cuenta</string>
+    
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="setup_distance">Configurar distancia</string>
@@ -96,11 +99,13 @@
     <string name="time_sample">19:03</string>
     <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
     
+
     <!-- XListView -->
-     <string name="xlistview_header_hint_normal">Actualizar</string>
+    <string name="xlistview_header_hint_normal">Actualizar</string>
     <string name="xlistview_header_hint_ready">Suelte para actualizar</string>
     <string name="xlistview_header_hint_loading">Actualizando&#8230;</string>
     <string name="xlistview_header_last_time">Actualizado a las: </string>
     <string name="xlistview_footer_hint_normal">Ver más notificaciones</string>
     <string name="xlistview_footer_hint_ready">Suelte para cargar notificaciones más antiguas</string>
+
 </resources>
