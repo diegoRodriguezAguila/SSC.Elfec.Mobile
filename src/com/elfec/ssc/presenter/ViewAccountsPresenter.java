@@ -96,7 +96,9 @@ public class ViewAccountsPresenter {
 					});
 				}
 				else
+				{
 					view.show(client.getActiveAccounts());
+				}
 				Looper.loop();
 			}
 		});

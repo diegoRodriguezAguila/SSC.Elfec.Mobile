@@ -136,6 +136,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public void run() {
 				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.view_accounts_row, result);
 				accountsListView.setAdapter(adapter);
+				
 				if(result.size()>0)
 				{
 					findViewById(R.id.layout_how_to_add_accounts).setVisibility(View.GONE);
@@ -150,6 +151,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 					findViewById(R.id.lbl_no_accounts_registered).setVisibility(View.VISIBLE);
 					accountsListView.setVisibility(View.GONE);
 				}
+				findViewById(R.id.loading_view_accounts).setVisibility(View.GONE);
 			}
 		});
 	}
