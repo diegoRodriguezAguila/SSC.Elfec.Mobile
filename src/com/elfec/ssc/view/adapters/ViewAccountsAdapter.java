@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.TextFormater;
+import com.elfec.ssc.helpers.utils.AccountFormatter;
 import com.elfec.ssc.model.Account;
 
 public class ViewAccountsAdapter extends ArrayAdapter<Account> {
@@ -45,8 +46,8 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 		if(convertView==null)
 			convertView = inflater.inflate(resource, null);
 		Account account = accounts.get(position);
-		((TextView) convertView.findViewById(R.id.row_account_value)).setText(""
-				+ account.getAccountNumber());
+		((TextView) convertView.findViewById(R.id.row_account_value)).setText(
+				AccountFormatter.formatAccountNumber(account.getAccountNumber()));
 		((TextView) convertView.findViewById(R.id.row_nus_value))
 				.setText(account.getNUS());
 		((TextView) convertView.findViewById(R.id.row_name_value))

@@ -40,8 +40,7 @@ public class ViewAccountsPresenter {
 				Looper.prepare();
 				AccountWS accountWS = new AccountWS();
 				final Client client=Client.getActiveClient();
-				accountWS.removeAccount(client.getGmail(), nus, imei, new IWSFinishEvent<Boolean>() {
-					
+				accountWS.removeAccount(client.getGmail(), nus, imei, new IWSFinishEvent<Boolean>() {					
 					@Override
 					public void executeOnFinished(WSResponse<Boolean> result) {
 						if(result.getResult())
@@ -130,8 +129,7 @@ public class ViewAccountsPresenter {
 			{
 				@Override
 				public void executeOnFinished(final WSResponse<List<Account>> result) 
-				{
-						
+				{						
 					Thread thread=new Thread(new Runnable() {
 						
 						@Override

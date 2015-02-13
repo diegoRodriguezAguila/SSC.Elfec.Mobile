@@ -14,6 +14,7 @@ import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.alertdialogpro.AlertDialogPro;
@@ -37,25 +38,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	private XListView accountsListView;
 	private AlertDialog waitingWSDialog;
 	private boolean isRefresh;
-	@Override
-	protected void onResume()
-	{
-		super.onResume();
-		ViewPresenterManager.setPresenter(presenter);
-		isRefresh=false;
-	    presenter.gatherAccounts();
-	}
-	@Override
-	protected void onStop()
-	{
-		super.onStop();
-	}
-	@Override
-	protected void onPause()
-	{
-		super.onPause();
-		ViewPresenterManager.setPresenter(null);
-	}
+	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +67,36 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				return false;
 			}
         }); 
+        accountsListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> adapter, View view, int pos,
+					long arg3) {
+				Intent i = new Intent(ViewAccounts.this, ViewAccountDetails.class);
+				startActivity(i);
+				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+			}
+		});
     }
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		ViewPresenterManager.setPresenter(presenter);
+		isRefresh=false;
+	    presenter.gatherAccounts();
+	}
+	@Override
+	protected void onStop()
+	{
+		super.onStop();
+	}
+	@Override
+	protected void onPause()
+	{
+		super.onPause();
+		ViewPresenterManager.setPresenter(null);
+	}
 
     @Override
     protected void attachBaseContext(Context newBase) {

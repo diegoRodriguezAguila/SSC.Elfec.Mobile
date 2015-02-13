@@ -39,6 +39,7 @@
     <string name="use_button_add">Utilice el botón</string>
     <string name="lbl_for_register">para agregar</string>
     <string name="lbl_an_account">una cuenta</string>
+    <string name="lbl_account_list_item_name">Nombre:</string>
     <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
     <!-- View Accounts: Delete Account -->
     <string name="delete_account_title">ELIMINAR CUENTA</string>
@@ -94,10 +95,13 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
+    
+    <!-- Samples -->
     <string name="account_deleted_sample">Cuenta eliminada</string>
     <string name="date_sample">06 Ago 2014</string>
     <string name="time_sample">19:03</string>
     <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
+    <string name="name_sample">Jarry Pedro Perez</string>
     
 
     <!-- XListView -->

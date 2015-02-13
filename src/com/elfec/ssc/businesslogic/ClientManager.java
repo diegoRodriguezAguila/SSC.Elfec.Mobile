@@ -24,11 +24,14 @@ public class ClientManager {
 		client.setInsertDate(DateTime.now());
 		client.save();
 	}
+	/**
+	 * Registra una lista de cuentas de un cliente
+	 * @param accounts
+	 */
 	public static void registerClientAccounts(final List<Account> accounts)
 	{
 		for(Account account : accounts)
 		{
-			//account.setAccountNumber(account.getAccountNumber());
 			ElfecAccountsManager.registerAccount(account);
 		}
 	}

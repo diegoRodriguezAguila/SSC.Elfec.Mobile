@@ -23,15 +23,28 @@ public class WSResponse<TResult> {
 	public WSResponse() {
 		listOfErrors = new ArrayList<Exception>();
 	}
+	/**
+	 * Obtiene la lista de errores del resultado de un servicio web
+	 * @return Lista de errores del WS
+	 */
 	public List<Exception> getErrors()
 	{
 		return listOfErrors;
 	}
+	/**
+	 * Agrega un error a la lista de errores del resultado de un servicio web
+	 * @param e
+	 */
 	public void addError(Exception e)
 	{
 		listOfErrors.add(e);
 	}
-	
+	/**
+	 * Convierte un json y extrae la lista de errores
+	 * retornando el mismo json sin la lista de errores
+	 * @param response
+	 * @return
+	 */
 	public String convertErrors(String response)
 	{
 		try {
@@ -47,18 +60,30 @@ public class WSResponse<TResult> {
 		}
 		return null;
 	}
-	
+	/**
+	 * Asigna el resultado a un servicio web
+	 * @param result
+	 * @return
+	 */
 	public WSResponse<TResult> setResult(TResult result)
 	{
 		this.result = result;
 		return this;
 	}
 	
+	/**
+	 * Obtiene el resultado de un servicio web
+	 * @return Resultado del ws
+	 */
 	public TResult getResult()
 	{
 		return this.result;
 	}
-//	
+	
+	/**
+	 * Si es que el resultado del servicio web tuvo errores
+	 * @return
+	 */
 	public boolean hasErrors()
 	{
 		return listOfErrors.size() > 0;

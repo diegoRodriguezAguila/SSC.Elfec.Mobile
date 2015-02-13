@@ -117,8 +117,8 @@ public class Client extends Model {
         .executeSingle();
 	}
 	/**
-	 * Obtiene el cliente que tenga estado activo
-	 * @return el cliente activo, null si es que no se registró ningun cliente aún
+	 * Obtiene el las cuentas activas de un cliente
+	 * @return el cuentas activas de un cliente
 	 */
 	public List<Account> getActiveAccounts()
 	{

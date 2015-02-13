@@ -3,18 +3,22 @@ package com.elfec.ssc.view;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.presenter.ViewAccountDetailsPresenter;
+import com.elfec.ssc.presenter.views.IViewAccountDetails;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 
-public class ViewAccountDetails extends ActionBarActivity {
+public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
 
+	private ViewAccountDetailsPresenter presenter;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
+		presenter = new ViewAccountDetailsPresenter(this);
 	}
 
 	@Override
