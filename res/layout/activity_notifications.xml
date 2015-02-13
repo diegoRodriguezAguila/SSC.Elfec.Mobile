@@ -68,10 +68,22 @@
 	    android:layout_below="@+id/outage_layout"
 	    android:layout_width="match_parent"
 	    android:background="@android:color/white"
+	    android:gravity="center"
 	    android:layout_alignParentLeft="true"
 	    android:layout_alignParentStart="true"
 	    android:layout_alignParentRight="true"
 	    android:layout_alignParentEnd="true">
+
+		<TextView
+		    android:id="@+id/lbl_no_outage_notifications"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+		    android:textColor="@color/text_gray_color"
+		    android:textSize="18sp"
+		    android:gravity="center"
+		    android:text="@string/lbl_no_outage_notifications" />
+
 		<com.elfec.ssc.view.controls.xlistview.XListView
 		        android:id="@+id/outage_listview"
 		        android:layout_height="0dp"
@@ -139,7 +151,15 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_alignParentEnd="true"
 	    android:background="@android:color/white">
-		
+		<TextView
+		    android:id="@+id/lbl_no_account_notifications"
+		    android:layout_width="match_parent"
+		    android:layout_height="match_parent"
+		    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+		    android:textColor="@color/text_gray_color"
+		    android:textSize="18sp"
+		    android:gravity="center"
+		    android:text="@string/lbl_no_account_notifications" />
 		 <com.elfec.ssc.view.controls.xlistview.XListView
 		        android:id="@+id/accounts_listview"
 		        android:layout_height="0dp"

@@ -5,6 +5,7 @@
     <color name="light_text_color">#2196F3</color>
     <color name="light_text_color_pressed">#007EB0</color>
     <color name="background_soft_gray">#E7E8EA</color>
+    <color name="text_gray_color">#757575</color>
     <color name="dark_gray">#4C5656</color>
     <color name="dark_soft_gray">#636F70</color>
     <color name="btn_disabled_gray">#D9D9D9</color>
