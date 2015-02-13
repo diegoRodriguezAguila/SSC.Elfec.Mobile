@@ -65,6 +65,8 @@
     <string name="notifications_title">Notificaciones</string>
     <string name="outage_group">Cortes</string>
     <string name="accounts_group">Cuentas</string>
+    <string name="lbl_no_outage_notifications">Actualmente no tiene ninguna notificación de cortes</string>
+    <string name="lbl_no_account_notifications">Actualmente no tiene ninguna notificación de sus cuentas</string>
     <string name="delete_notifications_title">ELIMINAR NOTIFICACIONES</string>
     <string name="delete_outage_notifications_msg">Está apunto de eliminar las notificaciones de cortes, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
     <string name="delete_account_notifications_msg">Está apunto de eliminar las notificaciones de cuentas, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>

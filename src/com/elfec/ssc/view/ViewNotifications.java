@@ -44,6 +44,8 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 	private XListView outageListView;
 	private CheckBox accountsGroup;
 	private XListView accountsListView;
+	private TextView lblNoOutageNotifications;
+	private TextView lblNoAccountNotifications;
 	
 	private NotificationAdapter outagesAdapter;
 	private NotificationAdapter accountsAdapter;
@@ -63,6 +65,8 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		accountsListView = (XListView) findViewById(R.id.accounts_listview);
 		outageLayout = (LinearLayout) findViewById(R.id.outage_listlayout);
 		accountsLayout = (LinearLayout) findViewById(R.id.accounts_listlayout);
+		lblNoOutageNotifications = (TextView) findViewById(R.id.lbl_no_outage_notifications);
+		lblNoAccountNotifications = (TextView) findViewById(R.id.lbl_no_account_notifications);
 		outageStatus = ExpandStatus.COLLAPSED;
 		accountsStatus = ExpandStatus.COLLAPSED;
 		outageListView.setPullLoadEnable(false);
@@ -256,6 +260,7 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		runOnUiThread(new Runnable() {		
 			@Override
 			public void run() {
+				lblNoOutageNotifications.setVisibility(outageNotifications.size()==0?View.VISIBLE:View.GONE);
 				outagesAdapter = new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, outageNotifications);
 				outageListView.setAdapter(outagesAdapter);	
 			}
@@ -267,6 +272,7 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		runOnUiThread(new Runnable() {		
 			@Override
 			public void run() {
+				lblNoAccountNotifications.setVisibility(accountNotifications.size()==0?View.VISIBLE:View.GONE);
 				accountsAdapter = new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, accountNotifications);
 				accountsListView.setAdapter(accountsAdapter);	
 			}
@@ -368,6 +374,7 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 			@Override
 			public void run() {
 				outagesAdapter.addNewNotificationUpdate(notif, removeLast);
+				lblNoOutageNotifications.setVisibility(View.GONE);
 			}
 		});
 	}
@@ -378,6 +385,7 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 			@Override
 			public void run() {
 				accountsAdapter.addNewNotificationUpdate(notif, removeLast);
+				lblNoAccountNotifications.setVisibility(View.GONE);
 			}
 		});
 	}
