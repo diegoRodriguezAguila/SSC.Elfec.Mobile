@@ -131,11 +131,14 @@
 	    android:id="@+id/loading_view_accounts"
 	    android:layout_width="wrap_content"
 	    android:layout_height="wrap_content"
-		android:layout_below="@+id/view_accounts_title"
-		android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"   
-	    android:layout_centerHorizontal="true" />
+		android:layout_centerInParent="true"/>
+	<TextView
+	    android:id="@+id/lbl_loading_accounts" 
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:text="@string/lbl_loading_accounts"
+	    android:layout_centerHorizontal="true"
+	    android:layout_below="@+id/loading_view_accounts"
+	    android:layout_marginTop="5dp"/>
     
 </RelativeLayout>

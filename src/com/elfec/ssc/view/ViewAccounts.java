@@ -18,7 +18,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 import com.alertdialogpro.AlertDialogPro;
-import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
@@ -136,7 +135,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public void run() {
 				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.view_accounts_row, result);
 				accountsListView.setAdapter(adapter);
-				
+				findViewById(R.id.loading_view_accounts).setVisibility(View.GONE);
+				findViewById(R.id.lbl_loading_accounts).setVisibility(View.GONE);
 				if(result.size()>0)
 				{
 					findViewById(R.id.layout_how_to_add_accounts).setVisibility(View.GONE);
@@ -151,7 +151,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 					findViewById(R.id.lbl_no_accounts_registered).setVisibility(View.VISIBLE);
 					accountsListView.setVisibility(View.GONE);
 				}
-				findViewById(R.id.loading_view_accounts).setVisibility(View.GONE);
 			}
 		});
 	}
@@ -216,7 +215,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
     }
 	@Override
 	public void ShowWaitingWS() {
-		runOnUiThread(new Runnable() {
+		/*runOnUiThread(new Runnable() {
 			@Override
 			public void run(){
 				waitingWSDialog = new ProgressDialogPro(ViewAccounts.this, R.style.Theme_FlavoredMaterialLight);
@@ -225,7 +224,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				waitingWSDialog.setCanceledOnTouchOutside(false);
 				waitingWSDialog.show();
 			}
-		});
+		});*/
 	}
 	@Override
 	public void hideWSWaiting() {

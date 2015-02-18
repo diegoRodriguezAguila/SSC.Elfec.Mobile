@@ -39,6 +39,7 @@
     <string name="use_button_add">Utilice el botón</string>
     <string name="lbl_for_register">para agregar</string>
     <string name="lbl_an_account">una cuenta</string>
+    <string name="lbl_loading_accounts">Cargando sus cuentas&#8230;</string>
     <string name="lbl_account_list_item_name">Nombre:</string>
     <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
     <!-- View Accounts: Delete Account -->
@@ -104,6 +105,7 @@
     <string name="time_sample">19:03</string>
     <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
     <string name="name_sample">Jarry Pedro Perez</string>
+    <string name="account_balance_sample">1923.45 Bs</string>
     
 
     <!-- XListView -->
