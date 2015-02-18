@@ -20,6 +20,14 @@
         android:text="@string/view_account_details_title"
         android:textAppearance="@style/TextAppearance.CustomFont.Title"  />
 
+    <Button
+        android:id="@+id/button1"
+        android:layout_alignRight="@+id/view_account_details_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="pruebita"
+        android:text="Button" />
+
     <LinearLayout
         android:id="@+id/test_layout"
         android:layout_width="match_parent"
