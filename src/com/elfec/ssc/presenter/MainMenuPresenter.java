@@ -50,7 +50,8 @@ public class MainMenuPresenter {
 			@Override
 			public void run() {
 				Client client = Client.getActiveClient();
-				view.setCurrentClient(client==null?null:client.getGmail());
+				if(client!=null)
+					view.setCurrentClient(client.getGmail());
 			}
 		});
 		thread.start();
