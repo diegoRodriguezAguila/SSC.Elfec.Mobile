@@ -1,6 +1,7 @@
 package com.elfec.ssc.model;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 import org.joda.time.DateTime;
 
@@ -52,7 +53,7 @@ public class Debt extends Model {
 			short month, int receiptNumber, DateTime expirationDate) {
 		super();
 		this.Account = fromAccount;
-		this.Amount = amount;
+		this.Amount = amount.setScale(2, RoundingMode.CEILING);
 		this.Year = year;
 		this.Month = month;
 		this.ReceiptNumber = receiptNumber;
@@ -77,7 +78,7 @@ public class Debt extends Model {
 	}
 
 	public void setAmount(BigDecimal amount) {
-		Amount = amount;
+		Amount = amount.setScale(2, RoundingMode.CEILING);
 	}
 
 	public int getYear() {

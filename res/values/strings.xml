@@ -47,6 +47,9 @@
     <string name="delete_account_msg">¿Esta seguro que desea eliminar esta cuenta?</string>
     <string name="account_successfully_deleted">¡La cuenta se eliminó exitosamente!</string>
     <string name="errors_on_delete_account_title">ERROR AL ELIMINAR LA CUENTA</string>
+    <!-- View Accounts: Rows -->
+    <string name="lbl_no_debts">Sin deudas</string>
+    <string name="lbl_currency">Bs.</string>
 
     <!-- Location Services -->
     <string name="location_services_title">Servicios de ubicación</string>
@@ -105,7 +108,8 @@
     <string name="time_sample">19:03</string>
     <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
     <string name="name_sample">Jarry Pedro Perez</string>
-    <string name="account_balance_sample">1923.45 Bs</string>
+    <string name="account_balance_sample">1.923</string>
+    <string name="decimal_balance_sample">70</string>
     
 
     <!-- XListView -->
