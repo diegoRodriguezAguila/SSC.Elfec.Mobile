@@ -24,11 +24,13 @@ public class ViewAccountsPresenter {
 
 	private IViewAccounts view;
 	private boolean isLoadingAccounts;
+	private boolean isRefreshing;
 	
 	public ViewAccountsPresenter(IViewAccounts view)
 	{
 		this.view = view;
 		isLoadingAccounts=false;
+		isRefreshing=false;
 	}
 	public void invokeRemoveAccountWS(final String nus)
 	{
@@ -97,7 +99,7 @@ public class ViewAccountsPresenter {
 				}
 				else
 				{
-					view.show(client.getActiveAccounts());
+					callGetAllAccountsWebService(client);
 				}
 				Looper.loop();
 			}
@@ -114,6 +116,7 @@ public class ViewAccountsPresenter {
 	public void getAllServiceAccounts()
 	{
 		Client client=Client.getActiveClient();
+		isRefreshing=true;
 		callGetAllAccountsWebService(client);
 	}
 	/**
@@ -121,7 +124,7 @@ public class ViewAccountsPresenter {
 	 * @param accountWS
 	 * @param client
 	 */
-	private void callGetAllAccountsWebService(Client client) {
+	private void callGetAllAccountsWebService(final Client client) {
 		if(!isLoadingAccounts)
 		{
 		isLoadingAccounts=true;
@@ -145,9 +148,13 @@ public class ViewAccountsPresenter {
 							}
 							else
 							{
-								view.showViewAccountsErrors(result.getErrors());
+								if(view.getPreferences().isFirstLoadAccounts() || isRefreshing)
+									view.showViewAccountsErrors(result.getErrors());
+								else
+									view.show(client.getActiveAccounts());
 							}
 							isLoadingAccounts=false;
+							isRefreshing=false;
 						}
 					});
 					view.hideWSWaiting();
