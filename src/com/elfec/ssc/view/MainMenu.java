@@ -12,6 +12,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
@@ -24,6 +25,7 @@ import com.elfec.ssc.view.controls.events.OnAccountPicked;
 public class MainMenu extends ActionBarActivity implements IMainMenu {
 
 	private MainMenuPresenter presenter;
+	private ImageButton btnSwitchClient;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,9 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		presenter = new MainMenuPresenter(this);
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.hide();
+		btnSwitchClient = (ImageButton) findViewById(R.id.btn_switch_client);
+		btnSwitchClient.setEnabled(false);
+		presenter.loadCurrentClient();
 	}
 	
 	@Override
@@ -150,6 +155,16 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	public void showAccountPickerDialog()
 	{
 		showAccountPickerDialog(null);
+	}
+
+	@Override
+	public void setCurrentClient(final String gmail) {
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				btnSwitchClient.setEnabled(true);
+			}
+		} );
 	}
 	
 	//#endregion

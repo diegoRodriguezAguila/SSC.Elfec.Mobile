@@ -44,7 +44,7 @@ public class AccountPickerDialogService {
 		else initializePickListAndPreselect(activity, activeClientGmail);
 		dialogBuilder = new AlertDialogPro.Builder(activity);
 		dialogBuilder.setTitle(R.string.account_picker_title)
-		.setIcon(R.drawable.location_services_selector)
+		.setIcon(R.drawable.gmail_icon)
         .setPositiveButton(R.string.btn_ok, new OnClickListener() {		
 			@Override
 			public void onClick(DialogInterface dialog, int which) {	
