@@ -2,6 +2,7 @@ package com.elfec.ssc.presenter;
 
 import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.helpers.ThreadMutex;
+import com.elfec.ssc.model.Client;
 import com.elfec.ssc.presenter.views.IMainMenu;
 
 
@@ -38,5 +39,20 @@ public class MainMenuPresenter {
 		});
 		thread.start();
 		view.goToViewAccounts();
+	}
+	
+	/**
+	 * obtiene el cliente actual
+	 */
+	public void loadCurrentClient()
+	{
+		Thread thread = new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				Client client = Client.getActiveClient();
+				view.setCurrentClient(client==null?null:client.getGmail());
+			}
+		});
+		thread.start();
 	}
 }

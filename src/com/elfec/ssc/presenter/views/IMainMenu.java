@@ -18,4 +18,9 @@ public interface IMainMenu {
 	 * por que no tiene una cuenta de gmail registrada
 	 */
 	public void warnUserHasNoAccounts();
+	/**
+	 * Muestra el cliente actual
+	 * @param gmail
+	 */
+	public void setCurrentClient(String gmail);
 }
