@@ -143,8 +143,6 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			public void run() {
 				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.view_accounts_row, result);
 				accountsListView.setAdapter(adapter);
-				findViewById(R.id.loading_view_accounts).setVisibility(View.GONE);
-				findViewById(R.id.lbl_loading_accounts).setVisibility(View.GONE);
 				if(result.size()>0)
 				{
 					findViewById(R.id.layout_how_to_add_accounts).setVisibility(View.GONE);
@@ -242,6 +240,9 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				if(waitingWSDialog!=null)
 					waitingWSDialog.dismiss();
 				accountsListView.stopRefresh();
+				findViewById(R.id.loading_view_accounts).setVisibility(View.GONE);
+				findViewById(R.id.lbl_loading_accounts).setVisibility(View.GONE);
+				
 			}
 		});
 	}

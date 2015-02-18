@@ -3,9 +3,7 @@ package com.elfec.ssc.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
@@ -22,7 +20,6 @@ public class Account extends Model {
 	public Account() {
 		super();
 	}
-	
 	public Account(Client ownerClient, String accountNumber, String nus)
 	{
 		super();

@@ -8,8 +8,10 @@ import com.elfec.ssc.presenter.views.IViewAccountDetails;
 
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.LinearLayout;
 
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
 
@@ -19,6 +21,8 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
 		presenter = new ViewAccountDetailsPresenter(this);
+		LinearLayout l =(LinearLayout)findViewById(R.id.test_layout);
+		l.setOrientation(LinearLayout.HORIZONTAL);
 	}
 
 	@Override
