@@ -47,7 +47,39 @@
             android:textSize="36sp"
             android:gravity="center"
             android:textAppearance="@style/TextAppearance.CustomFont.Title" />
-		
+		<LinearLayout
+		    android:layout_height="wrap_content"
+		    android:layout_width="wrap_content"
+		    android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="5dp"
+		    android:orientation="vertical" >
+
+		    <TextView
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="@android:color/white"
+		        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+		        android:textSize="13sp"
+		        android:layout_marginBottom="-6dp"
+		        android:text="@string/lbl_current_client" />
+		    
+		    <TextView
+		        android:id="@+id/txt_current_client"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:textColor="@android:color/white"
+		        android:textAppearance="@style/TextAppearance.CustomFont.Light"
+		        android:textSize="18sp"
+		        android:gravity="center"
+		        android:drawableLeft="@drawable/current_client"
+		        android:drawableStart="@drawable/current_client"
+		        android:text="@string/gmail_sample" />
+
+		</LinearLayout>
 	</RelativeLayout>
 	 <LinearLayout
 	        android:layout_width="fill_parent"

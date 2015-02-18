@@ -33,6 +33,7 @@
     <string name="btn_notifications">Notificaciones</string>
     <string name="btn_contacts">Contactos</string>
     <string name="content_switch_client">Cambiar cliente</string>
+    <string name="lbl_current_client">Usuario actual</string>
 
     <!-- View Accounts -->
     <string name="view_accounts_title">Cuentas</string>
@@ -111,6 +112,7 @@
     <string name="name_sample">Jarry Pedro Perez</string>
     <string name="account_balance_sample">1.923</string>
     <string name="decimal_balance_sample">70</string>
+    <string name="gmail_sample">ssc.elfec@gmail.com</string>
     
 
     <!-- XListView -->
