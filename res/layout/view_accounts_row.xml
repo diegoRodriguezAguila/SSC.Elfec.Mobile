@@ -84,7 +84,7 @@
 
         <LinearLayout          
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_gravity="end|top"
             android:orientation="horizontal"
             android:background="@drawable/ssc_elfec_btn_default_holo_light"

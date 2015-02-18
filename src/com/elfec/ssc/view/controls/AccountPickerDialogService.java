@@ -28,15 +28,23 @@ public class AccountPickerDialogService {
 	
 	public static AccountPickerDialogService instanceService(Activity activity, OnAccountPicked onAccountPicked)
 	{
-		return new AccountPickerDialogService(activity, onAccountPicked);
+		return new AccountPickerDialogService(activity, onAccountPicked, null);
 	}
 	
-	private AccountPickerDialogService(final Activity activity, OnAccountPicked onAccountPicked)
+	public static AccountPickerDialogService instanceService(Activity activity, OnAccountPicked onAccountPicked, String activeClientGmail)
+	{
+		return new AccountPickerDialogService(activity, onAccountPicked, activeClientGmail);
+	}
+	
+	private AccountPickerDialogService(final Activity activity, OnAccountPicked onAccountPicked, String activeClientGmail)
 	{
 		this.onAccountPicked = onAccountPicked;
-		initializePickList(activity);
+		if(activeClientGmail==null)
+			initializePickList(activity);
+		else initializePickListAndPreselect(activity, activeClientGmail);
 		dialogBuilder = new AlertDialogPro.Builder(activity);
 		dialogBuilder.setTitle(R.string.account_picker_title)
+		.setIcon(R.drawable.location_services_selector)
         .setPositiveButton(R.string.btn_ok, new OnClickListener() {		
 			@Override
 			public void onClick(DialogInterface dialog, int which) {	
@@ -58,15 +66,46 @@ public class AccountPickerDialogService {
         });
 	}
 
-	private void initializePickList(final Activity activity) {
+	/**
+	 * Inicializa la lista de cuentas de google, y setea el item seleccionado por defecto
+	 * @param activity
+	 */
+	private void initializePickListAndPreselect(final Activity activity, String activeClientGmail) {
+        int defaultItem = 0;
+		selectedItem = defaultItem;
+		AccountManager am = AccountManager.get(activity);
+        Account[] accounts = am.getAccounts();
+        googleAccounts = new ArrayList<String>();
+        for (Account ac : accounts) 
+        {
+            if(ac.type.equals(GOOGLE_ACCOUNT_TYPE)) 
+            {
+                googleAccounts.add(ac.name);
+        		if(ac.name.equals(activeClientGmail))
+    			{
+					selectedItem = defaultItem;
+    			}
+        		defaultItem++;
+    		}
+        }
+        googleAccounts.add("Agregar cuenta");
+	}
+	
+	/**
+	 * Inicializa la lista de cuentas de google
+	 * @param activity
+	 */
+	private void initializePickList(final Activity activity) {;
 		selectedItem = 0;
 		AccountManager am = AccountManager.get(activity);
         Account[] accounts = am.getAccounts();
-       googleAccounts = new ArrayList<String>();
-        for (Account ac : accounts) {
-            if(ac.type.equals(GOOGLE_ACCOUNT_TYPE)) {
+        googleAccounts = new ArrayList<String>();
+        for (Account ac : accounts) 
+        {
+            if(ac.type.equals(GOOGLE_ACCOUNT_TYPE)) 
+            {
                 googleAccounts.add(ac.name);
-            }
+    		}
         }
         googleAccounts.add("Agregar cuenta");
 	}

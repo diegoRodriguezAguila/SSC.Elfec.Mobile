@@ -32,6 +32,7 @@
     <string name="btn_location_services">Servicios de ubicación</string>
     <string name="btn_notifications">Notificaciones</string>
     <string name="btn_contacts">Contactos</string>
+    <string name="content_switch_client">Cambiar cliente</string>
 
     <!-- View Accounts -->
     <string name="view_accounts_title">Cuentas</string>

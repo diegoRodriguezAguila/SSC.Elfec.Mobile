@@ -46,6 +46,7 @@
         <item name="adpButtonBarNeutralButtonStyle">@style/AdpNormalButtonStyle</item>
         <item name="adpButtonBarPositiveButtonStyle">@style/AdpPositiveButtonStyle</item>
         <item name="adpMessageTextAppearance">@style/AdpMessageTextAppearance</item>
+        <item name="adpSingleChoiceItemLayout">@layout/adp_select_dialog_singlechoice_material</item>
     </style>
 
     <style name="AdpTitleStyle" parent="DialogWindowTitle.AlertDialogPro.Material.Light">

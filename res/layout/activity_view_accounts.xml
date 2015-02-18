@@ -37,7 +37,6 @@
 	        android:layout_height="wrap_content"
 	        android:padding="0dp"
 	        android:onClick="btnRegisterAccountClick"
-	        
 	        android:contentDescription="@string/register_account_title"
 	        android:src="@drawable/add_account" />
         

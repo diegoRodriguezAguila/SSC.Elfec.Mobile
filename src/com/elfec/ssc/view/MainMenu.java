@@ -98,6 +98,14 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		}
         lastClickTime = SystemClock.elapsedRealtime();
 	}
+	
+	public void btnSwitchClientClick(View view)
+	{
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+			showAccountPickerDialog("ssc.elfec@gmail.com");
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
+	}
 
 	//#region Interface Methods
 	
@@ -127,7 +135,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		.show();
 	}
 	
-	public void showAccountPickerDialog()
+	public void showAccountPickerDialog(String activeClientGmail)
 	{
 		AccountPickerDialogService.instanceService(this, new OnAccountPicked() {				
 			@Override
@@ -136,7 +144,12 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 			}
 			@Override
 			public void onPickedCanceled() {}		
-		}).show();
+		},activeClientGmail).show();
+	}
+	
+	public void showAccountPickerDialog()
+	{
+		showAccountPickerDialog(null);
 	}
 	
 	//#endregion

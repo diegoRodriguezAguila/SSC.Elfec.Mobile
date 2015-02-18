@@ -12,7 +12,17 @@
 	        android:layout_height="0dp"
 	        android:background="@color/ssc_elfec_color"
 	        android:layout_weight="0.4" >
-
+		<ImageButton
+	        android:id="@+id/btn_switch_client"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentTop="true"
+	        android:layout_alignParentRight="true"
+	        android:layout_alignParentEnd="true"
+	        android:padding="0dp"
+	        android:onClick="btnSwitchClientClick"
+	        android:contentDescription="@string/content_switch_client"
+	        android:src="@drawable/switch_client" />
         <ImageView
             android:id="@+id/imgLogoElfec"
             android:layout_width="wrap_content"

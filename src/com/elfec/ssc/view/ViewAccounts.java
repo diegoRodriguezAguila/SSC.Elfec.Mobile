@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -37,6 +38,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	private XListView accountsListView;
 	private AlertDialog waitingWSDialog;
 	private boolean isRefresh;
+	private long lastClickTime;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +73,12 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int pos,
 					long arg3) {
-				Intent i = new Intent(ViewAccounts.this, ViewAccountDetails.class);
-				startActivity(i);
-				overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+				if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+					Intent i = new Intent(ViewAccounts.this, ViewAccountDetails.class);
+					startActivity(i);
+					overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+				}
+		        lastClickTime = SystemClock.elapsedRealtime();
 			}
 		});
     }
@@ -117,9 +122,12 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
     
     public void btnRegisterAccountClick(View view)
     {
-    	Intent i = new Intent(ViewAccounts.this, RegisterAccount.class);
-		startActivity(i);
-		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+    	if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+        	Intent i = new Intent(ViewAccounts.this, RegisterAccount.class);
+    		startActivity(i);
+    		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out); 
+		}
+        lastClickTime = SystemClock.elapsedRealtime();
     }
     
     @Override
