@@ -14,6 +14,10 @@ public class MainMenuPresenter {
 		this.view = view;
 	}
 	
+	/**
+	 * Verifica si es que ya se definió el cliente activo par aobtener sus cuentas caso contrario se le advierte al usuario
+	 * 
+	 */
 	public void verifyAccountsRequirements()
 	{
 		if(view.getPreferences().hasOneGmailAccount())
@@ -29,10 +33,11 @@ public class MainMenuPresenter {
 	public void handlePickedGmailAccount(final String gmail)
 	{
 		ThreadMutex.instance("ActiveClient").setBusy();
+		view.setCurrentClient(gmail);
 		Thread thread = new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				ClientManager.registerClient(gmail);
+				ClientManager.registerActiveClient(gmail);
 				view.getPreferences().setHasOneGmailAccount();
 				ThreadMutex.instance("ActiveClient").setFree();
 			}
@@ -50,8 +55,7 @@ public class MainMenuPresenter {
 			@Override
 			public void run() {
 				Client client = Client.getActiveClient();
-				if(client!=null)
-					view.setCurrentClient(client.getGmail());
+				view.setCurrentClient(client==null?null:client.getGmail());
 			}
 		});
 		thread.start();

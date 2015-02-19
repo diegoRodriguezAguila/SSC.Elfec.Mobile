@@ -59,25 +59,26 @@
 		    android:orientation="vertical" >
 
 		    <TextView
+		        android:id="@+id/txt_active_client_info"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:textColor="@android:color/white"
 		        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
 		        android:textSize="13sp"
-		        android:layout_marginBottom="-6dp"
 		        android:text="@string/lbl_current_client" />
 		    
 		    <TextView
-		        android:id="@+id/txt_current_client"
+		        android:id="@+id/txt_active_client"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:textColor="@android:color/white"
 		        android:textAppearance="@style/TextAppearance.CustomFont.Light"
 		        android:textSize="18sp"
+		        android:layout_marginTop="-6dp"
 		        android:gravity="center"
+		        android:visibility="gone"
 		        android:drawableLeft="@drawable/current_client"
-		        android:drawableStart="@drawable/current_client"
-		        android:text="@string/gmail_sample" />
+		        android:drawableStart="@drawable/current_client" />
 
 		</LinearLayout>
 	</RelativeLayout>

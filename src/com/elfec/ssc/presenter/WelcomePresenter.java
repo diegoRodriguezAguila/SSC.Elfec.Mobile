@@ -20,7 +20,7 @@ public class WelcomePresenter {
 			@Override
 			public void run() {
 				view.getPreferences().setAppAlreadyUsed().setHasOneGmailAccount();
-				ClientManager.registerClient(gmail);
+				ClientManager.registerActiveClient(gmail);
 				ThreadMutex.instance("ActiveClient").setFree();
 			}
 		});

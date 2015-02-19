@@ -33,7 +33,15 @@
     <string name="btn_notifications">Notificaciones</string>
     <string name="btn_contacts">Contactos</string>
     <string name="content_switch_client">Cambiar cliente</string>
-    <string name="lbl_current_client">Usuario actual</string>
+    <string name="lbl_current_client">Cuenta de usuario</string>
+    <string name="lbl_no_active_client">No se seleccionó ninguna cuenta de Gmail</string>
+    <!-- Main Menu : Switch Client -->
+    <string name="switch_client_title">CAMBIO DE CUENTA DE USUARIO</string>
+    <string name="switch_client_msg">Se procederá a cambiar la cuenta de Gmail relacionada con la aplicación, 
+        tome en cuenta que ésta se utiliza para:\n
+        ● Relacionar las cuentas de elfec con su usuario\n
+        ● Obtener las cuentas de elfec registradas por su usuario\n
+        ● Recibir notificaciones de las cuentas de elfec relacionadas a su usuario</string>
 
     <!-- View Accounts -->
     <string name="view_accounts_title">Cuentas</string>

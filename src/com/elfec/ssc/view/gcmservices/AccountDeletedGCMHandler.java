@@ -5,6 +5,7 @@ import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Notification;
+import com.elfec.ssc.model.enums.ClientStatus;
 import com.elfec.ssc.model.enums.NotificationKey;
 import com.elfec.ssc.model.enums.NotificationType;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
@@ -31,7 +32,7 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 	@Override
 	public void handleGCMessage(Bundle messageInfo,	NotificationManager notifManager, NotificationCompat.Builder builder) {
 		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
-		if(ownerClient != null)
+		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
 		{
 			boolean res = ElfecAccountsManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
 			if(res)

@@ -15,13 +15,30 @@ public class ClientManager {
 
 	/**
 	 * Registra a un cliente en la base de datos con el gmail proporcionado y
-	 * con el estado activo por defecto
+	 * con el estado activo por defecto, si el cliente ya existia cambia su estado.
+	 * También cambia el estado de los demas clientes a inactivo
 	 * @param gmail
 	 */
-	public static void registerClient(String gmail)
+	public static void registerActiveClient(String gmail)
 	{
-		Client client = new Client(gmail, ClientStatus.ACTIVE);
-		client.setInsertDate(DateTime.now());
+		Client currentActiveClient = Client.getActiveClient();
+		if(currentActiveClient!=null)
+		{
+			currentActiveClient.setStatus(ClientStatus.REGISTERED);
+			currentActiveClient.setUpdateDate(DateTime.now());
+			currentActiveClient.save();
+		}
+		Client client = Client.getClientByGmail(gmail);
+		if(client==null)
+		{
+			client = new Client(gmail, ClientStatus.ACTIVE);
+			client.setInsertDate(DateTime.now());
+		}
+		else
+		{
+			client.setStatus(ClientStatus.ACTIVE);
+			client.setUpdateDate(DateTime.now());
+		}
 		client.save();
 	}
 	/**

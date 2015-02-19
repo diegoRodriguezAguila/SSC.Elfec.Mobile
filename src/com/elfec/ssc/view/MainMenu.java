@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
@@ -26,6 +27,9 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 
 	private MainMenuPresenter presenter;
 	private ImageButton btnSwitchClient;
+	private TextView txtActiveClient;
+	private TextView txtActiveClientInfo;
+	private String activeClientGmail;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,17 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		ActionBar actionBar = getSupportActionBar();
 		actionBar.hide();
 		btnSwitchClient = (ImageButton) findViewById(R.id.btn_switch_client);
+		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);		
+		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
 		btnSwitchClient.setEnabled(false);
-		presenter.loadCurrentClient();
+	}
+	
+	@Override
+	protected void onResume()
+	{
+		super.onResume();
+		if(activeClientGmail==null)
+			presenter.loadCurrentClient();
 	}
 	
 	@Override
@@ -107,7 +120,16 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	public void btnSwitchClientClick(View view)
 	{
 		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			showAccountPickerDialog("ssc.elfec@gmail.com");
+			(new AlertDialogPro.Builder(this)).setTitle(R.string.switch_client_title)
+			.setMessage(R.string.switch_client_msg)
+	        .setPositiveButton(R.string.btn_ok, new OnClickListener() {		
+				@Override
+				public void onClick(DialogInterface dialog, int which) {	
+					showAccountPickerDialog(activeClientGmail);
+				}		
+			})
+			.setNegativeButton(R.string.btn_cancel, null)
+			.show();
 		}
         lastClickTime = SystemClock.elapsedRealtime();
 	}
@@ -158,11 +180,19 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	}
 
 	@Override
-	public void setCurrentClient(final String gmail) {
+	public void setCurrentClient(String gmail) {
+		activeClientGmail = gmail;
 		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				btnSwitchClient.setEnabled(true);
+				if(activeClientGmail!=null)
+				{
+					txtActiveClientInfo.setText(R.string.lbl_current_client);
+					txtActiveClient.setVisibility(View.VISIBLE);
+					txtActiveClient.setText(activeClientGmail);
+					btnSwitchClient.setEnabled(true);
+				}
+				else txtActiveClientInfo.setText(R.string.lbl_no_active_client);
 			}
 		} );
 	}

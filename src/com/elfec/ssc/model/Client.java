@@ -113,7 +113,7 @@ public class Client extends Model {
 	public static Client getClientByGmail(String gmail)
 	{
 		return new Select()
-        .from(Client.class).where("Status=? AND Gmail=?", ClientStatus.ACTIVE.toShort(),gmail)
+        .from(Client.class).where("Gmail=?", gmail)
         .executeSingle();
 	}
 	/**
