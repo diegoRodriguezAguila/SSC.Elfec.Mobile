@@ -235,11 +235,17 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+        
         <LinearLayout
             android:orientation="vertical"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-            <!-- Aqui laburas pedro -->
+            <ListView 
+                android:id="@+id/list_usage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+            </ListView>
         </LinearLayout>
     </LinearLayout>
 

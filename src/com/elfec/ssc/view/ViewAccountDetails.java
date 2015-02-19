@@ -5,6 +5,8 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
@@ -13,15 +15,20 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ViewAccountDetailsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
+import com.elfec.ssc.view.adapters.ViewUsageAdapter;
 import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
@@ -30,10 +37,12 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 	private ViewAccountDetailsPresenter presenter;
 	private View accountSeparator;
 	private NumberFormat nf;
+	private ListView usageList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
+		usageList=(ListView)findViewById(R.id.list_usage);
 		nf = DecimalFormat.getInstance();
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator(',');
@@ -41,6 +50,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
 		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
+		presenter.getUsage();
 		accountSeparator = findViewById(R.id.account_separator);
 		setOrientation();
 	}
@@ -144,6 +154,18 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			.setText((totalDebt.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
 					.setScale(0, RoundingMode.CEILING).toString()));
 		}
+	}
+
+	@Override
+	public void showUsage(final List<Usage> usage) {
+		runOnUiThread(new Runnable() {
+			
+			@Override
+			public void run() {
+			   ViewUsageAdapter adapter=new ViewUsageAdapter(ViewAccountDetails.this, R.layout.usage_row, usage);
+			    usageList.setAdapter(adapter);
+			}
+		});
 	}
 	
 	//#endregion

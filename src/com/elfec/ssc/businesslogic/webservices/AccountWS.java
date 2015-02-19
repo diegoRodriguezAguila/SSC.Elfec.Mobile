@@ -3,10 +3,12 @@ package com.elfec.ssc.businesslogic.webservices;
 import java.util.List;
 
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
 import com.elfec.ssc.model.webservices.converters.GetAllAccountsWSConverter;
+import com.elfec.ssc.model.webservices.converters.GetUsageConverter;
 import com.elfec.ssc.model.webservices.converters.RegisterAccountWSConverter;
 import com.elfec.ssc.model.webservices.converters.RemoveAccountWSConverter;
 /**
@@ -67,6 +69,22 @@ public class AccountWS
 				new WebServiceConnector<Boolean>("AccountWS.php?wsdl", "", 
 						"ssc_elfec", "DeleteAccount", new RemoveAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("IMEI", imei),new WSParam("NUS", nus),new WSParam("GMail", gmail));
+
+	}
+	
+	/**
+	 * Elimina la cuenta que corresponde a los parametros, por medio de servicios web
+	 * @param gmail
+	 * @param nus
+	 * @param imei
+	 * @param eventHandler
+	 */
+	public void getUsage(String nus,IWSFinishEvent<List<Usage>> eventHandler)
+	{
+		WebServiceConnector<List<Usage>> accountWSConnector = 
+				new WebServiceConnector<List<Usage>>("AccountWS.php?wsdl", "", 
+						"ssc_elfec", "GetUsage", new GetUsageConverter(), eventHandler);
+		accountWSConnector.execute(new WSParam("NUS", nus));
 
 	}
 
