@@ -1,24 +1,16 @@
 package com.elfec.ssc.view;
 
-import java.util.Currency;
-
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.content.Context;
+import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.DisplayMetrics;
+import android.view.Menu;
+import android.widget.LinearLayout;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ViewAccountDetailsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
-
-import android.support.v7.app.ActionBarActivity;
-import android.telephony.TelephonyManager;
-import android.content.Context;
-import android.graphics.Point;
-import android.graphics.drawable.GradientDrawable.Orientation;
-import android.os.Bundle;
-import android.view.Display;
-import android.view.Menu;
-import android.view.View;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
 
@@ -29,27 +21,17 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
 		presenter = new ViewAccountDetailsPresenter(this);
-		LinearLayout l =(LinearLayout)findViewById(R.id.test_layout);
-		l.setOrientation(LinearLayout.HORIZONTAL);
-		horizontal=true;
+		setOrientation();
 	}
 	
-	public void pruebita(View view)
+	public void setOrientation()
 	{
 		LinearLayout l =(LinearLayout)findViewById(R.id.test_layout);
-		TextView t1=(TextView) findViewById(R.id.prueba1);
-		TextView t2=(TextView) findViewById(R.id.prueba2);
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		int width = display.getWidth();  // deprecated
-		int height = display.getHeight();  // deprecated
-		TelephonyManager manager = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-        if(manager.getPhoneType() == TelephonyManager.PHONE_TYPE_NONE)
-		t1.setText("Soy una tablet");
-        else
-        	
-		t1.setText("Soy un fono");
-		if(horizontal)
+		LinearLayout t1=(LinearLayout) findViewById(R.id.account_details_layout);
+		LinearLayout t2=(LinearLayout) findViewById(R.id.account_debts_layout);
+		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+		int dpWidth = (int) (displayMetrics.widthPixels/displayMetrics.density);
+		if(dpWidth<550 || displayMetrics.widthPixels<=480)
 		{
 		
 			l.setOrientation(LinearLayout.VERTICAL);
@@ -58,7 +40,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			 t1.setLayoutParams(params);
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
 			 params.weight = 0;
-			 t2.setLayoutParams(params);
+			 t2.setLayoutParams(params1);
 		}	
 		else
 		{
@@ -68,10 +50,8 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			 t1.setLayoutParams(params);
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
 			 params.weight = 1.0f;
-			 t2.setLayoutParams(params);
-		}
-		horizontal=!horizontal;
-		
+			 t2.setLayoutParams(params1);
+		}		
 	}
 
 	@Override

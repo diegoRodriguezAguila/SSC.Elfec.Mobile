@@ -87,6 +87,7 @@
    
     <!-- Información de cuenta -->
     <string name="view_account_details_title">Información de cuenta</string>
+    <string name="lbl_account_status">Estado:</string>
     
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
@@ -121,6 +122,7 @@
     <string name="account_balance_sample">1.923</string>
     <string name="decimal_balance_sample">70</string>
     <string name="gmail_sample">ssc.elfec@gmail.com</string>
+    <string name="account_status_sample">Cortado por mora</string>
     
 
     <!-- XListView -->

@@ -6,49 +6,208 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
-    tools:context="com.elfec.ssc.view.ViewAccountDetails" >
+    tools:context="com.elfec.ssc.view.ViewAccountDetails"
+    tools:ignore="UseCompoundDrawables" >
 
     <TextView
         android:id="@+id/view_account_details_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:text="@string/view_account_details_title"
-        android:textAppearance="@style/TextAppearance.CustomFont.Title"  />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_alignRight="@+id/view_account_details_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:onClick="pruebita"
-        android:text="Button" />
+        android:textAppearance="@style/TextAppearance.CustomFont.Title" />
 
     <LinearLayout
         android:id="@+id/test_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/view_account_details_title"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
-         <TextView
-        android:id="@+id/prueba1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-        android:layout_weight="1"
-        android:textAppearance="@style/TextAppearance.CustomFont.Title"  />
-           <TextView
-        android:id="@+id/prueba2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
-        android:textAppearance="@style/TextAppearance.CustomFont.Title"  />
-    </LinearLayout>
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/account_details_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/account_mini_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ssc_elfec_btn_default_holo_light"
+                    android:contentDescription="@string/account_img"
+                    android:padding="8dp"
+                    android:src="@drawable/account_mini" />
+
+                <TextView
+                    android:id="@+id/txt_account_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/account_sample"
+                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/row_nus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ssc_elfec_btn_default_holo_light"
+                    android:contentDescription="@string/account_img"
+                    android:padding="8dp"
+                    android:src="@drawable/nus_mini" />
+
+                <TextView
+                    android:id="@+id/txt_nus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/nus_sample"
+                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/dasd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ssc_elfec_btn_default_holo_light"
+                    android:contentDescription="@string/account_img"
+                    android:padding="8dp"
+                    android:src="@drawable/account_owner" />
+
+                <TextView
+                    android:id="@+id/txt_owner_client"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/name_sample"
+                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="18sp" />
+            </LinearLayout>
+            
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                     android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textColor="@color/dark_gray"
+                    android:text="@string/lbl_account_status"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/txt_account_status"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/account_status_sample"
+                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="20sp" />
+            </LinearLayout>
+            
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/account_debts_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Total deuda:" />
+
+			<LinearLayout          
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:orientation="horizontal"
+            android:background="@drawable/ssc_elfec_btn_default_holo_light"
+            android:gravity="center" >
+            <TextView
+                android:id="@+id/total_amount"
+               	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="@string/account_balance_sample"
+	            android:textAppearance="@style/TextAppearance.CustomFont.Light"
+	            android:textColor="@color/white"
+	            android:textSize="22sp" />
+            <LinearLayout 
+                android:id="@+id/layout_decimal_debt"
+                android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_gravity="center"
+	            android:layout_marginLeft="5dp"
+	            android:layout_marginStart="5dp" 
+	            android:orientation="vertical">
+                <TextView
+                android:id="@+id/total_amount_decimal"
+               	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="@string/decimal_balance_sample"
+	            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+	            android:textColor="@color/white"
+	            android:includeFontPadding="false"
+	            android:padding="0dp"
+	            android:background="@null"
+	            android:textSize="13sp" />
+                <View
+		        android:layout_width="match_parent"
+		        android:layout_height="1dp"
+		        android:background="@android:color/white" />
+                <TextView
+               	android:layout_width="wrap_content"
+            	android:layout_height="wrap_content"
+            	android:text="@string/lbl_currency"
+	            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+	            android:textColor="@color/white"
+	            android:includeFontPadding="false"
+	            android:padding="0dp"
+	            android:background="@null"
+	            android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+         </LinearLayout>
+            
+        </LinearLayout>
 
 </RelativeLayout>
