@@ -3,11 +3,14 @@ package com.elfec.ssc.model;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.joda.time.DateTime;
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
+import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 
 /**
  * Abstracción de las cuentas de usuario
@@ -107,6 +110,18 @@ public class Account extends Model {
 		NUS = nUS;
 	}
 	
+	public String getAddress() {
+		return Address;
+	}
+	public void setAddress(String address) {
+		Address = address;
+	}
+	public AccountEnergySupplyStatus getEnergySupplyStatus() {
+		return AccountEnergySupplyStatus.get(EnergySupplyStatus);
+	}
+	public void setEnergySupplyStatus(AccountEnergySupplyStatus energySupplyStatus) {
+		EnergySupplyStatus = energySupplyStatus.toShort();
+	}
 	public short getStatus() {
 		return Status;
 	}

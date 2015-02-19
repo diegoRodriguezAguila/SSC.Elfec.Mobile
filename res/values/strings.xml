@@ -88,6 +88,7 @@
     <!-- Información de cuenta -->
     <string name="view_account_details_title">Información de cuenta</string>
     <string name="lbl_account_status">Estado:</string>
+    <string name="lbl_total_debt">Deuda total:</string>
     
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>

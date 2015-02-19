@@ -145,21 +145,33 @@
             </LinearLayout>
             
         </LinearLayout>
-
+		<View
+			android:id="@+id/account_separator"
+	        android:layout_width="match_parent"
+	        android:layout_height="1dp"
+	        android:layout_marginBottom="10dp"
+	        android:layout_marginTop="10dp"
+        	android:background="@color/ssc_elfec_color" />
         <LinearLayout
             android:id="@+id/account_debts_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal" >
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Total deuda:" />
+                android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                android:textColor="@color/dark_gray"
+                android:textSize="20sp"
+                android:text="@string/lbl_total_debt" />
 
 			<LinearLayout          
             android:layout_width="wrap_content"
             android:layout_height="50dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
             android:orientation="horizontal"
             android:background="@drawable/ssc_elfec_btn_default_holo_light"
             android:gravity="center" >

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.DisplayMetrics;
 import android.view.Menu;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import com.elfec.ssc.R;
@@ -16,14 +17,19 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 
 	public boolean horizontal;
 	private ViewAccountDetailsPresenter presenter;
+	private View accountSeparator;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
 		presenter = new ViewAccountDetailsPresenter(this);
+		accountSeparator = findViewById(R.id.account_separator);
 		setOrientation();
 	}
 	
+	/**
+	 * Asigna el tipo de orientación para el detalle de las cuentas y de las deudas
+	 */
 	public void setOrientation()
 	{
 		LinearLayout l =(LinearLayout)findViewById(R.id.test_layout);
@@ -41,6 +47,9 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
 			 params.weight = 0;
 			 t2.setLayoutParams(params1);
+			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+			 vParams.setMargins(0, (int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density));
+			 accountSeparator.setLayoutParams(vParams);
 		}	
 		else
 		{
@@ -51,6 +60,9 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
 			 params.weight = 1.0f;
 			 t2.setLayoutParams(params1);
+			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(1, LinearLayout.LayoutParams.MATCH_PARENT);
+			 vParams.setMargins((int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density), 0);
+			 accountSeparator.setLayoutParams(vParams);
 		}		
 	}
 
