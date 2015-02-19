@@ -1,5 +1,6 @@
 package com.elfec.ssc.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -15,8 +16,13 @@ import com.elfec.ssc.model.enums.ClientStatus;
  * @author Diego
  */
 @Table(name = "Clients")
-public class Client extends Model {
+public class Client extends Model implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1014047679542647144L;
+
 	public Client() {
 		super();
 	}

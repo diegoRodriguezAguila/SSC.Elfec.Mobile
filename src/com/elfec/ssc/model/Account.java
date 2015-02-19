@@ -1,5 +1,6 @@
 package com.elfec.ssc.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +19,13 @@ import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
  *
  */
 @Table(name = "Accounts")
-public class Account extends Model {
+public class Account extends Model implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6023386891623504265L;
+
 
 	public Account() {
 		super();

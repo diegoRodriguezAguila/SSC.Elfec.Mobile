@@ -1,5 +1,6 @@
 package com.elfec.ssc.model;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -16,7 +17,12 @@ import com.activeandroid.annotation.Table;
  *
  */
 @Table(name = "Debts")
-public class Debt extends Model {
+public class Debt extends Model implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4328967895169344533L;
 
 	@Column(name = "Account", notNull=true, onDelete=ForeignKeyAction.CASCADE)
 	private Account Account;
