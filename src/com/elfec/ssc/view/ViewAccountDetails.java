@@ -5,6 +5,7 @@ import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
+import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
@@ -14,14 +15,17 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ViewAccountDetailsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
+import com.elfec.ssc.view.adapters.DebtAdapter;
 import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
@@ -29,6 +33,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 	public boolean horizontal;
 	private ViewAccountDetailsPresenter presenter;
 	private View accountSeparator;
+	private ListView LVAccountDebts;
 	private NumberFormat nf;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		customSymbol.setGroupingSeparator('.');
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
+		LVAccountDebts = (ListView) findViewById(R.id.listview_account_debts);
 		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
 		accountSeparator = findViewById(R.id.account_separator);
 		setOrientation();
@@ -58,7 +64,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		if(dpWidth<550 || displayMetrics.widthPixels<=480)
 		{
 		
-			l.setOrientation(LinearLayout.VERTICAL);
+			 l.setOrientation(LinearLayout.VERTICAL);
 			 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) t1.getLayoutParams();
 			 params.weight = 0;
 			 t1.setLayoutParams(params);
@@ -71,12 +77,12 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		}	
 		else
 		{
-			l.setOrientation(LinearLayout.HORIZONTAL);
+			 l.setOrientation(LinearLayout.HORIZONTAL);
 			 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) t1.getLayoutParams();
-			 params.weight = 1.0f;
+			 params.weight = 0.5f;
 			 t1.setLayoutParams(params);
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
-			 params.weight = 1.0f;
+			 params.weight = 0.5f;
 			 t2.setLayoutParams(params1);
 			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(1, LinearLayout.LayoutParams.MATCH_PARENT);
 			 vParams.setMargins((int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density), 0);
@@ -144,6 +150,11 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			.setText((totalDebt.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
 					.setScale(0, RoundingMode.CEILING).toString()));
 		}
+	}
+
+	@Override
+	public void showDebts(List<Debt> debts) {
+		LVAccountDebts.setAdapter(new DebtAdapter(this, R.layout.debt_list_item, debts));
 	}
 	
 	//#endregion
