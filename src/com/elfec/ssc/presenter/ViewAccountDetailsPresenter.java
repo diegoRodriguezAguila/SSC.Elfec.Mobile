@@ -52,6 +52,7 @@ public class ViewAccountDetailsPresenter {
 		view.setOwnerClient(accountToShow.getAccountOwner());
 		view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
 		view.setTotalDebt(accountToShow.getTotalDebt());
+		view.showDebts(accountToShow.getDebts());
 	}
 	
 }
