@@ -92,6 +92,7 @@
     <string name="lbl_debt_detail">Detalle deuda:</string>
     <string name="list_item_debt_expiration_date">Fecha de vencimiento:</string>
     <string name="list_item_receipt_number_date">N° de comprobante:</string>
+    <string name="lbl_usage">Evolución de consumo:</string>
     
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>

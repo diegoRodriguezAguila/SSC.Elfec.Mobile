@@ -32,6 +32,7 @@
         android:fillViewport="true"
         >
     <LinearLayout
+        android:id="@+id/principal_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -158,15 +159,13 @@
                         android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
-
-            <View
-                android:id="@+id/account_separator"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="@color/ssc_elfec_color" />
-
+			<View
+            android:id="@+id/static_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/ssc_elfec_color" />
             <LinearLayout
                 android:id="@+id/account_debts_layout"
                 android:layout_width="match_parent"
@@ -258,14 +257,30 @@
                     android:orientation="vertical" />
             </LinearLayout>
         </LinearLayout>
+
+        <View
+            android:id="@+id/account_separator"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/ssc_elfec_color" />
         
         <LinearLayout
+            android:id="@+id/usage_layout"
             android:orientation="vertical"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lbl_usage"
+                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textColor="@color/dark_gray"
+                    android:textSize="20sp" />
             <com.elfec.ssc.view.controls.LayoutListView
                 android:id="@+id/list_usage"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" 
                 android:layout_marginTop="10dp"/>

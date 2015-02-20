@@ -66,20 +66,19 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 	 */
 	public void setOrientation()
 	{
-		LinearLayout l =(LinearLayout)findViewById(R.id.dynamic_layout);
-		LinearLayout t1=(LinearLayout) findViewById(R.id.account_details_layout);
-		LinearLayout t2=(LinearLayout) findViewById(R.id.account_debts_layout);
+		LinearLayout l =(LinearLayout)findViewById(R.id.principal_layout);
+		LinearLayout t1=(LinearLayout) findViewById(R.id.dynamic_layout);
+		LinearLayout t2=(LinearLayout) findViewById(R.id.usage_layout);
 		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
 		int dpWidth = (int) (displayMetrics.widthPixels/displayMetrics.density);
 		if(dpWidth<550 || displayMetrics.widthPixels<=480)
 		{
-		
+			
 			 l.setOrientation(LinearLayout.VERTICAL);
 			 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) t1.getLayoutParams();
-			 params.weight = 0;
+			 params.width=LinearLayout.LayoutParams.MATCH_PARENT;
 			 t1.setLayoutParams(params);
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
-			 params.weight = 0;
 			 t2.setLayoutParams(params1);
 			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)(2*displayMetrics.density));
 			 vParams.setMargins(0, (int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density));
@@ -89,10 +88,10 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		{
 			 l.setOrientation(LinearLayout.HORIZONTAL);
 			 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) t1.getLayoutParams();
-			 params.weight = 0.5f;
+			 params.width=(int) (displayMetrics.widthPixels*0.6);
 			 t1.setLayoutParams(params);
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
-			 params.weight = 0.5f;
+			 params1.width=(int) (displayMetrics.widthPixels*0.3);
 			 t2.setLayoutParams(params1);
 			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams((int)(2*displayMetrics.density), LinearLayout.LayoutParams.MATCH_PARENT);
 			 vParams.setMargins((int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density), 0);
