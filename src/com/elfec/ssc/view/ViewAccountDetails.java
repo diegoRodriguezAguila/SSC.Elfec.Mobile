@@ -43,10 +43,10 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
 		usageList=(LayoutListView)findViewById(R.id.list_usage);
-		initializeDecimalFormater();
 		LVAccountDebts = (LayoutListView) findViewById(R.id.listview_account_debts);
-		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
 		accountSeparator = findViewById(R.id.account_separator);
+		initializeDecimalFormater();
+		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
 		setOrientation();
 		presenter.setFields();
 		presenter.getUsage();
@@ -147,6 +147,8 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		if (totalDebt.compareTo(BigDecimal.ZERO) == 0)
 		{
 			((LinearLayout)findViewById(R.id.layout_decimal_debt))
+				.setVisibility(View.GONE);
+			((TextView) findViewById(R.id.lbl_debt_detail))
 				.setVisibility(View.GONE);
 			txtTotalAmount.setTextSize(18);
 			txtTotalAmount.setText(R.string.lbl_no_debts);
