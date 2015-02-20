@@ -110,6 +110,7 @@
     
     <style name="ProgressBar.Ssc_elfec" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
         <item name="android:progressDrawable">@drawable/progress_horizontal_ssc_elfec</item>
+        <item name="android:maxHeight">100dp</item>
     </style>
     
     <style name="ActionButton.CloseMode.Ssc_elfec" parent="@style/Widget.AppCompat.ActionButton.CloseMode">

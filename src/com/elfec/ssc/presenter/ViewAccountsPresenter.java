@@ -104,8 +104,6 @@ public class ViewAccountsPresenter {
 				Looper.loop();
 			}
 		});
-		if(view.getPreferences().isFirstLoadAccounts())
-			view.ShowWaitingWS();
 		ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(new OnReleaseThread() {
 			@Override
 			public void threadReleased() {
@@ -127,9 +125,9 @@ public class ViewAccountsPresenter {
 	private void callGetAllAccountsWebService(final Client client) {
 		if(!isLoadingAccounts)
 		{
-		isLoadingAccounts=true;
-		AccountWS accountWS = new AccountWS();
-		accountWS.getAllAccounts(client.getGmail(), Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(), 
+			isLoadingAccounts=true;
+			AccountWS accountWS = new AccountWS();
+			accountWS.getAllAccounts(client.getGmail(), Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(), 
 				new IWSFinishEvent<List<Account>>() 
 			{
 				@Override
@@ -144,25 +142,29 @@ public class ViewAccountsPresenter {
 								final List<Account> accounts=result.getResult();
 								ClientManager.registerClientAccounts(accounts);
 								view.getPreferences().setLoadAccountsAlreadyUsed();
+								view.hideWSWaiting();	
 								view.show(accounts);
 							}
 							else
 							{
 								if(view.getPreferences().isFirstLoadAccounts() || isRefreshing)
+								{
+									view.hideWSWaiting();	
 									view.showViewAccountsErrors(result.getErrors());
+								}
 								else
-									view.show(client.getActiveAccounts());
+								{
+									List<Account> activeAccounts = client.getActiveAccounts();
+									view.hideWSWaiting();	
+									view.show(activeAccounts);
+								}
 							}
 							isLoadingAccounts=false;
 							isRefreshing=false;
 						}
 					});
-					view.hideWSWaiting();
-					
 					thread.start();
 					}
-				
-
 			});
 		}
 	}

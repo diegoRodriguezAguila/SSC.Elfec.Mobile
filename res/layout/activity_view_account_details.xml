@@ -20,15 +20,20 @@
         android:layout_alignParentTop="true"
         android:text="@string/view_account_details_title"
         android:textAppearance="@style/TextAppearance.CustomFont.Title" />
-
-    <LinearLayout
+<ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
         android:layout_below="@+id/view_account_details_title"
+        android:fillViewport="true"
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -164,7 +169,7 @@
 
             <LinearLayout
                 android:id="@+id/account_debts_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 		 		<LinearLayout
@@ -238,10 +243,11 @@
                     </LinearLayout>
                 </LinearLayout>
 
-                <ListView
+                <com.elfec.ssc.view.controls.LayoutListView
                     android:id="@+id/listview_account_debts"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     android:layout_marginTop="10dp" />
             </LinearLayout>
         </LinearLayout>
@@ -250,13 +256,14 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
-            <ListView 
+            <com.elfec.ssc.view.controls.LayoutListView
                 android:id="@+id/list_usage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                >
-            </ListView>
+                android:orientation="vertical" 
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
     </LinearLayout>
+     </ScrollView>
 
 </RelativeLayout>

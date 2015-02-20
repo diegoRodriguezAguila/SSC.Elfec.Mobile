@@ -1,26 +1,20 @@
 package com.elfec.ssc.view.adapters;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
-
-import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.TextFormater;
-import com.elfec.ssc.helpers.utils.AccountFormatter;
-import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.Usage;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import com.elfec.ssc.R;
+import com.elfec.ssc.model.Usage;
 
 public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 	private List<Usage> usage;

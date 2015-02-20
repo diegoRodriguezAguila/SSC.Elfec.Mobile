@@ -13,6 +13,11 @@ public class ViewAccountDetailsPresenter {
 
 	private IViewAccountDetails view;
 	private Account accountToShow;
+	
+	public ViewAccountDetailsPresenter(IViewAccountDetails view, Account accountToShow) {
+		this.view = view;
+		this.accountToShow = accountToShow;
+	}
 
 	public void getUsage()
 	{
@@ -36,16 +41,10 @@ public class ViewAccountDetailsPresenter {
 		});
 	}
 	
-	public ViewAccountDetailsPresenter(IViewAccountDetails view, Account accountToShow) {
-		this.view = view;
-		this.accountToShow = accountToShow;
-		setFields();
-	}
-	
 	/**
 	 * Asigna los datos a la vista
 	 */
-	private void setFields()
+	public void setFields()
 	{
 		view.setAccountNumber(accountToShow.getAccountNumber());
 		view.setNUS(accountToShow.getNUS());

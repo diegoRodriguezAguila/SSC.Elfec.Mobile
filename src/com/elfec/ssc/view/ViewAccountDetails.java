@@ -15,7 +15,6 @@ import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
@@ -29,31 +28,37 @@ import com.elfec.ssc.presenter.ViewAccountDetailsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
 import com.elfec.ssc.view.adapters.DebtAdapter;
 import com.elfec.ssc.view.adapters.ViewUsageAdapter;
+import com.elfec.ssc.view.controls.LayoutListView;
 
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
 
 	public boolean horizontal;
 	private ViewAccountDetailsPresenter presenter;
 	private View accountSeparator;
-	private ListView LVAccountDebts;
+	private LayoutListView LVAccountDebts;
 	private NumberFormat nf;
-	private ListView usageList;
+	private LayoutListView usageList;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_account_details);
-		usageList=(ListView)findViewById(R.id.list_usage);
+		usageList=(LayoutListView)findViewById(R.id.list_usage);
+		initializeDecimalFormater();
+		LVAccountDebts = (LayoutListView) findViewById(R.id.listview_account_debts);
+		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
+		accountSeparator = findViewById(R.id.account_separator);
+		setOrientation();
+		presenter.setFields();
+		presenter.getUsage();
+	}
+
+	private void initializeDecimalFormater() {
 		nf = DecimalFormat.getInstance();
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator(',');
 		customSymbol.setGroupingSeparator('.');
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
-		LVAccountDebts = (ListView) findViewById(R.id.listview_account_debts);
-		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
-		presenter.getUsage();
-		accountSeparator = findViewById(R.id.account_separator);
-		setOrientation();
 	}
 	
 	/**
@@ -76,7 +81,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
 			 params.weight = 0;
 			 t2.setLayoutParams(params1);
-			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1);
+			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)(2*displayMetrics.density));
 			 vParams.setMargins(0, (int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density));
 			 accountSeparator.setLayoutParams(vParams);
 		}	
@@ -89,7 +94,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
 			 params.weight = 0.5f;
 			 t2.setLayoutParams(params1);
-			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(1, LinearLayout.LayoutParams.MATCH_PARENT);
+			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams((int)(2*displayMetrics.density), LinearLayout.LayoutParams.MATCH_PARENT);
 			 vParams.setMargins((int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density), 0);
 			 accountSeparator.setLayoutParams(vParams);
 		}		
@@ -159,14 +164,7 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 
 	@Override
 	public void showUsage(final List<Usage> usage) {
-		runOnUiThread(new Runnable() {
-			
-			@Override
-			public void run() {
-			   ViewUsageAdapter adapter=new ViewUsageAdapter(ViewAccountDetails.this, R.layout.usage_row, usage);
-			    usageList.setAdapter(adapter);
-			}
-		});
+		usageList.setAdapter(new ViewUsageAdapter(ViewAccountDetails.this, R.layout.usage_row, usage));
 	}
 	@Override
 	public void showDebts(List<Debt> debts) {

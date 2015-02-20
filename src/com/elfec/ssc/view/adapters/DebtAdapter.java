@@ -40,6 +40,10 @@ public class DebtAdapter extends ArrayAdapter<Debt> {
 		this.debts = debts;
 		this.resource = resource;
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		initializeDecimalFormatter();
+	}
+
+	private void initializeDecimalFormatter() {
 		nf = DecimalFormat.getInstance();
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator(',');

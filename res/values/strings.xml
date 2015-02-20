@@ -128,6 +128,8 @@
     <string name="account_status_sample">Cortado por mora</string>
     <string name="month_year_sample">Diciembre 2014</string>
     <string name="simple_date_sample">06/09/2014</string>
+    <string name="short_date_sample">2014/12</string>
+    <string name="usage_sample">431</string>
     
 
     <!-- XListView -->

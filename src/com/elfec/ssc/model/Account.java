@@ -162,10 +162,7 @@ public class Account extends Model implements Serializable{
 		{
 			try
 			{
-				Debts = new Select()
-		        .from(Debt.class).as("d").join(Account.class).as("a").on("d.Account=a.Id")
-		        .orderBy("d.Year, d.Month DESC")
-		        .execute();
+				Debts = getMany(Debt.class, "Account");
 			}
 			catch(NullPointerException e)
 			{
