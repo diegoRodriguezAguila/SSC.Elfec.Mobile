@@ -1,10 +1,15 @@
 package com.elfec.ssc.model;
 
+import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Column.ForeignKeyAction;
 
-public class Usage {
+public class Usage extends Model{
+	
+	@Column(name = "Account", notNull=true, onDelete=ForeignKeyAction.CASCADE)
+	private Account Account;
 	@Column(name = "EnergyUsage")
-	private String EnergyUsage;
+	private int EnergyUsage;
 	@Column(name = "Term")
     private String Term;
 	
@@ -12,15 +17,25 @@ public class Usage {
 	{
 		
 	}
-	public Usage(String EnergyUsage,String Term)
+	
+	public Usage(int EnergyUsage, String Term)
 	{
 		this.EnergyUsage=EnergyUsage;
 		this.Term=Term;
 	}
-	public String getEnergyUsage() {
+	
+	public Account getAccount() {
+		return Account;
+	}
+
+	public void setAccount(Account account) {
+		Account = account;
+	}
+
+	public int getEnergyUsage() {
 		return EnergyUsage;
 	}
-	public void setEnergyUsage(String energyUsage) {
+	public void setEnergyUsage(int energyUsage) {
 		EnergyUsage = energyUsage;
 	}
 	public String getTerm() {

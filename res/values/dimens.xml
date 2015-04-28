@@ -4,4 +4,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
  	<dimen name="activity_vertical_top_margin">6dp</dimen>
+ 	<dimen name="title_txt_size">25sp</dimen>
+ 	<dimen name="square_button_txt_size">15sp</dimen>
+ 	<dimen name="username_lbl_txt_size">13sp</dimen>
+ 	<dimen name="username_txt_size">18sp</dimen>
 </resources>

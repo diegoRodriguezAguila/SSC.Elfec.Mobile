@@ -22,7 +22,7 @@ public class GetUsageConverter implements IWSResultConverter<List<Usage>> {
 				JSONArray array = new JSONArray(result);
 				for (int i = 0; i < array.length(); i++) {
 					JSONObject object = (JSONObject) array.get(i);
-					usage.add(new Usage(object.getString("EnergyUsage"), object.getString("Term")));
+					usage.add(new Usage(object.getInt("EnergyUsage"), object.getString("Term")));
 				}
 			}
 			catch(JSONException ex)

@@ -4,9 +4,11 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import com.activeandroid.ActiveAndroid;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Debt;
+import com.elfec.ssc.model.Usage;
 
 /**
  * Se encarga de las distintas operaciones relacionadas con las cuentas de elfec
@@ -75,6 +77,31 @@ public class ElfecAccountsManager {
 			return account.save()>0;
 		}
 		return false;
+	}
+	
+	/**
+	 * Registra una lista de consumos a nombre de una cuenta
+	 * @param account
+	 * @param usages
+	 */
+	public static void registerAccountUsages(Account account, List<Usage> usages)
+	{
+		ActiveAndroid.beginTransaction();
+		try
+		{
+			for (Usage usage : usages) {
+				usage.setAccount(account);
+				usage.save();
+			}
+			ActiveAndroid.setTransactionSuccessful();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		finally{
+			ActiveAndroid.endTransaction();
+		}
 	}
 
 }

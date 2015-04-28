@@ -19,6 +19,7 @@ import com.elfec.ssc.model.Usage;
 public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 	private List<Usage> usage;
 	private int resource;
+	private int maxUsage;
 	private LayoutInflater inflater = null;
 	private NumberFormat nf;
 
@@ -27,6 +28,7 @@ public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 		super(context, resource, usage);
 		this.usage = usage;
 		this.resource = resource;
+		this.maxUsage = maxConsume(usage);
 		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		nf = DecimalFormat.getInstance();
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
@@ -34,6 +36,20 @@ public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 		customSymbol.setGroupingSeparator('.');
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
+	}
+	
+	/**
+	 * Obtiene el máximo consumo de todos de la lista de consumos
+	 * @param usages
+	 * @return máximo consumo
+	 */
+	private int maxConsume(List<Usage> usages)
+	{
+		int max = 0;
+		for (Usage usage : usages) {
+			max = Math.max(max, usage.getEnergyUsage());
+		}
+		return max;
 	}
 	
 	
@@ -59,10 +75,12 @@ public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 			convertView = inflater.inflate(resource, null);
 		Usage u = usage.get(position);
 		((TextView) convertView.findViewById(R.id.term_text)).setText(u.getTerm());
-		((ProgressBar) convertView.findViewById(R.id.progressBar1)).setProgress(100);
+		ProgressBar progress = ((ProgressBar) convertView.findViewById(R.id.progressBar1));
+		progress.setMax(maxUsage);
+		progress.setProgress(u.getEnergyUsage());
 
 		((TextView) convertView.findViewById(R.id.usage_text))
-		.setText(u.getEnergyUsage());
+		.setText(""+u.getEnergyUsage());
 	
 		return convertView;
 	}

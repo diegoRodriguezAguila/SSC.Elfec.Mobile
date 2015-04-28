@@ -64,7 +64,7 @@
 		        android:layout_height="wrap_content"
 		        android:textColor="@android:color/white"
 		        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
-		        android:textSize="13sp"
+		        android:textSize="@dimen/username_lbl_txt_size"
 		        android:text="@string/lbl_current_client" />
 		    
 		    <TextView
@@ -73,7 +73,7 @@
 		        android:layout_height="wrap_content"
 		        android:textColor="@android:color/white"
 		        android:textAppearance="@style/TextAppearance.CustomFont.Light"
-		        android:textSize="18sp"
+		        android:textSize="@dimen/username_txt_size"
 		        android:layout_marginTop="-6dp"
 		        android:gravity="center"
 		        android:visibility="gone"

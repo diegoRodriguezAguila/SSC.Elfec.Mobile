@@ -2,6 +2,7 @@ package com.elfec.ssc.presenter;
 
 import java.util.List;
 
+import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Usage;
@@ -21,24 +22,24 @@ public class ViewAccountDetailsPresenter {
 
 	public void getUsage()
 	{
-		AccountWS ws=new AccountWS();
-		ws.getUsage(accountToShow.getNUS(), new IWSFinishEvent<List<Usage>>() {
-			
+		new Thread(new Runnable() {
 			@Override
-			public void executeOnFinished(final WSResponse<List<Usage>> result) {
-				Thread thread=new Thread(new Runnable() {
-					
+			public void run() {
+				view.showUsage(accountToShow.getUsages());
+				new AccountWS()
+				.getUsage(accountToShow.getNUS(), new IWSFinishEvent<List<Usage>>() {
+			
 					@Override
-					public void run() {
+					public void executeOnFinished(final WSResponse<List<Usage>> result) {									
 						if(result.getErrors().size()==0)
 						{
+							accountToShow.removeUsages();
+							ElfecAccountsManager.registerAccountUsages(accountToShow, result.getResult());
 							view.showUsage(result.getResult());
 						}
-					}
-				});
-				thread.start();
+					}});
 			}
-		});
+		}).start();
 	}
 	
 	/**
@@ -50,8 +51,13 @@ public class ViewAccountDetailsPresenter {
 		view.setNUS(accountToShow.getNUS());
 		view.setOwnerClient(accountToShow.getAccountOwner());
 		view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
-		view.setTotalDebt(accountToShow.getTotalDebt());
-		view.showDebts(accountToShow.getDebts());
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				view.showDebts(accountToShow.getDebts());
+				view.setTotalDebt(accountToShow.getTotalDebt());
+			}
+		}).start();
 	}
 	
 }

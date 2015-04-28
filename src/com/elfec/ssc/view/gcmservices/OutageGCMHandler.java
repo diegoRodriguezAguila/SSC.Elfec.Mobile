@@ -26,9 +26,16 @@ public class OutageGCMHandler implements IGCMHandler {
 	@Override
 	public void handleGCMessage(Bundle messageInfo,
 			NotificationManager notifManager, Builder builder) {
-		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
-		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
-		{
+		//---------------------------------------------MENSAJE--------------------------------------------------------------------
+		
+		//Pedro, este fue un pequeño cambio que hice en android no hay un owner especifico cuando envias una notificacion asi que no se toma en cuenta
+		//cheka el fono, ya jala bien, la tablet no pude decifrar que pasa
+		//Me tuve que ir, cualquier cosa me avisa, estamos hablando
+		
+		//----------------------------------------------------------------------------------------------------------------------
+		//Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
+		//if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
+		//{
 			Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
 					NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
 			//Si la vista de ver notificaciones está activa
@@ -37,7 +44,7 @@ public class OutageGCMHandler implements IGCMHandler {
 			if (notifPresenter != null)
 				notifPresenter.addNewOutageNotificationUpdate(notif);
 			notifManager.notify(NOTIF_ID, builder.build());
-		}
+		//}
 	}
 
 	@Override

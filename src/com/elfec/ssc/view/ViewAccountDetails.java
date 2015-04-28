@@ -141,35 +141,51 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 	}
 
 	@Override
-	public void setTotalDebt(BigDecimal totalDebt) {
-		TextView txtTotalAmount = ((TextView) findViewById(R.id.total_amount));
-		if (totalDebt.compareTo(BigDecimal.ZERO) == 0)
-		{
-			((LinearLayout)findViewById(R.id.layout_decimal_debt))
-				.setVisibility(View.GONE);
-			((TextView) findViewById(R.id.lbl_debt_detail))
-				.setVisibility(View.GONE);
-			txtTotalAmount.setTextSize(18);
-			txtTotalAmount.setText(R.string.lbl_no_debts);
-		}
-		else
-		{
-			txtTotalAmount.setText(nf.format
-					(totalDebt.toBigInteger().doubleValue()));
-			
-			((TextView) findViewById(R.id.total_amount_decimal))
-			.setText((totalDebt.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
-					.setScale(0, RoundingMode.CEILING).toString()));
-		}
+	public void setTotalDebt(final BigDecimal totalDebt) {
+		final TextView txtTotalAmount = ((TextView) findViewById(R.id.total_amount));
+		runOnUiThread(new Runnable() {		
+			@Override
+			public void run() {
+				if (totalDebt.compareTo(BigDecimal.ZERO) == 0)
+				{
+					((LinearLayout)findViewById(R.id.layout_decimal_debt))
+						.setVisibility(View.GONE);
+					((TextView) findViewById(R.id.lbl_debt_detail))
+						.setVisibility(View.GONE);
+					txtTotalAmount.setTextSize(18);
+					txtTotalAmount.setText(R.string.lbl_no_debts);
+				}
+				else
+				{
+					txtTotalAmount.setText(nf.format
+							(totalDebt.toBigInteger().doubleValue()));
+					
+					((TextView) findViewById(R.id.total_amount_decimal))
+					.setText((totalDebt.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
+							.setScale(0, RoundingMode.CEILING).toString()));
+				}
+			}
+		});	
 	}
 
 	@Override
 	public void showUsage(final List<Usage> usage) {
-		usageList.setAdapter(new ViewUsageAdapter(ViewAccountDetails.this, R.layout.usage_row, usage));
+		runOnUiThread(new Runnable() {			
+			@Override
+			public void run() {
+				usageList.setAdapter(new ViewUsageAdapter(ViewAccountDetails.this, R.layout.usage_row, usage));
+			}
+		});
+		
 	}
 	@Override
-	public void showDebts(List<Debt> debts) {
-		LVAccountDebts.setAdapter(new DebtAdapter(this, R.layout.debt_list_item, debts));
+	public void showDebts(final List<Debt> debts) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				LVAccountDebts.setAdapter(new DebtAdapter(ViewAccountDetails.this, R.layout.debt_list_item, debts));
+			}
+		}); 
 	}
 	
 	//#endregion

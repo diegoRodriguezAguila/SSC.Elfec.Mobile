@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 
@@ -84,6 +85,7 @@ public class Account extends Model implements Serializable{
     
     private List<Debt> Debts;
     
+    private List<Usage> Usages;
     
     public BigDecimal getTotalDebt()
     {
@@ -170,6 +172,35 @@ public class Account extends Model implements Serializable{
 			}
 		}
 		return Debts;
+	}
+	
+	/**
+	 * Obtiene los consumos relacionados a la cuenta
+	 * @return Lista de consumos relacionadas
+	 */
+	public List<Usage> getUsages() 
+	{
+		if(Usages==null)
+		{
+			try
+			{
+				Usages = getMany(Usage.class, "Usage");
+			}
+			catch(NullPointerException e)
+			{
+				Usages = new ArrayList<Usage>();
+			}
+		}
+		return Usages;
+	}
+	
+	/**
+	 * Elimina todos los consumos relacionados a la cuenta
+	 */
+	public void removeUsages() 
+	{
+		Usages=null;
+		new Delete().from(Usage.class).where("Account=?", getId()).execute();
 	}
 	
 	public String getAccountOwner() {

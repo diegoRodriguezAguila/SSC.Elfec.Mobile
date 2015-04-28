@@ -39,7 +39,7 @@
             tools:ignore="MissingPrefix"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@color/dark_gray"
-            android:textSize="15sp" />
+            android:textSize="@dimen/square_button_txt_size" />
     </RelativeLayout>
 
 </LinearLayout>
