@@ -45,7 +45,7 @@
 
             <LinearLayout
                 android:id="@+id/account_details_layout"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical" >
 
@@ -155,14 +155,14 @@
                         android:layout_marginStart="5dp"
                         android:text="@string/account_status_sample"
                         android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
-                        android:textColor="@color/dark_gray"
+                        android:textColor="@color/ssc_elfec_color"
                         android:textSize="20sp" />
                 </LinearLayout>
             </LinearLayout>
 			<View
             android:id="@+id/static_separator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1.5dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/ssc_elfec_color" />
@@ -261,7 +261,7 @@
         <View
             android:id="@+id/account_separator"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1.5dp"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:background="@color/ssc_elfec_color" />

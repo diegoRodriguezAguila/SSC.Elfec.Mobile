@@ -12,7 +12,7 @@
     </style>
     
      <style name="TextAppearance.CustomFont.Normal" parent="android:TextAppearance">
-        <item name="fontPath">fonts/segoe_ui_.ttf</item>
+        <item name="fontPath">fonts/segoe_ui.ttf</item>
     </style>
     
     <style name="TextAppearance.CustomFont.Title" parent="android:TextAppearance">

@@ -40,8 +40,9 @@ public class ElfecAccountsManager {
 	 * @param ownerClient
 	 * @param accountNumber
 	 * @param nus
+	 * @return retorna la cuenta retistrada
 	 */
-	public static void registerAccount(Account account) {
+	public static Account registerAccount(Account account) {
 		Account newAccount = Account.findAccount(account.getClient().getGmail(), account.getNUS(), account.getAccountNumber());
 		if(newAccount==null)
 		{
@@ -62,6 +63,7 @@ public class ElfecAccountsManager {
 				debt.setInsertDate(DateTime.now());
 			debt.save();
 		}
+		return newAccount;
 	}
 	
 	/**

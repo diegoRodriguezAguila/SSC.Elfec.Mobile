@@ -81,6 +81,7 @@
 		    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
 		    android:textColor="@color/text_gray_color"
 		    android:textSize="18sp"
+		    android:layout_margin="5dp"
 		    android:gravity="center"
 		    android:text="@string/lbl_no_outage_notifications" />
 
@@ -159,6 +160,7 @@
 		    android:textColor="@color/text_gray_color"
 		    android:textSize="18sp"
 		    android:gravity="center"
+		    android:layout_margin="5dp"
 		    android:text="@string/lbl_no_account_notifications" />
 		 <com.elfec.ssc.view.controls.xlistview.XListView
 		        android:id="@+id/accounts_listview"

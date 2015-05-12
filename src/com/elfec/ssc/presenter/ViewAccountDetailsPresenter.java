@@ -15,9 +15,9 @@ public class ViewAccountDetailsPresenter {
 	private IViewAccountDetails view;
 	private Account accountToShow;
 	
-	public ViewAccountDetailsPresenter(IViewAccountDetails view, Account accountToShow) {
+	public ViewAccountDetailsPresenter(IViewAccountDetails view, long accountToShowId) {
 		this.view = view;
-		this.accountToShow = accountToShow;
+		this.accountToShow = Account.get(accountToShowId);
 	}
 
 	public void getUsage()

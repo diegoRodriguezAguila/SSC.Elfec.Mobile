@@ -1,5 +1,6 @@
 package com.elfec.ssc.businesslogic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -44,12 +45,15 @@ public class ClientManager {
 	/**
 	 * Registra una lista de cuentas de un cliente
 	 * @param accounts
+	 * @return lista de cuentas registradas
 	 */
-	public static void registerClientAccounts(final List<Account> accounts)
+	public static List<Account> registerClientAccounts(final List<Account> accounts)
 	{
+		List<Account> regAccounts = new ArrayList<Account>(accounts.size());
 		for(Account account : accounts)
 		{
-			ElfecAccountsManager.registerAccount(account);
+			regAccounts.add(ElfecAccountsManager.registerAccount(account));
 		}
+		return regAccounts;
 	}
 }

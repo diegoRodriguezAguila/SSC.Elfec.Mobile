@@ -11,7 +11,6 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.DisplayMetrics;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
-import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
@@ -32,9 +30,9 @@ import com.elfec.ssc.view.controls.LayoutListView;
 
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
 
+	public static final String SELECTED_ACCOUNT_ID = "SelectedAccountId";
 	public boolean horizontal;
 	private ViewAccountDetailsPresenter presenter;
-	private View accountSeparator;
 	private LayoutListView LVAccountDebts;
 	private NumberFormat nf;
 	private LayoutListView usageList;
@@ -44,12 +42,11 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		setContentView(R.layout.activity_view_account_details);
 		usageList=(LayoutListView)findViewById(R.id.list_usage);
 		LVAccountDebts = (LayoutListView) findViewById(R.id.listview_account_debts);
-		accountSeparator = findViewById(R.id.account_separator);
 		initializeDecimalFormater();
-		presenter = new ViewAccountDetailsPresenter(this, (Account)getIntent().getSerializableExtra("SelectedAccount"));
-		setOrientation();
+		presenter = new ViewAccountDetailsPresenter(this, getIntent().getLongExtra(SELECTED_ACCOUNT_ID, -1));
 		presenter.setFields();
 		presenter.getUsage();
+		
 	}
 
 	private void initializeDecimalFormater() {
@@ -59,44 +56,6 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		customSymbol.setGroupingSeparator('.');
 		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
-	}
-	
-	/**
-	 * Asigna el tipo de orientación para el detalle de las cuentas y de las deudas
-	 */
-	public void setOrientation()
-	{
-		LinearLayout l =(LinearLayout)findViewById(R.id.principal_layout);
-		LinearLayout t1=(LinearLayout) findViewById(R.id.dynamic_layout);
-		LinearLayout t2=(LinearLayout) findViewById(R.id.usage_layout);
-		DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
-		int dpWidth = (int) (displayMetrics.widthPixels/displayMetrics.density);
-		if(dpWidth<550 || displayMetrics.widthPixels<=480)
-		{
-			
-			 l.setOrientation(LinearLayout.VERTICAL);
-			 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) t1.getLayoutParams();
-			 params.width=LinearLayout.LayoutParams.MATCH_PARENT;
-			 t1.setLayoutParams(params);
-			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
-			 t2.setLayoutParams(params1);
-			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, (int)(2*displayMetrics.density));
-			 vParams.setMargins(0, (int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density));
-			 accountSeparator.setLayoutParams(vParams);
-		}	
-		else
-		{
-			 l.setOrientation(LinearLayout.HORIZONTAL);
-			 LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) t1.getLayoutParams();
-			 params.width=(int) (displayMetrics.widthPixels*0.6);
-			 t1.setLayoutParams(params);
-			 LinearLayout.LayoutParams params1 = (LinearLayout.LayoutParams) t2.getLayoutParams();
-			 params1.width=(int) (displayMetrics.widthPixels*0.3);
-			 t2.setLayoutParams(params1);
-			 LinearLayout.LayoutParams vParams = new LinearLayout.LayoutParams((int)(2*displayMetrics.density), LinearLayout.LayoutParams.MATCH_PARENT);
-			 vParams.setMargins((int)(10*displayMetrics.density), 0, (int)(10*displayMetrics.density), 0);
-			 accountSeparator.setLayoutParams(vParams);
-		}		
 	}
 
 	@Override

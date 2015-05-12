@@ -72,7 +72,7 @@ public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if(convertView==null)
-			convertView = inflater.inflate(resource, null);
+			convertView = inflater.inflate(resource, null, false);
 		Usage u = usage.get(position);
 		((TextView) convertView.findViewById(R.id.term_text)).setText(u.getTerm());
 		ProgressBar progress = ((ProgressBar) convertView.findViewById(R.id.progressBar1));

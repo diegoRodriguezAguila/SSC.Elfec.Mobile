@@ -1,6 +1,5 @@
 package com.elfec.ssc.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,12 +19,8 @@ import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
  *
  */
 @Table(name = "Accounts")
-public class Account extends Model implements Serializable{
+public class Account extends Model{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6023386891623504265L;
 
 
 	public Account() {
@@ -184,7 +179,7 @@ public class Account extends Model implements Serializable{
 		{
 			try
 			{
-				Usages = getMany(Usage.class, "Usage");
+				Usages = getMany(Usage.class, "Account");
 			}
 			catch(NullPointerException e)
 			{
@@ -262,6 +257,18 @@ public class Account extends Model implements Serializable{
 	{
 		return new Select()
         .from(Account.class).as("a").join(Client.class).as("c").on("a.Client=c.Id").where("NUS=? AND AccountNumber=? AND Gmail=?", nus, accountNumber, gmail)
+        .executeSingle();
+	}
+	
+	/**
+	 * Busca una cuenta con el id proporcionado
+	 * @param id
+	 * @return cuenta con el id proporcionado
+	 */
+	public static Account get(Long id)
+	{
+		return new Select()
+        .from(Account.class).where("Id = ?", id)
         .executeSingle();
 	}
 }

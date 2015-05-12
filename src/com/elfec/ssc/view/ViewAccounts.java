@@ -75,8 +75,8 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 					long arg3) {
 				if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
 					Intent i = new Intent(ViewAccounts.this, ViewAccountDetails.class);
-					Account acc = (Account)adapter.getItemAtPosition(pos);
-					i.putExtra("SelectedAccount", (Account)adapter.getItemAtPosition(pos));
+					Long id = ((Account)adapter.getItemAtPosition(pos)).getId();
+					i.putExtra(ViewAccountDetails.SELECTED_ACCOUNT_ID, id);
 					startActivity(i);
 					overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 				}

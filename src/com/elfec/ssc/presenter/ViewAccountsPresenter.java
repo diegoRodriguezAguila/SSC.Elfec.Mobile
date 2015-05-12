@@ -139,8 +139,7 @@ public class ViewAccountsPresenter {
 						public void run() {
 							if(result.getErrors().size()==0)
 							{
-								final List<Account> accounts=result.getResult();
-								ClientManager.registerClientAccounts(accounts);
+								final List<Account> accounts=ClientManager.registerClientAccounts(result.getResult());
 								view.getPreferences().setLoadAccountsAlreadyUsed();
 								view.hideWSWaiting();	
 								view.show(accounts);

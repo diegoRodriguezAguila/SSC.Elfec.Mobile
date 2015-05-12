@@ -8,4 +8,6 @@
  	<dimen name="square_button_txt_size">15sp</dimen>
  	<dimen name="username_lbl_txt_size">13sp</dimen>
  	<dimen name="username_txt_size">18sp</dimen>
+ 	<dimen name="fab_right_margin">0dp</dimen>
+ 	<dimen name="fab_bottom_margin">0dp</dimen>
 </resources>
