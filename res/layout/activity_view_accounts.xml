@@ -37,9 +37,9 @@
              android:layout_height="wrap_content"
              android:lineSpacingExtra="-3dp"
              android:paddingBottom="7dp"
-             android:textSize="18sp"
              android:visibility="gone"
              android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+             android:textSize="20sp"
              android:textColor="@color/ssc_elfec_color_pressed"
              android:text="@string/no_accounts_registered" />
 			 
