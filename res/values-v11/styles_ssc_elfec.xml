@@ -2,7 +2,9 @@
 
 <!-- Generated with http://android-holo-colors.com -->
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
-    
+    <style name="Toolbar.Dark" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
+        <item name="android:displayOptions">useLogo|showHome</item>
+    </style>
      <style name="TextAppearance.CustomFont.Light" parent="android:TextAppearance">
         <item name="fontPath">fonts/segoe_ui_light.ttf</item>
     </style>
@@ -136,11 +138,7 @@
 
   <style name="ActionButtonssc_elfec" parent="android:Widget.Holo.Light.Button">
 	  <item name="android:background">@drawable/ssc_elfec_btn_default_holo_light</item>
-	  <item name="android:textColor">#ffffff</item>
-	  <item name="android:minHeight">35dp</item>
-	  <item name="android:minWidth">35dp</item>
-	  <item name="android:height">35dp</item>
-	  <item name="android:width">35dp</item>
+	  <item name="android:textColor">@color/abc_primary_text_material_dark</item>
 	  <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
   </style>
   

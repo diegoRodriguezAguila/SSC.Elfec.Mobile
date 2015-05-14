@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,8 @@ import com.elfec.ssc.presenter.views.IContact;
 public class Contacts extends ActionBarActivity implements IContact {
 
 	ContactPresenter presenter;
+	
+	private Toolbar toolbar;
 	private boolean isFirst = true;
 	private String facebook;
 	private String facebookId;
@@ -24,6 +27,10 @@ public class Contacts extends ActionBarActivity implements IContact {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contacts);
 		presenter=new ContactPresenter(this);
+		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar); 
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.contacts_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 		presenter.setDefaultData();
 		isFirst = true;
 	}

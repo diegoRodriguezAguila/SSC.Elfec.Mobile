@@ -72,7 +72,8 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 
 	private void setAccountBalanceInformation(View convertView, Account account) {
 		TextView txtTotalAmount = ((TextView) convertView.findViewById(R.id.total_amount));
-		if (account.getTotalDebt().compareTo(BigDecimal.ZERO) == 0)
+		BigDecimal totalDebt = account.getTotalDebt();
+		if (totalDebt.compareTo(BigDecimal.ZERO) == 0)
 		{
 			((LinearLayout)convertView.findViewById(R.id.layout_decimal_debt))
 				.setVisibility(View.GONE);
@@ -81,6 +82,8 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 		}
 		else
 		{
+			((LinearLayout)convertView.findViewById(R.id.layout_decimal_debt))
+			.setVisibility(View.VISIBLE);
 			txtTotalAmount.setText(nf.format
 					(account.getTotalDebt().toBigInteger().doubleValue()));
 			

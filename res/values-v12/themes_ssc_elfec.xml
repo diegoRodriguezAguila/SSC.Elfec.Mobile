@@ -5,14 +5,15 @@
 
     <style name="ssc_elfec" parent="@style/_ssc_elfec" />
     
-    <style name="_ssc_elfec" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="_ssc_elfec" parent="Theme.AppCompat.Light.NoActionBar">
         
         <!-- Textview with customfont -->
         <item name="android:textViewStyle">@style/CustomFontStyle.Ssc_elfecc</item>
         
-        <item name="colorPrimary">#3F51B5</item>
-	    <item name="colorPrimaryDark">#303F9F</item>
-	    <item name="colorAccent">@color/ssc_elfec_color</item>
+        
+        <item name="colorPrimary">@color/ssc_elfec_color</item>
+	    <item name="colorPrimaryDark">@color/ssc_elfec_color</item>
+	    <item name="colorAccent">@color/ssc_elfec_color_pressed</item>
 	    <item name="alertDialogProTheme">@style/Theme.FlavoredMaterialLight</item>
         
 	    <item name="android:windowIsTranslucent">true</item>

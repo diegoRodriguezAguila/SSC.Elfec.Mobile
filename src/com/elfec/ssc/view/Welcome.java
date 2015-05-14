@@ -9,7 +9,6 @@ import com.elfec.ssc.presenter.views.IWelcome;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.content.Context;
 import android.content.Intent;
@@ -28,8 +27,6 @@ public class Welcome extends ActionBarActivity implements IWelcome {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_welcome);
 		presenter = new WelcomePresenter(this);
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.hide();
 		presenter.insertContact();
 		Animation slideRight = AnimationUtils.loadAnimation(this,R.anim.slide_right_welcome);
 		Animation slideLeft = AnimationUtils.loadAnimation(this,R.anim.slide_left_welcome);

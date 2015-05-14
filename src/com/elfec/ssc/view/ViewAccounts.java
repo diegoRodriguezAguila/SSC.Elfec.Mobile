@@ -11,12 +11,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
@@ -35,6 +37,8 @@ import com.github.johnpersano.supertoasts.util.Style;
 public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
+	
+	private Toolbar toolbar;
 	private XListView accountsListView;
 	private AlertDialog waitingWSDialog;
 	private boolean isRefresh;
@@ -45,6 +49,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
         presenter = new ViewAccountsPresenter(this);
+        toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar); 
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.view_accounts_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
         accountsListView=(XListView)findViewById(R.id.accounts_list);
         accountsListView.setPullLoadEnable(false);
         accountsListView.setPullRefreshEnable(true);

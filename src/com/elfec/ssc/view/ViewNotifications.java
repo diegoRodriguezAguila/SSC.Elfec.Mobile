@@ -9,6 +9,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.CheckBox;
@@ -35,11 +36,12 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 	};
 
 	private ViewNotificationsPresenter presenter;
+	
+	private Toolbar toolbar;
 	private ExpandStatus outageStatus;
 	private ExpandStatus accountsStatus;
 	private int halfSize = -1;
 	private int fullSize = -1;
-	private TextView titleNotifications;
 	private CheckBox outageGroup;
 	private XListView outageListView;
 	private CheckBox accountsGroup;
@@ -58,7 +60,10 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notifications);
 		presenter = new ViewNotificationsPresenter(this);
-		titleNotifications = (TextView) findViewById(R.id.notifications_title);
+		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar); 
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.notifications_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 		outageGroup = (CheckBox) findViewById(R.id.outage_group);
 		outageListView = (XListView) findViewById(R.id.outage_listview);
 		accountsGroup = (CheckBox) findViewById(R.id.accounts_group);
@@ -109,14 +114,13 @@ public class ViewNotifications extends ActionBarActivity implements IViewNotific
 			ActionBar actionBar = getSupportActionBar();
 			int screenHeight = displayMetrics.heightPixels;
 			int actionBarHeight = actionBar.getHeight();
-			int titleHeight = titleNotifications.getHeight();
 			float paddingTop = (6 * displayMetrics.density);
 			float paddingBottom = (16 * displayMetrics.density);
 			float extraMarginFull = (15 * displayMetrics.density);
-			halfSize = (int) (((screenHeight - actionBarHeight - titleHeight
+			halfSize = (int) (((screenHeight - actionBarHeight
 					- paddingBottom - paddingTop) / 2) - ((outageGroup
 					.getHeight() * 1.5)));
-			fullSize = (int) ((screenHeight - actionBarHeight - titleHeight
+			fullSize = (int) ((screenHeight - actionBarHeight
 					- paddingBottom - paddingTop)
 					- (outageGroup.getHeight() * 2.5) - extraMarginFull);
 		}

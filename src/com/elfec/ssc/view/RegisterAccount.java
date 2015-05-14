@@ -8,14 +8,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.Html;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
-import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
@@ -31,6 +32,8 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
 
+	private Toolbar toolbar;
+	
 	private RegisterAccountPresenter presenter;
 	private EditText txtNUS;
 	private EditText txtAccountNumber;
@@ -42,6 +45,10 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register_account);
 		presenter = new RegisterAccountPresenter(this);
+		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar); 
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.register_account_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 		txtNUS = (EditText) findViewById(R.id.txt_nus);		
 		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
 		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
@@ -235,7 +242,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 			@Override
 			public void run() {
 				Crouton.clearCroutonsForActivity(RegisterAccount.this);
-				Crouton.makeText(RegisterAccount.this, R.string.errors_in_fields, croutonStyle, (ViewGroup)findViewById(R.id.croutonview)).show();
+				Crouton.makeText(RegisterAccount.this, R.string.errors_in_fields, croutonStyle, R.id.view_content).show();
 			}
 		});
 	}

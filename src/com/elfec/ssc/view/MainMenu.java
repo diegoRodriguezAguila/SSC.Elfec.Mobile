@@ -7,7 +7,6 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -36,8 +35,6 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 		presenter = new MainMenuPresenter(this);
-		ActionBar actionBar = getSupportActionBar();
-		actionBar.hide();
 		btnSwitchClient = (ImageButton) findViewById(R.id.btn_switch_client);
 		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);		
 		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
@@ -182,7 +179,7 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 	@Override
 	public void setCurrentClient(String gmail) {
 		activeClientGmail = gmail;
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				if(activeClientGmail!=null)

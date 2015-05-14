@@ -35,6 +35,7 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.location.Location;
@@ -45,6 +46,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 public class LocationServices extends ActionBarActivity implements ILocationServices, OnMapReadyCallback {
 
@@ -55,6 +57,8 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	private AlertDialog waitingMapDialog;
 	
 	private LocationServicesPresenter presenter;
+	
+	private Toolbar toolbar;
 	private GoogleMap map;
 	private MenuItem menuItemSetupDistance;
 	private Marker lastOpenedMarker;
@@ -65,6 +69,10 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		setContentView(R.layout.activity_location_services);
 		showWaitingDialog();
 		presenter = new LocationServicesPresenter(this);
+		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar); 
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.location_services_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 		setupMap();
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
@@ -236,7 +244,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	@Override
 	public void showDetailMessage(String message) {
 		Crouton.clearCroutonsForActivity(this);
-		Crouton.makeText(this, message, croutonStyle).show();
+		Crouton.makeText(this, message, croutonStyle, R.id.view_content).show();
 	}
 	
 	//#endregion

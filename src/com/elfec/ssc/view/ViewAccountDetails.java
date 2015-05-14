@@ -11,6 +11,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -31,8 +32,11 @@ import com.elfec.ssc.view.controls.LayoutListView;
 public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
 
 	public static final String SELECTED_ACCOUNT_ID = "SelectedAccountId";
-	public boolean horizontal;
+	
 	private ViewAccountDetailsPresenter presenter;
+	
+	public boolean horizontal;
+	private Toolbar toolbar;
 	private LayoutListView LVAccountDebts;
 	private NumberFormat nf;
 	private LayoutListView usageList;
@@ -43,6 +47,10 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 		usageList=(LayoutListView)findViewById(R.id.list_usage);
 		LVAccountDebts = (LayoutListView) findViewById(R.id.listview_account_debts);
 		initializeDecimalFormater();
+		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
+        setSupportActionBar(toolbar); 
+        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.view_account_details_title);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 		presenter = new ViewAccountDetailsPresenter(this, getIntent().getLongExtra(SELECTED_ACCOUNT_ID, -1));
 		presenter.setFields();
 		presenter.getUsage();

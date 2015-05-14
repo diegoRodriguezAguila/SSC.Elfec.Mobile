@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="fab_size" type="dimen">@dimen/floating_action_button_size_normal</item>
+</resources>
