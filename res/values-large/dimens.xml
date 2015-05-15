@@ -11,4 +11,5 @@
  	<dimen name="fab_right_margin">16dp</dimen>
  	<dimen name="fab_bottom_margin">16dp</dimen>
  	<dimen name="title_text_size">22sp</dimen>
+ 	<dimen name="main_menu_title_text_size">40sp</dimen>
 </resources>
