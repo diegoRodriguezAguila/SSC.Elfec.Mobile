@@ -12,4 +12,5 @@
     <color name="btn_pressed_gray">#D5D5D5</color>
     <color name="ssc_elfec_color_pressed">#004C6A</color>
     <color name="rbtn_unchecked_gray">#939598</color>
+    <color name="list_item_ripple_color">#B2B4B8</color>
 </resources>
