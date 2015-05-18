@@ -89,8 +89,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
+                android:divider="@null"
+                android:listSelector="@drawable/notification_item_background"
                 android:background="@android:color/white"
-                android:listSelector="@android:color/transparent"
                 android:fastScrollEnabled="true" />
         </LinearLayout>
 
@@ -170,8 +171,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:listSelector="@android:color/transparent"
+                android:listSelector="@drawable/notification_item_background"
                 android:background="@android:color/white"
+                android:divider="@null"
                 android:fastScrollEnabled="true" />
         </LinearLayout>
     </RelativeLayout>

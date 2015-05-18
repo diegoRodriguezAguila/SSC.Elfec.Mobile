@@ -181,6 +181,10 @@
                                 android:layout_height="50dp"
                                 android:layout_marginLeft="8dp"
                                 android:layout_marginStart="8dp"
+                                android:paddingStart="6dp"
+					            android:paddingLeft="6dp"
+					            android:paddingRight="6dp"
+					            android:paddingEnd="6dp"
                                 android:background="@drawable/ssc_elfec_btn_default_holo_light"
                                 android:gravity="center"
                                 android:orientation="horizontal" >

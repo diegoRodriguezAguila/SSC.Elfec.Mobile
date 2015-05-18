@@ -13,7 +13,7 @@ public class LayoutListView extends LinearLayout {
 	private Handler mhHandler;
 	private ListAdapter adapter;
 	private DisplayMetrics displayMetrics;
-	private View[] views;
+	private volatile View[] views;
 	private LinearLayout.LayoutParams params;
 	//#region constructors
 	public LayoutListView(Context context) {
@@ -77,9 +77,12 @@ public class LayoutListView extends LinearLayout {
 				synchronized (views) {
 					LayoutListView.this.removeAllViews();
 					for (int i = 0; i < views.length; i++) {
-						if(views[i].getParent()!=null)
-							LayoutListView.this.removeView(views[i]);
-						LayoutListView.this.addView(views[i]);
+						if(views[i]!=null)
+						{
+							if(views[i].getParent()!=null)
+								LayoutListView.this.removeView(views[i]);
+							LayoutListView.this.addView(views[i]);
+						}
 					}
 				}
 			}

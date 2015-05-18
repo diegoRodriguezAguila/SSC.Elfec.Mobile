@@ -91,7 +91,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 		        lastClickTime = SystemClock.elapsedRealtime();
 			}
 		});
-    }
+	}
 	@Override
 	protected void onResume()
 	{

@@ -85,5 +85,10 @@
         android:textColor="@color/dark_gray"
         android:textAppearance="@style/TextAppearance.CustomFont.Normal"
         android:textSize="15sp" />
+    <View
+                android:id="@+id/static_separator"
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:background="@color/background_soft_gray" />
 
 </LinearLayout>

@@ -104,11 +104,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:listSelector="@android:color/transparent"
+            android:listSelector="@drawable/notification_item_background"
             android:layout_below="@+id/view_accounts_title_layout"
             android:layout_marginTop="8dp"
-            android:divider="@android:color/transparent"
-            android:dividerHeight="3dp"
+            android:background="@android:color/white"
+            android:divider="@null"
             android:fastScrollEnabled="true"
             android:visibility="gone" >
         </com.elfec.ssc.view.controls.xlistview.XListView>
