@@ -219,7 +219,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
     {
 		(new AlertDialogPro.Builder(this)).setTitle(R.string.delete_account_title)
         .setMessage(R.string.delete_account_msg)
-        .setPositiveButton(R.string.btn_yes, new OnClickListener() {
+        .setPositiveButton(R.string.btn_confirm, new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -227,7 +227,7 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 				ShowWaitingWS();
 				presenter.invokeRemoveAccountWS(account.getNUS());
 			}
-		}).setNegativeButton(R.string.btn_no, null).show();
+		}).setNegativeButton(R.string.btn_cancel, null).show();
     }
 	@Override
 	public void ShowWaitingWS() {

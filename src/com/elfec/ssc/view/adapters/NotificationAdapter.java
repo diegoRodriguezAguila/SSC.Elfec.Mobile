@@ -3,8 +3,10 @@ package com.elfec.ssc.view.adapters;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -14,6 +16,7 @@ import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.utils.NotificationDrawablePicker;
 import com.elfec.ssc.model.Notification;
@@ -109,8 +112,8 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		Notification notification = wrappedNotif.getWrappedObject();
 		((ImageView) convertView.findViewById(R.id.notification_image)).setImageDrawable(
 				getContext().getResources().getDrawable(wrappedNotif.getImageResourceId()));
-		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(notification.getTitle());
-		txtNotifMessage.setText(notification.getContent());
+		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(Html.fromHtml(notification.getTitle()));
+		txtNotifMessage.setText(Html.fromHtml(notification.getContent()));
 		((TextView) convertView.findViewById(R.id.list_item_notification_date)).setText(notification.getInsertDate().toString("dd MMM yyyy"));
 		((TextView) convertView.findViewById(R.id.list_item_notification_time)).setText(notification.getInsertDate().toString("HH:mm"));
 

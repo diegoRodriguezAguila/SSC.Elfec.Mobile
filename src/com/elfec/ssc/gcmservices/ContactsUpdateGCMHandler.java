@@ -1,4 +1,4 @@
-package com.elfec.ssc.view.gcmservices;
+package com.elfec.ssc.gcmservices;
 
 import com.elfec.ssc.businesslogic.ContactsManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;

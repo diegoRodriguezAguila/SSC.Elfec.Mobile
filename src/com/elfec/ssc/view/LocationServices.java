@@ -78,7 +78,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		presenter.loadLocations();
 		setSelectedOptions();
 		croutonStyle =  new Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
-				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color)).build();
+				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color_highlight)).build();
 	}
 	protected void onResume()
 	{

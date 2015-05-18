@@ -1,4 +1,4 @@
-package com.elfec.ssc.view.gcmservices;
+package com.elfec.ssc.gcmservices;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -52,7 +52,7 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 		txtNUS = (EditText) findViewById(R.id.txt_nus);		
 		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
 		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
-				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color)).build();
+				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color_highlight)).build();
 		setOnFocusChangedListeners();
 	}
 	

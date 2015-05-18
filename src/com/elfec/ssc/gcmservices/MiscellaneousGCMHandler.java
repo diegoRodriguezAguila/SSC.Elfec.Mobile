@@ -1,4 +1,4 @@
-package com.elfec.ssc.view.gcmservices;
+package com.elfec.ssc.gcmservices;
 
 import android.app.Activity;
 import android.app.NotificationManager;

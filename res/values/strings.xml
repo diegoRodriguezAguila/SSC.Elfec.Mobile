@@ -114,6 +114,7 @@
 
     <!-- Botones Dialogos -->
     <string name="btn_ok">Aceptar</string>
+    <string name="btn_confirm">Confirmar</string>
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>

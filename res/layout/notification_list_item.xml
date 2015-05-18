@@ -57,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/date_sample"
                 android:textAppearance="@style/TextAppearance.CustomFont.Normal"
-                android:textColor="@color/light_text_color"
+                android:textColor="@color/ssc_elfec_color"
                 android:textSize="12sp" />
 
             <TextView
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time_sample"
-                android:textColor="@color/light_text_color"
+                android:textColor="@color/ssc_elfec_color"
                 android:textAppearance="@style/TextAppearance.CustomFont.Normal"
                 android:textSize="13sp" />
         </LinearLayout>

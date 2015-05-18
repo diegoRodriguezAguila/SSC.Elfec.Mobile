@@ -1,4 +1,4 @@
-package com.elfec.ssc.view.gcmservices;
+package com.elfec.ssc.gcmservices;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
@@ -12,7 +12,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
         // Explicitly specify that GcmMessageHandler will handle the intent.
         ComponentName comp = new ComponentName(context.getPackageName(),
-                GcmMessageHandler.class.getName());
+                GcmMessageService.class.getName());
 
         // Start the service, keeping the device awake while it is launching.
         startWakefulService(context, (intent.setComponent(comp)));

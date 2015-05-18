@@ -1,4 +1,4 @@
-package com.elfec.ssc.view.gcmservices;
+package com.elfec.ssc.gcmservices;
 
 import org.json.JSONException;
 import org.json.JSONObject;

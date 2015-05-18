@@ -12,7 +12,7 @@
         
         
         <item name="colorPrimary">@color/ssc_elfec_color</item>
-	    <item name="colorPrimaryDark">@color/ssc_elfec_color</item>
+	    <item name="colorPrimaryDark">@color/ssc_elfec_color_pressed</item>
 	    <item name="colorAccent">@color/ssc_elfec_color_pressed</item>
 	    <item name="alertDialogProTheme">@style/Theme.FlavoredMaterialLight</item>
         

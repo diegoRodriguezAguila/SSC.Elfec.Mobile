@@ -1,4 +1,4 @@
-package com.elfec.ssc.view.gcmservices;
+package com.elfec.ssc.gcmservices;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
+import android.text.Html;
 
 import com.elfec.ssc.R;
 
@@ -15,10 +16,10 @@ import com.elfec.ssc.R;
  * @author Zuki
  *
  */
-public class GcmMessageHandler extends IntentService {
+public class GcmMessageService extends IntentService {
 
-    public GcmMessageHandler() {
-        super("GcmMessageHandler");
+    public GcmMessageService() {
+        super("GcmMessageService");
     }
 
     @Override
@@ -43,8 +44,9 @@ public class GcmMessageHandler extends IntentService {
 			}
             gcmHandler.handleGCMessage(messageInfo, notifManager, 
             		builder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-							   		    .setContentTitle(messageInfo.getString("title"))
-										.setContentText(messageInfo.getString("message"))
+            							.setColor(getResources().getColor(R.color.ssc_elfec_color))
+							   		    .setContentTitle(Html.fromHtml(messageInfo.getString("title")))
+										.setContentText(Html.fromHtml(messageInfo.getString("message")))
 							   		    .setSmallIcon(R.drawable.elfec_notification));
 		}
 		
