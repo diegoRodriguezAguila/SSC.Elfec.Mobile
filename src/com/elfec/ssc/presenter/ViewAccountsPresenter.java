@@ -87,8 +87,9 @@ public class ViewAccountsPresenter {
 							{
 								view.hideWSWaiting();
 								List<Exception> errorsToShow = new ArrayList<Exception>();
-								errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexi�n a internet"));
+								errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet.\n● También verifique que tiene Google Play Services instalado."));
 								view.showViewAccountsErrors(errorsToShow);
+								view.showAccounts(null);
 							}
 							else
 							{
@@ -133,7 +134,7 @@ public class ViewAccountsPresenter {
 				@Override
 				public void executeOnFinished(final WSResponse<List<Account>> result) 
 				{						
-					Thread thread=new Thread(new Runnable() {
+					new Thread(new Runnable() {
 						
 						@Override
 						public void run() {
@@ -142,7 +143,7 @@ public class ViewAccountsPresenter {
 								final List<Account> accounts=ClientManager.registerClientAccounts(result.getResult());
 								view.getPreferences().setLoadAccountsAlreadyUsed();
 								view.hideWSWaiting();	
-								view.show(accounts);
+								view.showAccounts(accounts);
 							}
 							else
 							{
@@ -150,19 +151,19 @@ public class ViewAccountsPresenter {
 								{
 									view.hideWSWaiting();	
 									view.showViewAccountsErrors(result.getErrors());
+									view.showAccounts(null);
 								}
 								else
 								{
 									List<Account> activeAccounts = client.getActiveAccounts();
 									view.hideWSWaiting();	
-									view.show(activeAccounts);
+									view.showAccounts(activeAccounts);
 								}
 							}
 							isLoadingAccounts=false;
 							isRefreshing=false;
 						}
-					});
-					thread.start();
+					}).start();
 					}
 			});
 		}

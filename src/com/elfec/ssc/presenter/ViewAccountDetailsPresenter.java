@@ -2,6 +2,8 @@ package com.elfec.ssc.presenter;
 
 import java.util.List;
 
+import android.os.Looper;
+
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
@@ -25,6 +27,7 @@ public class ViewAccountDetailsPresenter {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
+				Looper.prepare();
 				view.showUsage(accountToShow.getUsages());
 				new AccountWS()
 				.getUsage(accountToShow.getNUS(), new IWSFinishEvent<List<Usage>>() {
@@ -38,6 +41,7 @@ public class ViewAccountDetailsPresenter {
 							view.showUsage(result.getResult());
 						}
 					}});
+				Looper.loop();
 			}
 		}).start();
 	}

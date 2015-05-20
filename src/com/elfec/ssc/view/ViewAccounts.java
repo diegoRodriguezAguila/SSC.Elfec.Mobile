@@ -147,14 +147,14 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	}
 
 	@Override
-	public void show(final List<com.elfec.ssc.model.Account> result) {
+	public void showAccounts(final List<com.elfec.ssc.model.Account> result) {
 		runOnUiThread(new Runnable() {		
 			@Override
-			public void run() {
-				ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.view_accounts_row, result);
-				accountsListView.setAdapter(adapter);
-				if(result.size()>0)
+			public void run() {				
+				if(result!=null && result.size()>0)
 				{
+					ViewAccountsAdapter adapter=new ViewAccountsAdapter(ViewAccounts.this, R.layout.view_accounts_row, result);
+					accountsListView.setAdapter(adapter);
 					findViewById(R.id.layout_how_to_add_accounts).setVisibility(View.GONE);
 					findViewById(R.id.lbl_an_account).setVisibility(View.GONE);
 					findViewById(R.id.lbl_no_accounts_registered).setVisibility(View.GONE);
@@ -224,13 +224,13 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				Account account=(Account)accountsListView.getAdapter().getItem(position);
-				ShowWaitingWS();
+				showWSWaiting();
 				presenter.invokeRemoveAccountWS(account.getNUS());
 			}
 		}).setNegativeButton(R.string.btn_cancel, null).show();
     }
 	@Override
-	public void ShowWaitingWS() {
+	public void showWSWaiting() {
 		/*runOnUiThread(new Runnable() {
 			@Override
 			public void run(){
