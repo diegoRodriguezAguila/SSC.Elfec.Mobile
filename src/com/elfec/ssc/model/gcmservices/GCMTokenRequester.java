@@ -45,7 +45,7 @@ public class GCMTokenRequester extends AsyncTask<Void, Void, String> {
 	
 	 @Override
      protected void onPostExecute(String deviceToken) {
-		 if(deviceToken!=null)
+		 if(deviceToken!=null && !deviceToken.isEmpty())
 			 preferences.setGCMToken(deviceToken);
 		 if(callback!=null)
 			 callback.onGCMTokenReceived(deviceToken);

@@ -22,6 +22,7 @@ public class PreferencesManager {
 	private final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
 	private final String SETUP_DISTANCE = "SetupDistance";
 	private final String GCM_TOKEN = "GCMToken";
+	private final String HAS_TO_UPDATE_GCM_TOKEN = "HasToUpdateGCMToken";
 	
 	private SharedPreferences preferences;
 	
@@ -171,5 +172,24 @@ public class PreferencesManager {
 	public void setGCMToken(String gcmToken)
 	{
 		preferences.edit().putString(GCM_TOKEN, gcmToken).commit();
+	}
+	
+	/**
+	 * Verifica si es que se tiene que realizar el envío del token al servidor
+	 * @return true si es que si 
+	 */
+	public boolean hasToUpdateGCMToken()
+	{
+		return preferences.getBoolean(HAS_TO_UPDATE_GCM_TOKEN, false);
+	}
+	
+	/**
+	 * Asigna que se tiene que realizar el envío del token al servidor
+	 * @return la instancia actual de PreferencesManager
+	 */
+	public PreferencesManager setHasToUpdateGCMToken(boolean hasToUpdateIt)
+	{
+		preferences.edit().putBoolean(HAS_TO_UPDATE_GCM_TOKEN, hasToUpdateIt).commit();
+		return this;
 	}
 }

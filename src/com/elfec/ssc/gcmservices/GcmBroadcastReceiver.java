@@ -15,14 +15,15 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         // Explicitly specify that GcmMessageHandler will handle the intent.
         ComponentName comp = new ComponentName(context.getPackageName(),
                 GcmMessageService.class.getName());
-        String deviceToken = intent.getExtras().getString("registration_id"); 
-        
+        String deviceToken = intent.getExtras().getString("registration_id");   
         if(deviceToken != null && !deviceToken.equals("")) { 
         	PreferencesManager preferences = new PreferencesManager(context);
    			preferences.setGCMToken(deviceToken);
+        } 
+        else {
+	        // Start the service, keeping the device awake while it is launching.
+	        startWakefulService(context, (intent.setComponent(comp)));
         }
-        // Start the service, keeping the device awake while it is launching.
-        startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);
     }
 }

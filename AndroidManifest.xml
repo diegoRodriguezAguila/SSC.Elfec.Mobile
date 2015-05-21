@@ -14,7 +14,6 @@
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
@@ -101,7 +100,15 @@
             android:name=".view.Contacts"
             android:label="@string/contacts_title" >
         </activity>
-
+        <activity
+            android:name=".view.ViewNotifications"
+            android:label="@string/notifications_title" >
+        </activity>
+        <activity
+            android:name="com.elfec.ssc.view.ViewAccountDetails"
+            android:label="@string/view_account_details_title" >
+        </activity>
+        
         <receiver
             android:name=".gcmservices.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -113,15 +120,22 @@
         </receiver>
 
         <service android:name=".gcmservices.GcmMessageService" />
+        
+		<receiver android:name=".gcmservices.UpdateReceiver">
+		     <intent-filter>
+		          <action android:name="android.intent.action.PACKAGE_REPLACED" />
+		          <data android:path="com.elfec.ssc"
+		          android:scheme="package" />
+		     </intent-filter>
+		</receiver>
 
-        <activity
-            android:name=".view.ViewNotifications"
-            android:label="@string/notifications_title" >
-        </activity>
-        <activity
-            android:name="com.elfec.ssc.view.ViewAccountDetails"
-            android:label="@string/view_account_details_title" >
-        </activity>
+		<service android:name=".gcmservices.UpdateGCMTokenService" />
+		
+		<receiver android:name=".gcmservices.InternetEnabledReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>
