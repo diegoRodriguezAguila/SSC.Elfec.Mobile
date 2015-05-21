@@ -34,6 +34,7 @@ public class UpdateGCMTokenService extends IntentService{
 						public void executeOnFinished(WSResponse<Boolean> result) {
 							if(result.hasErrors())
 							{
+								preferences.setGCMToken(lastToken);
 								preferences.setHasToUpdateGCMToken(true);
 							}
 							else preferences.setHasToUpdateGCMToken(false);
