@@ -101,6 +101,10 @@ public class LocationPoint extends Model {
 		return location.distanceTo(thisLocation);
 	}
 	
+	public static boolean existPoint(LocationPoint point)
+	{
+		return new Select().from(LocationPoint.class).where("Latitude=? And Longitude=?",point.getLatitude(),point.getLongitude()).execute().size()>0;
+	}
 	//#region Getters y Setters
 	public String getInstitutionName() {
 		return InstitutionName;

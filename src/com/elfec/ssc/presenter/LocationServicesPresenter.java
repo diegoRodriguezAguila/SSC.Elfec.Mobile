@@ -123,8 +123,6 @@ public class LocationServicesPresenter {
 			@Override
 			public void run() {
 				Looper.prepare();
-				if(view.getPreferences().isFirstLoadLocations())
-				{
 				LocationPointWS pointWS=new LocationPointWS();
 				pointWS.getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
 					
@@ -133,22 +131,19 @@ public class LocationServicesPresenter {
 						if(result.getErrors().size()==0)
 						{
 							LocationPointsManager.registerLocations(result.getResult());
-							view.getPreferences().setLoadLocationsAlreadyUsed();
+							LocationPointsManager.removeLocations(result.getResult());
 							verifyShowLocationPoints(result.getResult());
 						}
 						else
 						{
-							view.showLocationServicesErrors(result.getErrors());
+							verifyShowLocationPoints(LocationPoint.getAll(LocationPoint.class));
+							//view.showLocationServicesErrors(result.getErrors());
 						}
 					}
 
 
 				});
-			}
-			else
-			{
-				verifyShowLocationPoints(LocationPoint.getAll(LocationPoint.class));
-			}
+			
 			Looper.loop();
 			}
 		});

@@ -18,10 +18,41 @@ public class LocationPointsManager {
 	{
 		for(LocationPoint point : points)
 		{
-			point.setInsertDate(DateTime.now());
-			point.save();
+			if(!LocationPoint.existPoint(point))
+			{
+				point.setInsertDate(DateTime.now());
+				point.save();
+			}
 		}
 	}
+	
+	/**
+	 * Registra el conjunto de puntos de ubicación
+	 * @param points
+	 */
+	public static void removeLocations(final List<LocationPoint> points)
+	{
+		List<LocationPoint> allPoints = LocationPoint.getAll(LocationPoint.class);
+		for(LocationPoint point : allPoints)
+		{
+			if(notExists(point,points))
+			{
+				point.delete();
+			}
+		}
+	}
+	
+	private static boolean notExists(LocationPoint point,
+			List<LocationPoint> points) {
+		for(LocationPoint p : points)
+		{
+			if(p.getLatitude()==point.getLatitude() && p.getLongitude()==point.getLongitude())
+				return false;
+			
+		}
+		return true;
+	}
+
 	/**
 	 * Obtiene los puntos cercanos a la ubicación dada, y con la distancia definida
 	 * @param points
