@@ -46,7 +46,7 @@ public class LocationPointsManager {
 			List<LocationPoint> points) {
 		for(LocationPoint p : points)
 		{
-			if(p.getLatitude()==point.getLatitude() && p.getLongitude()==point.getLongitude())
+			if(p.compare(point))
 				return false;
 			
 		}

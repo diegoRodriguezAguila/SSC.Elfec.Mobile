@@ -101,9 +101,38 @@ public class LocationPoint extends Model {
 		return location.distanceTo(thisLocation);
 	}
 	
+	/**
+	 * Compara todos los atributos de locationpoint
+	 * @param location
+	 * @return si son iguales da true
+	 */
+	public boolean compare(LocationPoint location)
+	{
+		return InstitutionName.equals(location.InstitutionName) &&
+			   Address.equals(location.Address) &&
+			   Phone.equals(location.Phone) &&
+			   StartAttention.equals(location.StartAttention) &&
+			   EndAttention.equals(location.EndAttention) &&
+			   Latitude == location.Latitude &&
+			   Longitude == location.Longitude &&
+			   Type==location.Type;
+			   
+	}
+	
+	/**
+	 * Compara todos los puntos
+	 * @param point
+	 * @return
+	 */
 	public static boolean existPoint(LocationPoint point)
 	{
-		return new Select().from(LocationPoint.class).where("Latitude=? And Longitude=?",point.getLatitude(),point.getLongitude()).execute().size()>0;
+		return new Select().from(LocationPoint.class)
+				.where("InstitutionName=? and Address=? and Phone=? and "
+						+ "StartAttention=? and EndAttention=? and "
+						+ "Latitude=? And Longitude=? and Type=? ",
+						point.InstitutionName,point.Address, point.Phone, 
+						point.StartAttention, point.EndAttention, 
+						point.Latitude, point.Longitude, point.Type).execute().size()>0;
 	}
 	//#region Getters y Setters
 	public String getInstitutionName() {
