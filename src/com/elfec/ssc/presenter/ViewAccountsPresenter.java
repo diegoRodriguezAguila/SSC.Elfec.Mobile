@@ -100,7 +100,7 @@ public class ViewAccountsPresenter {
 				}
 				else
 				{
-					callGetAllAccountsWebService(client);
+					loadLocalAccounts(client);
 				}
 				Looper.loop();
 			}
@@ -147,18 +147,11 @@ public class ViewAccountsPresenter {
 							}
 							else
 							{
-								if(view.getPreferences().isFirstLoadAccounts() || isRefreshing)
-								{
-									view.hideWSWaiting();	
-									view.showViewAccountsErrors(result.getErrors());
+								view.hideWSWaiting();	
+								view.showViewAccountsErrors(result.getErrors());
+								if(view.getPreferences().isFirstLoadAccounts() && !isRefreshing)
 									view.showAccounts(null);
-								}
-								else
-								{
-									List<Account> activeAccounts = client.getActiveAccounts();
-									view.hideWSWaiting();	
-									view.showAccounts(activeAccounts);
-								}
+								else loadLocalAccounts(client);
 							}
 							isLoadingAccounts=false;
 							isRefreshing=false;
@@ -167,6 +160,17 @@ public class ViewAccountsPresenter {
 					}
 			});
 		}
+	}
+	
+	/**
+	 * Obtiene las cuentas locales del cliente
+	 * @param client
+	 */
+	public void loadLocalAccounts(Client client)
+	{
+		List<Account> activeAccounts = client.getActiveAccounts();
+		view.hideWSWaiting();	
+		view.showAccounts(activeAccounts);
 	}
 	
 }
