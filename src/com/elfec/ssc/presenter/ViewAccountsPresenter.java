@@ -16,7 +16,9 @@ import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.events.WSTokenReceivedCallback;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
+import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 
@@ -40,26 +42,29 @@ public class ViewAccountsPresenter {
 			public void run() 
 			{
 				Looper.prepare();
-				AccountWS accountWS = new AccountWS();
-				final Client client=Client.getActiveClient();
-				accountWS.removeAccount(client.getGmail(), nus, imei, new IWSFinishEvent<Boolean>() {					
+				view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {			
 					@Override
-					public void executeOnFinished(WSResponse<Boolean> result) {
-						if(result.getResult())
-						{
-							ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
-							view.refreshAccounts();
-							view.hideWSWaiting();
-						}
-						else
-						{
-							view.hideWSWaiting();
-							view.displayErrors(result.getErrors());
-						}
-						
-						
+					public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
+						final Client client=Client.getActiveClient();		
+						new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(), nus, imei, new IWSFinishEvent<Boolean>() {					
+							@Override
+							public void executeOnFinished(WSResponse<Boolean> result) {
+								if(result.getResult())
+								{
+									ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
+									view.refreshAccounts();
+									view.hideWSWaiting();
+								}
+								else
+								{
+									view.hideWSWaiting();
+									view.displayErrors(result.getErrors());
+								}
+							}
+						});	
 					}
-				});				
+				});
+				
 				Looper.loop();
 			}
 		});
@@ -127,37 +132,39 @@ public class ViewAccountsPresenter {
 		if(!isLoadingAccounts)
 		{
 			isLoadingAccounts=true;
-			AccountWS accountWS = new AccountWS();
-			accountWS.getAllAccounts(client.getGmail(), Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(), 
-				new IWSFinishEvent<List<Account>>() 
-			{
+			view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {			
 				@Override
-				public void executeOnFinished(final WSResponse<List<Account>> result) 
-				{						
-					new Thread(new Runnable() {
-						
-						@Override
-						public void run() {
-							if(result.getErrors().size()==0)
-							{
-								final List<Account> accounts=ClientManager.registerClientAccounts(result.getResult());
-								view.getPreferences().setLoadAccountsAlreadyUsed();
-								view.hideWSWaiting();	
-								view.showAccounts(accounts);
-							}
-							else
-							{
-								view.hideWSWaiting();	
-								view.showViewAccountsErrors(result.getErrors());
-								if(view.getPreferences().isFirstLoadAccounts() && !isRefreshing)
-									view.showAccounts(null);
-								else loadLocalAccounts(client);
-							}
-							isLoadingAccounts=false;
-							isRefreshing=false;
-						}
-					}).start();
-					}
+				public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {					
+					new AccountWS(wsTokenResult.getResult()).getAllAccounts(client.getGmail(), Build.BRAND , Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(), 
+							new IWSFinishEvent<List<Account>>(){
+							@Override
+							public void executeOnFinished(final WSResponse<List<Account>> result) 
+							{						
+								new Thread(new Runnable() {				
+									@Override
+									public void run() {
+										if(result.getErrors().size()==0)
+										{
+											final List<Account> accounts=ClientManager.registerClientAccounts(result.getResult());
+											view.getPreferences().setLoadAccountsAlreadyUsed();
+											view.hideWSWaiting();	
+											view.showAccounts(accounts);
+										}
+										else
+										{
+											view.hideWSWaiting();	
+											view.showViewAccountsErrors(result.getErrors());
+											if(view.getPreferences().isFirstLoadAccounts() && !isRefreshing)
+												view.showAccounts(null);
+											else loadLocalAccounts(client);
+										}
+										isLoadingAccounts=false;
+										isRefreshing=false;
+									}
+								}).start();
+								}
+						});
+				}
 			});
 		}
 	}

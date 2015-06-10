@@ -5,6 +5,7 @@ import java.util.List;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
 import com.elfec.ssc.model.webservices.converters.GetAllAccountsWSConverter;
@@ -18,6 +19,12 @@ import com.elfec.ssc.model.webservices.converters.RemoveAccountWSConverter;
  */
 public class AccountWS 
 {
+	private WSToken wsToken;
+	
+	public AccountWS(WSToken wsToken){
+		this.wsToken = wsToken;
+	}
+	
 	/**
 	 * Registra una cuenta por medio de servicios web
 	 * @param accountNumber
@@ -35,7 +42,7 @@ public class AccountWS
 	{
 		WebServiceConnector<Account> accountWSConnector = 
 				new WebServiceConnector<Account>("AccountWS.php?wsdl", "", 
-						"ssc_elfec", "RegisterAccount", new RegisterAccountWSConverter(), eventHandler);
+						"ssc_elfec", "RegisterAccount", wsToken, new RegisterAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("AccountNumber", accountNumber), new WSParam("NUS", nUS), new WSParam("GMail", gmail), 
 				new WSParam("PhoneNumber", phoneNumber), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
@@ -51,7 +58,7 @@ public class AccountWS
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 
 				new WebServiceConnector<List<Account>>("AccountWS.php?wsdl", "", 
-						"ssc_elfec", "GetAllAccounts", new GetAllAccountsWSConverter(), eventHandler);
+						"ssc_elfec", "GetAllAccounts", wsToken, new GetAllAccountsWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("GMail", gmail), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
 	}
@@ -67,7 +74,7 @@ public class AccountWS
 	{
 		WebServiceConnector<Boolean> accountWSConnector = 
 				new WebServiceConnector<Boolean>("AccountWS.php?wsdl", "", 
-						"ssc_elfec", "DeleteAccount", new RemoveAccountWSConverter(), eventHandler);
+						"ssc_elfec", "DeleteAccount", wsToken, new RemoveAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("IMEI", imei),new WSParam("NUS", nus),new WSParam("GMail", gmail));
 
 	}
@@ -83,7 +90,7 @@ public class AccountWS
 	{
 		WebServiceConnector<List<Usage>> accountWSConnector = 
 				new WebServiceConnector<List<Usage>>("AccountWS.php?wsdl", "", 
-						"ssc_elfec", "GetUsage", new GetUsageConverter(), eventHandler);
+						"ssc_elfec", "GetUsage", wsToken, new GetUsageConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("NUS", nus));
 
 	}

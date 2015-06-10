@@ -64,6 +64,7 @@
     <!-- Location Services -->
     <string name="location_services_title">Servicios de ubicación</string>
     <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>
+    <string name="no_internet_msg" >No se pudo contactar con el servidor, revise su conexión a internet!</string>
     <string name="errors_on_get_points_title">ERROR AL OBTENER PUNTOS DE UBICACIÓN</string>
     <!-- Location Services: Markers -->
     <string name="lbl_marker_address">Dirección:</string>

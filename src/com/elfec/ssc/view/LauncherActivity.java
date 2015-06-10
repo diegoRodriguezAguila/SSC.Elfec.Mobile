@@ -1,6 +1,6 @@
 package com.elfec.ssc.view;
 
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.security.PreferencesManager;
 
 import android.app.Activity;
 import android.content.Intent;

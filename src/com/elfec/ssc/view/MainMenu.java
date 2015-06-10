@@ -1,13 +1,22 @@
 package com.elfec.ssc.view;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,9 +25,9 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
+import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
@@ -39,6 +48,25 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);		
 		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
 		btnSwitchClient.setEnabled(false);
+		getSignature();
+	}
+	
+	private void getSignature()
+	{
+		try {
+	        PackageInfo info = getPackageManager().getPackageInfo(
+	                "com.elfec.ssc", 
+	                PackageManager.GET_SIGNATURES);
+	        for (Signature signature : info.signatures) {
+	            MessageDigest md = MessageDigest.getInstance("SHA");
+	            md.update(signature.toByteArray());
+	            Log.d("LA KEY SIGNATURE", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+	            }
+	    } catch (NameNotFoundException e) {
+
+	    } catch (NoSuchAlgorithmException e) {
+
+	    }
 	}
 	
 	@Override

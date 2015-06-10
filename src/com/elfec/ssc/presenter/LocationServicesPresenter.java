@@ -14,6 +14,8 @@ import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.events.WSTokenReceivedCallback;
+import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
 
@@ -123,27 +125,27 @@ public class LocationServicesPresenter {
 			@Override
 			public void run() {
 				Looper.prepare();
-				LocationPointWS pointWS=new LocationPointWS();
-				pointWS.getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
-					
+				view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {					
 					@Override
-					public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
-						if(result.getErrors().size()==0)
-						{
-							LocationPointsManager.registerLocations(result.getResult());
-							LocationPointsManager.removeLocations(result.getResult());
-							verifyShowLocationPoints(result.getResult());
-						}
-						else
-						{
-							verifyShowLocationPoints(LocationPoint.getAll(LocationPoint.class));
-							//view.showLocationServicesErrors(result.getErrors());
-						}
+					public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
+						new LocationPointWS(wsTokenResult.getResult())
+							.getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
+							@Override
+							public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
+								if(result.getErrors().size()==0)
+								{
+									LocationPointsManager.registerLocations(result.getResult());
+									LocationPointsManager.removeLocations(result.getResult());
+									verifyShowLocationPoints(result.getResult());
+								}
+								else {
+									verifyShowLocationPoints(LocationPoint.getAll(LocationPoint.class));
+									view.informNoInternetConnection();
+								}
+							}
+						});
 					}
-
-
 				});
-			
 			Looper.loop();
 			}
 		});

@@ -1,7 +1,11 @@
-package com.elfec.ssc.helpers;
+package com.elfec.ssc.security;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
+import com.elfec.ssc.model.security.WSToken;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +27,7 @@ public class PreferencesManager {
 	private final String SETUP_DISTANCE = "SetupDistance";
 	private final String GCM_TOKEN = "GCMToken";
 	private final String HAS_TO_UPDATE_GCM_TOKEN = "HasToUpdateGCMToken";
+	private final String WS_TOKEN = "WSToken";
 	
 	private SharedPreferences preferences;
 	
@@ -191,5 +196,29 @@ public class PreferencesManager {
 	{
 		preferences.edit().putBoolean(HAS_TO_UPDATE_GCM_TOKEN, hasToUpdateIt).commit();
 		return this;
+	}
+	
+	/**
+	 * Guarda el wsToken
+	 * @param wsToken
+	 */
+	public void setWSToken(WSToken wsToken)
+	{
+		preferences.edit().putString(WS_TOKEN, wsToken!=null?wsToken.toString():null).commit();
+	}
+	
+	/**
+	 * Obtiene el wsToken
+	 * @return wsToken
+	 */
+	public WSToken getWSToken()
+	{
+		try {
+			JSONObject json = new JSONObject(preferences.getString(WS_TOKEN, null));
+			return new WSToken(json.getString("imei"), json.getString("token"));
+		} 
+		catch (JSONException e) {}
+		catch (NullPointerException e) {}
+		return null;
 	}
 }

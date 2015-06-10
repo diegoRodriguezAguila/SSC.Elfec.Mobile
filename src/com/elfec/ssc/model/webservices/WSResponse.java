@@ -63,7 +63,7 @@ public class WSResponse<TResult> {
 	/**
 	 * Asigna el resultado a un servicio web
 	 * @param result
-	 * @return
+	 * @return this instance
 	 */
 	public WSResponse<TResult> setResult(TResult result)
 	{

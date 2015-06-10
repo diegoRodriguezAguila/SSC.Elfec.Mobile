@@ -6,6 +6,7 @@ import java.net.Proxy;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -16,6 +17,7 @@ import org.xmlpull.v1.XmlPullParserException;
 
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.exceptions.ServerSideException;
+import com.elfec.ssc.model.security.WSToken;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -33,12 +35,60 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	private String soapAction; //= "";  
 	private String namespace;// = "http://DefaultNamespace";
 	private String methodName;
+	private WSToken wsToken;
 	private IWSFinishEvent<TResult> onFinishedEvent;
 	private IWSResultConverter<TResult> converter;
 	private WSResponse<TResult> resultWS;
 	
 	/**
-	 * 
+	 * Construye un conector de webservice soap con los parámetros indicados y con
+	 * autenticación por wsToken
+	 * @param url
+	 * @param soapAction
+	 * @param namespace
+	 * @param methodName
+	 * @param wsToken
+	 * @param converter
+	 */
+	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, WSToken wsToken, IWSResultConverter<TResult> converter) 
+	{
+		super();
+		this.url = WS_SERVER+url;
+		this.soapAction = soapAction;
+		this.namespace = namespace;
+		this.methodName = methodName;
+		this.wsToken = wsToken;
+		this.converter = converter;
+		this.resultWS = new WSResponse<TResult>();
+	}
+	
+	/**
+	 * Construye un conector de webservice soap con los parámetros indicados y con
+	 * autenticación por wsToken
+	 * @param url
+	 * @param soapAction
+	 * @param namespace
+	 * @param methodName
+	 * @param wsToken
+	 * @param converter
+	 * @param onFinishedEvent
+	 */
+	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, WSToken wsToken
+			, IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
+	{
+		super();
+		this.url = WS_SERVER+url;
+		this.soapAction = soapAction;
+		this.namespace = namespace;
+		this.methodName = methodName;
+		this.wsToken = wsToken;
+		this.onFinishedEvent = onFinishedEvent;
+		this.converter = converter;
+		this.resultWS = new WSResponse<TResult>();
+	}
+	
+	/**
+	 * Construye un conector de webservice soap con los parámetros indicados sin autenticación
 	 * @param url
 	 * @param soapAction
 	 * @param namespace
@@ -57,7 +107,7 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	}
 	
 	/**
-	 * 
+	 * Construye un conector de webservice soap con los parámetros indicados sin autenticación
 	 * @param url
 	 * @param soapAction
 	 * @param namespace
@@ -65,8 +115,8 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	 * @param converter
 	 * @param onFinishedEvent
 	 */
-	public WebServiceConnector(String url, String soapAction, String namespace, String methodName 
-			, IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
+	public WebServiceConnector(String url, String soapAction, String namespace, String methodName,
+			IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
 	{
 		super();
 		this.url = WS_SERVER+url;
@@ -93,6 +143,8 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		{
 			List<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
 			headerPropertyArrayList.add(new HeaderProperty("Connection", "close"));
+			if(wsToken!=null)
+				headerPropertyArrayList.add(new HeaderProperty("x-ws-token", wsToken.toString()));
 			ht.call(soapAction, envelope, headerPropertyArrayList);
 			result = envelope.getResponse().toString();
 		} 
@@ -122,6 +174,11 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		{
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ServerSideException());
+		}
+		catch (Exception e) 
+		{
+			Log.d(methodName, e.toString());
+			resultWS.addError(new Exception("Ocurrió un error inesperado al conectarse al servicio, lamentamos las molestias, intenteló de nuevo mas tarde."));
 		}
 		return converter.convert(resultWS.convertErrors(result));
 	}

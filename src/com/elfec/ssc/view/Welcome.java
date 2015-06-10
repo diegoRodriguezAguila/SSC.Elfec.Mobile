@@ -3,9 +3,9 @@ package com.elfec.ssc.view;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.presenter.WelcomePresenter;
 import com.elfec.ssc.presenter.views.IWelcome;
+import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 

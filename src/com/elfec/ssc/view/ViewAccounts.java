@@ -22,12 +22,14 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ViewPresenterManager;
+import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
+import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
 import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
@@ -191,25 +193,17 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 
 	@Override
 	public void displayErrors(final List<Exception> errors) {
-		runOnUiThread(new Runnable() {
+		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				StringBuilder msg = new StringBuilder();
-				int size = errors.size();
-				if(size==1)
-					msg.append(errors.get(0).getMessage()).toString();
-				else
+				if(errors.size()>0)
 				{
-					for (int i = 0; i < size; i++) {
-						msg.append("● ").append(errors.get(i).getMessage());
-						msg.append((i<size-1?"\n":""));
-					}
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(ViewAccounts.this);
+					builder.setTitle(R.string.errors_on_delete_account_title)
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
 				}
-				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(ViewAccounts.this);
-				builder.setTitle(R.string.errors_on_delete_account_title)
-				.setMessage(msg)
-				.setPositiveButton(R.string.btn_ok, null)
-				.show();
 			}
 		});
 	}
@@ -287,6 +281,10 @@ public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
 	@Override
 	public boolean isRefreshed() {
 		return isRefresh;
+	}
+	@Override
+	public WSTokenRequester getWSTokenRequester() {
+		return new WSTokenRequester(this);
 	}
 	
 }

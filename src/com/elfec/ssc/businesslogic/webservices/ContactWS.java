@@ -2,6 +2,7 @@ package com.elfec.ssc.businesslogic.webservices;
 
 import com.elfec.ssc.model.Contact;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
 import com.elfec.ssc.model.webservices.converters.GetContactUpdateWSConverter;
 
@@ -12,6 +13,11 @@ import com.elfec.ssc.model.webservices.converters.GetContactUpdateWSConverter;
  */
 public class ContactWS {
 
+	private WSToken wsToken;
+	
+	public ContactWS(WSToken wsToken){
+		this.wsToken = wsToken;
+	}
 	/**
 	 * Obtiene una actualización de la información de contacto
 	 * @param eventHandler
@@ -20,7 +26,7 @@ public class ContactWS {
 	{
 		WebServiceConnector<Contact> accountWSConnector = 
 				new WebServiceConnector<Contact>("ContactWS.php?wsdl", "", 
-						"ssc_elfec", "GetContactUpdate", new GetContactUpdateWSConverter(), eventHandler);
+						"ssc_elfec", "GetContactUpdate", wsToken, new GetContactUpdateWSConverter(), eventHandler);
 		accountWSConnector.execute();
 	}
 }

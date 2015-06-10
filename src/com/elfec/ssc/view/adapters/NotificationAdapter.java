@@ -6,6 +6,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +112,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		txtNotifMessage.getLayoutParams().height = endSize;
 		Notification notification = wrappedNotif.getWrappedObject();
 		((ImageView) convertView.findViewById(R.id.notification_image)).setImageDrawable(
-				getContext().getResources().getDrawable(wrappedNotif.getImageResourceId()));
+				ResourcesCompat.getDrawable(getContext().getResources(), wrappedNotif.getImageResourceId(), getContext().getTheme()));
 		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(Html.fromHtml(notification.getTitle()));
 		txtNotifMessage.setText(Html.fromHtml(notification.getContent()));
 		((TextView) convertView.findViewById(R.id.list_item_notification_date)).setText(notification.getInsertDate().toString("dd MMM yyyy"));

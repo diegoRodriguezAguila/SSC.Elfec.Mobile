@@ -1,6 +1,6 @@
 package com.elfec.ssc.presenter.views;
 
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.security.PreferencesManager;
 
 public interface IWelcome {
 	/**

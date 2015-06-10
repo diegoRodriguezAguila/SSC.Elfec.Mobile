@@ -3,8 +3,8 @@ package com.elfec.ssc.model.gcmservices;
 import java.io.IOException;
 
 import com.activeandroid.util.Log;
-import com.elfec.ssc.helpers.PreferencesManager;
 import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
+import com.elfec.ssc.security.PreferencesManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import android.content.Context;

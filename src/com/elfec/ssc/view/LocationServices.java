@@ -7,7 +7,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
@@ -16,11 +16,14 @@ import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
+import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
 import com.elfec.ssc.view.controls.GMapFragment;
 import com.elfec.ssc.view.controls.SetupDistanceDialogService;
 import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 import com.elfec.ssc.view.controls.events.OnMapReadyCallback;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
 import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
@@ -32,7 +35,6 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
-import de.keyboardsurfer.android.widget.crouton.Style;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
@@ -53,7 +55,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	private final double LAT_ELFEC = -17.3934795;
 	private final double LNG_ELFEC = -66.1651093;
 	private final float DEFAULT_ZOOM = 13.5f;
-	private Style croutonStyle;
+	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	private AlertDialog waitingMapDialog;
 	
 	private LocationServicesPresenter presenter;
@@ -77,7 +79,7 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
 		setSelectedOptions();
-		croutonStyle =  new Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
+		croutonStyle =  new de.keyboardsurfer.android.widget.crouton.Style.Builder().setFontName("fonts/segoe_ui_semilight.ttf").setTextSize(16)
 				.setBackgroundColorValue(getResources().getColor(R.color.ssc_elfec_color_highlight)).build();
 	}
 	protected void onResume()
@@ -119,6 +121,11 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 		    finish();//go back to the previous Activity
 		    overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);  
 		}
+	}
+	
+	@Override
+	public WSTokenRequester getWSTokenRequester() {
+		return new WSTokenRequester(this);
 	}
 	
 	/**
@@ -374,5 +381,15 @@ public class LocationServices extends ActionBarActivity implements ILocationServ
 	public void onMapReady(GoogleMap obtainedMap) {
 		map = obtainedMap;
 		initializeMapOptions();
+	}
+	@Override
+	public void informNoInternetConnection() {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				SuperToast.create(LocationServices.this, R.string.no_internet_msg, SuperToast.Duration.SHORT, 
+					    Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
+			}
+		});
 	}
 }

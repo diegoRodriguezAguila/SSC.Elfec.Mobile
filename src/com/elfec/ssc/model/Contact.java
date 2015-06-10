@@ -14,10 +14,10 @@ import com.activeandroid.query.Select;
 @Table(name = "Contacts")
 public class Contact extends Model{
 	
-	private static final String PHONE="176";
+	private static final String PHONE="176 / 4259400";
 	private static final String ADDRESS="Av. Heroinas entre c. Falsuri y c. Costanera #686";
 	private static final String EMAIL="elfec@elfec.com";
-	private static final String WEB_PAGE="www.elfec.bo";
+	private static final String WEB_PAGE="www.elfec.com";
 	private static final String FACEBOOK="touch.facebook.com/ende.elfec";
 	/**
 	 * Sirve para invocar la página de facebook con la app respectiva,

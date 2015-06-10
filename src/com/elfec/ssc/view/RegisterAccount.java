@@ -21,10 +21,12 @@ import android.widget.TextView;
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
+import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
+import com.elfec.ssc.security.PreferencesManager;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
 
@@ -263,25 +265,17 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	
 	@Override
 	public void showRegistrationErrors(final List<Exception> errors) {
-		runOnUiThread(new Runnable() {
+		runOnUiThread(new Runnable() {			
 			@Override
 			public void run() {
-				StringBuilder msg = new StringBuilder();
-				int size = errors.size();
-				if(size==1)
-					msg.append(errors.get(0).getMessage()).toString();
-				else
+				if(errors.size()>0)
 				{
-					for (int i = 0; i < size; i++) {
-						msg.append("● ").append(errors.get(i).getMessage());
-						msg.append((i<size-1?"\n":""));
-					}
+					AlertDialogPro.Builder builder = new AlertDialogPro.Builder(RegisterAccount.this);
+					builder.setTitle(R.string.errors_on_register_title)
+					.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+					.setPositiveButton(R.string.btn_ok, null)
+					.show();
 				}
-				AlertDialogPro.Builder builder = new AlertDialogPro.Builder(RegisterAccount.this);
-				builder.setTitle(R.string.errors_on_register_title)
-				.setMessage(msg)
-				.setPositiveButton(R.string.btn_ok, null)
-				.show();
 			}
 		});
 	}
@@ -294,6 +288,11 @@ public class RegisterAccount extends ActionBarActivity implements IRegisterAccou
 	@Override
 	public GCMTokenRequester getGCMTokenRequester() {
 		return new GCMTokenRequester(this);
+	}
+
+	@Override
+	public WSTokenRequester getWSTokenRequester() {
+		return new WSTokenRequester(this);
 	}
 
 	

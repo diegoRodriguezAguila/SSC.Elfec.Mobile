@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
 import com.elfec.ssc.model.Debt;
@@ -153,6 +154,11 @@ public class ViewAccountDetails extends ActionBarActivity implements IViewAccoun
 				LVAccountDebts.setAdapter(new DebtAdapter(ViewAccountDetails.this, R.layout.debt_list_item, debts));
 			}
 		}); 
+	}
+	
+	@Override
+	public WSTokenRequester getWSTokenRequester() {
+		return new WSTokenRequester(this);
 	}
 	
 	//#endregion

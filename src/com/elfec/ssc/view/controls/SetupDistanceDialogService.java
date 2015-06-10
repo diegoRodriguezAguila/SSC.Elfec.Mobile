@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 
 /**

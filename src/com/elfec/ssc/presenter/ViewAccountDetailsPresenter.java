@@ -9,6 +9,8 @@ import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.events.WSTokenReceivedCallback;
+import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
 
@@ -27,20 +29,26 @@ public class ViewAccountDetailsPresenter {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Looper.prepare();
+				Looper.prepare();				
 				view.showUsage(accountToShow.getUsages());
-				new AccountWS()
-				.getUsage(accountToShow.getNUS(), new IWSFinishEvent<List<Usage>>() {
-			
+				view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {					
 					@Override
-					public void executeOnFinished(final WSResponse<List<Usage>> result) {									
-						if(result.getErrors().size()==0)
-						{
-							accountToShow.removeUsages();
-							ElfecAccountsManager.registerAccountUsages(accountToShow, result.getResult());
-							view.showUsage(result.getResult());
-						}
-					}});
+					public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
+						if(wsTokenResult.getResult()!=null)
+						new AccountWS(wsTokenResult.getResult())
+						.getUsage(accountToShow.getNUS(), new IWSFinishEvent<List<Usage>>() {
+					
+							@Override
+							public void executeOnFinished(final WSResponse<List<Usage>> result) {									
+								if(result.getErrors().size()==0)
+								{
+									accountToShow.removeUsages();
+									ElfecAccountsManager.registerAccountUsages(accountToShow, result.getResult());
+									view.showUsage(result.getResult());
+								}
+							}});
+					}
+				});
 				Looper.loop();
 			}
 		}).start();

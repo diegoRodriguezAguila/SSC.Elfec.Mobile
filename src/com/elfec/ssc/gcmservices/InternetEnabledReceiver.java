@@ -1,6 +1,6 @@
 package com.elfec.ssc.gcmservices;
 
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.security.PreferencesManager;
 
 import android.content.ComponentName;
 import android.content.Context;

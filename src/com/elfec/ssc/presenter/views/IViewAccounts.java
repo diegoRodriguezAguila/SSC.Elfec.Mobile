@@ -2,9 +2,10 @@ package com.elfec.ssc.presenter.views;
 
 import java.util.List;
 
-import com.elfec.ssc.helpers.PreferencesManager;
+import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
+import com.elfec.ssc.security.PreferencesManager;
 
 public interface IViewAccounts {
 	/**
@@ -56,4 +57,9 @@ public interface IViewAccounts {
 	 * @return
 	 */
 	public GCMTokenRequester getGCMTokenRequester();
+	/**
+	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
+	 * @return
+	 */
+	public WSTokenRequester getWSTokenRequester();
 }
