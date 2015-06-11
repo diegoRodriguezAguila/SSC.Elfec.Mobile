@@ -16,6 +16,7 @@ import org.ksoap2.transport.HttpTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
 
 import com.elfec.ssc.model.events.IWSFinishEvent;
+import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.exceptions.ServerSideException;
 import com.elfec.ssc.model.security.WSToken;
 
@@ -150,9 +151,10 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		} 
 		catch (HttpResponseException e) 
 		{
-			Log.d(methodName, e.toString());
-		
-			resultWS.addError(e);
+			Log.d(methodName, e.toString());	
+			if(e.getStatusCode()==403) //aplicación ya no es válida
+				resultWS.addError(new OutdatedAppException());
+			else resultWS.addError(e);
 		} 
 		catch (ConnectException e)
 		{

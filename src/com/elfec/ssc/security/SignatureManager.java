@@ -38,7 +38,7 @@ class SignatureManager {
 			for (Signature signature : info.signatures) {
 				MessageDigest md = MessageDigest.getInstance("SHA");
 				md.update(signature.toByteArray());
-				return Base64.encodeToString(md.digest(), Base64.DEFAULT);
+				return Base64.encodeToString(md.digest(), Base64.DEFAULT).replace("\n", "");
 			}
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
