@@ -8,7 +8,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -29,7 +29,7 @@ import com.elfec.ssc.view.animations.HeightAnimation;
 import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 
-public class ViewNotifications extends ActionBarActivity implements IViewNotifications {
+public class ViewNotifications extends AppCompatActivity implements IViewNotifications {
 
 	public enum ExpandStatus {
 		COLLAPSED, HALF, FULL

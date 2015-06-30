@@ -10,7 +10,7 @@ import java.util.List;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.View;
@@ -30,7 +30,7 @@ import com.elfec.ssc.view.adapters.DebtAdapter;
 import com.elfec.ssc.view.adapters.ViewUsageAdapter;
 import com.elfec.ssc.view.controls.LayoutListView;
 
-public class ViewAccountDetails extends ActionBarActivity implements IViewAccountDetails{
+public class ViewAccountDetails extends AppCompatActivity implements IViewAccountDetails{
 
 	public static final String SELECTED_ACCOUNT_ID = "SelectedAccountId";
 	

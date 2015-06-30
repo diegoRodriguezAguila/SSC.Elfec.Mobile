@@ -14,7 +14,7 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
@@ -31,56 +31,54 @@ import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
-public class MainMenu extends ActionBarActivity implements IMainMenu {
+public class MainMenu extends AppCompatActivity implements IMainMenu {
 
 	private MainMenuPresenter presenter;
 	private ImageButton btnSwitchClient;
 	private TextView txtActiveClient;
 	private TextView txtActiveClientInfo;
 	private String activeClientGmail;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 		presenter = new MainMenuPresenter(this);
 		btnSwitchClient = (ImageButton) findViewById(R.id.btn_switch_client);
-		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);		
+		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);
 		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
 		btnSwitchClient.setEnabled(false);
-		getSignature();
+		// getSignature();
 	}
-	
-	private void getSignature()
-	{
+
+	private void getSignature() {
 		try {
-	        PackageInfo info = getPackageManager().getPackageInfo(
-	                "com.elfec.ssc", 
-	                PackageManager.GET_SIGNATURES);
-	        for (Signature signature : info.signatures) {
-	            MessageDigest md = MessageDigest.getInstance("SHA");
-	            md.update(signature.toByteArray());
-	            Log.d("LA KEY SIGNATURE", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-	            }
-	    } catch (NameNotFoundException e) {
+			PackageInfo info = getPackageManager().getPackageInfo(
+					"com.elfec.ssc", PackageManager.GET_SIGNATURES);
+			for (Signature signature : info.signatures) {
+				MessageDigest md = MessageDigest.getInstance("SHA");
+				md.update(signature.toByteArray());
+				Log.d("LA KEY SIGNATURE",
+						Base64.encodeToString(md.digest(), Base64.DEFAULT));
+			}
+		} catch (NameNotFoundException e) {
 
-	    } catch (NoSuchAlgorithmException e) {
+		} catch (NoSuchAlgorithmException e) {
 
-	    }
+		}
 	}
-	
+
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		super.onResume();
-		if(activeClientGmail==null)
+		if (activeClientGmail == null)
 			presenter.loadCurrentClient();
 	}
-	
+
 	@Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
+	protected void attachBaseContext(Context newBase) {
+		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -100,67 +98,64 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	private long lastClickTime = 0;
-	
-	public void btnAccountsClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 600){
+
+	public void btnAccountsClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > 600) {
 			presenter.verifyAccountsRequirements();
-        }
-        lastClickTime = SystemClock.elapsedRealtime();
+		}
+		lastClickTime = SystemClock.elapsedRealtime();
 
 	}
-	
-	public void btnLocationServicesClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
+
+	public void btnLocationServicesClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
 			Intent i = new Intent(MainMenu.this, LocationServices.class);
 			startActivity(i);
-			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+			overridePendingTransition(R.anim.slide_left_in,
+					R.anim.slide_left_out);
 		}
-        lastClickTime = SystemClock.elapsedRealtime();
-	}
-	
-	public void btnNotificationsClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			Intent i = new Intent(MainMenu.this, ViewNotifications.class);
-			startActivity(i);
-			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-		}
-        lastClickTime = SystemClock.elapsedRealtime();
-	}
-	
-	public void btnContactsClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			Intent i = new Intent(MainMenu.this, Contacts.class);
-			startActivity(i);
-			overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-		}
-        lastClickTime = SystemClock.elapsedRealtime();
-	}
-	
-	public void btnSwitchClientClick(View view)
-	{
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000){
-			(new AlertDialogPro.Builder(this)).setTitle(R.string.switch_client_title)
-			.setMessage(R.string.switch_client_msg)
-	        .setPositiveButton(R.string.btn_ok, new OnClickListener() {		
-				@Override
-				public void onClick(DialogInterface dialog, int which) {	
-					showAccountPickerDialog(activeClientGmail);
-				}		
-			})
-			.setNegativeButton(R.string.btn_cancel, null)
-			.show();
-		}
-        lastClickTime = SystemClock.elapsedRealtime();
+		lastClickTime = SystemClock.elapsedRealtime();
 	}
 
-	//#region Interface Methods
-	
+	public void btnNotificationsClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+			Intent i = new Intent(MainMenu.this, ViewNotifications.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in,
+					R.anim.slide_left_out);
+		}
+		lastClickTime = SystemClock.elapsedRealtime();
+	}
+
+	public void btnContactsClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+			Intent i = new Intent(MainMenu.this, Contacts.class);
+			startActivity(i);
+			overridePendingTransition(R.anim.slide_left_in,
+					R.anim.slide_left_out);
+		}
+		lastClickTime = SystemClock.elapsedRealtime();
+	}
+
+	public void btnSwitchClientClick(View view) {
+		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+			(new AlertDialogPro.Builder(this))
+					.setTitle(R.string.switch_client_title)
+					.setMessage(R.string.switch_client_msg)
+					.setPositiveButton(R.string.btn_ok, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							showAccountPickerDialog(activeClientGmail);
+						}
+					}).setNegativeButton(R.string.btn_cancel, null).show();
+		}
+		lastClickTime = SystemClock.elapsedRealtime();
+	}
+
+	// #region Interface Methods
+
 	@Override
 	public void goToViewAccounts() {
 		Intent i = new Intent(MainMenu.this, ViewAccounts.class);
@@ -175,32 +170,31 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 
 	@Override
 	public void warnUserHasNoAccounts() {
-		(new AlertDialogPro.Builder(this)).setTitle(R.string.no_gmail_account_title)
-		.setMessage(R.string.no_gmail_account_message)
-        .setPositiveButton(R.string.btn_ok, new OnClickListener() {		
-			@Override
-			public void onClick(DialogInterface dialog, int which) {	
-				showAccountPickerDialog();
-			}		
-		})
-		.setNegativeButton(R.string.btn_cancel, null)
-		.show();
+		(new AlertDialogPro.Builder(this))
+				.setTitle(R.string.no_gmail_account_title)
+				.setMessage(R.string.no_gmail_account_message)
+				.setPositiveButton(R.string.btn_ok, new OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						showAccountPickerDialog();
+					}
+				}).setNegativeButton(R.string.btn_cancel, null).show();
 	}
-	
-	public void showAccountPickerDialog(String activeClientGmail)
-	{
-		AccountPickerDialogService.instanceService(this, new OnAccountPicked() {				
+
+	public void showAccountPickerDialog(String activeClientGmail) {
+		AccountPickerDialogService.instanceService(this, new OnAccountPicked() {
 			@Override
 			public void onAccountPicked(String gmail) {
 				presenter.handlePickedGmailAccount(gmail);
 			}
+
 			@Override
-			public void onPickedCanceled() {}		
-		},activeClientGmail).show();
+			public void onPickedCanceled() {
+			}
+		}, activeClientGmail).show();
 	}
-	
-	public void showAccountPickerDialog()
-	{
+
+	public void showAccountPickerDialog() {
 		showAccountPickerDialog(null);
 	}
 
@@ -210,17 +204,16 @@ public class MainMenu extends ActionBarActivity implements IMainMenu {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(activeClientGmail!=null)
-				{
+				if (activeClientGmail != null) {
 					txtActiveClientInfo.setText(R.string.lbl_current_client);
 					txtActiveClient.setVisibility(View.VISIBLE);
 					txtActiveClient.setText(activeClientGmail);
 					btnSwitchClient.setEnabled(true);
-				}
-				else txtActiveClientInfo.setText(R.string.lbl_no_active_client);
+				} else
+					txtActiveClientInfo.setText(R.string.lbl_no_active_client);
 			}
-		} );
+		});
 	}
-	
-	//#endregion
+
+	// #endregion
 }

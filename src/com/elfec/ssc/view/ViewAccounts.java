@@ -10,7 +10,7 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.view.Menu;
@@ -36,7 +36,7 @@ import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
 
-public class ViewAccounts extends ActionBarActivity implements IViewAccounts {
+public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
 	private ViewAccountsPresenter presenter;
 	

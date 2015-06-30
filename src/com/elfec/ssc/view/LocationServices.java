@@ -36,7 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -50,7 +50,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
-public class LocationServices extends ActionBarActivity implements ILocationServices, OnMapReadyCallback {
+public class LocationServices extends AppCompatActivity implements ILocationServices, OnMapReadyCallback {
 
 	private final double LAT_ELFEC = -17.3934795;
 	private final double LNG_ELFEC = -66.1651093;

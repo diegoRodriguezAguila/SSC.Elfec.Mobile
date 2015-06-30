@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
@@ -14,7 +14,7 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.presenter.ContactPresenter;
 import com.elfec.ssc.presenter.views.IContact;
 
-public class Contacts extends ActionBarActivity implements IContact {
+public class Contacts extends AppCompatActivity implements IContact {
 
 	ContactPresenter presenter;
 	

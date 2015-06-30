@@ -9,7 +9,7 @@ import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,7 +19,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
-public class Welcome extends ActionBarActivity implements IWelcome {
+public class Welcome extends AppCompatActivity implements IWelcome {
 
 	private WelcomePresenter presenter;
 	@Override

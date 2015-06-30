@@ -7,7 +7,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -32,7 +32,7 @@ import com.github.johnpersano.supertoasts.util.Style;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
-public class RegisterAccount extends ActionBarActivity implements IRegisterAccount {
+public class RegisterAccount extends AppCompatActivity implements IRegisterAccount {
 
 	private Toolbar toolbar;
 	
