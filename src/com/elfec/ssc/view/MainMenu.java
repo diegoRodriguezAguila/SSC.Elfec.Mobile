@@ -25,6 +25,7 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
+import com.elfec.ssc.businesslogic.webservices.SSLConection;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
 import com.elfec.ssc.security.PreferencesManager;
@@ -48,7 +49,8 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);
 		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
 		btnSwitchClient.setEnabled(false);
-		// getSignature();
+		getSignature();
+		SSLConection.allowSelfSignedElfecSSL(this);
 	}
 
 	private void getSignature() {

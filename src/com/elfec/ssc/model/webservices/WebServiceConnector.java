@@ -2,8 +2,10 @@ package com.elfec.ssc.model.webservices;
 
 import java.io.IOException;
 import java.net.ConnectException;
+import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.SocketTimeoutException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,37 +15,40 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
+import org.ksoap2.transport.HttpsTransportSE;
 import org.xmlpull.v1.XmlPullParserException;
+
+import android.os.AsyncTask;
+import android.util.Log;
 
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.exceptions.ServerSideException;
 import com.elfec.ssc.model.security.WSToken;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
 /**
  * Clase general para conexión con servicios web
+ * 
  * @author Diego
  *
  * @param <TResult>
  */
-public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TResult>
-{
-	private final String WS_SERVER="http://192.168.50.56/SSC.Elfec/web_services/";
+public class WebServiceConnector<TResult> extends
+		AsyncTask<WSParam, TResult, TResult> {
+	private final String WS_SERVER = "https://ssc.elfec.bo:4343/";
 	private String url;// = "http://192.168.30.44:8080/ws_lecturas.cfc?wsdl";
-	private String soapAction; //= "";  
+	private String soapAction; // = "";
 	private String namespace;// = "http://DefaultNamespace";
 	private String methodName;
 	private WSToken wsToken;
 	private IWSFinishEvent<TResult> onFinishedEvent;
 	private IWSResultConverter<TResult> converter;
 	private WSResponse<TResult> resultWS;
-	
+
 	/**
-	 * Construye un conector de webservice soap con los parámetros indicados y con
-	 * autenticación por wsToken
+	 * Construye un conector de webservice soap con los parámetros indicados y
+	 * con autenticación por wsToken
+	 * 
 	 * @param url
 	 * @param soapAction
 	 * @param namespace
@@ -51,10 +56,11 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	 * @param wsToken
 	 * @param converter
 	 */
-	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, WSToken wsToken, IWSResultConverter<TResult> converter) 
-	{
+	public WebServiceConnector(String url, String soapAction, String namespace,
+			String methodName, WSToken wsToken,
+			IWSResultConverter<TResult> converter) {
 		super();
-		this.url = WS_SERVER+url;
+		this.url = WS_SERVER + url;
 		this.soapAction = soapAction;
 		this.namespace = namespace;
 		this.methodName = methodName;
@@ -62,10 +68,11 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 		this.converter = converter;
 		this.resultWS = new WSResponse<TResult>();
 	}
-	
+
 	/**
-	 * Construye un conector de webservice soap con los parámetros indicados y con
-	 * autenticación por wsToken
+	 * Construye un conector de webservice soap con los parámetros indicados y
+	 * con autenticación por wsToken
+	 * 
 	 * @param url
 	 * @param soapAction
 	 * @param namespace
@@ -74,141 +81,172 @@ public class WebServiceConnector<TResult> extends AsyncTask<WSParam, TResult, TR
 	 * @param converter
 	 * @param onFinishedEvent
 	 */
-	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, WSToken wsToken
-			, IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
-	{
+	public WebServiceConnector(String url, String soapAction, String namespace,
+			String methodName, WSToken wsToken,
+			IWSResultConverter<TResult> converter,
+			IWSFinishEvent<TResult> onFinishedEvent) {
 		super();
-		this.url = WS_SERVER+url;
+		this.url = WS_SERVER + url;
 		this.soapAction = soapAction;
 		this.namespace = namespace;
 		this.methodName = methodName;
 		this.wsToken = wsToken;
-		this.onFinishedEvent = onFinishedEvent;
-		this.converter = converter;
-		this.resultWS = new WSResponse<TResult>();
-	}
-	
-	/**
-	 * Construye un conector de webservice soap con los parámetros indicados sin autenticación
-	 * @param url
-	 * @param soapAction
-	 * @param namespace
-	 * @param methodName
-	 * @param converter
-	 */
-	public WebServiceConnector(String url, String soapAction, String namespace, String methodName, IWSResultConverter<TResult> converter) 
-	{
-		super();
-		this.url = WS_SERVER+url;
-		this.soapAction = soapAction;
-		this.namespace = namespace;
-		this.methodName = methodName;
-		this.converter = converter;
-		this.resultWS = new WSResponse<TResult>();
-	}
-	
-	/**
-	 * Construye un conector de webservice soap con los parámetros indicados sin autenticación
-	 * @param url
-	 * @param soapAction
-	 * @param namespace
-	 * @param methodName
-	 * @param converter
-	 * @param onFinishedEvent
-	 */
-	public WebServiceConnector(String url, String soapAction, String namespace, String methodName,
-			IWSResultConverter<TResult> converter,IWSFinishEvent<TResult> onFinishedEvent) 
-	{
-		super();
-		this.url = WS_SERVER+url;
-		this.soapAction = soapAction;
-		this.namespace = namespace;
-		this.methodName = methodName;
 		this.onFinishedEvent = onFinishedEvent;
 		this.converter = converter;
 		this.resultWS = new WSResponse<TResult>();
 	}
 
+	/**
+	 * Construye un conector de webservice soap con los parámetros indicados sin
+	 * autenticación
+	 * 
+	 * @param url
+	 * @param soapAction
+	 * @param namespace
+	 * @param methodName
+	 * @param converter
+	 */
+	public WebServiceConnector(String url, String soapAction, String namespace,
+			String methodName, IWSResultConverter<TResult> converter) {
+		super();
+		this.url = WS_SERVER + url;
+		this.soapAction = soapAction;
+		this.namespace = namespace;
+		this.methodName = methodName;
+		this.converter = converter;
+		this.resultWS = new WSResponse<TResult>();
+	}
+
+	/**
+	 * Construye un conector de webservice soap con los parámetros indicados sin
+	 * autenticación
+	 * 
+	 * @param url
+	 * @param soapAction
+	 * @param namespace
+	 * @param methodName
+	 * @param converter
+	 * @param onFinishedEvent
+	 */
+	public WebServiceConnector(String url, String soapAction, String namespace,
+			String methodName, IWSResultConverter<TResult> converter,
+			IWSFinishEvent<TResult> onFinishedEvent) {
+		super();
+		this.url = WS_SERVER + url;
+		this.soapAction = soapAction;
+		this.namespace = namespace;
+		this.methodName = methodName;
+		this.onFinishedEvent = onFinishedEvent;
+		this.converter = converter;
+		this.resultWS = new WSResponse<TResult>();
+	}
 
 	@Override
-	protected  TResult doInBackground(WSParam... params) {
+	protected TResult doInBackground(WSParam... params) {
 		SoapObject request = new SoapObject(namespace, methodName);
-		String result="";
-		for (int i = 0; i < params.length; i++) 
-		{
+		String result = "";
+		for (int i = 0; i < params.length; i++) {
 			request.addProperty(params[i].getKey(), params[i].getValue());
 		}
 		SoapSerializationEnvelope envelope = getSoapSerializationEnvelope(request);
-		HttpTransportSE ht = getHttpTransportSE();
-		try 
-		{
+		try {
+			HttpTransportSE ht = getProperProtocolTransportSE();
 			List<HeaderProperty> headerPropertyArrayList = new ArrayList<HeaderProperty>();
-			headerPropertyArrayList.add(new HeaderProperty("Connection", "close"));
-			if(wsToken!=null)
-				headerPropertyArrayList.add(new HeaderProperty("x-ws-token", wsToken.toString()));
+			headerPropertyArrayList.add(new HeaderProperty("Connection",
+					"close"));
+			if (wsToken != null)
+				headerPropertyArrayList.add(new HeaderProperty("x-ws-token",
+						wsToken.toString()));
 			ht.call(soapAction, envelope, headerPropertyArrayList);
 			result = envelope.getResponse().toString();
-		} 
-		catch (HttpResponseException e) 
-		{
-			Log.d(methodName, e.toString());	
-			if(e.getStatusCode()==403) //aplicación ya no es válida
+		} catch (HttpResponseException e) {
+			Log.d(methodName, "Error in url: " + url + " " + e.getMessage());
+			if (e.getStatusCode() == 403) // aplicación ya no es válida
 				resultWS.addError(new OutdatedAppException());
-			else resultWS.addError(e);
-		} 
-		catch (ConnectException e)
-		{
+			else
+				resultWS.addError(e);
+		} catch (ConnectException e) {
 			Log.d(methodName, e.toString());
-			resultWS.addError(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
-			
-		}
-		catch (SocketTimeoutException e)
-		{
+			resultWS.addError(new ConnectException(
+					"No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
+
+		} catch (SocketTimeoutException e) {
 			Log.d(methodName, e.toString());
-			resultWS.addError(new SocketTimeoutException("No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexión a internet"));
-		}
-		catch (IOException e) 
-		{
+			resultWS.addError(new SocketTimeoutException(
+					"No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexión a internet"));
+		} catch (IOException e) {
 			Log.d(methodName, e.toString());
-			resultWS.addError(new ConnectException("Ocurrio un problema al conectarse con el servidor, porfavor revise su conexión a internet"));
-		} 
-		catch (XmlPullParserException e) 
-		{
+			resultWS.addError(new ConnectException(
+					"Ocurrio un problema al conectarse con el servidor, porfavor revise su conexión a internet"));
+		} catch (XmlPullParserException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ServerSideException());
-		}
-		catch (Exception e) 
-		{
+		} catch (Exception e) {
 			Log.d(methodName, e.toString());
-			resultWS.addError(new Exception("Ocurrió un error inesperado al conectarse al servicio, lamentamos las molestias, intenteló de nuevo mas tarde."));
+			resultWS.addError(new Exception(
+					"Ocurrió un error inesperado al conectarse al servicio, lamentamos las molestias, intenteló de nuevo mas tarde."));
 		}
 		return converter.convert(resultWS.convertErrors(result));
 	}
-	
+
 	@Override
-	protected void onPostExecute(TResult result)
-	{
-		if(onFinishedEvent!=null)
-		{
+	protected void onPostExecute(TResult result) {
+		if (onFinishedEvent != null) {
 			onFinishedEvent.executeOnFinished(resultWS.setResult(result));
 		}
 	}
-	
-	private SoapSerializationEnvelope getSoapSerializationEnvelope(SoapObject request) {
-	    SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-	    envelope.dotNet = false;
-	    envelope.implicitTypes = true;
-	    envelope.setAddAdornments(false);
-	    envelope.setOutputSoapObject(request); 
-	    MarshalDouble md = new MarshalDouble();
-	    md.register(envelope);
-	    return envelope;
+
+	private SoapSerializationEnvelope getSoapSerializationEnvelope(
+			SoapObject request) {
+		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(
+				SoapEnvelope.VER11);
+		envelope.dotNet = false;
+		envelope.implicitTypes = true;
+		envelope.setAddAdornments(false);
+		envelope.setOutputSoapObject(request);
+		MarshalDouble md = new MarshalDouble();
+		md.register(envelope);
+		return envelope;
 	}
-	
+
+	/**
+	 * Obtiene el tunel de transporte HTTP/HTTPS dependiendo de la URL
+	 * 
+	 * @return HttpTransportSE/HttpsTransportSE
+	 * @throws MalformedURLException
+	 */
+	HttpTransportSE getProperProtocolTransportSE() throws MalformedURLException {
+		URL urlObj = new URL(url);
+		return urlObj.getProtocol() == "http" ? getHttpTransportSE()
+				: getHttpsTransportSE();
+	}
+
+	/**
+	 * Obtiene el tunel de transporte HTTP
+	 * 
+	 * @return HttpTransportSE
+	 */
 	private HttpTransportSE getHttpTransportSE() {
-	    HttpTransportSE ht = new HttpTransportSE(Proxy.NO_PROXY, url, 10000);
-	    ht.debug = true;
-	    ht.setXmlVersionTag("<!--?xml version=\"1.0\" encoding= \"UTF-8\" ?-->");
-	    return ht;
+		HttpTransportSE ht = new HttpTransportSE(Proxy.NO_PROXY, url, 10000);
+		ht.debug = true;
+		ht.setXmlVersionTag("<!--?xml version=\"1.0\" encoding= \"UTF-8\" ?-->");
+		return ht;
+	}
+
+	/**
+	 * Obtiene el tunel de transporte HTTPS
+	 * 
+	 * @return HttpsTransportSE
+	 * @throws MalformedURLException
+	 */
+	private HttpTransportSE getHttpsTransportSE() throws MalformedURLException {
+		URL urlObj = new URL(url);
+		int port = urlObj.getPort();
+		HttpTransportSE ht = new HttpsTransportSE(urlObj.getHost(),
+				port == -1 ? urlObj.getDefaultPort() : port, urlObj.getFile(),
+				10000);
+		ht.debug = true;
+		ht.setXmlVersionTag("<!--?xml version=\"1.0\" encoding= \"UTF-8\" ?-->");
+		return ht;
 	}
 }
