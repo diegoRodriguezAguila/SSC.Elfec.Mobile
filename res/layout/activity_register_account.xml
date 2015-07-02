@@ -113,6 +113,7 @@
             android:layout_alignStart="@+id/account_layout"
             android:layout_below="@+id/account_layout"
             android:layout_marginTop="10dp"
+            android:textAppearance="@style/TextAppearance.CustomFont.Button"
             android:onClick="btnRegisterAccountClick"
             android:text="@string/btn_register" />
     </RelativeLayout>

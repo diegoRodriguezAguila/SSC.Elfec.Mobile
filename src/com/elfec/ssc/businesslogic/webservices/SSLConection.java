@@ -8,9 +8,6 @@ import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 
-import javax.net.ssl.HostnameVerifier;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.TrustManagerFactory;
 import javax.net.ssl.X509TrustManager;
@@ -36,18 +33,6 @@ public class SSLConection {
 	 * @param context
 	 */
 	public static void allowSelfSignedElfecSSL(Context context) {
-
-		final HostnameVerifier hv = HttpsURLConnection
-				.getDefaultHostnameVerifier();
-		javax.net.ssl.HttpsURLConnection
-				.setDefaultHostnameVerifier(new HostnameVerifier() {
-					@Override
-					public boolean verify(String hostname, SSLSession session) {
-						return hostname.equals("ssc.elfec.bo") ? true : hv
-								.verify(hostname, session);
-					}
-				});
-
 		try {
 			// Get an instance of the Bouncy Castle KeyStore format
 			KeyStore trusted = KeyStore.getInstance("BKS");// put BKS literal

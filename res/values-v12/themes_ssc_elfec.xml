@@ -47,6 +47,7 @@
         <item name="android:listChoiceIndicatorMultiple">@drawable/ssc_elfec_btn_check_holo_light</item>
         <item name="android:listChoiceIndicatorSingle">@drawable/ssc_elfec_btn_radio_holo_light</item>
         <item name="android:buttonStyle">@style/Buttonssc_elfec</item>
+        <item name="buttonStyle">@style/Buttonssc_elfec</item>
         <item name="android:imageButtonStyle">@style/ImageButtonssc_elfec</item>
         <item name="android:dropDownSpinnerStyle">@style/Spinnerssc_elfec</item>
         <item name="android:progressBarStyleHorizontal">@style/ProgressBarssc_elfec</item>
