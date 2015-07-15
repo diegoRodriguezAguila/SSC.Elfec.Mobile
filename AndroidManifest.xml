@@ -46,7 +46,7 @@
         android:theme="@style/ssc_elfec" >
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyD7-jMTRsOlNQzuM7Q0gGBa31RBVt68KWs" />
+            android:value="AIzaSyAnuJ_uAGrMok6r-aSsR6MMsz6A1pObYcE" />
         <!--
              <meta-data
 		    android:name="com.google.android.gms.version"

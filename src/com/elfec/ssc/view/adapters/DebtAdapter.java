@@ -28,18 +28,20 @@ public class DebtAdapter extends ArrayAdapter<Debt> {
 	private int resource;
 	private LayoutInflater inflater = null;
 	private NumberFormat nf;
-	
-	public DebtAdapter(Context context, int resource,
-			final List<Debt> debts) {
+
+	public DebtAdapter(Context context, int resource, final List<Debt> debts) {
 		super(context, resource, debts);
-		Collections.sort(debts, new Comparator<Debt>(){
-			 public int compare(Debt debt1, Debt debt2) {
-				    return (new DateTime(debt2.getYear(), debt2.getMonth(), 1,0,0).compareTo(new DateTime(debt1.getYear(), debt1.getMonth(), 1,0,0)));
-				  }
+		Collections.sort(debts, new Comparator<Debt>() {
+			public int compare(Debt debt1, Debt debt2) {
+				return (new DateTime(debt2.getYear(), debt2.getMonth(), 1, 0, 0)
+						.compareTo(new DateTime(debt1.getYear(), debt1
+								.getMonth(), 1, 0, 0)));
+			}
 		});
 		this.debts = debts;
 		this.resource = resource;
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		initializeDecimalFormatter();
 	}
 
@@ -48,10 +50,10 @@ public class DebtAdapter extends ArrayAdapter<Debt> {
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator(',');
 		customSymbol.setGroupingSeparator('.');
-		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
+		((DecimalFormat) nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
 	}
-	
+
 	@Override
 	public int getCount() {
 		return debts.size();
@@ -66,24 +68,32 @@ public class DebtAdapter extends ArrayAdapter<Debt> {
 	public long getItemId(int position) {
 		return position;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if(convertView==null)
+		if (convertView == null)
 			convertView = inflater.inflate(resource, null);
 		Debt debt = getItem(position);
-		DateTime date = new DateTime(debt.getYear(), debt.getMonth(),1,0,0);
-		((TextView)convertView.findViewById(R.id.list_item_moth_year_debt)).setText(
-				TextFormater.capitalize(date.toString("MMMM yyyy")));
-		((TextView)convertView.findViewById(R.id.debt_amount)).setText(nf.format
-				(debt.getAmount().toBigInteger().doubleValue()));
-		
-		((TextView)convertView.findViewById(R.id.list_item_expiration_date_debt)).setText(debt.getExpirationDate().toString("dd/MM/yyyy"));
-		((TextView)convertView.findViewById(R.id.list_item_receipt_number_debt)).setText(""+debt.getReceiptNumber());
+		DateTime date = new DateTime(debt.getYear(), debt.getMonth(), 1, 0, 0);
+		((TextView) convertView.findViewById(R.id.list_item_moth_year_debt))
+				.setText(TextFormater.capitalize(date.toString("MMMM yyyy")));
+		((TextView) convertView.findViewById(R.id.debt_amount)).setText(nf
+				.format(debt.getAmount().toBigInteger().doubleValue()));
+
+		((TextView) convertView
+				.findViewById(R.id.list_item_expiration_date_debt))
+				.setText(debt.getExpirationDate().toString("dd/MM/yyyy"));
+		((TextView) convertView
+				.findViewById(R.id.list_item_receipt_number_debt)).setText(""
+				+ debt.getReceiptNumber());
+		String decimalPart = (debt.getAmount().remainder(BigDecimal.ONE)
+				.multiply(new BigDecimal("100"))
+				.setScale(0, RoundingMode.CEILING).toString());
+		if (decimalPart.equals("0"))
+			decimalPart += "0";
 		((TextView) convertView.findViewById(R.id.debt_amount_decimal))
-		.setText((debt.getAmount().remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
-				.setScale(0, RoundingMode.CEILING).toString()));
+				.setText(decimalPart);
 		return convertView;
 	}
-	
+
 }

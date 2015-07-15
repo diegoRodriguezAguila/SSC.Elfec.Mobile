@@ -35,7 +35,7 @@ import com.elfec.ssc.model.security.WSToken;
  */
 public class WebServiceConnector<TResult> extends
 		AsyncTask<WSParam, TResult, TResult> {
-	private final String WS_SERVER = "https://ssc.elfec.bo:4343/";
+	private final String WS_SERVER = "http://192.168.50.56/SSC.Elfec/web_services/";// "https://ssc.elfec.bo:4343/";
 	private String url;// = "http://192.168.30.44:8080/ws_lecturas.cfc?wsdl";
 	private String soapAction; // = "";
 	private String namespace;// = "http://DefaultNamespace";
@@ -217,7 +217,7 @@ public class WebServiceConnector<TResult> extends
 	 */
 	HttpTransportSE getProperProtocolTransportSE() throws MalformedURLException {
 		URL urlObj = new URL(url);
-		return urlObj.getProtocol() == "http" ? getHttpTransportSE()
+		return urlObj.getProtocol().equals("http") ? getHttpTransportSE()
 				: getHttpsTransportSE();
 	}
 

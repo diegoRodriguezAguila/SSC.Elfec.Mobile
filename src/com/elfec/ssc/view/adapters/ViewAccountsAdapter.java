@@ -25,20 +25,22 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 	private int resource;
 	private LayoutInflater inflater = null;
 	private NumberFormat nf;
+
 	public ViewAccountsAdapter(Context context, int resource,
 			final List<Account> accounts) {
 		super(context, resource, accounts);
 		this.accounts = accounts;
 		this.resource = resource;
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		inflater = (LayoutInflater) context
+				.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		nf = DecimalFormat.getInstance();
 		DecimalFormatSymbols customSymbol = new DecimalFormatSymbols();
 		customSymbol.setDecimalSeparator(',');
 		customSymbol.setGroupingSeparator('.');
-		((DecimalFormat)nf).setDecimalFormatSymbols(customSymbol);
+		((DecimalFormat) nf).setDecimalFormatSymbols(customSymbol);
 		nf.setGroupingUsed(true);
 	}
-	
+
 	@Override
 	public int getCount() {
 		return accounts.size();
@@ -53,45 +55,47 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 	public long getItemId(int position) {
 		return position;
 	}
-	
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		if(convertView==null)
+		if (convertView == null)
 			convertView = inflater.inflate(resource, null);
 		Account account = accounts.get(position);
-		((TextView) convertView.findViewById(R.id.row_account_value)).setText(
-				AccountFormatter.formatAccountNumber(account.getAccountNumber()));
+		((TextView) convertView.findViewById(R.id.row_account_value))
+				.setText(AccountFormatter.formatAccountNumber(account
+						.getAccountNumber()));
 		((TextView) convertView.findViewById(R.id.row_nus_value))
 				.setText(account.getNUS());
 		((TextView) convertView.findViewById(R.id.row_name_value))
-		.setText(TextFormater.capitalize(account.getAccountOwner()));
+				.setText(TextFormater.capitalize(account.getAccountOwner()));
 		setAccountBalanceInformation(convertView, account);
 
 		return convertView;
 	}
 
 	private void setAccountBalanceInformation(View convertView, Account account) {
-		TextView txtTotalAmount = ((TextView) convertView.findViewById(R.id.total_amount));
+		TextView txtTotalAmount = ((TextView) convertView
+				.findViewById(R.id.total_amount));
 		BigDecimal totalDebt = account.getTotalDebt();
-		if (totalDebt.compareTo(BigDecimal.ZERO) == 0)
-		{
-			((LinearLayout)convertView.findViewById(R.id.layout_decimal_debt))
-				.setVisibility(View.GONE);
+		if (totalDebt.compareTo(BigDecimal.ZERO) == 0) {
+			((LinearLayout) convertView.findViewById(R.id.layout_decimal_debt))
+					.setVisibility(View.GONE);
 			txtTotalAmount.setTextSize(18);
 			txtTotalAmount.setText(R.string.lbl_no_debts);
-		}
-		else
-		{
-			((LinearLayout)convertView.findViewById(R.id.layout_decimal_debt))
-			.setVisibility(View.VISIBLE);
-			txtTotalAmount.setText(nf.format
-					(account.getTotalDebt().toBigInteger().doubleValue()));
-			
+		} else {
+			((LinearLayout) convertView.findViewById(R.id.layout_decimal_debt))
+					.setVisibility(View.VISIBLE);
+			txtTotalAmount.setText(nf.format(account.getTotalDebt()
+					.toBigInteger().doubleValue()));
+
+			String decimalPart = (account.getTotalDebt()
+					.remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
+					.setScale(0, RoundingMode.CEILING).toString());
+			if (decimalPart.equals("0"))
+				decimalPart += "0";
 			((TextView) convertView.findViewById(R.id.total_amount_decimal))
-			.setText((account.getTotalDebt().remainder(BigDecimal.ONE).multiply(new BigDecimal("100"))
-					.setScale(0, RoundingMode.CEILING).toString()));
+					.setText(decimalPart);
 		}
 	}
-	
 
 }
