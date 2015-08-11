@@ -18,50 +18,60 @@ public class ViewAccountDetailsPresenter {
 
 	private IViewAccountDetails view;
 	private Account accountToShow;
-	
-	public ViewAccountDetailsPresenter(IViewAccountDetails view, long accountToShowId) {
+
+	public ViewAccountDetailsPresenter(IViewAccountDetails view,
+			long accountToShowId) {
 		this.view = view;
 		this.accountToShow = Account.get(accountToShowId);
 	}
 
-	public void getUsage()
-	{
+	public void getUsage() {
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
-				Looper.prepare();				
+				Looper.prepare();
 				view.showUsage(accountToShow.getUsages());
-				view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {					
-					@Override
-					public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
-						if(wsTokenResult.getResult()!=null)
-						new AccountWS(wsTokenResult.getResult())
-						.getUsage(accountToShow.getNUS(), new IWSFinishEvent<List<Usage>>() {
-					
+				view.getWSTokenRequester().getTokenAsync(
+						new WSTokenReceivedCallback() {
 							@Override
-							public void executeOnFinished(final WSResponse<List<Usage>> result) {									
-								if(result.getErrors().size()==0)
-								{
-									accountToShow.removeUsages();
-									ElfecAccountsManager.registerAccountUsages(accountToShow, result.getResult());
-									view.showUsage(result.getResult());
-								}
-							}});
-					}
-				});
+							public void onWSTokenReceived(
+									WSResponse<WSToken> wsTokenResult) {
+								if (wsTokenResult.getResult() != null)
+									new AccountWS(wsTokenResult.getResult()).getUsage(
+											accountToShow.getNUS(),
+											new IWSFinishEvent<List<Usage>>() {
+
+												@Override
+												public void executeOnFinished(
+														final WSResponse<List<Usage>> result) {
+													if (result.getErrors()
+															.size() == 0) {
+														accountToShow
+																.removeUsages();
+														ElfecAccountsManager
+																.registerAccountUsages(
+																		accountToShow,
+																		result.getResult());
+														view.showUsage(result
+																.getResult());
+													}
+												}
+											});
+							}
+						});
 				Looper.loop();
 			}
 		}).start();
 	}
-	
+
 	/**
 	 * Asigna los datos a la vista
 	 */
-	public void setFields()
-	{
+	public void setFields() {
 		view.setAccountNumber(accountToShow.getAccountNumber());
 		view.setNUS(accountToShow.getNUS());
 		view.setOwnerClient(accountToShow.getAccountOwner());
+		view.setClientAddress(accountToShow.getAddress());
 		view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
 		new Thread(new Runnable() {
 			@Override
@@ -71,5 +81,5 @@ public class ViewAccountDetailsPresenter {
 			}
 		}).start();
 	}
-	
+
 }

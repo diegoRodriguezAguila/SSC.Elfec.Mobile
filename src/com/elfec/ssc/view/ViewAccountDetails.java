@@ -7,6 +7,8 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
 
+import org.apache.commons.lang.WordUtils;
+
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.os.Bundle;
@@ -50,9 +52,8 @@ public class ViewAccountDetails extends AppCompatActivity implements
 		usageList = (LayoutListView) findViewById(R.id.list_usage);
 		LVAccountDebts = (LayoutListView) findViewById(R.id.listview_account_debts);
 		initializeDecimalFormater();
-		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout
-															// to the toolbar
-															// object
+		// Attaching the layout to the toolbar object
+		toolbar = (Toolbar) findViewById(R.id.tool_bar);
 		setSupportActionBar(toolbar);
 		((TextView) toolbar.findViewById(R.id.toolbar_title))
 				.setText(R.string.view_account_details_title);
@@ -108,6 +109,12 @@ public class ViewAccountDetails extends AppCompatActivity implements
 	public void setOwnerClient(String ownerClient) {
 		((TextView) findViewById(R.id.txt_owner_client)).setText(TextFormater
 				.capitalize(ownerClient));
+	}
+
+	@Override
+	public void setClientAddress(String address) {
+		((TextView) findViewById(R.id.txt_client_address)).setText(WordUtils
+				.capitalizeFully(address, new char[] { '.', ' ' }));
 	}
 
 	@Override

@@ -7,6 +7,8 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
 
+import org.apache.commons.lang.WordUtils;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,7 +61,7 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		if (convertView == null)
-			convertView = inflater.inflate(resource, null);
+			convertView = inflater.inflate(resource, parent, false);
 		Account account = accounts.get(position);
 		((TextView) convertView.findViewById(R.id.row_account_value))
 				.setText(AccountFormatter.formatAccountNumber(account
@@ -68,8 +70,10 @@ public class ViewAccountsAdapter extends ArrayAdapter<Account> {
 				.setText(account.getNUS());
 		((TextView) convertView.findViewById(R.id.row_name_value))
 				.setText(TextFormater.capitalize(account.getAccountOwner()));
+		((TextView) convertView.findViewById(R.id.row_address_value))
+				.setText(WordUtils.capitalizeFully(account.getAddress(),
+						new char[] { '.', ' ' }));
 		setAccountBalanceInformation(convertView, account);
-
 		return convertView;
 	}
 

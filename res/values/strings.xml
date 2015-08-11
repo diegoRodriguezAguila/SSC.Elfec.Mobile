@@ -126,6 +126,7 @@
     <string name="time_sample">19:03</string>
     <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
     <string name="name_sample">Jarry Pedro Perez</string>
+    <string name="address_sample">Av Cap. V. Ustariz 01323</string>
     <string name="account_balance_sample">1.923</string>
     <string name="decimal_balance_sample">70</string>
     <string name="gmail_sample">ssc.elfec@gmail.com</string>

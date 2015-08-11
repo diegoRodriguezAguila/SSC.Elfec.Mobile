@@ -8,4 +8,5 @@
     http://developer.android.com/training/multiscreen/screensizes.html#TaskUseAliasFilters
     -->
     <item name="activity_view_account_details" type="layout">@layout/activity_view_account_details_tablet</item>
+    <item name="list_item_orientation" type="integer">0</item>
 </resources>
