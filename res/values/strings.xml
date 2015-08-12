@@ -24,6 +24,13 @@
     <string name="account_already_reg_title">CUENTA YA REGISTRADA</string>
     <string name="account_already_reg_msg">La información que proporcionó corresponde a una cuenta que ya tiene registrada</string>
     <string name="errors_on_register_title">ERROR AL REGISTRAR LA CUENTA</string>
+    <string name="register_account_information">Información sobre registro</string>
+    <string name="title_register_account_information">INFORMACIÓN DE REGISTRO</string>
+    <string name="btn_understanded">Entendido</string>
+    <string name="msg_register_account_info">Para registrar una cuenta necesita la información provista en el aviso de cobranza. 
+        El aviso de cobranza es la papeleta que se ve como en la imagen. De ella podrá obtener su NUS y su Cuenta. Intoduzca ambos valores
+        en los campos y presione <i>\"Registrar\"</i>.\n Si desea eliminar una cuenta registrada, podrá hacerlo con un click largo sobre ella, en la vista de Cuentas.</string>
+    <string name="img_collection_notice">Aviso de Cobranza</string>
 
     <!-- Main Menu -->
     <string name="app_title">Sistema de Servicios al Cliente</string>
@@ -48,7 +55,12 @@
     <string name="no_accounts_registered">Actualmente no tiene cuentas registradas</string>
     <string name="use_button_add">Utilice el botón</string>
     <string name="lbl_for_register">para agregar</string>
-    <string name="lbl_an_account">una cuenta</string>
+    <string name="lbl_an_account">una cuenta.\n\nRegistrar sus cuentas de elfec le trae muchas ventajas, entre ellas:\n
+        ● Permite que le lleguen notificaciones sobre cualquier evento que afecten al suministro de energía de su cuenta.
+        Como cortes fortuitos (ej. Camión choca con un poste), cortes programados y 
+        retraso en el pago de sus facturas, antes de que se le proceda a cortar.\n
+       ● Ver el estado de su suministro de energía, y de sus deudas.\n
+       ● Ver la evolución de su consumo.</string>
     <string name="lbl_loading_accounts">Cargando sus cuentas&#8230;</string>
     <string name="lbl_account_list_item_name">Nombre:</string>
     <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
@@ -64,7 +76,7 @@
     <!-- Location Services -->
     <string name="location_services_title">Servicios de ubicación</string>
     <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>
-    <string name="no_internet_msg" >No se pudo contactar con el servidor, revise su conexión a internet!</string>
+    <string name="no_internet_msg">No se pudo contactar con el servidor, revise su conexión a internet!</string>
     <string name="errors_on_get_points_title">ERROR AL OBTENER PUNTOS DE UBICACIÓN</string>
     <!-- Location Services: Markers -->
     <string name="lbl_marker_address">Dirección:</string>
@@ -85,7 +97,7 @@
     <string name="delete_notifications_title">ELIMINAR NOTIFICACIONES</string>
     <string name="delete_outage_notifications_msg">Está apunto de eliminar las notificaciones de cortes, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
     <string name="delete_account_notifications_msg">Está apunto de eliminar las notificaciones de cuentas, si procede ya no podrá volver a verlas, ¿confirma que desea hacerlo?</string>
-   
+
     <!-- View Account Details -->
     <string name="view_account_details_title">Información de cuenta</string>
     <string name="lbl_account_status">Estado:</string>
@@ -94,7 +106,7 @@
     <string name="list_item_debt_expiration_date">Fecha de vencimiento:</string>
     <string name="list_item_receipt_number_date">N° de comprobante:</string>
     <string name="lbl_usage">Evolución de consumo:</string>
-    
+
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>
     <string name="setup_distance">Configurar distancia</string>
@@ -119,7 +131,7 @@
     <string name="btn_cancel">Cancelar</string>
     <string name="btn_yes">Si</string>
     <string name="btn_no">No</string>
-    
+
     <!-- Samples -->
     <string name="account_deleted_sample">Cuenta eliminada</string>
     <string name="date_sample">06 Ago 2014</string>
@@ -135,7 +147,6 @@
     <string name="simple_date_sample">06/09/2014</string>
     <string name="short_date_sample">2014/12</string>
     <string name="usage_sample">431</string>
-    
 
     <!-- XListView -->
     <string name="xlistview_header_hint_normal">Actualizar</string>

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.ButtonClicksHelper;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
@@ -29,14 +30,15 @@ import com.elfec.ssc.view.animations.HeightAnimation;
 import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 
-public class ViewNotifications extends AppCompatActivity implements IViewNotifications {
+public class ViewNotifications extends AppCompatActivity implements
+		IViewNotifications {
 
 	public enum ExpandStatus {
 		COLLAPSED, HALF, FULL
 	};
 
 	private ViewNotificationsPresenter presenter;
-	
+
 	private Toolbar toolbar;
 	private ExpandStatus outageStatus;
 	private ExpandStatus accountsStatus;
@@ -48,10 +50,10 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 	private XListView accountsListView;
 	private TextView lblNoOutageNotifications;
 	private TextView lblNoAccountNotifications;
-	
+
 	private NotificationAdapter outagesAdapter;
 	private NotificationAdapter accountsAdapter;
-	
+
 	private LinearLayout outageLayout;
 	private LinearLayout accountsLayout;
 
@@ -60,10 +62,13 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_notifications);
 		presenter = new ViewNotificationsPresenter(this);
-		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(toolbar); 
-        ((TextView)toolbar.findViewById(R.id.toolbar_title)).setText(R.string.notifications_title);
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout
+															// to the toolbar
+															// object
+		setSupportActionBar(toolbar);
+		((TextView) toolbar.findViewById(R.id.toolbar_title))
+				.setText(R.string.notifications_title);
+		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		outageGroup = (CheckBox) findViewById(R.id.outage_group);
 		outageListView = (XListView) findViewById(R.id.outage_listview);
 		accountsGroup = (CheckBox) findViewById(R.id.accounts_group);
@@ -89,17 +94,15 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 	protected void attachBaseContext(Context newBase) {
 		super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
 	}
-	
+
 	@Override
-	protected void onPause()
-	{
+	protected void onPause() {
 		super.onPause();
 		ViewPresenterManager.setPresenter(null);
 	}
-	
+
 	@Override
-	protected void onResume()
-	{
+	protected void onResume() {
 		super.onResume();
 		presenter.loadNotifications();
 		ViewPresenterManager.setPresenter(presenter);
@@ -117,29 +120,27 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 			float paddingTop = (6 * displayMetrics.density);
 			float paddingBottom = (16 * displayMetrics.density);
 			float extraMarginFull = (15 * displayMetrics.density);
-			halfSize = (int) (((screenHeight - actionBarHeight
-					- paddingBottom - paddingTop) / 2) - ((outageGroup
+			halfSize = (int) (((screenHeight - actionBarHeight - paddingBottom - paddingTop) / 2) - ((outageGroup
 					.getHeight() * 1.5)));
-			fullSize = (int) ((screenHeight - actionBarHeight
-					- paddingBottom - paddingTop)
+			fullSize = (int) ((screenHeight - actionBarHeight - paddingBottom - paddingTop)
 					- (outageGroup.getHeight() * 2.5) - extraMarginFull);
 		}
 	}
-	
+
 	/**
 	 * Inicia un hilo para asignar los listeners a ambas listas
 	 */
 	private void initializeListListeners() {
-		Thread thread = new Thread(new Runnable() {			
+		Thread thread = new Thread(new Runnable() {
 			@Override
 			public void run() {
-				setOnCheckListeners();	
+				setOnCheckListeners();
 				setOnRefreshAndLoadListeners();
 			}
 		});
 		thread.start();
-	}	
-	
+	}
+
 	/**
 	 * Pone los check listeners para los cortes y las cuentas
 	 */
@@ -156,7 +157,8 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 	}
 
 	/**
-	 * según los checkbox marcados distribuye enl a pantalla las dos listas de notificaciones
+	 * según los checkbox marcados distribuye enl a pantalla las dos listas de
+	 * notificaciones
 	 */
 	public void redefineViewSizes() {
 		defineSizes();
@@ -177,45 +179,47 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 			accountsStatus = ExpandStatus.COLLAPSED;
 		}
 		changeLinearLayoutHeight(outageLayout, outageStatus, outageListView);
-		changeLinearLayoutHeight(accountsLayout, accountsStatus, accountsListView);
-	}
-	
-	public void btndeleteOutageNotificationsClick(View view)
-	{
-		(new AlertDialogPro.Builder(this))
-		.setTitle(R.string.delete_notifications_title)
-		.setMessage(R.string.delete_outage_notifications_msg)
-		.setPositiveButton(R.string.btn_ok, new OnClickListener() {			
-			@Override
-			public void onClick(DialogInterface dialog, int arg1) {
-				presenter.clearOutageNotifications();	
-			}
-		})
-		.setNegativeButton(R.string.btn_cancel, null).show();
-	}
-	
-	public void btndeleteAccountNotificationsClick(View view)
-	{
-		(new AlertDialogPro.Builder(this))
-		.setTitle(R.string.delete_notifications_title)
-		.setMessage(R.string.delete_account_notifications_msg)
-		.setPositiveButton(R.string.btn_ok, new OnClickListener() {			
-			@Override
-			public void onClick(DialogInterface dialog, int arg1) {
-				presenter.clearAccountNotifications();	
-			}
-		})
-		.setNegativeButton(R.string.btn_cancel, null).show();
+		changeLinearLayoutHeight(accountsLayout, accountsStatus,
+				accountsListView);
 	}
 
-	
+	public void btndeleteOutageNotificationsClick(View view) {
+		if (ButtonClicksHelper.canClickButton()) {
+			(new AlertDialogPro.Builder(this))
+					.setTitle(R.string.delete_notifications_title)
+					.setMessage(R.string.delete_outage_notifications_msg)
+					.setPositiveButton(R.string.btn_ok, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int arg1) {
+							presenter.clearOutageNotifications();
+						}
+					}).setNegativeButton(R.string.btn_cancel, null).show();
+		}
+	}
+
+	public void btndeleteAccountNotificationsClick(View view) {
+		if (ButtonClicksHelper.canClickButton()) {
+			(new AlertDialogPro.Builder(this))
+					.setTitle(R.string.delete_notifications_title)
+					.setMessage(R.string.delete_account_notifications_msg)
+					.setPositiveButton(R.string.btn_ok, new OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int arg1) {
+							presenter.clearAccountNotifications();
+						}
+					}).setNegativeButton(R.string.btn_cancel, null).show();
+		}
+	}
+
 	/**
 	 * Crea una animación para el layout del parámetro
+	 * 
 	 * @param wichLayout
 	 * @param expandSize
 	 * @param concordantListView
 	 */
-	public void changeLinearLayoutHeight(final LinearLayout wichLayout, final ExpandStatus expandSize, final XListView concordantListView) {
+	public void changeLinearLayoutHeight(final LinearLayout wichLayout,
+			final ExpandStatus expandSize, final XListView concordantListView) {
 		int selectedSize = -1;
 		if (expandSize == ExpandStatus.COLLAPSED)
 			selectedSize = 0;
@@ -228,82 +232,91 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 		heightAnim.setDuration(500);
 		wichLayout.startAnimation(heightAnim);
 	}
-	
+
 	/**
 	 * Asigna los refresh y load more listeners para ambas listas
 	 */
 	private void setOnRefreshAndLoadListeners() {
-		outageListView.setXListViewListener(new IXListViewListener() {			
+		outageListView.setXListViewListener(new IXListViewListener() {
 			@Override
 			public void onRefresh() {
 				presenter.refreshOutageNotifications();
 			}
-			
+
 			@Override
 			public void onLoadMore() {
 				presenter.loadMoreOutageNotifications();
 			}
 		});
 		accountsListView.setXListViewListener(new IXListViewListener() {
-			
+
 			@Override
 			public void onRefresh() {
 				presenter.refreshAccountNotifications();
 			}
-			
+
 			@Override
 			public void onLoadMore() {
 				presenter.loadMoreAccountNotifications();
 			}
 		});
 	}
-	
-	//#region Interface Methods
+
+	// #region Interface Methods
 	@Override
 	public void setOutageList(final List<Notification> outageNotifications) {
-		runOnUiThread(new Runnable() {		
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				lblNoOutageNotifications.setVisibility(outageNotifications.size()==0?View.VISIBLE:View.GONE);
-				outagesAdapter = new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, outageNotifications);
-				outageListView.setAdapter(outagesAdapter);	
+				lblNoOutageNotifications.setVisibility(outageNotifications
+						.size() == 0 ? View.VISIBLE : View.GONE);
+				outagesAdapter = new NotificationAdapter(
+						ViewNotifications.this,
+						R.layout.notification_list_item, outageNotifications);
+				outageListView.setAdapter(outagesAdapter);
 			}
 		});
 	}
 
 	@Override
 	public void setAccountsList(final List<Notification> accountNotifications) {
-		runOnUiThread(new Runnable() {		
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				lblNoAccountNotifications.setVisibility(accountNotifications.size()==0?View.VISIBLE:View.GONE);
-				accountsAdapter = new NotificationAdapter(ViewNotifications.this, R.layout.notification_list_item, accountNotifications);
-				accountsListView.setAdapter(accountsAdapter);	
-			}
-		});
-	}
-	
-	
-	@Override
-	public void addOutageNotifications(final List<Notification> outageNotifications) {
-		runOnUiThread(new Runnable() {		
-			@Override
-			public void run() {
-				if(outagesAdapter==null)
-					setOutageList(outageNotifications);
-				else outagesAdapter.addAll(outageNotifications);
+				lblNoAccountNotifications.setVisibility(accountNotifications
+						.size() == 0 ? View.VISIBLE : View.GONE);
+				accountsAdapter = new NotificationAdapter(
+						ViewNotifications.this,
+						R.layout.notification_list_item, accountNotifications);
+				accountsListView.setAdapter(accountsAdapter);
 			}
 		});
 	}
 
 	@Override
-	public void addAccountNotifications(final List<Notification> accountNotifications) {
-		runOnUiThread(new Runnable() {		
+	public void addOutageNotifications(
+			final List<Notification> outageNotifications) {
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if(accountsAdapter==null)
+				if (outagesAdapter == null)
+					setOutageList(outageNotifications);
+				else
+					outagesAdapter.addAll(outageNotifications);
+			}
+		});
+	}
+
+	@Override
+	public void addAccountNotifications(
+			final List<Notification> accountNotifications) {
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				if (accountsAdapter == null)
 					setAccountsList(accountNotifications);
-				else accountsAdapter.addAll(accountNotifications);
+				else
+					accountsAdapter.addAll(accountNotifications);
 			}
 		});
 	}
@@ -330,7 +343,7 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 
 	@Override
 	public void loadAndRefreshOutageFinished() {
-		runOnUiThread(new Runnable() {	
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				outageListView.stopRefresh();
@@ -342,7 +355,7 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 
 	@Override
 	public void loadAndRefreshAccountsFinished() {
-		runOnUiThread(new Runnable() {	
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				accountsListView.stopRefresh();
@@ -354,7 +367,7 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 
 	@Override
 	public void hideOutageList() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				outageGroup.setChecked(false);
@@ -364,7 +377,7 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 
 	@Override
 	public void hideAccountsList() {
-		runOnUiThread(new Runnable() {			
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				accountsGroup.setChecked(false);
@@ -373,8 +386,9 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 	}
 
 	@Override
-	public void showNewOutageNotificationUpdate(final Notification notif, final boolean removeLast) {
-		runOnUiThread(new Runnable() {			
+	public void showNewOutageNotificationUpdate(final Notification notif,
+			final boolean removeLast) {
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				outagesAdapter.addNewNotificationUpdate(notif, removeLast);
@@ -384,8 +398,9 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 	}
 
 	@Override
-	public void showNewAccountNotificationUpdate(final Notification notif, final boolean removeLast) {
-		runOnUiThread(new Runnable() {			
+	public void showNewAccountNotificationUpdate(final Notification notif,
+			final boolean removeLast) {
+		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
 				accountsAdapter.addNewNotificationUpdate(notif, removeLast);
@@ -393,6 +408,6 @@ public class ViewNotifications extends AppCompatActivity implements IViewNotific
 			}
 		});
 	}
-	
-	//#endregion
+
+	// #endregion
 }

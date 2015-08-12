@@ -42,6 +42,7 @@
         <item name="android:checkboxStyle">@style/CheckBoxssc_elfec</item>
         <item name="android:radioButtonStyle">@style/RadioButtonssc_elfec</item>
         <item name="android:buttonStyle">@style/Buttonssc_elfec</item>
+        <item name="buttonStyle">@style/Buttonssc_elfec</item>
         <item name="android:imageButtonStyle">@style/ImageButtonssc_elfec</item>
         <item name="android:spinnerStyle">@style/Spinnerssc_elfec</item>
         <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItemssc_elfec</item>

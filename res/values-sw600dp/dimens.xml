@@ -13,4 +13,6 @@
  	<dimen name="title_text_size">22sp</dimen>
  	<dimen name="main_menu_title_text_size">40sp</dimen>
  	<dimen name="marker_popup_txt_width">330dp</dimen>
+ 	<dimen name="txt_desc_size">20sp</dimen>
+ 	<dimen name="empty_height">0dp</dimen>
 </resources>

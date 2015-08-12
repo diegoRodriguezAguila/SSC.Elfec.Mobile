@@ -13,7 +13,6 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.Signature;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
@@ -26,6 +25,7 @@ import android.widget.TextView;
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.SSLConection;
+import com.elfec.ssc.helpers.ButtonClicksHelper;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
 import com.elfec.ssc.security.PreferencesManager;
@@ -101,48 +101,41 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private long lastClickTime = 0;
-
 	public void btnAccountsClick(View view) {
-		if (SystemClock.elapsedRealtime() - lastClickTime > 600) {
+		if (ButtonClicksHelper.canClickButton()) {
 			presenter.verifyAccountsRequirements();
 		}
-		lastClickTime = SystemClock.elapsedRealtime();
-
 	}
 
 	public void btnLocationServicesClick(View view) {
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+		if (ButtonClicksHelper.canClickButton()) {
 			Intent i = new Intent(MainMenu.this, LocationServices.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in,
 					R.anim.slide_left_out);
 		}
-		lastClickTime = SystemClock.elapsedRealtime();
 	}
 
 	public void btnNotificationsClick(View view) {
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+		if (ButtonClicksHelper.canClickButton()) {
 			Intent i = new Intent(MainMenu.this, ViewNotifications.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in,
 					R.anim.slide_left_out);
 		}
-		lastClickTime = SystemClock.elapsedRealtime();
 	}
 
 	public void btnContactsClick(View view) {
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+		if (ButtonClicksHelper.canClickButton()) {
 			Intent i = new Intent(MainMenu.this, Contacts.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in,
 					R.anim.slide_left_out);
 		}
-		lastClickTime = SystemClock.elapsedRealtime();
 	}
 
 	public void btnSwitchClientClick(View view) {
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+		if (ButtonClicksHelper.canClickButton()) {
 			(new AlertDialogPro.Builder(this))
 					.setTitle(R.string.switch_client_title)
 					.setMessage(R.string.switch_client_msg)
@@ -153,7 +146,6 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 						}
 					}).setNegativeButton(R.string.btn_cancel, null).show();
 		}
-		lastClickTime = SystemClock.elapsedRealtime();
 	}
 
 	// #region Interface Methods

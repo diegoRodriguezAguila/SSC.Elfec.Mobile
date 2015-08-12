@@ -9,7 +9,6 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
@@ -23,6 +22,7 @@ import android.widget.TextView;
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
+import com.elfec.ssc.helpers.ButtonClicksHelper;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.Account;
@@ -46,7 +46,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 	private XListView accountsListView;
 	private AlertDialog waitingWSDialog;
 	private boolean isRefresh;
-	private long lastClickTime;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +89,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 			@Override
 			public void onItemClick(AdapterView<?> adapter, View view, int pos,
 					long arg3) {
-				if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+				if (ButtonClicksHelper.canClickButton()) {
 					Intent i = new Intent(ViewAccounts.this,
 							ViewAccountDetails.class);
 					Long id = ((Account) adapter.getItemAtPosition(pos))
@@ -100,7 +99,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 					overridePendingTransition(R.anim.slide_left_in,
 							R.anim.slide_left_out);
 				}
-				lastClickTime = SystemClock.elapsedRealtime();
 			}
 		});
 	}
@@ -149,13 +147,12 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 	}
 
 	public void btnRegisterAccountClick(View view) {
-		if (SystemClock.elapsedRealtime() - lastClickTime > 1000) {
+		if (ButtonClicksHelper.canClickButton()) {
 			Intent i = new Intent(ViewAccounts.this, RegisterAccount.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in,
 					R.anim.slide_left_out);
 		}
-		lastClickTime = SystemClock.elapsedRealtime();
 	}
 
 	@Override
