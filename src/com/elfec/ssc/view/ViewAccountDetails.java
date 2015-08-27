@@ -200,6 +200,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
 	public void navigateToAddress(Account account) {
 		GoogleMapsHelper.launchGoogleMaps(this, account.getLatitude(),
 				account.getLongitude(), account.getAddress());
+		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 	}
 
 	// #endregion

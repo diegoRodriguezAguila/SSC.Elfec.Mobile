@@ -86,6 +86,8 @@
     <!-- Contacts -->
     <string name="contacts_title">Contactos</string>
     <string name="lbl_visit_us_facebook">Visítanos en facebook</string>
+    <string name="title_phone_pick">ELIJA UN NÚMERO TELEFÓNICO</string>
+    <string name="btn_dial">Marcar</string>
 
     <!-- Notificaciones -->
 
