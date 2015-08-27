@@ -125,6 +125,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:gravity="center_vertical"
+                        android:clickable="true"
+                        android:onClick="goToAddressClick"
                         android:orientation="horizontal" >
 
                         <ImageView
@@ -133,6 +135,7 @@
                             android:background="@drawable/ssc_elfec_btn_default_holo_light"
                             android:contentDescription="@string/account_img"
                             android:padding="8dp"
+                            android:duplicateParentState="true"
                             android:src="@drawable/client_address" />
 
                         <TextView
@@ -141,9 +144,10 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
+                            android:duplicateParentState="true"
                             android:text="@string/address_sample"
                             android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
-                            android:textColor="@color/dark_gray"
+                            android:textColor="@color/contact_link_txt_color"
                             android:textSize="18sp" />
                     </LinearLayout>
 

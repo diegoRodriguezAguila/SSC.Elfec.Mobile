@@ -21,8 +21,11 @@ import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
+import com.elfec.ssc.helpers.ButtonClicksHelper;
+import com.elfec.ssc.helpers.GoogleMapsHelper;
 import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
+import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
@@ -90,6 +93,17 @@ public class ViewAccountDetails extends AppCompatActivity implements
 	public void onBackPressed() {
 		finish();// go back to the previous Activity
 		overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+	}
+
+	/**
+	 * Click de la direccion
+	 * 
+	 * @param v
+	 */
+	public void goToAddressClick(View v) {
+		if (ButtonClicksHelper.canClickButton()) {
+			presenter.goToAddress();
+		}
 	}
 
 	// #region Interface Methods
@@ -180,6 +194,12 @@ public class ViewAccountDetails extends AppCompatActivity implements
 	@Override
 	public WSTokenRequester getWSTokenRequester() {
 		return new WSTokenRequester(this);
+	}
+
+	@Override
+	public void navigateToAddress(Account account) {
+		GoogleMapsHelper.launchGoogleMaps(this, account.getLatitude(),
+				account.getLongitude(), account.getAddress());
 	}
 
 	// #endregion

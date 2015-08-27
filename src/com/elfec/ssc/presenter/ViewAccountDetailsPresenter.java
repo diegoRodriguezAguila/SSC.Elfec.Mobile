@@ -82,4 +82,11 @@ public class ViewAccountDetailsPresenter {
 		}).start();
 	}
 
+	/**
+	 * LLama a los métodos necesarios para ir a la direcció
+	 */
+	public void goToAddress() {
+		view.navigateToAddress(accountToShow);
+	}
+
 }

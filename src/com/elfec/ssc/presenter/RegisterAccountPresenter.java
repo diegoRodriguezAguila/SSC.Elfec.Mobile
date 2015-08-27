@@ -15,6 +15,7 @@ import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
+import com.elfec.ssc.model.exceptions.MobileSideException;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.validations.ValidationRulesFactory;
@@ -107,13 +108,15 @@ public class RegisterAccountPresenter {
 								public void executeOnFinished(
 										WSResponse<Account> result) {
 									view.hideWSWaiting();
-									view.showRegistrationErrors(result.getErrors());
 									if (result.getResult() != null) {
 										ElfecAccountsManager
 												.registerAccount(result
 														.getResult());
 										view.notifyAccountSuccessfulyRegistered();
-									}
+									} else
+										result.addError(new MobileSideException());
+									view.showRegistrationErrors(result
+											.getErrors());
 								}
 							});
 				}

@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
+import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
@@ -28,6 +29,8 @@ public interface IViewAccountDetails {
 	public void showUsage(List<Usage> usage);
 
 	public void showDebts(List<Debt> debts);
+
+	public void navigateToAddress(Account account);
 
 	/**
 	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
