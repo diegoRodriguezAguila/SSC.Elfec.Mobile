@@ -35,8 +35,8 @@ import com.elfec.ssc.model.security.WSToken;
  */
 public class WebServiceConnector<TResult> extends
 		AsyncTask<WSParam, TResult, TResult> {
-	private final String WS_SERVER = "http://192.168.50.56/SSC.Elfec/web_services/";// "https://ssc.elfec.bo:4343/";
-	private String url;// = "http://192.168.30.44:8080/ws_lecturas.cfc?wsdl";
+	private final String WS_SERVER = "https://ssc.elfec.bo:4343/";// "http://192.168.50.56/SSC.Elfec/web_services/";//
+	private String url;
 	private String soapAction; // = "";
 	private String namespace;// = "http://DefaultNamespace";
 	private String methodName;
@@ -157,7 +157,10 @@ public class WebServiceConnector<TResult> extends
 			if (wsToken != null)
 				headerPropertyArrayList.add(new HeaderProperty("x-ws-token",
 						wsToken.toString()));
-			ht.call(soapAction, envelope, headerPropertyArrayList);
+			@SuppressWarnings("unchecked")
+			List<HeaderProperty> headers = ht.call(soapAction, envelope,
+					headerPropertyArrayList);
+			checkHeaderStatus(headers);
 			result = envelope.getResponse().toString();
 		} catch (HttpResponseException e) {
 			Log.d(methodName, "Error in url: " + url + " " + e.getMessage());
@@ -187,6 +190,27 @@ public class WebServiceConnector<TResult> extends
 					"Ocurrió un error inesperado al conectarse al servicio, lamentamos las molestias, intenteló de nuevo mas tarde."));
 		}
 		return converter.convert(resultWS.convertErrors(result));
+	}
+
+	/**
+	 * Verifica que el codigo http response sea 200
+	 * 
+	 * @param headers
+	 * @throws HttpResponseException
+	 */
+	private void checkHeaderStatus(List<HeaderProperty> headers)
+			throws HttpResponseException {
+		for (HeaderProperty header : headers) {
+			if (header != null && header.getValue() != null
+					&& header.getValue().contains("HTTP/1.1")) {
+				int codeStatus = Integer
+						.parseInt(header.getValue().split(" ")[1]);
+				if (codeStatus != 200)
+					throw new HttpResponseException(
+							"HTTP request failed, HTTP status: " + codeStatus,
+							codeStatus);
+			}
+		}
 	}
 
 	@Override

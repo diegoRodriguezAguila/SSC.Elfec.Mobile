@@ -41,7 +41,7 @@ public class RegisterAccountPresenter {
 	 * Obtiene la información provista por el usuario y del dispositivo
 	 */
 	public void processAccountData() {
-		Thread thread = new Thread(new Runnable() {
+		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				Looper.prepare();
@@ -80,8 +80,7 @@ public class RegisterAccountPresenter {
 				Looper.loop();
 
 			}
-		});
-		thread.start();
+		}).start();
 
 	}
 
@@ -113,7 +112,7 @@ public class RegisterAccountPresenter {
 												.registerAccount(result
 														.getResult());
 										view.notifyAccountSuccessfulyRegistered();
-									} else
+									} else if (!result.hasErrors())
 										result.addError(new MobileSideException());
 									view.showRegistrationErrors(result
 											.getErrors());
