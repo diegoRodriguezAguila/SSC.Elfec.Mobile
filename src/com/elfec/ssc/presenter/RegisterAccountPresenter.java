@@ -118,7 +118,8 @@ public class RegisterAccountPresenter {
 											.getErrors());
 								}
 							});
-				}
+				} else
+					view.hideWSWaiting();
 			}
 		});
 	}

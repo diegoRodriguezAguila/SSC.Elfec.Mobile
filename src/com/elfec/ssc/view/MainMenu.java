@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -49,10 +50,11 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);
 		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
 		btnSwitchClient.setEnabled(false);
-		getSignature();
+		// getSignature();
 		SSLConection.allowSelfSignedElfecSSL(this);
 	}
 
+	@SuppressLint("NewApi")
 	private void getSignature() {
 		try {
 			PackageInfo info = getPackageManager().getPackageInfo(
