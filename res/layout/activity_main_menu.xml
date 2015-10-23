@@ -22,6 +22,7 @@
 	        android:padding="0dp"
 	        android:onClick="btnSwitchClientClick"
 	        android:contentDescription="@string/content_switch_client"
+	        android:background="@drawable/ssc_elfec_btn_default_holo_light"
 	        android:src="@drawable/switch_client" />
         <ImageView
             android:id="@+id/imgLogoElfec"
