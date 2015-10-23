@@ -9,6 +9,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -73,9 +74,7 @@ public class LocationServices extends AppCompatActivity implements
 		setContentView(R.layout.activity_location_services);
 		showWaitingDialog();
 		presenter = new LocationServicesPresenter(this);
-		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout
-															// to the toolbar
-															// object
+		toolbar = (Toolbar) findViewById(R.id.tool_bar);
 		setSupportActionBar(toolbar);
 		((TextView) toolbar.findViewById(R.id.toolbar_title))
 				.setText(R.string.location_services_title);
@@ -88,7 +87,7 @@ public class LocationServices extends AppCompatActivity implements
 				.setFontName("fonts/segoe_ui_semilight.ttf")
 				.setTextSize(16)
 				.setBackgroundColorValue(
-						getResources().getColor(
+						ContextCompat.getColor(this,
 								R.color.ssc_elfec_color_highlight)).build();
 	}
 

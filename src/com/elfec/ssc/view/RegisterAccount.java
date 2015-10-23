@@ -6,6 +6,7 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
@@ -62,7 +63,7 @@ public class RegisterAccount extends AppCompatActivity implements
 				.setFontName("fonts/segoe_ui_semilight.ttf")
 				.setTextSize(16)
 				.setBackgroundColorValue(
-						getResources().getColor(
+						ContextCompat.getColor(RegisterAccount.this,
 								R.color.ssc_elfec_color_highlight)).build();
 		setOnFocusChangedListeners();
 	}
