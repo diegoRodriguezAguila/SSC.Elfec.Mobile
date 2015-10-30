@@ -11,18 +11,23 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.telephony.TelephonyManager;
 import android.text.Html;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnFocusChangeListener;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.alertdialogpro.ProgressDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ButtonClicksHelper;
+import com.elfec.ssc.helpers.KeyboardHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
@@ -42,6 +47,7 @@ public class RegisterAccount extends AppCompatActivity implements
 	private RegisterAccountPresenter presenter;
 	private EditText txtNUS;
 	private EditText txtAccountNumber;
+	private LinearLayout mRootLayout;
 	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	private AlertDialog waitingWSDialog;
 
@@ -57,8 +63,21 @@ public class RegisterAccount extends AppCompatActivity implements
 		((TextView) toolbar.findViewById(R.id.toolbar_title))
 				.setText(R.string.register_account_title);
 		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		mRootLayout = (LinearLayout) findViewById(R.id.view_content);
 		txtNUS = (EditText) findViewById(R.id.txt_nus);
 		txtAccountNumber = (EditText) findViewById(R.id.txt_accountNumber);
+		txtAccountNumber
+				.setOnEditorActionListener(new OnEditorActionListener() {
+					@Override
+					public boolean onEditorAction(TextView v, int actionId,
+							KeyEvent event) {
+						if (actionId == EditorInfo.IME_ACTION_DONE) {
+							KeyboardHelper.hideKeyboard(mRootLayout);
+							btnRegisterAccountClick(mRootLayout);
+						}
+						return false;
+					}
+				});
 		croutonStyle = new de.keyboardsurfer.android.widget.crouton.Style.Builder()
 				.setFontName("fonts/segoe_ui_semilight.ttf")
 				.setTextSize(16)
@@ -269,8 +288,8 @@ public class RegisterAccount extends AppCompatActivity implements
 			public void run() {
 				Crouton.clearCroutonsForActivity(RegisterAccount.this);
 				Crouton.makeText(RegisterAccount.this,
-						R.string.errors_in_fields, croutonStyle,
-						R.id.view_content).show();
+						R.string.errors_in_fields, croutonStyle, mRootLayout)
+						.show();
 			}
 		});
 	}
