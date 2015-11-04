@@ -92,9 +92,9 @@
     <!-- Notificaciones -->
 
     <string name="notifications_title">Notificaciones</string>
-    <string name="outage_group">Cortes</string>
+    <string name="outage_group">Cortes e información</string>
     <string name="accounts_group">Cuentas</string>
-    <string name="lbl_no_outage_notifications">Actualmente no tiene ninguna notificación de cortes</string>
+    <string name="lbl_no_outage_notifications">Actualmente no tiene ninguna notificación de cortes ni informaciones</string>
     <string name="lbl_no_account_notifications">Actualmente no tiene ninguna notificación de sus cuentas</string>
     <string name="delete_notifications_title">ELIMINAR NOTIFICACIONES</string>
     <string name="delete_outage_notifications_msg">Está apunto de eliminar el historial de las notificaciones de cortes ¿confirma que desea hacerlo?</string>

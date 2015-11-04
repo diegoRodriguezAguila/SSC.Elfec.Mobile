@@ -2,12 +2,14 @@ package com.elfec.ssc.model.enums;
 
 /**
  * Representa las distintas keys de notificaciones
+ * 
  * @author Diego
  *
  */
 public enum NotificationKey {
 	/**
-	 * Notificación de que se agregó una nueva cuenta para ese cliente en otro dispositivo
+	 * Notificación de que se agregó una nueva cuenta para ese cliente en otro
+	 * dispositivo
 	 */
 	NEW_ACCOUNT("NewAccount"),
 	/**
@@ -37,51 +39,54 @@ public enum NotificationKey {
 	/**
 	 * Key de Notificación indefinido
 	 */
-	MISCELLANEOUS("Miscellaneous");
-	
+	MISCELLANEOUS("Miscellaneous"),
+	/**
+	 * Notificación de vencimiento de factura
+	 */
+	EXPIRED_DEBT("ExpiredDebt");
+
 	private String string;
-	
-	private NotificationKey(String string)
-	{
+
+	private NotificationKey(String string) {
 		this.string = string;
 	}
-	
+
 	@Override
 	public String toString() {
-	       return string;
-    }
+		return string;
+	}
 
 	/**
 	 * Obtiene la key de notificación que corresponde al short provisto
+	 * 
 	 * @param status
 	 * @return
 	 */
-	public static NotificationKey get(short status)
-	{
+	public static NotificationKey get(short status) {
 		return NotificationKey.values()[status];
 	}
-	
+
 	/**
-	 * Obtiene el NotificationKey correspondiente a la key en cadena provista 
+	 * Obtiene el NotificationKey correspondiente a la key en cadena provista
+	 * 
 	 * @param keyAsString
 	 * @return
 	 */
-	public static NotificationKey get(String keyAsString)
-	{
+	public static NotificationKey get(String keyAsString) {
 		NotificationKey[] notifKeys = NotificationKey.values();
 		for (int i = 0; i < notifKeys.length; i++) {
-			if(notifKeys[i].toString().equals(keyAsString))
+			if (notifKeys[i].toString().equals(keyAsString))
 				return notifKeys[i];
 		}
 		return NotificationKey.MISCELLANEOUS;
 	}
-	
+
 	/**
 	 * Convierte la key de notificación a su short equivalente
+	 * 
 	 * @return Short equivalente a la key de notificación
 	 */
-	public short toShort()
-	{
-		return (short)this.ordinal();
+	public short toShort() {
+		return (short) this.ordinal();
 	}
 }

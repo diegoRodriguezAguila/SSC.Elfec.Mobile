@@ -6,8 +6,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.support.v4.content.res.ResourcesCompat;
-import android.text.Html;
+import android.support.annotation.IntegerRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.MeasureSpec;
@@ -15,132 +14,125 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.utils.NotificationDrawablePicker;
 import com.elfec.ssc.model.Notification;
+import com.elfec.ssc.view.adapters.viewholders.NotificationViewHolder;
 import com.elfec.ssc.view.animations.HeightAnimation;
 
 public class NotificationAdapter extends ArrayAdapter<Notification> {
 
-	private List<AdapterItemWrapper<Notification>> notifications;
-	private int resource;
-	private LayoutInflater inflater = null;
-	public NotificationAdapter(Context context, int resource,
+	private List<ExpandableItem> mExpandedStatuses;
+	private List<Notification> mNotifications;
+	private int mRresourceId;
+	private LayoutInflater mInflater = null;
+
+	public NotificationAdapter(Context context, @IntegerRes int resource,
 			List<Notification> notifications) {
 		super(context, resource, notifications);
-		this.notifications = new ArrayList<AdapterItemWrapper<Notification>>();
-		for(Notification notif : notifications)
-		{
-			this.notifications.add(new AdapterItemWrapper<Notification>(notif,
-					NotificationDrawablePicker.getDrawable(notif.getKey())));
+		mInflater = LayoutInflater.from(context);
+		int size = notifications.size();
+		mExpandedStatuses = new ArrayList<ExpandableItem>(size);
+		for (int i = 0; i < size; i++) {
+			mExpandedStatuses.add(new ExpandableItem());
 		}
-		this.resource = resource;
-		inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	@Override
-	public int getCount() {
-		return notifications.size();
+		this.mRresourceId = resource;
+		this.mNotifications = notifications;
 	}
 
 	@Override
 	public Notification getItem(int position) {
-		return notifications.get(position).getWrappedObject();
+		return mNotifications.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
-	
-	@Override
-	public void addAll(Collection<? extends Notification> collection) {
-		for(Notification notif : collection)
-		{
-			this.notifications.add(new AdapterItemWrapper<Notification>(notif,
-					NotificationDrawablePicker.getDrawable(notif.getKey())));
-		}
-		notifyDataSetChanged();
-	}
-	
+
 	/**
 	 * Agrega una notificación al frente y elimina la ultima
+	 * 
 	 * @param notification
 	 */
-	public void addNewNotificationUpdate(Notification notification, boolean removeLast)
-	{
-		this.notifications.add(0, new AdapterItemWrapper<Notification>(notification, 
-				NotificationDrawablePicker.getDrawable(notification.getKey())));
-		if(removeLast)
-			this.notifications.remove(this.notifications.size()-1);
+	public void addNewNotificationUpdate(Notification notification,
+			boolean removeLast) {
+		mNotifications.add(0, notification);
+		mExpandedStatuses.add(0, new ExpandableItem(true));
+		if (removeLast) {
+			int delPos = mNotifications.size() - 1;
+			mNotifications.remove(delPos);
+			mExpandedStatuses.remove(delPos);
+		}
 		notifyDataSetChanged();
 	}
-	
+
+	@Override
+	public void addAll(Collection<? extends Notification> collection) {
+		mNotifications.addAll(collection);
+		int size = collection.size();
+		for (int i = 0; i < size; i++) {
+			this.mExpandedStatuses.add(new ExpandableItem());
+		}
+		notifyDataSetChanged();
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		final AdapterItemWrapper<Notification> wrappedNotif = notifications.get(position);
-		if(convertView==null || Integer.parseInt(convertView.getTag().toString())!=position)
-		{
-			convertView = inflater.inflate(resource, null);
-			convertView.setTag(position);
-			final TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
-			setClickListenerToItem(wrappedNotif, convertView,
-					txtNotifMessage, position);
-			txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,MeasureSpec.UNSPECIFIED);
-			txtNotifMessage.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
-                @SuppressLint("NewApi")
-				@SuppressWarnings("deprecation")
-				@Override
-                public void onGlobalLayout() {
-        			wrappedNotif.setExpandedSize(txtNotifMessage.getLineCount() * txtNotifMessage.getLineHeight());
-        			 if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN){
-        				 txtNotifMessage.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-        			    }else{
-        			    	txtNotifMessage.getViewTreeObserver().removeGlobalOnLayoutListener(this);
-        			    }
-                }
-  });
-		}
-		TextView txtNotifMessage = (TextView) convertView.findViewById(R.id.list_item_notification_message);
-		int endSize = 0;
-		if(wrappedNotif.isExpanded())
-		{
-			endSize =  wrappedNotif.getExpandedSize();
-		}
-		txtNotifMessage.getLayoutParams().height = endSize;
-		Notification notification = wrappedNotif.getWrappedObject();
-		((ImageView) convertView.findViewById(R.id.notification_image)).setImageDrawable(
-				ResourcesCompat.getDrawable(getContext().getResources(), wrappedNotif.getImageResourceId(), getContext().getTheme()));
-		((TextView) convertView.findViewById(R.id.list_item_notification_title)).setText(Html.fromHtml(notification.getTitle()));
-		txtNotifMessage.setText(Html.fromHtml(notification.getContent()));
-		((TextView) convertView.findViewById(R.id.list_item_notification_date)).setText(notification.getInsertDate().toString("dd MMM yyyy"));
-		((TextView) convertView.findViewById(R.id.list_item_notification_time)).setText(notification.getInsertDate().toString("HH:mm"));
-
-		return convertView;
-	}
-	
-	private void setClickListenerToItem(
-			final AdapterItemWrapper<Notification> wrappedNotif,
-			final View convertView, final TextView txtNotifMessage, final int pos) {		
-				convertView.setOnClickListener(new OnClickListener() {				
+		NotificationViewHolder viewHolder;
+		if (convertView == null) {
+			convertView = mInflater.inflate(mRresourceId, parent, false);
+			viewHolder = new NotificationViewHolder(convertView);
+			convertView.setTag(viewHolder);
+		} else
+			viewHolder = (NotificationViewHolder) convertView.getTag();
+		final ExpandableItem expandedStatus = mExpandedStatuses.get(position);
+		viewHolder.bindNotification(getItem(position), expandedStatus);
+		final TextView txtNotifMessage = viewHolder.lblMessage;
+		txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,
+				MeasureSpec.UNSPECIFIED);
+		txtNotifMessage.getViewTreeObserver().addOnGlobalLayoutListener(
+				new ViewTreeObserver.OnGlobalLayoutListener() {
+					@SuppressLint("NewApi")
+					@SuppressWarnings("deprecation")
 					@Override
-					public void onClick(View v) {
-						int initSize = 0;
-						int endSize = wrappedNotif.getExpandedSize();
-						if(wrappedNotif.isExpanded())
-						{
-							initSize = wrappedNotif.getExpandedSize();
-							endSize = 0;
+					public void onGlobalLayout() {
+						expandedStatus.setExpandedSize(txtNotifMessage
+								.getLineCount()
+								* txtNotifMessage.getLineHeight());
+						if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
+							txtNotifMessage.getViewTreeObserver()
+									.removeOnGlobalLayoutListener(this);
+						} else {
+							txtNotifMessage.getViewTreeObserver()
+									.removeGlobalOnLayoutListener(this);
 						}
-						wrappedNotif.setExpanded(!wrappedNotif.isExpanded());
-						HeightAnimation heightAnim = new HeightAnimation(txtNotifMessage,
-								initSize, endSize);
-						heightAnim.setDuration(250);
-						txtNotifMessage.startAnimation(heightAnim);
 					}
 				});
+		setClickListenerToItem(expandedStatus, convertView,
+				viewHolder.lblMessage, position);
+		return convertView;
+	}
+
+	private void setClickListenerToItem(final ExpandableItem expandedStatus,
+			final View convertView, final TextView txtNotifMessage,
+			final int pos) {
+		convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				int initSize = 0;
+				int endSize = expandedStatus.getExpandedSize();
+				if (expandedStatus.isExpanded()) {
+					initSize = expandedStatus.getExpandedSize();
+					endSize = 0;
+				}
+				expandedStatus.setExpanded(!expandedStatus.isExpanded());
+				HeightAnimation heightAnim = new HeightAnimation(
+						txtNotifMessage, initSize, endSize);
+				heightAnim.setDuration(250);
+				txtNotifMessage.startAnimation(heightAnim);
+			}
+		});
 	}
 
 }
