@@ -1,4 +1,4 @@
-package com.elfec.ssc.helpers;
+package com.elfec.ssc.helpers.ui;
 
 import android.os.SystemClock;
 

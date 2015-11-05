@@ -19,7 +19,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.TextFormater;
+import com.elfec.ssc.helpers.utils.TextFormater;
 import com.elfec.ssc.model.Debt;
 
 public class DebtAdapter extends ArrayAdapter<Debt> {

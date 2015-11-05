@@ -16,6 +16,8 @@ import android.view.ViewTreeObserver;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import com.elfec.ssc.helpers.ui.DrawableCache;
+import com.elfec.ssc.helpers.utils.NotificationDrawablePicker;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.view.adapters.viewholders.NotificationViewHolder;
 import com.elfec.ssc.view.animations.HeightAnimation;
@@ -25,6 +27,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 	private List<ExpandableItem> mExpandedStatuses;
 	private List<Notification> mNotifications;
 	private int mRresourceId;
+	private DrawableCache mDrawableCache;
 	private LayoutInflater mInflater = null;
 
 	public NotificationAdapter(Context context, @IntegerRes int resource,
@@ -38,6 +41,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		}
 		this.mRresourceId = resource;
 		this.mNotifications = notifications;
+		this.mDrawableCache = new DrawableCache(context);
 	}
 
 	@Override
@@ -58,7 +62,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 	public void addNewNotificationUpdate(Notification notification,
 			boolean removeLast) {
 		mNotifications.add(0, notification);
-		mExpandedStatuses.add(0, new ExpandableItem(true));
+		mExpandedStatuses.add(0, new ExpandableItem());
 		if (removeLast) {
 			int delPos = mNotifications.size() - 1;
 			mNotifications.remove(delPos);
@@ -87,10 +91,21 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		} else
 			viewHolder = (NotificationViewHolder) convertView.getTag();
 		final ExpandableItem expandedStatus = mExpandedStatuses.get(position);
-		viewHolder.bindNotification(getItem(position), expandedStatus);
+		final Notification notif = getItem(position);
+		viewHolder.bindNotification(notif, expandedStatus, mDrawableCache
+				.getDrawable(NotificationDrawablePicker.getDrawable(notif
+						.getKey())));
 		final TextView txtNotifMessage = viewHolder.lblMessage;
 		txtNotifMessage.measure(MeasureSpec.UNSPECIFIED,
 				MeasureSpec.UNSPECIFIED);
+		setGlobalLayoutListener(expandedStatus, txtNotifMessage);
+		setClickListenerToItem(expandedStatus, convertView,
+				viewHolder.lblMessage, position);
+		return convertView;
+	}
+
+	private void setGlobalLayoutListener(final ExpandableItem expandedStatus,
+			final TextView txtNotifMessage) {
 		txtNotifMessage.getViewTreeObserver().addOnGlobalLayoutListener(
 				new ViewTreeObserver.OnGlobalLayoutListener() {
 					@SuppressLint("NewApi")
@@ -109,9 +124,6 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 						}
 					}
 				});
-		setClickListenerToItem(expandedStatus, convertView,
-				viewHolder.lblMessage, position);
-		return convertView;
 	}
 
 	private void setClickListenerToItem(final ExpandableItem expandedStatus,

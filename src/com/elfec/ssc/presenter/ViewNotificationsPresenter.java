@@ -110,7 +110,6 @@ public class ViewNotificationsPresenter {
 				newOutageNotifications.removeAll(outageNotifications);
 				view.addOutageNotifications(newOutageNotifications);
 				view.loadAndRefreshOutageFinished();
-				outageNotifications.addAll(newOutageNotifications);
 				view.setMoreOutageNotificationsEnabled(outageSize > currentOutageLimit);
 			}
 		});
@@ -135,7 +134,6 @@ public class ViewNotificationsPresenter {
 				newAccountNotifications.removeAll(accountNotifications);
 				view.addAccountNotifications(newAccountNotifications);
 				view.loadAndRefreshAccountsFinished();
-				accountNotifications.addAll(newAccountNotifications);
 				view.setMoreAcccountNotificationsEnabled(accountsSize > currentAccountsLimit);
 			}
 		});

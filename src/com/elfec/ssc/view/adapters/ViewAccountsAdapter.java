@@ -18,8 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.TextFormater;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
+import com.elfec.ssc.helpers.utils.TextFormater;
 import com.elfec.ssc.model.Account;
 
 public class ViewAccountsAdapter extends ArrayAdapter<Account> {

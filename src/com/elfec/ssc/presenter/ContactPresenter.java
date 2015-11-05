@@ -1,7 +1,7 @@
 package com.elfec.ssc.presenter;
 
-import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
+import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.model.Contact;
 import com.elfec.ssc.presenter.views.IContact;
 

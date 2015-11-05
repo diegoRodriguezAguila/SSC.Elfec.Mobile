@@ -1,10 +1,8 @@
-package com.elfec.ssc.helpers;
+package com.elfec.ssc.helpers.threading;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
-
-import com.elfec.ssc.helpers.threading.OnReleaseThread;
 
 /**
  * Esta clase sirve coordinar el acceso a recursos entre hilos

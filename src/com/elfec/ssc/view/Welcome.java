@@ -12,7 +12,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.ButtonClicksHelper;
+import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.WelcomePresenter;
 import com.elfec.ssc.presenter.views.IWelcome;
 import com.elfec.ssc.security.PreferencesManager;

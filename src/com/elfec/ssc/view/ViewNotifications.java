@@ -3,15 +3,19 @@ package com.elfec.ssc.view;
 import java.util.List;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Animation.AnimationListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
@@ -20,8 +24,8 @@ import android.widget.TextView;
 
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
-import com.elfec.ssc.helpers.ButtonClicksHelper;
 import com.elfec.ssc.helpers.ViewPresenterManager;
+import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
 import com.elfec.ssc.presenter.views.IViewNotifications;
@@ -178,9 +182,8 @@ public class ViewNotifications extends AppCompatActivity implements
 			outageStatus = ExpandStatus.COLLAPSED;
 			accountsStatus = ExpandStatus.COLLAPSED;
 		}
-		changeLinearLayoutHeight(outageLayout, outageStatus, outageListView);
-		changeLinearLayoutHeight(accountsLayout, accountsStatus,
-				accountsListView);
+		changeLinearLayoutHeight(outageLayout, outageStatus);
+		changeLinearLayoutHeight(accountsLayout, accountsStatus);
 	}
 
 	public void btndeleteOutageNotificationsClick(View view) {
@@ -219,7 +222,7 @@ public class ViewNotifications extends AppCompatActivity implements
 	 * @param concordantListView
 	 */
 	public void changeLinearLayoutHeight(final LinearLayout wichLayout,
-			final ExpandStatus expandSize, final XListView concordantListView) {
+			final ExpandStatus expandSize) {
 		int selectedSize = -1;
 		if (expandSize == ExpandStatus.COLLAPSED)
 			selectedSize = 0;
@@ -229,8 +232,32 @@ public class ViewNotifications extends AppCompatActivity implements
 			selectedSize = fullSize;
 		HeightAnimation heightAnim = new HeightAnimation(wichLayout,
 				wichLayout.getHeight(), selectedSize);
-		heightAnim.setDuration(500);
+		heightAnim.setDuration(400);
+		enableHWAceleration(wichLayout, heightAnim);
+
 		wichLayout.startAnimation(heightAnim);
+	}
+
+	@SuppressLint({ "InlinedApi", "NewApi" })
+	private void enableHWAceleration(final LinearLayout wichLayout,
+			HeightAnimation heightAnim) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			wichLayout.setLayerType(View.LAYER_TYPE_HARDWARE, null);
+			heightAnim.setAnimationListener(new AnimationListener() {
+				@Override
+				public void onAnimationStart(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationRepeat(Animation animation) {
+				}
+
+				@Override
+				public void onAnimationEnd(Animation animation) {
+					wichLayout.setLayerType(View.LAYER_TYPE_NONE, null);
+				}
+			});
+		}
 	}
 
 	/**

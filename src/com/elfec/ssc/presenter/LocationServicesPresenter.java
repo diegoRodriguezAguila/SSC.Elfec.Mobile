@@ -7,8 +7,8 @@ import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.LocationPointsManager;
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
-import com.elfec.ssc.helpers.ThreadMutex;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
+import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.LocationServicesMessages;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;

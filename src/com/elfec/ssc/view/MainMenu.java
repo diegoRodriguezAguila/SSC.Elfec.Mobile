@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.alertdialogpro.AlertDialogPro;
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.SSLConection;
-import com.elfec.ssc.helpers.ButtonClicksHelper;
+import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
 import com.elfec.ssc.security.PreferencesManager;
