@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/SSC.Elfec.Mobile.iml" filepath="$PROJECT_DIR$/SSC.Elfec.Mobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sscElfecMobile/sscElfecMobile.iml" filepath="$PROJECT_DIR$/sscElfecMobile/sscElfecMobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sscElfecMobile/sscElfecMobile.iml" filepath="$PROJECT_DIR$/sscElfecMobile/sscElfecMobile.iml" />
+      <module fileurl="file://$PROJECT_DIR$/supertoasts/supertoasts.iml" filepath="$PROJECT_DIR$/supertoasts/supertoasts.iml" />
+    </modules>
+  </component>
+</project>

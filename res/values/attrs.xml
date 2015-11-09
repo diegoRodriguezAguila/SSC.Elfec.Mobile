@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <declare-styleable name="SquareButtonOptions">
-        <attr name="buttonText" format="string" localization="suggested" />
-        <attr name="buttonIcon" format="string" localization="suggested" />
-        <attr name="buttonBackground" format="reference" localization="suggested" />
-    </declare-styleable>
-</resources>
-
