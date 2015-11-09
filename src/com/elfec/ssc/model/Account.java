@@ -228,30 +228,33 @@ public class Account extends Model {
 	}
 
 	/**
-	 * Agrega una nueva deuda siempre y cuando no exista ya en la lista de
-	 * deudas
+	 * Elimina todas las deudas de esta cuenta
+	 */
+	public void removeAllDebts() {
+		List<Debt> debts = getDebts();
+		for (Debt debt : debts) {
+			debt.delete();
+		}
+	}
+
+	/**
+	 * Agrega una nueva deuda
 	 * 
 	 * @param debt
 	 */
 	public void addDebt(Debt newDebt) {
 		List<Debt> debts = getDebts();
-		for (Debt debt : debts) {
-			if (debt.getReceiptNumber() == newDebt.getReceiptNumber())
-				return;
-		}
 		debts.add(newDebt);
 	}
 
 	/**
-	 * Agrega una lista de deudas siempre y cuando cada una no exista ya en la
-	 * lista de deudas
+	 * Agrega una lista de deudas siempre
 	 * 
 	 * @param debt
 	 */
 	public void addDebts(List<Debt> newDebt) {
-		for (Debt debt : newDebt) {
-			this.addDebt(debt);
-		}
+		List<Debt> debts = getDebts();
+		debts.addAll(newDebt);
 	}
 
 	/**
