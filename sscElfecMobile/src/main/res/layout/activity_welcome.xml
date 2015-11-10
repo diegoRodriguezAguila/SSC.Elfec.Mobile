@@ -23,7 +23,7 @@
         android:textColor="@color/ssc_elfec_color"
         android:layout_centerHorizontal="true"
         android:text="@string/welcome_to_app"
-        android:textAppearance="@style/TextAppearance.CustomFont.Title" 
+        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
         android:textSize="34sp" /> 
 
         <ImageView
@@ -52,7 +52,7 @@
             android:textSize="28sp"
             android:lineSpacingExtra="-8dp"
             android:paddingTop="20dp"
-            android:textAppearance="@style/TextAppearance.CustomFont.Title" />
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
 
        
 		
@@ -93,7 +93,7 @@
             android:textSize="22sp"
             android:lineSpacingExtra="-2dp"
             android:gravity="start|center_vertical"
-            android:textAppearance="@style/TextAppearance.CustomFont.Title" />
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
 		<RelativeLayout
 		    android:background="@color/dark_gray" 
 		    android:layout_width="fill_parent"
@@ -125,11 +125,10 @@
             android:textSize="22sp"
             android:lineSpacingExtra="-2dp"
             android:gravity="start|center_vertical"
-            android:textAppearance="@style/TextAppearance.CustomFont.Title" />
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
 
 		    <Button
 		        android:id="@+id/btn_decline_account"
-		        style="@style/Button_mahapp"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentBottom="true"
@@ -143,7 +142,6 @@
 
 		    <Button
 		        android:id="@+id/btn_select_account"
-		        style="@style/Button_mahapp"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignTop="@+id/btn_decline_account"

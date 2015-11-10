@@ -35,7 +35,7 @@
             android:layout_toLeftOf="@+id/list_item_notification_datetime"
             android:layout_toEndOf="@+id/list_item_notification_datetime"          
             android:text="@string/account_deleted_sample"
-            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
             android:textColor="@color/dark_gray"
             android:textSize="18sp" />
 
@@ -56,7 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date_sample"
-                android:textAppearance="@style/TextAppearance.CustomFont.Normal"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Normal"
                 android:textColor="@color/ssc_elfec_color"
                 android:textSize="12sp" />
 
@@ -66,7 +66,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/time_sample"
                 android:textColor="@color/ssc_elfec_color"
-                android:textAppearance="@style/TextAppearance.CustomFont.Normal"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Normal"
                 android:textSize="13sp" />
         </LinearLayout>
     </RelativeLayout>
@@ -83,7 +83,7 @@
         android:layout_marginBottom="10dp"
         android:text="@string/notification_message_sample"
         android:textColor="@color/dark_gray"
-        android:textAppearance="@style/TextAppearance.CustomFont.Normal"
+        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Normal"
         android:textSize="15sp" />
     <View
                 android:id="@+id/static_separator"

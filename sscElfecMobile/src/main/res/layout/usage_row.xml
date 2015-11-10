@@ -14,7 +14,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:text="@string/short_date_sample"
-        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
         android:textColor="@color/dark_gray"
         android:textSize="18sp" />
 
@@ -29,7 +29,6 @@
         android:layout_marginStart="5dp"
         android:layout_marginRight="5dp"
         android:layout_marginEnd="5dp"
-        style="@style/ProgressBarssc_elfec"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         
@@ -42,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:text="@string/usage_sample" android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+        android:text="@string/usage_sample" android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
         android:textColor="@color/dark_gray"
         android:textSize="18sp" />
 </RelativeLayout>

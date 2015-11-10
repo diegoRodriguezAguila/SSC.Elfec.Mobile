@@ -62,7 +62,7 @@
                 android:inputType="number"
                 android:maxLength="10"
                 android:tag="NotNullOrEmpty; MinLenght, 4"
-                android:textAppearance="@style/TextAppearance.CustomFont.EditText" >
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.EditText" >
             </EditText>
         </LinearLayout>
 
@@ -99,7 +99,7 @@
                 android:hint="@string/account_sample"
                 android:inputType="number"
                 android:tag="NotNullOrEmpty; MinLenght, 10"
-                android:textAppearance="@style/TextAppearance.CustomFont.EditText"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.EditText"
                 app:mask="@string/account_mask" />
         </LinearLayout>
 
@@ -113,7 +113,7 @@
             android:layout_alignStart="@+id/account_layout"
             android:layout_below="@+id/account_layout"
             android:layout_marginTop="10dp"
-            android:textAppearance="@style/TextAppearance.CustomFont.Button"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Button"
             android:onClick="btnRegisterAccountClick"
             android:text="@string/btn_register" />
     </RelativeLayout>

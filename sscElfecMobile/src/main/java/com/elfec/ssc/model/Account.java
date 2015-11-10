@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstracciï¿½n de las cuentas de usuario
+ * Abstracci?n de las cuentas de usuario
  * 
  * @author Diego
  *
@@ -85,6 +85,31 @@ public class Account extends Model {
 	private List<Debt> Debts;
 
 	private List<Usage> Usages;
+
+	/**
+	 * Copia los atributos de la cuenta del parámetro a la cuenta actual. Los
+	 * atributos que se copian son:
+	 * <ul>
+	 *     <li>AccountOwner</li>
+	 *     <li>AccountNumber</li>
+	 *     <li>Address</li>
+	 *     <li>Latitude</li>
+	 *     <li>Longitude</li>
+	 *     <li>EnergySupplyStatus</li>
+     *     <li>Debts</li>
+	 * </ul>
+     * No guarda los cambios por tanto tiene que llamarse a save() para que persistan
+	 * @param account cuenta
+	 */
+	public void copyAttributes(Account account){
+		this.AccountOwner = account.getAccountOwner();
+		this.AccountNumber = account.getAccountNumber();
+		this.Address = account.getAddress();
+		this.Latitude = account.getLatitude();
+		this.Longitude = account.getLongitude();
+		setEnergySupplyStatus(account.getEnergySupplyStatus());
+        this.addDebts(account.getDebts());
+	}
 
 	public BigDecimal getTotalDebt() {
 		BigDecimal total = BigDecimal.ZERO;
@@ -258,7 +283,7 @@ public class Account extends Model {
 	}
 
 	/**
-	 * Busca una cuenta que coincida con los parï¿½metros
+	 * Busca una cuenta que coincida con los parámetros
 	 * 
 	 * @param gmail
 	 * @param nus
@@ -270,25 +295,6 @@ public class Account extends Model {
 				.where("NUS=? AND Gmail=?", nus, gmail).executeSingle();
 	}
 
-	/**
-	 * Busca una cuenta que coincida con los parï¿½metros
-	 * 
-	 * @param gmail
-	 * @param nus
-	 * @param accountNumber
-	 * @return
-	 */
-	public static Account findAccount(String gmail, String nus,
-			String accountNumber) {
-		return new Select()
-				.from(Account.class)
-				.as("a")
-				.join(Client.class)
-				.as("c")
-				.on("a.Client=c.Id")
-				.where("NUS=? AND AccountNumber=? AND Gmail=?", nus,
-						accountNumber, gmail).executeSingle();
-	}
 
 	/**
 	 * Busca una cuenta con el id proporcionado

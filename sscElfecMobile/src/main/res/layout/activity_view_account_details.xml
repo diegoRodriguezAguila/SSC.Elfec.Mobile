@@ -59,7 +59,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
                             android:text="@string/account_sample"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/dark_gray"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -87,7 +87,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
                             android:text="@string/nus_sample"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/dark_gray"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -115,7 +115,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
                             android:text="@string/name_sample"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/dark_gray"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -146,7 +146,7 @@
                             android:layout_marginStart="5dp"
                             android:duplicateParentState="true"
                             android:text="@string/address_sample"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/contact_link_txt_color"
                             android:textSize="18sp" />
                     </LinearLayout>
@@ -162,7 +162,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/lbl_account_status"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/dark_gray"
                             android:textSize="18sp" />
 
@@ -173,7 +173,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
                             android:text="@string/account_status_sample"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/ssc_elfec_color"
                             android:textSize="20sp" />
                     </LinearLayout>
@@ -203,7 +203,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/lbl_total_debt"
-                            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/dark_gray"
                             android:textSize="20sp" />
 
@@ -225,7 +225,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/account_balance_sample"
-                                android:textAppearance="@style/TextAppearance.CustomFont.Light"
+                                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Light"
                                 android:textColor="@color/white"
                                 android:textSize="22sp" />
 
@@ -246,7 +246,7 @@
                                     android:includeFontPadding="false"
                                     android:padding="0dp"
                                     android:text="@string/decimal_balance_sample"
-                                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                                    android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                                     android:textColor="@color/white"
                                     android:textSize="13sp" />
 
@@ -262,7 +262,7 @@
                                     android:includeFontPadding="false"
                                     android:padding="0dp"
                                     android:text="@string/lbl_currency"
-                                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                                    android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                                     android:textColor="@color/white"
                                     android:textSize="13sp" />
                             </LinearLayout>
@@ -274,7 +274,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/lbl_debt_detail"
-                        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                         android:textColor="@color/dark_gray"
                         android:textSize="16sp" />
 
@@ -304,7 +304,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/lbl_usage"
-                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                     android:textColor="@color/dark_gray"
                     android:textSize="20sp" />
 

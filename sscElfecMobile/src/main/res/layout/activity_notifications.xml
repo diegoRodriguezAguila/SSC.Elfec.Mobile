@@ -36,7 +36,7 @@
                 android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="@string/outage_group"
-                android:textAppearance="@style/TextAppearance.CustomFont.Title"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
@@ -57,7 +57,7 @@
                 android:onClick="btndeleteOutageNotificationsClick"
                 android:padding="0dp"
                 android:src="@drawable/delete_notifications"
-                android:textAppearance="@style/TextAppearance.CustomFont.Title" />
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
         </RelativeLayout>
 
         <LinearLayout
@@ -80,7 +80,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="@string/lbl_no_outage_notifications"
-                android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                 android:textColor="@color/text_gray_color"
                 android:textSize="18sp" />
 
@@ -121,7 +121,7 @@
                 android:gravity="center_vertical"
                 android:padding="5dp"
                 android:text="@string/accounts_group"
-                android:textAppearance="@style/TextAppearance.CustomFont.Title"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
                 android:textColor="@android:color/white"
                 android:textSize="20sp" />
 
@@ -142,7 +142,7 @@
                 android:onClick="btndeleteAccountNotificationsClick"
                 android:padding="0dp"
                 android:src="@drawable/delete_notifications"
-                android:textAppearance="@style/TextAppearance.CustomFont.Title" />
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
         </RelativeLayout>
 
         <LinearLayout
@@ -164,7 +164,7 @@
                 android:layout_margin="5dp"
                 android:gravity="center"
                 android:text="@string/lbl_no_account_notifications"
-                android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                 android:textColor="@color/text_gray_color"
                 android:textSize="18sp" />
 

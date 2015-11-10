@@ -47,7 +47,7 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/main_menu_title_text_size"
             android:gravity="center"
-            android:textAppearance="@style/TextAppearance.CustomFont.Title" />
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
 		<LinearLayout
 		    android:layout_height="wrap_content"
 		    android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:textColor="@android:color/white"
-		        android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+		        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
 		        android:textSize="@dimen/username_lbl_txt_size"
 		        android:text="@string/lbl_current_client" />
 		    
@@ -73,7 +73,7 @@
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:textColor="@android:color/white"
-		        android:textAppearance="@style/TextAppearance.CustomFont.Light"
+		        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Light"
 		        android:textSize="@dimen/username_txt_size"
 		        android:layout_marginTop="-6dp"
 		        android:gravity="center"

@@ -2,7 +2,6 @@ package com.elfec.ssc.businesslogic;
 
 import com.activeandroid.ActiveAndroid;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
 
@@ -22,42 +21,19 @@ public class ElfecAccountsManager {
 	 * como dueño de la cuenta y con el nus y numero de cuentas proporcionados y
 	 * con estado 1 por defecto
 	 * 
-	 * @param ownerClient
-	 * @param accountNumber
-	 * @param nus
-	 */
-	public static void registerAccount(Client ownerClient,
-			String accountNumber, String nus) {
-		Account newAccount = Account.findAccount(ownerClient.getGmail(), nus,
-				accountNumber);
-		if (newAccount == null) {
-			newAccount = new Account(ownerClient, accountNumber, nus);
-			newAccount.setInsertDate(DateTime.now());
-		} else
-			newAccount.setStatus((short) 1);
-		newAccount.save();
-	}
-
-	/**
-	 * Registra una cuenta de elfec en la base de datos asignando al ownerClient
-	 * como dueño de la cuenta y con el nus y numero de cuentas proporcionados y
-	 * con estado 1 por defecto
-	 * 
-	 * @param account
+	 * @param account cuenta
 	 * @return retorna la cuenta retistrada
 	 */
 	public static Account registerAccount(Account account) {
 		Account newAccount = Account.findAccount(
-				account.getClient().getGmail(), account.getNUS(),
-				account.getAccountNumber());
+				account.getClient().getGmail(), account.getNUS());
 		if (newAccount == null) {
 			newAccount = account;
 			newAccount.setInsertDate(DateTime.now());
 		} else {
 			newAccount.removeAllDebts();
-			newAccount.addDebts(account.getDebts());
 			newAccount.setStatus((short) 1);
-
+            newAccount.copyAttributes(account);
 		}
 		newAccount.save();
 		List<Debt> accountDebts = newAccount.getDebts();

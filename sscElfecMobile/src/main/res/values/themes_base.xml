@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Alert Dialog AppCompat -->
+    <style name="Base.Theme.ElfecSsc.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="colorPrimary">@color/ssc_elfec_color</item>
+        <item name="colorPrimaryDark">@color/ssc_elfec_color_pressed</item>
+        <item name="colorAccent">@color/ssc_elfec_color</item>
+        <item name="colorControlActivated">@color/ssc_elfec_color</item>
+        <item name="android:windowTitleStyle">@style/TextAppearance.ElfecSsc.AlertDialog.Title</item>
+    </style>
+
+    <style name="Base.Theme.ElfecSsc" parent="Theme.AppCompat.Light.NoActionBar">
+
+        <!-- Textview with customfont -->
+        <item name="android:textViewStyle">@style/TextAppearance.ElfecSsc.CustomFont.TextView</item>
+
+
+        <item name="colorPrimary">@color/ssc_elfec_color</item>
+        <item name="colorPrimaryDark">@color/ssc_elfec_color_pressed</item>
+        <item name="colorAccent">@color/ssc_elfec_color_pressed</item>
+
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@color/background_soft_gray</item>
+        <item name="icon">@drawable/actionbar_icon</item>
+        <item name="actionButtonStyle">@style/Widget.ElfecSsc.ActionButton</item>
+
+        <item name="actionBarStyle">@style/Widget.ElfecSsc.ActionBar</item>
+
+        <item name="android:editTextStyle">@style/Widget.ElfecSsc.EditText</item>
+        <item name="editTextStyle">@style/Widget.ElfecSsc.EditText</item>
+        <item name="editTextBackground">@drawable/ssc_elfec_edit_text_holo_light</item>
+        <item name="android:textColorHighlight">#99006086</item>
+
+        <item name="android:buttonStyle">@style/Widget.ElfecSsc.Button</item>
+        <item name="buttonStyle">@style/Widget.ElfecSsc.Button</item>
+        <item name="android:imageButtonStyle">@style/Widget.ElfecSsc.ImageButton</item>
+
+        <item name="android:listViewStyle">@style/Widget.ElfecSsc.ListView</item>
+
+        <item name="actionModeStyle">@style/Widget.ElfecSsc.ActionMode</item>
+        <item name="alertDialogTheme">@style/Theme.ElfecSsc.AlertDialog</item>
+
+    </style>
+
+</resources>

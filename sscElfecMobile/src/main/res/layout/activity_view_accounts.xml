@@ -36,7 +36,7 @@
                 android:lineSpacingExtra="-3dp"
                 android:paddingBottom="7dp"
                 android:text="@string/no_accounts_registered"
-                android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                 android:textColor="@color/ssc_elfec_color_pressed"
                 android:textSize="@dimen/txt_desc_size"
                 android:visibility="gone" />
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/use_button_add"
-                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                     android:textSize="@dimen/txt_desc_size" />
 
                 <ImageView
@@ -89,7 +89,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginStart="5dp"
                     android:text="@string/lbl_for_register"
-                    android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+                    android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                     android:textSize="@dimen/txt_desc_size" />
             </LinearLayout>
             <TextView
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="-8dp"
             android:text="@string/lbl_an_account"
-            android:textAppearance="@style/TextAppearance.CustomFont.Semilight"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
             android:textSize="@dimen/txt_desc_size"
             android:visibility="invisible" />
             <View 
