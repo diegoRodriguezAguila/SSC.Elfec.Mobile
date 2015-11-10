@@ -17,19 +17,28 @@ public class GMapFragment extends SupportMapFragment {
 
 	private OnMapReadyCallback onMapReadyCallback;
 	private GoogleMapOptions options;
-	
-	public GMapFragment(OnMapReadyCallback onMapReadyCallback)
-	{
-		super();
-		this.onMapReadyCallback = onMapReadyCallback;
-	}
-	
-	public GMapFragment(OnMapReadyCallback onMapReadyCallback, GoogleMapOptions options)
-	{
-		super();
-		this.onMapReadyCallback = onMapReadyCallback;
-		this.options = options;
-	}
+
+    /**
+     * Asigna el callback para cuando el mapa está listo
+     * @param onMapReadyCallback
+     * @return la instancia de este fragment
+     */
+    public GMapFragment setOnMapReadyCallback(OnMapReadyCallback onMapReadyCallback){
+
+        this.onMapReadyCallback = onMapReadyCallback;
+        return this;
+    }
+
+    /**
+     * Asigna las opciones del mapa
+     * @param options
+     * @return la instancia de este fragment
+     */
+    public GMapFragment setGoogleMapOptions(GoogleMapOptions options){
+        this.options = options;
+        return this;
+    }
+
 	@Override
 	public void onResume()
 	{

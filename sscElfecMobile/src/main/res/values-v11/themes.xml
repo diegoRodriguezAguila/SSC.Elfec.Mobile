@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- Generated with http://android-holo-colors.com -->
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <style name="Theme.Elfec.Ssc" parent="@style/Base.Theme.Elfec.Ssc" >
+
+        <item name="android:homeAsUpIndicator">@null</item>
+
+        <!-- Light.DarkActionBar specific -->
+
+        <item name="android:editTextStyle">@style/EditTextssc_elfec</item>
+        <item name="android:editTextBackground">@drawable/ssc_elfec_edit_text_holo_light</item>
+        <item name="android:textColorHighlight">#99006086</item>
+        <item name="android:textSelectHandleLeft">@drawable/ssc_elfec_text_select_handle_left</item>
+        <item name="android:textSelectHandleRight">@drawable/ssc_elfec_text_select_handle_right</item>
+        <item name="android:textSelectHandle">@drawable/ssc_elfec_text_select_handle_middle</item>
+        <item name="android:autoCompleteTextViewStyle">@style/AutoCompleteTextViewssc_elfec</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/ssc_elfec_btn_check_holo_light</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/ssc_elfec_btn_radio_holo_light</item>
+        <item name="android:listChoiceBackgroundIndicator">@drawable/ssc_elfec_list_selector_holo_light</item>
+        <item name="android:activatedBackgroundIndicator">@drawable/ssc_elfec_activated_background_holo_light</item>
+        <item name="android:fastScrollThumbDrawable">@drawable/ssc_elfec_fastscroll_thumb_holo</item>
+    </style>
+
+</resources>

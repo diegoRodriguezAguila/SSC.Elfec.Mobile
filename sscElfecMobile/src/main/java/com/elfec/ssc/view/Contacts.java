@@ -24,6 +24,7 @@ public class Contacts extends AppCompatActivity implements IContact {
 
 	private Toolbar toolbar;
 	private boolean isFirst = true;
+    private int mSelectedPhoneNumberIndex;
 	private String facebook;
 	private String facebookId;
 
@@ -32,9 +33,8 @@ public class Contacts extends AppCompatActivity implements IContact {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contacts);
 		presenter = new ContactPresenter(this);
-		toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout
-															// to the toolbar
-															// object
+		// Attaching the layout to the toolbar object
+		toolbar = (Toolbar) findViewById(R.id.tool_bar);
 		setSupportActionBar(toolbar);
 		((TextView) toolbar.findViewById(R.id.toolbar_title))
 				.setText(R.string.contacts_title);
@@ -82,8 +82,6 @@ public class Contacts extends AppCompatActivity implements IContact {
 		});
 
 	}
-
-	private int mSelectedPhoneNumberIndex;
 
 	public void contactPhoneClick(View view) {
 		String phoneNumbersTxt = ((TextView) view).getText().toString();

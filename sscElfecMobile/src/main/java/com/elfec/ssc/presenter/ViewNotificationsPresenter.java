@@ -1,11 +1,11 @@
 package com.elfec.ssc.presenter;
 
-import java.util.List;
-
 import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.model.enums.NotificationType;
 import com.elfec.ssc.presenter.views.IViewNotifications;
+
+import java.util.List;
 
 public class ViewNotificationsPresenter {
 

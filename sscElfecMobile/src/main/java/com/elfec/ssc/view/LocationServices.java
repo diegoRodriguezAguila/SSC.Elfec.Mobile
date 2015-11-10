@@ -162,8 +162,8 @@ public class LocationServices extends AppCompatActivity implements
 							.tiltGesturesEnabled(false)
 							.zoomControlsEnabled(false);
 					FragmentManager fm = getSupportFragmentManager();
-					GMapFragment mapFragment = new GMapFragment(
-							LocationServices.this, options);
+					GMapFragment mapFragment = new GMapFragment().setOnMapReadyCallback(
+							LocationServices.this).setGoogleMapOptions(options);
 					waitingMapDialog.dismiss();
 					System.gc();
 					fm.beginTransaction()
@@ -258,7 +258,7 @@ public class LocationServices extends AppCompatActivity implements
 	/**
 	 * Añade un marker al mapa
 	 * 
-	 * @param point
+	 * @param point point
 	 */
 	private void addMarker(LocationPoint point) {
 		map.addMarker(new MarkerOptions()
@@ -271,7 +271,7 @@ public class LocationServices extends AppCompatActivity implements
 								+ point.getPhone()
 								+ ((point.getStartAttention() != null) ? ("\n"
 										+ point.getStartAttention() + " - " + point
-										.getEndAttention()) : ""))
+								.getEndAttention()) : ""))
 				.icon(BitmapDescriptorFactory
 						.fromResource(point.getType() == LocationPointType.OFFICE ? R.drawable.office_marker
 								: R.drawable.paypoint_marker)));

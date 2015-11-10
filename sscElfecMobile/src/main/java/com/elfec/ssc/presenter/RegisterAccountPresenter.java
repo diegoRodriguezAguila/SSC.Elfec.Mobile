@@ -38,7 +38,7 @@ public class RegisterAccountPresenter {
 	}
 
 	/**
-	 * Obtiene la informaciï¿½n provista por el usuario y del dispositivo
+	 * Obtiene la información provista por el usuario y del dispositivo
 	 */
 	public void processAccountData() {
 		new Thread(new Runnable() {
@@ -64,7 +64,7 @@ public class RegisterAccountPresenter {
 											List<Exception> errorsToShow = new ArrayList<Exception>();
 											errorsToShow
 													.add(new ConnectException(
-															"No fue posible conectarse con el servidor, porfavor revise su conexiï¿½n a internet"));
+															"No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
 											view.showRegistrationErrors(errorsToShow);
 										} else {
 											callRegisterWebService(client);
