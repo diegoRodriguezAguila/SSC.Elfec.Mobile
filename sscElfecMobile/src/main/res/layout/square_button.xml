@@ -38,7 +38,7 @@
             fontPath="fonts/segoe_ui_semilight.ttf"
             tools:ignore="MissingPrefix"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/mtrl_gray"
             android:textSize="@dimen/square_button_txt_size" />
     </RelativeLayout>
 

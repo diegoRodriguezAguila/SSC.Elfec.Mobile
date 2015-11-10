@@ -5,10 +5,6 @@
 
     <style name="Theme.ElfecSsc" parent="Base.Theme.ElfecSsc" >
 
-        <item name="android:homeAsUpIndicator">@null</item>
-
-        <!-- Light.DarkActionBar specific -->
-
         <item name="android:editTextStyle">@style/Widget.ElfecSsc.EditText</item>
         <item name="android:editTextBackground">@drawable/ssc_elfec_edit_text_holo_light</item>
         <item name="android:textColorHighlight">#99006086</item>
@@ -18,6 +14,8 @@
         <item name="android:listChoiceBackgroundIndicator">@drawable/ssc_elfec_list_selector_holo_light</item>
         <item name="android:activatedBackgroundIndicator">@drawable/ssc_elfec_activated_background_holo_light</item>
         <item name="android:fastScrollThumbDrawable">@drawable/ssc_elfec_fastscroll_thumb_holo</item>
+        <item name="android:actionButtonStyle">@style/Widget.ElfecSsc.ActionButton</item>
+        <item name="android:actionBarStyle">@style/Widget.ElfecSsc.ActionBar</item>
     </style>
 
 </resources>

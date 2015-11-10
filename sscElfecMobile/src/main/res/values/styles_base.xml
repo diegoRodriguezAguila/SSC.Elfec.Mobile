@@ -69,19 +69,18 @@
 
     <style name="Base.TextAppearance.ElfecSsc.CustomFont.Button" parent="TextAppearance.AppCompat.Button">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
     </style>
 
     <style name="Base.Widget.ElfecSsc.Button" parent="Widget.AppCompat.Button">
-        <item name="android:background">@drawable/btn_default</item>
-        <item name="android:minHeight">40dip</item>
-        <item name="android:minWidth">64dip</item>
-        <item name="android:paddingBottom">2dp</item>
-        <item name="android:paddingTop">0dp</item>
-        <item name="android:textColor">@android:color/white</item>
         <item name="android:textAppearance">@style/TextAppearance.ElfecSsc.CustomFont.Button</item>
-        <item name="fontPath">fonts/segoe_ui_semilight.ttf</item>
+    </style>
+
+    <style name="Base.Widget.ElfecSsc.Button.Negative" parent="Widget.AppCompat.Button.Colored">
+        <item name="android:textAppearance">@style/TextAppearance.ElfecSsc.CustomFont.Button</item>
+        <item name="colorButtonNormal">@color/mtrl_gray_50</item>
+        <item name="android:textColor">@color/mtrl_gray_800</item>
     </style>
 
     <style name="Base.Widget.ElfecSsc.ImageButton" parent="Widget.AppCompat.ImageButton">

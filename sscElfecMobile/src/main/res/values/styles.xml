@@ -45,6 +45,9 @@
     <style name="Widget.ElfecSsc.Button"
         parent="Base.Widget.ElfecSsc.Button" />
 
+    <style name="Widget.ElfecSsc.Button.Negative"
+        parent="Base.Widget.ElfecSsc.Button.Negative" />
+
     <style name="Widget.ElfecSsc.ImageButton"
         parent="Base.Widget.ElfecSsc.ImageButton" />
 

@@ -95,7 +95,7 @@
             android:gravity="start|center_vertical"
             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
 		<RelativeLayout
-		    android:background="@color/dark_gray" 
+		    android:background="@color/mtrl_gray_300"
 		    android:layout_width="fill_parent"
 		    android:layout_height="match_parent"
 		    android:layout_alignParentLeft="true"
@@ -121,37 +121,38 @@
             android:layout_marginTop="3dp"
             android:text="@string/welcome_create_gmail"
             android:layout_centerHorizontal="true"
-            android:textColor="@android:color/white"
+            android:textColor="@color/mtrl_gray"
             android:textSize="22sp"
             android:lineSpacingExtra="-2dp"
             android:gravity="start|center_vertical"
             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
 
 		    <Button
-		        android:id="@+id/btn_decline_account"
+		        android:id="@+id/btn_select_account"
 		        android:layout_width="wrap_content"
 		        android:layout_height="wrap_content"
 		        android:layout_alignParentBottom="true"
 		        android:layout_alignParentRight="true"
 		        android:layout_alignParentEnd="true"
 		        android:layout_marginRight="5dp"
-		        android:layout_marginEnd="5dp" 
+		        android:layout_marginEnd="5dp"
 		        android:layout_marginBottom="5dp"
-		        android:onClick="btnDeclineAccountClick"
-		        android:text="@string/btn_decline_account" />
-
-		    <Button
-		        android:id="@+id/btn_select_account"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignTop="@+id/btn_decline_account"
-		        android:layout_alignBottom="@+id/btn_decline_account"
-		        android:layout_toLeftOf="@+id/btn_decline_account"
-		        android:layout_toStartOf="@+id/btn_decline_account"
-		        android:layout_marginRight="5dp"
-		        android:layout_marginEnd="5dp" 
 		        android:onClick="btnSelectAccountClick"
 		        android:text="@string/btn_select_account" />
+
+		    <Button
+		        android:id="@+id/btn_decline_account"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_alignTop="@+id/btn_select_account"
+		        android:layout_alignBottom="@+id/btn_select_account"
+		        android:layout_toLeftOf="@+id/btn_select_account"
+		        android:layout_toStartOf="@+id/btn_select_account"
+		        android:layout_marginRight="5dp"
+		        android:layout_marginEnd="5dp"
+		        android:onClick="btnDeclineAccountClick"
+		        android:text="@string/btn_decline_account"
+                android:theme="@style/Widget.ElfecSsc.Button.Negative" />
 
 		</RelativeLayout>
 	</RelativeLayout>

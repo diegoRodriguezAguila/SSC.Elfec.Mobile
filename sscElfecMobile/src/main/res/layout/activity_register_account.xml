@@ -113,7 +113,8 @@
             android:layout_alignStart="@+id/account_layout"
             android:layout_below="@+id/account_layout"
             android:layout_marginTop="10dp"
-            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Button"
+            android:layout_marginLeft="-4dp"
+            android:layout_marginRight="-4dp"
             android:onClick="btnRegisterAccountClick"
             android:text="@string/btn_register" />
     </RelativeLayout>

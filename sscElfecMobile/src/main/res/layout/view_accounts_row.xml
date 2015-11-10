@@ -46,7 +46,7 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/account_sample"
                     android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/mtrl_gray"
                     android:textSize="20sp" />
             </LinearLayout>
 
@@ -74,7 +74,7 @@
                     android:layout_marginStart="5dp"
                     android:text="@string/nus_sample"
                     android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/mtrl_gray"
                     android:textSize="16sp" />
             </LinearLayout>
         </LinearLayout>
@@ -172,7 +172,7 @@
                 android:layout_marginStart="5dp"
                 android:text="@string/name_sample"
                 android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Normal"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/mtrl_gray"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -199,7 +199,7 @@
                 android:layout_marginStart="5dp"
                 android:text="@string/address_sample"
                 android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Normal"
-                android:textColor="@color/dark_gray"
+                android:textColor="@color/mtrl_gray"
                 android:textSize="14sp" />
         </LinearLayout>
     </LinearLayout>

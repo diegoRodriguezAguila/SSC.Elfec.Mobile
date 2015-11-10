@@ -30,7 +30,7 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/month_year_sample"
                     android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/mtrl_gray"
                     android:textSize="20sp" />
         </LinearLayout>
 
@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:text="@string/list_item_debt_expiration_date"
             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/mtrl_gray"
             android:textSize="15sp" />
 
         <TextView
@@ -114,7 +114,7 @@
             android:layout_marginStart="5dp"
             android:text="@string/simple_date_sample"
             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/mtrl_gray"
             android:textSize="15sp" />
     </LinearLayout>
     
@@ -129,7 +129,7 @@
             android:layout_height="wrap_content"
             android:text="@string/list_item_receipt_number_date"
             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/mtrl_gray"
             android:textSize="15sp" />
 
         <TextView
@@ -140,7 +140,7 @@
             android:layout_marginStart="5dp"
             android:text="@string/nus_sample"
             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-            android:textColor="@color/dark_gray"
+            android:textColor="@color/mtrl_gray"
             android:textSize="15sp" />
     </LinearLayout>
 </LinearLayout>
