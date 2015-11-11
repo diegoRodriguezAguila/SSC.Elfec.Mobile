@@ -26,7 +26,7 @@ public class ThreadMutex {
 	}
 	
 	static {
-		instances=new ConcurrentHashMap<String,ThreadMutex>();
+		instances=new ConcurrentHashMap<>();
 	}
 	/**
 	 * Devuelve la instancia actual de un mutex segun su key
@@ -45,7 +45,7 @@ public class ThreadMutex {
 	}
 	
 	/**
-	 * Indica si es que se puede utilizar el recurso compartido, si es que el hilo está libre
+	 * Indica si es que se puede utilizar el recurso compartido, si es que el hilo estÃ¡ libre
 	 * @return
 	 */
 	public boolean isFree()
@@ -87,7 +87,7 @@ public class ThreadMutex {
 	}
 	
 	/**
-	 * Añade un evento a la lista de eventos que se ejecutaran en cuanto se libere el hilo que 
+	 * Aï¿½ade un evento a la lista de eventos que se ejecutaran en cuanto se libere el hilo que 
 	 * ocupa un recurso compartido, si el hilo ya se encuentra libre lo ejecuta directamente
 	 * @param onReleaseEvent
 	 */
