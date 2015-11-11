@@ -30,7 +30,7 @@
         android:layout_marginRight="5dp"
         android:layout_marginEnd="5dp"
         android:layout_width="wrap_content"
-        android:indeterminate="false"
+        style="?android:attr/progressBarStyleHorizontal"
         android:layout_height="wrap_content" />
 
  <TextView
