@@ -99,4 +99,9 @@
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
     </style>
 
+    <style name="Base.Widget.ElfecSsc.ProgressBar.Horizontal" parent="Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_ssc_elfec</item>
+        <item name="android:maxHeight">100dp</item>
+    </style>
+
 </resources>

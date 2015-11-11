@@ -45,6 +45,8 @@
         <item name="actionModeStyle">@style/Widget.ElfecSsc.ActionMode</item>
         <item name="alertDialogTheme">@style/Theme.ElfecSsc.AlertDialog</item>
 
+        <item name="android:progressBarStyleHorizontal">@style/Widget.ElfecSsc.ProgressBar.Horizontal</item>
+
     </style>
 
 </resources>
