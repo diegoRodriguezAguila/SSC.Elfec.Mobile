@@ -64,7 +64,7 @@ public class LocationPointsManager {
 	 */
 	public static List<LocationPoint> getNearestPoints(List<LocationPoint> points,Location current,double maxDistance)
 	{
-		List<LocationPoint> result=new ArrayList<LocationPoint>();
+		List<LocationPoint> result=new ArrayList<>();
 		for(LocationPoint point:points)
 		{
 			if(point.distanceFrom(current)<=maxDistance)

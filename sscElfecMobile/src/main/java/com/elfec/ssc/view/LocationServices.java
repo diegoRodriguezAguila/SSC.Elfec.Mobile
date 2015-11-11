@@ -60,7 +60,7 @@ public class LocationServices extends AppCompatActivity implements
 
 	private final double LAT_ELFEC = -17.3934795;
 	private final double LNG_ELFEC = -66.1651093;
-	private final float DEFAULT_ZOOM = 13.5f;
+	private final float DEFAULT_ZOOM = 15.5f;
     private final Handler mHandler = new Handler();
     private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	private ProgressDialogService waitingMapDialog;
@@ -212,17 +212,18 @@ public class LocationServices extends AppCompatActivity implements
      */
     private void putPointsInMapAsync(final List<LocationPoint> points) {
         final int range = 10;
-        final int delay = 100;
+        final int delay = 70;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 int size = points.size();
-                int iterations = size/range;
+                int iterations = (size/range)+1;
                 int topRange;
                 for(int i=0; i< iterations; i++){
                     topRange = range*(i+1);
                     putPointsInMapUI(
-                            points.subList(range*i, topRange<=size? topRange : size), i*delay);
+                            points.subList(range*i, topRange<size? topRange : size)
+                            , i*delay);
                 }
             }
         }).start();

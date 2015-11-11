@@ -135,7 +135,7 @@ public class AccountPickerDialogService {
 			acm.addAccount(GOOGLE_ACCOUNT_TYPE, null, null, null,
 					activity, callback, null);
 		} 
-		else // si selecion� una cuenta existente
+		else // si selecionó una cuenta existente
 		{
 			AccountPickerDialogService.this.onAccountPicked
 					.onAccountPicked(googleAccounts

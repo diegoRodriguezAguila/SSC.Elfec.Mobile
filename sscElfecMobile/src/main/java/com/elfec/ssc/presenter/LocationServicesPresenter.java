@@ -39,17 +39,8 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Obtiene la lista de puntos
-	 * @return
-	 */
-	public List<LocationPoint> getPoints()
-	{
-		return points;
-	}
-	
-	/**
-	 * Asigna la distancia en metros para realizar la filtraci�n de puntos, cuando la opci�n
-	 * de m�s cercanos es seleccionada
+	 * Asigna la distancia en metros para realizar la filtración de puntos, cuando la opción
+	 * de más cercanos es seleccionada
 	 * @param distance
 	 */
 	public void setDistanceRange(int distance)
@@ -65,7 +56,7 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Filtra la lista de puntos seg�n el tipo de punto
+	 * Filtra la lista de puntos según el tipo de punto
 	 * @param selectedType
 	 */
 	public void setSelectedType(LocationPointType selectedType)
@@ -81,7 +72,7 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Filtra la lista de puntos seg�n el tipo de proximidad definido, usando el punto de locaci�n exacto
+	 * Filtra la lista de puntos segón el tipo de proximidad definido, usando el punto de locación exacto
 	 * @param distance
 	 */
 	public void setSelectedDistance(LocationDistance distance, Location currentLocation)
@@ -94,7 +85,7 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Filtra la lista de puntos seg�n el tipo de proximidad definido, obteniendo la locaci�n de la vista
+	 * Filtra la lista de puntos segón el tipo de proximidad definido, obteniendo la locación de la vista
 	 * @param distance
 	 */
 	public void setSelectedDistance(LocationDistance distance)
@@ -103,7 +94,7 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Actualiza el filtro de ubicaci�n si cuando la ubicaci�n cambia o se obtiene una nueva ubicaci�n
+	 * Actualiza el filtro de ubicación si cuando la ubicación cambia o se obtiene una nueva ubicación
 	 */
 	public void updateSelectedDistancePoints(Location recievedLocation)
 	{
@@ -116,11 +107,11 @@ public class LocationServicesPresenter {
 	}
 	
 	/**
-	 * Obtiene la lista de puntos de ubicaci�n en un hilo
+	 * Obtiene la lista de puntos de ubicación en un hilo
 	 */
 	public void loadLocations()
 	{
-		Thread thread=new Thread(new Runnable() {
+		new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
@@ -134,12 +125,12 @@ public class LocationServicesPresenter {
 							public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
 								if(result.getErrors().size()==0)
 								{
-									LocationPointsManager.registerLocations(result.getResult());
 									LocationPointsManager.removeLocations(result.getResult());
+									LocationPointsManager.registerLocations(result.getResult());
 									verifyShowLocationPoints(result.getResult());
 								}
 								else {
-									verifyShowLocationPoints(LocationPoint.getAll(LocationPoint.class));
+									verifyShowLocationPoints(null);
 									view.informNoInternetConnection();
 								}
 							}
@@ -148,8 +139,7 @@ public class LocationServicesPresenter {
 				});
 			Looper.loop();
 			}
-		});
-		thread.start();
+		}).start();
 	}
 
 	/**

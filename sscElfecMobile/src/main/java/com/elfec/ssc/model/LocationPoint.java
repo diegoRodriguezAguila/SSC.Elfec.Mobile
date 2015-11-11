@@ -1,9 +1,5 @@
 package com.elfec.ssc.model;
 
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import android.location.Location;
 
 import com.activeandroid.Model;
@@ -12,8 +8,12 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.LocationPointType;
 
+import org.joda.time.DateTime;
+
+import java.util.List;
+
 /**
- * Guarda la información de los puntos de pago para mostrarlos en el mapa
+ * Guarda la informaciï¿½n de los puntos de pago para mostrarlos en el mapa
  * @author Diego
  */
 @Table(name = "LocationPoints")
@@ -41,7 +41,7 @@ public class LocationPoint extends Model {
 	private double Longitude;
 	
 	/**
-	 * Los diferentes tipos de puntos de ubicación según {@link LocationPointType} representados en enteros
+	 * Los diferentes tipos de puntos de ubicaciï¿½n segï¿½n {@link LocationPointType} representados en enteros
 	 */
 	@Column(name = "Type", notNull = true, index = true)
 	private short Type;
@@ -61,7 +61,7 @@ public class LocationPoint extends Model {
 	}
 	
 	/**
-	 * Inicializa un punto de pago con los parámetros especificados y con Status = 1
+	 * Inicializa un punto de pago con los parï¿½metros especificados y con Status = 1
 	 * @param address
 	 * @param phone
 	 * @param startAttention
@@ -89,7 +89,7 @@ public class LocationPoint extends Model {
 	}
 	
 	/**
-	 * Calcula la distancia en metros desde una ubicación de gps y este punto de ubicación
+	 * Calcula la distancia en metros desde una ubicaciï¿½n de gps y este punto de ubicaciï¿½n
 	 * @param location
 	 * @return
 	 */
@@ -126,13 +126,14 @@ public class LocationPoint extends Model {
 	 */
 	public static boolean existPoint(LocationPoint point)
 	{
-		return new Select().from(LocationPoint.class)
+        return new Select().from(LocationPoint.class)
 				.where("InstitutionName=? and Address=? and Phone=? and "
 						+ "StartAttention=? and EndAttention=? and "
 						+ "Latitude=? And Longitude=? and Type=? ",
-						point.InstitutionName,point.Address, point.Phone, 
-						point.StartAttention, point.EndAttention, 
-						point.Latitude, point.Longitude, point.Type).execute().size()>0;
+						point.InstitutionName,point.Address, (point.Phone==null?"NULL":point.Phone),
+						(point.StartAttention==null?"NULL":point.StartAttention),
+						(point.EndAttention==null?"NULL":point.EndAttention),
+						point.Latitude, point.Longitude, point.Type).executeSingle()!=null;
 	}
 	//#region Getters y Setters
 	public String getInstitutionName() {
