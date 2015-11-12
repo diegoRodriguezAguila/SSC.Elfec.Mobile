@@ -49,7 +49,7 @@ public class ClientManager {
 	 */
 	public static List<Account> registerClientAccounts(final List<Account> accounts)
 	{
-		List<Account> regAccounts = new ArrayList<Account>(accounts.size());
+		List<Account> regAccounts = new ArrayList<>(accounts.size());
 		for(Account account : accounts)
 		{
 			regAccounts.add(ElfecAccountsManager.registerAccount(account));

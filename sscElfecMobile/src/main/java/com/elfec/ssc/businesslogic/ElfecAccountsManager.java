@@ -39,6 +39,7 @@ public class ElfecAccountsManager {
 		List<Debt> accountDebts = newAccount.getDebts();
 		for (Debt debt : accountDebts) {
 			if (debt.getInsertDate() == null)
+				debt.setAccount(newAccount);
 				debt.setInsertDate(DateTime.now());
 			debt.save();
 		}

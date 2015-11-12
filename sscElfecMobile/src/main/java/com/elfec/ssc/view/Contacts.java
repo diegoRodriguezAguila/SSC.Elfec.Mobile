@@ -133,8 +133,8 @@ public class Contacts extends AppCompatActivity implements IContact {
 	}
 
 	/**
-	 * Obtiene el intent necesario para abrir la p�gina de facebook, en caso de
-	 * que no se tenga la aplicaci�n la abre por defecto en un browser
+	 * Obtiene el intent necesario para abrir la página de facebook, en caso de
+	 * que no se tenga la aplicación la abre por defecto en un browser
 	 * 
 	 * @return
 	 */

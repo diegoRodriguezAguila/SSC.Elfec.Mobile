@@ -256,20 +256,8 @@ public class Account extends Model {
 	 * Elimina todas las deudas de esta cuenta
 	 */
 	public void removeAllDebts() {
-		List<Debt> debts = getDebts();
-		for (Debt debt : debts) {
-			debt.delete();
-		}
-	}
-
-	/**
-	 * Agrega una nueva deuda
-	 * 
-	 * @param newDebt
-	 */
-	public void addDebt(Debt newDebt) {
-		List<Debt> debts = getDebts();
-		debts.add(newDebt);
+        Debts = null;
+        new Delete().from(Debt.class).where("Account=?", getId()).execute();
 	}
 
 	/**
