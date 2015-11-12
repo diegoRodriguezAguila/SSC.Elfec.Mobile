@@ -30,7 +30,7 @@ import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.security.PreferencesManager;
-import com.elfec.ssc.view.adapters.ViewAccountsAdapter;
+import com.elfec.ssc.view.adapters.AccountAdapter;
 import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -168,8 +168,8 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 			public void run() {
 				if (!isDestroyed) {
 					if (result != null && result.size() > 0) {
-						ViewAccountsAdapter adapter = new ViewAccountsAdapter(
-								ViewAccounts.this, R.layout.view_accounts_row,
+						AccountAdapter adapter = new AccountAdapter(
+								ViewAccounts.this, R.layout.account_list_item,
 								result);
 						accountsListView.setAdapter(adapter);
 						findViewById(R.id.layout_how_to_add_accounts)

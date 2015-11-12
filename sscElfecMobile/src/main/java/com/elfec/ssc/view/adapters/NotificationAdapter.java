@@ -35,7 +35,7 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
 		super(context, resource, notifications);
 		mInflater = LayoutInflater.from(context);
 		int size = notifications.size();
-		mExpandedStatuses = new ArrayList<ExpandableItem>(size);
+		mExpandedStatuses = new ArrayList<>(size);
 		for (int i = 0; i < size; i++) {
 			mExpandedStatuses.add(new ExpandableItem());
 		}

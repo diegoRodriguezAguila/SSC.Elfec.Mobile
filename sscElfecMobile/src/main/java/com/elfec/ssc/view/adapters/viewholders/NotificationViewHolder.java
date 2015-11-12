@@ -10,6 +10,9 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.view.adapters.ExpandableItem;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * ViewHolder para notificaciones
  * 
@@ -17,23 +20,14 @@ import com.elfec.ssc.view.adapters.ExpandableItem;
  *
  */
 public class NotificationViewHolder {
-	public TextView lblMessage;
-	public ImageView imgNotification;
-	private TextView lblTitle;
-	private TextView lblDate;
-	private TextView lblHour;
+	public @Bind(R.id.list_item_notification_message) TextView lblMessage;
+	protected @Bind(R.id.notification_image) ImageView mImgNotification;
+	protected @Bind(R.id.list_item_notification_title) TextView mLblTitle;
+	protected @Bind(R.id.list_item_notification_date) TextView mLblDate;
+	protected @Bind(R.id.list_item_notification_time) TextView mLblHour;
 
 	public NotificationViewHolder(View convertView) {
-		lblMessage = (TextView) convertView
-				.findViewById(R.id.list_item_notification_message);
-		imgNotification = (ImageView) convertView
-				.findViewById(R.id.notification_image);
-		lblTitle = (TextView) convertView
-				.findViewById(R.id.list_item_notification_title);
-		lblDate = (TextView) convertView
-				.findViewById(R.id.list_item_notification_date);
-		lblHour = (TextView) convertView
-				.findViewById(R.id.list_item_notification_time);
+		ButterKnife.bind(this, convertView);
 	}
 
 	/**
@@ -47,9 +41,9 @@ public class NotificationViewHolder {
 				.getExpandedSize() : 0;
 		lblMessage.getLayoutParams().height = endSize;
 		lblMessage.setText(Html.fromHtml(notification.getContent()));
-		imgNotification.setImageDrawable(image);
-		lblTitle.setText(Html.fromHtml(notification.getTitle()));
-		lblDate.setText(notification.getInsertDate().toString("dd MMM yyyy"));
-		lblHour.setText(notification.getInsertDate().toString("HH:mm"));
+		mImgNotification.setImageDrawable(image);
+		mLblTitle.setText(Html.fromHtml(notification.getTitle()));
+		mLblDate.setText(notification.getInsertDate().toString("dd MMM yyyy"));
+		mLblHour.setText(notification.getInsertDate().toString("HH:mm"));
 	}
 }

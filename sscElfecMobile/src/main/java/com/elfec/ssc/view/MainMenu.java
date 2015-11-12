@@ -1,6 +1,5 @@
 package com.elfec.ssc.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
@@ -32,34 +31,33 @@ import com.elfec.ssc.view.controls.events.OnAccountPicked;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainMenu extends AppCompatActivity implements IMainMenu {
 
 	private MainMenuPresenter presenter;
-	private ImageButton btnSwitchClient;
-	private TextView txtActiveClient;
-	private TextView txtActiveClientInfo;
-	private String activeClientGmail;
+	protected @Bind(R.id.btn_switch_client) ImageButton mBtnSwitchClient;
+	protected @Bind(R.id.txt_active_client) TextView mTxtActiveClient;
+	protected @Bind(R.id.txt_active_client_info) TextView mTxtActiveClientInfo;
+	private String mActiveClientGmail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main_menu);
 		presenter = new MainMenuPresenter(this);
-		btnSwitchClient = (ImageButton) findViewById(R.id.btn_switch_client);
-		txtActiveClient = (TextView) findViewById(R.id.txt_active_client);
-		txtActiveClientInfo = (TextView) findViewById(R.id.txt_active_client_info);
-		btnSwitchClient.setEnabled(false);
+        ButterKnife.bind(this);
+		mBtnSwitchClient.setEnabled(false);
 		// getSignature();
 		SSLConection.allowSelfSignedElfecSSL(this);
 	}
 
-	@SuppressLint("NewApi")
 	private void getSignature() {
 		try {
 			PackageInfo info = getPackageManager().getPackageInfo(
-					"com.elfec.ssc", PackageManager.GET_SIGNATURES);
+					getPackageName(), PackageManager.GET_SIGNATURES);
 			for (Signature signature : info.signatures) {
 				MessageDigest md = MessageDigest.getInstance("SHA");
 				md.update(signature.toByteArray());
@@ -74,7 +72,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (activeClientGmail == null)
+		if (mActiveClientGmail == null)
 			presenter.loadCurrentClient();
 	}
 
@@ -140,7 +138,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 					.setPositiveButton(R.string.btn_ok, new OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							showAccountPickerDialog(activeClientGmail);
+							showAccountPickerDialog(mActiveClientGmail);
 						}
 					}).setNegativeButton(R.string.btn_cancel, null).show();
 		}
@@ -192,17 +190,17 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
 	@Override
 	public void setCurrentClient(String gmail) {
-		activeClientGmail = gmail;
+		mActiveClientGmail = gmail;
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				if (activeClientGmail != null) {
-					txtActiveClientInfo.setText(R.string.lbl_current_client);
-					txtActiveClient.setVisibility(View.VISIBLE);
-					txtActiveClient.setText(activeClientGmail);
-					btnSwitchClient.setEnabled(true);
+				if (mActiveClientGmail != null) {
+					mTxtActiveClientInfo.setText(R.string.lbl_current_client);
+					mTxtActiveClient.setVisibility(View.VISIBLE);
+					mTxtActiveClient.setText(mActiveClientGmail);
+					mBtnSwitchClient.setEnabled(true);
 				} else
-					txtActiveClientInfo.setText(R.string.lbl_no_active_client);
+					mTxtActiveClientInfo.setText(R.string.lbl_no_active_client);
 			}
 		});
 	}
