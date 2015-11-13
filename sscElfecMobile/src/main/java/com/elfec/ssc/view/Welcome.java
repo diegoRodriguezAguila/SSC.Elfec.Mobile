@@ -1,6 +1,5 @@
 package com.elfec.ssc.view;
 
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +17,8 @@ import com.elfec.ssc.presenter.views.IWelcome;
 import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
+
+import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class Welcome extends AppCompatActivity implements IWelcome {
 
@@ -73,7 +74,7 @@ public class Welcome extends AppCompatActivity implements IWelcome {
 
 	public void btnSelectAccountClick(View view) {
 		if (ButtonClicksHelper.canClickButton()) {
-			AccountPickerDialogService.instanceService(this,
+			new AccountPickerDialogService(this,
 					new OnAccountPicked() {
 						@Override
 						public void onAccountPicked(String gmail) {

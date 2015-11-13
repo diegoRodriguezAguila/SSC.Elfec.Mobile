@@ -8,13 +8,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
@@ -58,35 +56,30 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 public class LocationServices extends AppCompatActivity implements
 		ILocationServices, OnMapReadyCallback {
 
-	private final double LAT_ELFEC = -17.3934795;
-	private final double LNG_ELFEC = -66.1651093;
-	private final float DEFAULT_ZOOM = 15.5f;
-    private final Handler mHandler = new Handler();
-    private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
+	private static final double LAT_ELFEC = -17.3934795;
+	private static final double LNG_ELFEC = -66.1651093;
+	private static final float DEFAULT_ZOOM = 15.5f;
+	private final Handler mHandler = new Handler();
+	private de.keyboardsurfer.android.widget.crouton.Style croutonStyle;
 	private ProgressDialogService waitingMapDialog;
 
 	private LocationServicesPresenter presenter;
 
-	protected  @Bind(R.id.tool_bar) Toolbar toolbar;
 	private GoogleMap map;
 	private MenuItem menuItemSetupDistance;
 	private Marker lastOpenedMarker;
 	private BitmapDescriptor mBitmapOffice;
-    private BitmapDescriptor mBitmapPayPoint;
-    protected @Bind(R.id.map_show_distance) RadioGroup mMapShowDistance;
-    protected @Bind(R.id.map_show_type) RadioGroup mMapShowType;
+	private BitmapDescriptor mBitmapPayPoint;
+	protected @Bind(R.id.map_show_distance) RadioGroup mMapShowDistance;
+	protected @Bind(R.id.map_show_type) RadioGroup mMapShowType;
 
-    @Override
+	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_location_services);
 		showWaitingDialog();
 		presenter = new LocationServicesPresenter(this);
-        ButterKnife.bind(this);
-		setSupportActionBar(toolbar);
-		((TextView) toolbar.findViewById(R.id.toolbar_title))
-				.setText(R.string.location_services_title);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
+		ButterKnife.bind(this);
 		setupMap();
 		ThreadMutex.instance("LoadMap").setBusy();
 		presenter.loadLocations();
@@ -160,26 +153,26 @@ public class LocationServices extends AppCompatActivity implements
 	 */
 	private void setupMap() {
 		mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!isFinishing()) {
-                    GoogleMapOptions options = new GoogleMapOptions();
-                    options.rotateGesturesEnabled(false)
-                            .camera(new CameraPosition(new LatLng(LAT_ELFEC,
-                                    LNG_ELFEC), DEFAULT_ZOOM, 0, 0))
-                            .tiltGesturesEnabled(false)
-                            .zoomControlsEnabled(false);
-                    FragmentManager fm = getSupportFragmentManager();
-                    GMapFragment mapFragment = new GMapFragment().setOnMapReadyCallback(
-                            LocationServices.this).setGoogleMapOptions(options);
-                    waitingMapDialog.dismiss();
-                    System.gc();
-                    fm.beginTransaction()
-                            .add(R.id.google_map_container, mapFragment)
-                            .commit();
-                }
-            }
-        }, 500);
+			@Override
+			public void run() {
+				if (!isFinishing()) {
+					GoogleMapOptions options = new GoogleMapOptions();
+					options.rotateGesturesEnabled(false)
+							.camera(new CameraPosition(new LatLng(LAT_ELFEC,
+									LNG_ELFEC), DEFAULT_ZOOM, 0, 0))
+							.tiltGesturesEnabled(false)
+							.zoomControlsEnabled(false);
+					FragmentManager fm = getSupportFragmentManager();
+					GMapFragment mapFragment = new GMapFragment().setOnMapReadyCallback(
+							LocationServices.this).setGoogleMapOptions(options);
+					waitingMapDialog.dismiss();
+					System.gc();
+					fm.beginTransaction()
+							.add(R.id.google_map_container, mapFragment)
+							.commit();
+				}
+			}
+		}, 500);
 	}
 
 	/**
@@ -197,73 +190,73 @@ public class LocationServices extends AppCompatActivity implements
 			}
 		});
 		map.setOnMarkerClickListener(new OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                lastOpenedMarker = marker;
-                return false;
-            }
-        });
+			@Override
+			public boolean onMarkerClick(Marker marker) {
+				lastOpenedMarker = marker;
+				return false;
+			}
+		});
 	}
 
-    /**
-     * Crea un hilo para poner los puntos en el mapa, los pone de 10 en 10
-     * utilizando el hilo principal, realizando llamadas a {@link #putPointsInMapUI}
-     * @param points
-     */
-    private void putPointsInMapAsync(final List<LocationPoint> points) {
-        final int range = 10;
-        final int delay = 70;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int size = points.size();
-                int iterations = (size/range)+1;
-                int topRange;
-                for(int i=0; i< iterations; i++){
-                    topRange = range*(i+1);
-                    putPointsInMapUI(
-                            points.subList(range*i, topRange<size? topRange : size)
-                            , i*delay);
-                }
-            }
-        }).start();
-    }
+	/**
+	 * Crea un hilo para poner los puntos en el mapa, los pone de 10 en 10
+	 * utilizando el hilo principal, realizando llamadas a {@link #putPointsInMapUI}
+	 * @param points lista de puntos
+	 */
+	private void putPointsInMapAsync(final List<LocationPoint> points) {
+		final int range = 10;
+		final int delay = 70;
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				int size = points.size();
+				int iterations = (size/range)+1;
+				int topRange;
+				for(int i=0; i< iterations; i++){
+					topRange = range*(i+1);
+					putPointsInMapUI(
+							points.subList(range*i, topRange<size? topRange : size)
+							, i*delay);
+				}
+			}
+		}).start();
+	}
 
-    /**
-     * Pone los puntos en el mapa, en el hilo de la UI, esta operación podría bloquear
-     * el hilo principal si son demasiados puntos, para listas grandes utilice {@link #putPointsInMapAsync}
-     * @param points
-     * @param delay el tiempo delay en el que se pondrá en la UI los puntos
-     */
-    private void putPointsInMapUI(final List<LocationPoint> points, int delay) {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (LocationPoint point : points) {
-                    addMarker(point);
-                }
-            }
-        }, delay);
-    }
+	/**
+	 * Pone los puntos en el mapa, en el hilo de la UI, esta operación podría bloquear
+	 * el hilo principal si son demasiados puntos, para listas grandes utilice {@link #putPointsInMapAsync}
+	 * @param points lista de puntos
+	 * @param delay el tiempo delay en el que se pondrá en la UI los puntos
+	 */
+	private void putPointsInMapUI(final List<LocationPoint> points, int delay) {
+		mHandler.postDelayed(new Runnable() {
+			@Override
+			public void run() {
+				for (LocationPoint point : points) {
+					addMarker(point);
+				}
+			}
+		}, delay);
+	}
 
 
 	// #region Interface Methods
 	@Override
 	public void showLocationPoints(final List<LocationPoint> points) {
 		ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(
-                new OnReleaseThread() {
-                    @Override
-                    public void threadReleased() {
-                        map.clear();
-                        mBitmapOffice = BitmapDescriptorFactory.fromResource(R.drawable.office_marker);
-                        mBitmapPayPoint = BitmapDescriptorFactory.fromResource(R.drawable.paypoint_marker);
-                        putPointsInMapAsync(points);
-                    }
-                });
+				new OnReleaseThread() {
+					@Override
+					public void threadReleased() {
+						map.clear();
+						mBitmapOffice = BitmapDescriptorFactory.fromResource(R.drawable.office_marker);
+						mBitmapPayPoint = BitmapDescriptorFactory.fromResource(R.drawable.paypoint_marker);
+						putPointsInMapAsync(points);
+					}
+				});
 
 	}
 
-    @Override
+	@Override
 	public PreferencesManager getPreferences() {
 		return new PreferencesManager(getApplicationContext());
 	}
@@ -271,15 +264,15 @@ public class LocationServices extends AppCompatActivity implements
 	@Override
 	public void showLocationServicesErrors(final List<Exception> errors) {
 		runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        LocationServices.this);
-                builder.setTitle(R.string.errors_on_get_points_title)
-                        .setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-                        .setPositiveButton(R.string.btn_ok, null).show();
-            }
-        });
+			@Override
+			public void run() {
+				AlertDialog.Builder builder = new AlertDialog.Builder(
+						LocationServices.this);
+				builder.setTitle(R.string.errors_on_get_points_title)
+						.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
+						.setPositiveButton(R.string.btn_ok, null).show();
+			}
+		});
 	}
 
 	@Override
@@ -301,7 +294,7 @@ public class LocationServices extends AppCompatActivity implements
 
 	/**
 	 * Añade un marker al mapa
-	 * 
+	 *
 	 * @param point point
 	 */
 	private void addMarker(LocationPoint point) {
@@ -314,7 +307,7 @@ public class LocationServices extends AppCompatActivity implements
 								+ "\n"
 								+ point.getPhone()
 								+ ((point.getStartAttention() != null && !point.getStartAttention().equals("")) ? ("\n"
-										+ point.getStartAttention() + " - " + point
+								+ point.getStartAttention() + " - " + point
 								.getEndAttention()) : ""))
 				.icon(point.getType() == LocationPointType.OFFICE? mBitmapOffice:mBitmapPayPoint));
 	}
@@ -366,18 +359,18 @@ public class LocationServices extends AppCompatActivity implements
 		LocationPointType selectedType = getPreferences()
 				.getSelectedLocationPointType();
 		switch (selectedType) {
-		case OFFICE: {
-			mMapShowType.check(R.id.rbtn_show_offices);
-			break;
-		}
-		case PAYPOINT: {
-			mMapShowType.check(R.id.rbtn_show_paypoints);
-			break;
-		}
-		default: {
-			mMapShowType.check(R.id.rbtn_show_both);
-			break;
-		}
+			case OFFICE: {
+				mMapShowType.check(R.id.rbtn_show_offices);
+				break;
+			}
+			case PAYPOINT: {
+				mMapShowType.check(R.id.rbtn_show_paypoints);
+				break;
+			}
+			default: {
+				mMapShowType.check(R.id.rbtn_show_both);
+				break;
+			}
 		}
 	}
 
@@ -389,15 +382,15 @@ public class LocationServices extends AppCompatActivity implements
 	private void setCheckedLocationDistance() {
 		LocationDistance selectedDistance = getPreferences()
 				.getSelectedLocationPointDistance();
-        switch (selectedDistance) {
-		case NEAREST: {
-			mMapShowDistance.check(R.id.rbtn_show_nearest);
-			break;
-		}
-		default: {
-			mMapShowDistance.check(R.id.rbtn_show_all);
-			break;
-		}
+		switch (selectedDistance) {
+			case NEAREST: {
+				mMapShowDistance.check(R.id.rbtn_show_nearest);
+				break;
+			}
+			default: {
+				mMapShowDistance.check(R.id.rbtn_show_all);
+				break;
+			}
 		}
 	}
 

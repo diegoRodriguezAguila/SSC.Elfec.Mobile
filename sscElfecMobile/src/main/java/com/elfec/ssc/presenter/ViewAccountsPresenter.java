@@ -92,7 +92,7 @@ public class ViewAccountsPresenter {
 							{
 								view.hideWSWaiting();
 								List<Exception> errorsToShow = new ArrayList<>();
-								errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexiÃ³n a internet.\n\u25CF TambiÃ©n verifique que tiene Google Play Services instalado."));
+								errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet.\n\u25CF También verifique que tiene Google Play Services instalado."));
 								view.showViewAccountsErrors(errorsToShow);
 								view.showAccounts(null);
 							}
@@ -125,7 +125,7 @@ public class ViewAccountsPresenter {
 	}
 	/**
 	 * Invoca a las clases necesarias para obtener las cuentas del cliente via web services
-	 * @param client
+	 * @param client cliente
 	 */
 	private void callGetAllAccountsWebService(final Client client) {
 		if(!isLoadingAccounts)
@@ -170,7 +170,7 @@ public class ViewAccountsPresenter {
 	
 	/**
 	 * Obtiene las cuentas locales del cliente
-	 * @param client
+	 * @param client cliente
 	 */
 	public void loadLocalAccounts(Client client)
 	{

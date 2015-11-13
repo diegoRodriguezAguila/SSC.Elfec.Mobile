@@ -68,6 +68,7 @@
         </activity>
         <activity
             android:name=".view.MainMenu"
+            android:theme="@style/Theme.ElfecSsc.NoActionBar"
             android:label="@string/app_title"
             android:screenOrientation="portrait" >
         </activity>

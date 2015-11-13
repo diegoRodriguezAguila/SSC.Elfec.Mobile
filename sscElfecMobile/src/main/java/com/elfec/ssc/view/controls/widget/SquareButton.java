@@ -1,6 +1,8 @@
 package com.elfec.ssc.view.controls.widget;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
@@ -14,67 +16,75 @@ import android.widget.TextView;
 
 import com.elfec.ssc.R;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-public class SquareButton extends LinearLayout{
+public class SquareButton extends LinearLayout {
 
-	private TextView text;
-	private ImageView icon;
-	private RelativeLayout baseButton;
-	
-	@SuppressWarnings("deprecation")
-	public SquareButton(final Context context, AttributeSet attrs) {
-		super(context, attrs);
-		TypedArray a = context.obtainStyledAttributes(attrs,
-		        R.styleable.SquareButtonOptions, 0, 0);
-			String textPrincipal = a.getString(R.styleable.SquareButtonOptions_buttonText);
-		    Drawable buttonIcon = a.getDrawable(R.styleable.SquareButtonOptions_buttonIcon);
-		    Drawable background = a.getDrawable(R.styleable.SquareButtonOptions_buttonBackground);
-		    a.recycle();
-		    
-		    int[] onClickAttr = new int[] { android.R.attr.onClick};
-		    TypedArray ta = context.obtainStyledAttributes(attrs, onClickAttr,0,0);
-		    final String onClickHandler = ta.getString(0);
-		    ta.recycle();
+    private TextView text;
+    private ImageView icon;
+    private RelativeLayout baseButton;
 
-		    setGravity(Gravity.CENTER_VERTICAL);
-		    LayoutInflater inflater = (LayoutInflater) context
-		        .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		    LinearLayout layoutButton = (LinearLayout) inflater.inflate(R.layout.square_button, this, true);
-		    text = (TextView) layoutButton.findViewById(R.id.principal_text);
-		    text.setText(textPrincipal);
-		    icon = (ImageView) layoutButton.findViewById(R.id.btn_icon);
-		    icon.setImageDrawable(buttonIcon);    
-		    baseButton = (RelativeLayout)layoutButton.findViewById(R.id.base_button);
-		    if(background!=null)
-		    {
-		    	baseButton.setBackgroundDrawable(background);
-		    }
-		    baseButton.setOnClickListener(new OnClickListener() {
-				private Method mHandler;
-				@Override
-			public void onClick(View v) {
-				if (onClickHandler != null) 
-				{
-					if (mHandler == null) 
-					{
-						try {
-							mHandler = getContext().getClass().getMethod(
-									onClickHandler, View.class);
-						} catch (NoSuchMethodException e) {
-							throw new IllegalStateException();
-						}
-					}
+    @SuppressWarnings("deprecation")
+    public SquareButton(final Context context, AttributeSet attrs) {
+        super(context, attrs);
+        TypedArray a = context.obtainStyledAttributes(attrs,
+                R.styleable.SquareButtonOptions, 0, 0);
+        String textPrincipal = a.getString(R.styleable.SquareButtonOptions_buttonText);
+        Drawable buttonIcon = a.getDrawable(R.styleable.SquareButtonOptions_buttonIcon);
+        Drawable background = a.getDrawable(R.styleable.SquareButtonOptions_buttonBackground);
+        a.recycle();
 
-					try {
-						mHandler.invoke(getContext(), baseButton);
-					} catch (IllegalAccessException | InvocationTargetException e) {
-						throw new IllegalStateException();
-					}
-				}
-			}
-		});
-	}
+        int[] onClickAttr = new int[]{android.R.attr.onClick};
+        TypedArray ta = context.obtainStyledAttributes(attrs, onClickAttr, 0, 0);
+        final String onClickHandler = ta.getString(0);
+        ta.recycle();
+
+        setGravity(Gravity.CENTER_VERTICAL);
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LinearLayout layoutButton = (LinearLayout) inflater.inflate(R.layout.square_button, this, true);
+        text = (TextView) layoutButton.findViewById(R.id.principal_text);
+        text.setText(textPrincipal);
+        icon = (ImageView) layoutButton.findViewById(R.id.btn_icon);
+        icon.setImageDrawable(buttonIcon);
+        baseButton = (RelativeLayout) layoutButton.findViewById(R.id.base_button);
+        if (background != null)
+            baseButton.setBackgroundDrawable(background);
+
+        baseButton.setOnClickListener(new OnClickListener() {
+            private Method mHandler;
+
+            @Override
+            public void onClick(View v) {
+                if (onClickHandler != null) {
+                    Activity activity = scanForActivity(getContext());
+                    if (mHandler == null) {
+                        try {
+                            mHandler = activity.getClass().getMethod(
+                                    onClickHandler, View.class);
+                        } catch (NoSuchMethodException e) {
+                            throw new IllegalStateException("No method: "+onClickHandler+" on class: "+ getContext().getClass().getName());
+                        }
+                    }
+                    try {
+                        mHandler.invoke(activity, baseButton);
+                    } catch (Exception e) {
+                        throw new IllegalStateException();
+                    }
+                }
+            }
+        });
+    }
+
+    private Activity scanForActivity(Context cont) {
+        if (cont == null)
+            return null;
+        else if (cont instanceof Activity)
+            return (Activity)cont;
+        else if (cont instanceof ContextWrapper)
+            return scanForActivity(((ContextWrapper)cont).getBaseContext());
+
+        return null;
+    }
 
 }

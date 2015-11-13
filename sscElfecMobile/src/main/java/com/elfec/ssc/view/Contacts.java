@@ -8,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
@@ -22,7 +21,6 @@ public class Contacts extends AppCompatActivity implements IContact {
 
 	ContactPresenter presenter;
 
-	private Toolbar toolbar;
 	private boolean isFirst = true;
     private int mSelectedPhoneNumberIndex;
 	private String facebook;
@@ -33,12 +31,6 @@ public class Contacts extends AppCompatActivity implements IContact {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_contacts);
 		presenter = new ContactPresenter(this);
-		// Attaching the layout to the toolbar object
-		toolbar = (Toolbar) findViewById(R.id.tool_bar);
-		setSupportActionBar(toolbar);
-		((TextView) toolbar.findViewById(R.id.toolbar_title))
-				.setText(R.string.contacts_title);
-		getSupportActionBar().setDisplayShowTitleEnabled(false);
 		presenter.setDefaultData();
 		isFirst = true;
 	}
@@ -136,7 +128,7 @@ public class Contacts extends AppCompatActivity implements IContact {
 	 * Obtiene el intent necesario para abrir la página de facebook, en caso de
 	 * que no se tenga la aplicación la abre por defecto en un browser
 	 * 
-	 * @return
+	 * @return Intent para el facebook
 	 */
 	public Intent getFacebookIntent() {
 		try {

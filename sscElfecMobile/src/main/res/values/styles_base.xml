@@ -5,7 +5,7 @@
 
     <style name="Base.TextAppearance.Widget.ElfecSsc.ActionBar.Title" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
-        <item name="android:textSize">21sp</item>
+        <item name="android:textSize">@dimen/txt_size_action_bar</item>
         <item name="fontPath">fonts/segoe_ui_light.ttf</item>
     </style>
 
@@ -16,7 +16,7 @@
     </style>
 
     <style name="Base.Widget.ElfecSsc.ActionBar" parent="Widget.AppCompat.ActionBar.Solid">
-        <item name="contentInsetStart">8dp</item>
+        <item name="contentInsetStart">12dp</item>
         <item name="elevation">0dp</item>
         <item name="displayOptions">useLogo|showHome|showTitle</item>
         <item name="titleTextStyle">@style/TextAppearance.Widget.ElfecSsc.ActionBar.Title</item>

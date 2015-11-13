@@ -12,7 +12,13 @@
         <item name="android:windowTitleStyle">@style/TextAppearance.ElfecSsc.AlertDialog.Title</item>
     </style>
 
-    <style name="Base.Theme.ElfecSsc" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.Theme.ElfecSsc.NoActionBar" parent="Base.Theme.ElfecSsc">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
+    <style name="Base.Theme.ElfecSsc" parent="Theme.AppCompat.Light.DarkActionBar">
 
         <!-- Textview with customfont -->
         <item name="android:textViewStyle">@style/TextAppearance.ElfecSsc.CustomFont.TextView</item>
@@ -26,7 +32,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowBackground">@color/background_soft_gray</item>
-        <item name="icon">@drawable/actionbar_icon</item>
+        <item name="icon">@drawable/logo_toolbar</item>
         <item name="actionButtonStyle">@style/Widget.ElfecSsc.ActionButton</item>
 
         <item name="actionBarStyle">@style/Widget.ElfecSsc.ActionBar</item>
@@ -39,6 +45,7 @@
         <item name="android:buttonStyle">@style/Widget.ElfecSsc.Button</item>
         <item name="buttonStyle">@style/Widget.ElfecSsc.Button</item>
         <item name="android:imageButtonStyle">@style/Widget.ElfecSsc.ImageButton</item>
+        <item name="imageButtonStyle">@style/Widget.ElfecSsc.ImageButton</item>
 
         <item name="android:listViewStyle">@style/Widget.ElfecSsc.ListView</item>
 

@@ -2,7 +2,9 @@
 
 <!-- Generated with http://android-holo-colors.com -->
 <resources>
-    
+
+    <style name="Theme.ElfecSsc.NoActionBar" parent="Base.Theme.ElfecSsc.NoActionBar" />
+
     <style name="Theme.ElfecSsc" parent="Base.Theme.ElfecSsc" />
 
     <!-- Alert Dialog AppCompat -->

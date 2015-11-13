@@ -172,7 +172,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 	}
 
 	public void showAccountPickerDialog(String activeClientGmail) {
-		AccountPickerDialogService.instanceService(this, new OnAccountPicked() {
+		new AccountPickerDialogService (this, new OnAccountPicked() {
 			@Override
 			public void onAccountPicked(String gmail) {
 				presenter.handlePickedGmailAccount(gmail);

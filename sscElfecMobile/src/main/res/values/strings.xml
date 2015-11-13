@@ -12,7 +12,7 @@
     <string name="btn_decline_account">NO, POR AHORA</string>
 
     <!-- Register Account -->
-    <string name="register_account_title">Registrar cuenta</string>
+    <string name="register_account_title">&#160;&#160;Registrar cuenta</string>
     <string name="nus_sample">Ej. 261724</string>
     <string name="account_sample">Ej. 34&#8211;453&#8211;321&#8211;65</string>
     <string name="btn_register">Registrar</string>
@@ -51,7 +51,7 @@
         ● Recibir notificaciones de las cuentas de elfec relacionadas a su usuario</string>
 
     <!-- View Accounts -->
-    <string name="view_accounts_title">Cuentas</string>
+    <string name="view_accounts_title">&#160;&#160;Cuentas</string>
     <string name="no_accounts_registered">Actualmente no tiene cuentas registradas</string>
     <string name="use_button_add">Utilice el botón</string>
     <string name="lbl_for_register">para agregar</string>
@@ -74,7 +74,7 @@
     <string name="lbl_currency">Bs.</string>
 
     <!-- Location Services -->
-    <string name="location_services_title">Servicios de ubicación</string>
+    <string name="location_services_title">&#160;&#160;Servicios de ubicación</string>
     <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>
     <string name="no_internet_msg">No se pudo contactar con el servidor, revise su conexión a internet!</string>
     <string name="errors_on_get_points_title">ERROR AL OBTENER PUNTOS DE UBICACIÓN</string>
@@ -84,14 +84,14 @@
     <string name="lbl_marker_bussines_hours">Horario de atención:</string>
 
     <!-- Contacts -->
-    <string name="contacts_title">Contactos</string>
+    <string name="contacts_title">&#160;&#160;Contactos</string>
     <string name="lbl_visit_us_facebook">Visítanos en facebook</string>
     <string name="title_phone_pick">ELIJA UN NÚMERO TELEFÓNICO</string>
     <string name="btn_dial">Marcar</string>
 
     <!-- Notificaciones -->
 
-    <string name="notifications_title">Notificaciones</string>
+    <string name="notifications_title">&#160;&#160;Notificaciones</string>
     <string name="outage_group">Cortes e información</string>
     <string name="accounts_group">Cuentas</string>
     <string name="lbl_no_outage_notifications">Actualmente no tiene ninguna notificación de cortes ni informaciones</string>
@@ -101,7 +101,7 @@
     <string name="delete_account_notifications_msg">Está apunto de eliminar el historial de las notificaciones de cuentas ¿confirma que desea hacerlo?</string>
 
     <!-- View Account Details -->
-    <string name="view_account_details_title">Información de cuenta</string>
+    <string name="view_account_details_title">&#160;&#160;Información de cuenta</string>
     <string name="lbl_account_status">Estado:</string>
     <string name="lbl_total_debt">Deuda total:</string>
     <string name="lbl_debt_detail">Detalle deuda:</string>

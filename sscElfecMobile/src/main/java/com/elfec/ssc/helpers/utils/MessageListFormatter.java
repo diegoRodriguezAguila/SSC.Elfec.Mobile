@@ -14,8 +14,8 @@ public class MessageListFormatter {
 
 	/**
 	 * Formatea una lista de errores una lista de errores en html
-	 * @param errors
-	 * @return
+	 * @param errors errores
+	 * @return mensaje formateado en html
 	 */
 	public static Spanned fotmatHTMLFromErrors(List<Exception> errors)
 	{
@@ -32,8 +32,8 @@ public class MessageListFormatter {
 	
 	/**
 	 * Formatea una lista de objetos una lista (en cadena) en html
-	 * @param objects
-	 * @return
+	 * @param objects lista de objetos
+	 * @return mensaje formateado en html
 	 */
 	public static <T> String fotmatHTMLStringFromObjectList(List<T> objects, AttributePicker<String, T> attributePicker)
 	{
@@ -50,8 +50,8 @@ public class MessageListFormatter {
 	
 	/**
 	 * Formatea una lista de mensajes una lista (en cadena) en html
-	 * @param messages
-	 * @return
+	 * @param messages lista de cadenas
+	 * @return mensaje formateado en html
 	 */
 	public static Spanned fotmatHTMLFromStringList(List<String> messages)
 	{
@@ -60,8 +60,7 @@ public class MessageListFormatter {
 		if(size==1)
 			return Html.fromHtml(str.append(messages.get(0)).toString());
 		for (int i = 0; i < size; i++) {
-			str.append("\u25CF ").append(messages.get(i));
-			str.append((i<size-1?"<br/>":""));
+			str.append("\u25CF ").append(messages.get(i)).append((i<size-1)?"<br/>":"");
 		}
 		return Html.fromHtml(str.toString());
 	}
