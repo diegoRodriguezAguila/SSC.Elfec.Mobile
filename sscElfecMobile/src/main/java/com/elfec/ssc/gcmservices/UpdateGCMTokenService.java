@@ -8,13 +8,13 @@ import android.telephony.TelephonyManager;
 import com.elfec.ssc.businesslogic.webservices.DeviceWS;
 import com.elfec.ssc.businesslogic.webservices.SSLConection;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
-import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
+import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.security.AppPreferences;
 
 public class UpdateGCMTokenService extends IntentService {
 
@@ -25,7 +25,7 @@ public class UpdateGCMTokenService extends IntentService {
 	@Override
 	protected void onHandleIntent(Intent intent) {
 		SSLConection.allowSelfSignedElfecSSL(this);
-		final PreferencesManager preferences = new PreferencesManager(this);
+		final AppPreferences preferences = AppPreferences.instance();
 		final String lastToken = preferences.getGCMToken();
 		final String IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
 				.getDeviceId();
@@ -36,16 +36,16 @@ public class UpdateGCMTokenService extends IntentService {
 			public void onWSTokenReceived(
 					final WSResponse<WSToken> wsTokenResult) {
 				new GCMTokenRequester(UpdateGCMTokenService.this)
-						.getTokenAsync(new GCMTokenReceivedCallback() {
+						.getTokenAsync(new GcmTokenCallback() {
 							@Override
-							public void onGCMTokenReceived(String deviceToken) {
-								if (deviceToken != null
-										&& !deviceToken.isEmpty()) {
+							public void onGcmTokenReceived(String gcmToken) {
+								if (gcmToken != null
+										&& !gcmToken.isEmpty()) {
 									new DeviceWS(wsTokenResult.getResult())
 											.updateDeviceGCMToken(
 													lastToken,
 													IMEI,
-													deviceToken,
+													gcmToken,
 													new IWSFinishEvent<Boolean>() {
 														@Override
 														public void executeOnFinished(

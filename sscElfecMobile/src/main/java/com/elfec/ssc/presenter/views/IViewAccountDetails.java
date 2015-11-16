@@ -1,41 +1,41 @@
 package com.elfec.ssc.presenter.views;
 
-import java.math.BigDecimal;
-import java.util.List;
-
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 /**
- * Provee de una abstracción de la vista de información de una cuenta
+ * Provee de una abstracciï¿½n de la vista de informaciÃ³n de una cuenta
  */
 public interface IViewAccountDetails {
-	public void setAccountNumber(String accountNumber);
+    void setAccountNumber(String accountNumber);
 
-	public void setNUS(String nus);
+    void setNUS(String nus);
 
-	public void setOwnerClient(String ownerClient);
+    void setOwnerClient(String ownerClient);
 
-	public void setClientAddress(String address);
+    void setClientAddress(String address);
 
-	public void setEnergySupplyStatus(
-			AccountEnergySupplyStatus energySuppluStatus);
+    void setEnergySupplyStatus(
+            AccountEnergySupplyStatus energySupplyStatus);
 
-	public void setTotalDebt(BigDecimal totalDebt);
+    void setTotalDebt(BigDecimal totalDebt);
 
-	public void showUsage(List<Usage> usage);
+    void showUsage(List<Usage> usage);
 
-	public void showDebts(List<Debt> debts);
+    void showDebts(List<Debt> debts);
 
-	public void navigateToAddress(Account account);
+    void navigateToAddress(Account account);
 
-	/**
-	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
-	 * 
-	 * @return
-	 */
-	public WSTokenRequester getWSTokenRequester();
+    /**
+     * Obtiene el WSTokenRequester con el contexto de la actividad actual
+     *
+     * @return
+     */
+    WSTokenRequester getWSTokenRequester();
 }

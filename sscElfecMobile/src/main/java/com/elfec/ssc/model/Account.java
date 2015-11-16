@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Abstracci?n de las cuentas de usuario
+ * Abstracción de las cuentas de usuario
  * 
  * @author Diego
  *

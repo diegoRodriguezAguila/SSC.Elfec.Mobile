@@ -1,6 +1,7 @@
 package com.elfec.ssc;
 
 import com.activeandroid.app.Application;
+import com.elfec.ssc.security.AppPreferences;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -14,6 +15,7 @@ public class ElfecApp extends Application {
 				.setDefaultFontPath("fonts/segoe_ui.ttf")
 				.setFontAttrId(R.attr.fontPath).build());
 		JodaTimeAndroid.init(this);
+		AppPreferences.init(this);
 	}
 
 }

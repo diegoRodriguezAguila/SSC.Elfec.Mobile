@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
@@ -25,7 +26,6 @@ import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
-import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.adapters.AccountAdapter;
 import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
@@ -34,6 +34,8 @@ import com.github.johnpersano.supertoasts.util.Style;
 
 import java.util.List;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
@@ -42,8 +44,11 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     private boolean mIsDestroyed;
 
-    private XListView mListViewAccounts;
-    private boolean mIsRefresh;
+    protected @Bind(R.id.accounts_list) XListView mListViewAccounts;
+    protected @Bind(R.id.layout_loading_accounts) View mLayoutLoadingAccounts;
+    protected @Bind(R.id.layout_how_to_add_accounts)
+    ScrollView mLayoutHowToAddAccounts;
+    protected @Bind(R.id.lbl_no_accounts_registered) TextView mTxtNoAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,13 +56,13 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         setContentView(R.layout.activity_view_accounts);
         mIsDestroyed = false;
         presenter = new ViewAccountsPresenter(this);
-        mListViewAccounts = (XListView) findViewById(R.id.accounts_list);
+        ButterKnife.bind(this);
         mListViewAccounts.setPullLoadEnable(false);
         mListViewAccounts.setPullRefreshEnable(true);
         mListViewAccounts.setXListViewListener(new IXListViewListener() {
             @Override
             public void onRefresh() {
-                presenter.getAllServiceAccounts();
+                presenter.refreshAccountsRemotely();
             }
 
             @Override
@@ -98,7 +103,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     protected void onResume() {
         super.onResume();
         ViewPresenterManager.setPresenter(presenter);
-        mIsRefresh = false;
         presenter.gatherAccounts();
     }
 
@@ -120,7 +124,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     }
 
     @Override
-    public String getIMEI() {
+    public String getImei() {
         return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
                 .getDeviceId();
     }
@@ -148,40 +152,26 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     }
 
     @Override
-    public void showAccounts(final List<com.elfec.ssc.model.Account> result) {
+    public void showAccounts(final List<Account> accounts) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (!mIsDestroyed) {
-                    if (result != null && result.size() > 0) {
-                        AccountAdapter adapter = new AccountAdapter(
+                    if (accounts != null && accounts.size() > 0) {
+                        mListViewAccounts.setAdapter(new AccountAdapter(
                                 ViewAccounts.this, R.layout.account_list_item,
-                                result);
-                        mListViewAccounts.setAdapter(adapter);
-                        findViewById(R.id.layout_how_to_add_accounts)
-                                .setVisibility(View.GONE);
-                        findViewById(R.id.lbl_an_account).setVisibility(
-                                View.GONE);
-                        findViewById(R.id.lbl_no_accounts_registered)
-                                .setVisibility(View.GONE);
+                                accounts));
+                        mLayoutHowToAddAccounts.setVisibility(View.GONE);
+                        mTxtNoAccounts.setVisibility(View.GONE);
                         mListViewAccounts.setVisibility(View.VISIBLE);
                     } else {
-                        findViewById(R.id.layout_how_to_add_accounts)
-                                .setVisibility(View.VISIBLE);
-                        findViewById(R.id.lbl_an_account).setVisibility(
-                                View.VISIBLE);
-                        findViewById(R.id.lbl_no_accounts_registered)
-                                .setVisibility(View.VISIBLE);
+                        mLayoutHowToAddAccounts.setVisibility(View.VISIBLE);
+                        mTxtNoAccounts.setVisibility(View.VISIBLE);
                         mListViewAccounts.setVisibility(View.GONE);
                     }
                 }
             }
         });
-    }
-
-    @Override
-    public PreferencesManager getPreferences() {
-        return new PreferencesManager(getApplicationContext());
     }
 
     @Override
@@ -226,12 +216,11 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                 .setTitle(R.string.delete_account_title)
                 .setMessage(R.string.delete_account_msg)
                 .setPositiveButton(R.string.btn_confirm, new OnClickListener() {
-
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Account account = (Account) mListViewAccounts
                                 .getAdapter().getItem(position);
-                        showWSWaiting();
+                        showWaiting();
                         presenter.invokeRemoveAccountWS(account.getNUS());
                     }
                 }).setNegativeButton(R.string.btn_cancel, null);
@@ -242,20 +231,18 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     }
 
     @Override
-    public void showWSWaiting() {
+    public void showWaiting() {
 
     }
 
     @Override
-    public void hideWSWaiting() {
+    public void hideWaiting() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 if (!mIsDestroyed) {
                     mListViewAccounts.stopRefresh();
-                    findViewById(R.id.loading_view_accounts).setVisibility(
-                            View.GONE);
-                    findViewById(R.id.lbl_loading_accounts).setVisibility(
+                    mLayoutLoadingAccounts.setVisibility(
                             View.GONE);
                 }
 
@@ -288,11 +275,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     @Override
     public GCMTokenRequester getGCMTokenRequester() {
         return new GCMTokenRequester(this);
-    }
-
-    @Override
-    public boolean isRefreshed() {
-        return mIsRefresh;
     }
 
     @Override

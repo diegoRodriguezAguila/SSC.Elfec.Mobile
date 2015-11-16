@@ -1,11 +1,11 @@
 package com.elfec.ssc.gcmservices;
-import com.elfec.ssc.security.PreferencesManager;
-
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
+
+import com.elfec.ssc.security.AppPreferences;
 
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
 
@@ -16,9 +16,8 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         ComponentName comp = new ComponentName(context.getPackageName(),
                 GcmMessageService.class.getName());
         String deviceToken = intent.getExtras().getString("registration_id");   
-        if(deviceToken != null && !deviceToken.equals("")) { 
-        	PreferencesManager preferences = new PreferencesManager(context);
-   			preferences.setGCMToken(deviceToken);
+        if(deviceToken != null && !deviceToken.equals("")) {
+            AppPreferences.instance().setGCMToken(deviceToken);
         } 
         else {
 	        // Start the service, keeping the device awake while it is launching.

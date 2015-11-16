@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.security.AppPreferences;
 
 public class LauncherActivity extends Activity {
 
@@ -12,7 +12,7 @@ public class LauncherActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Intent i = new Intent(LauncherActivity.this,
-				new PreferencesManager(this).isFirstAppUsage()?
+				AppPreferences.instance().isFirstAppUsage()?
                         Welcome.class : MainMenu.class);
 		startActivity(i);
 		LauncherActivity.this.finish();

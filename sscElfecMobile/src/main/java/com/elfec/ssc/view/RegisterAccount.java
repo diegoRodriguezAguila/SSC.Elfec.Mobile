@@ -27,7 +27,6 @@ import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
-import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.ProgressDialogService;
 import com.elfec.ssc.view.controls.RegisterInformationDialogService;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -314,11 +313,6 @@ public class RegisterAccount extends AppCompatActivity implements
                 }
             }
         });
-    }
-
-    @Override
-    public PreferencesManager getPreferences() {
-        return new PreferencesManager(getApplicationContext());
     }
 
     @Override

@@ -24,7 +24,6 @@ import com.elfec.ssc.businesslogic.webservices.SSLConection;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;
-import com.elfec.ssc.security.PreferencesManager;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
@@ -153,10 +152,6 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 	}
 
-	@Override
-	public PreferencesManager getPreferences() {
-		return new PreferencesManager(getApplicationContext());
-	}
 
 	@Override
 	public void warnUserHasNoAccounts() {

@@ -92,8 +92,7 @@
                 android:layout_marginTop="-8dp"
                 android:text="@string/lbl_an_account"
                 android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
-                android:textSize="@dimen/txt_desc_size"
-                android:visibility="invisible" />
+                android:textSize="@dimen/txt_desc_size" />
 
             <View
                 android:layout_width="match_parent"
@@ -118,22 +117,26 @@
         android:listSelector="@drawable/notification_item_background"
         android:visibility="gone" />
 
-    <com.pnikosis.materialishprogress.ProgressWheel
-        android:id="@+id/loading_view_accounts"
-        android:layout_width="56dp"
-        android:layout_height="56dp"
-        android:layout_centerInParent="true"
-        app:matProg_barColor="@color/ssc_elfec_color"
-        app:matProg_progressIndeterminate="true" />
-
-    <TextView
-        android:id="@+id/lbl_loading_accounts"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/layout_loading_accounts"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/loading_view_accounts"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="@string/lbl_loading_accounts" />
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <com.pnikosis.materialishprogress.ProgressWheel
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            app:matProg_barColor="@color/ssc_elfec_color"
+            app:matProg_progressIndeterminate="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/lbl_loading_accounts" />
+    </LinearLayout>
 
     <com.shamanland.fab.FloatingActionButton
         android:id="@+id/fab"

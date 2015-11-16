@@ -28,7 +28,7 @@ import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
 import com.elfec.ssc.view.controls.GMapFragment;
 import com.elfec.ssc.view.controls.ProgressDialogService;
@@ -115,7 +115,7 @@ public class LocationServices extends AppCompatActivity implements
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.location_services, menu);
 		menuItemSetupDistance = menu.findItem(R.id.setup_distance);
-		if (getPreferences().getSelectedLocationPointDistance() != LocationDistance.NEAREST)
+		if (AppPreferences.instance().getSelectedLocationPointDistance() != LocationDistance.NEAREST)
 			menuItemSetupDistance.setVisible(false);
 		return true;
 	}
@@ -259,11 +259,6 @@ public class LocationServices extends AppCompatActivity implements
 	}
 
 	@Override
-	public PreferencesManager getPreferences() {
-		return new PreferencesManager(getApplicationContext());
-	}
-
-	@Override
 	public void showLocationServicesErrors(final List<Exception> errors) {
 		runOnUiThread(new Runnable() {
 			@Override
@@ -362,7 +357,7 @@ public class LocationServices extends AppCompatActivity implements
 	 * defecto
 	 */
 	private void setCheckedLocationType() {
-		LocationPointType selectedType = getPreferences()
+		LocationPointType selectedType = AppPreferences.instance()
 				.getSelectedLocationPointType();
 		switch (selectedType) {
 			case OFFICE: {
@@ -386,7 +381,7 @@ public class LocationServices extends AppCompatActivity implements
 	 * defecto
 	 */
 	private void setCheckedLocationDistance() {
-		LocationDistance selectedDistance = getPreferences()
+		LocationDistance selectedDistance = AppPreferences.instance()
 				.getSelectedLocationPointDistance();
 		switch (selectedDistance) {
 			case NEAREST: {

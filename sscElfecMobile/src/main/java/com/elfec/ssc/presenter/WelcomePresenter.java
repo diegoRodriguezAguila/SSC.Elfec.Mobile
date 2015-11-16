@@ -4,6 +4,7 @@ import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.model.Contact;
 import com.elfec.ssc.presenter.views.IWelcome;
+import com.elfec.ssc.security.AppPreferences;
 
 public class WelcomePresenter {
 
@@ -19,7 +20,7 @@ public class WelcomePresenter {
 		Thread thread = new Thread(new Runnable() {			
 			@Override
 			public void run() {
-				view.getPreferences().setAppAlreadyUsed().setHasOneGmailAccount();
+				AppPreferences.instance().setAppAlreadyUsed().setHasOneGmailAccount();
 				ClientManager.registerActiveClient(gmail);
 				ThreadMutex.instance("ActiveClient").setFree();
 			}

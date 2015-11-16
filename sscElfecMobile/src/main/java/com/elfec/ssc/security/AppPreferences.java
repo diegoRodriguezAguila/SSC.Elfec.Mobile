@@ -6,21 +6,23 @@ import android.preference.PreferenceManager;
 
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
+import com.elfec.ssc.model.exceptions.InitializationException;
 import com.elfec.ssc.model.security.WSToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.lang.ref.SoftReference;
 
 /**
  * Maneja las sharedpreferences de toda la aplicaci�n
  * @author Diego
  *
  */
-public class PreferencesManager {
+public class AppPreferences {
 
 	private final String FIRST_APP_USAGE = "FirstAppUsage";
 	private final String HAS_ONE_GMAIL_ACCOUNT = "HasAtLeastOneGmailAccount";
-	private final String FIRST_LOAD_ACCOUNTS = "FirstLoadAccounts";
 	private final String FIRST_LOAD_LOCATIONS="FirstLoadLocations";
 	private final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
 	private final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
@@ -28,13 +30,50 @@ public class PreferencesManager {
 	private final String GCM_TOKEN = "GCMToken";
 	private final String HAS_TO_UPDATE_GCM_TOKEN = "HasToUpdateGCMToken";
 	private final String WS_TOKEN = "WSToken";
-	
+    
+	/**
+	 * Contexto
+	 */
+	private static Context sContext;
+	/**
+	 * Referencia débil de la instancia de appPreferences
+	 */
+	private static SoftReference<AppPreferences> appPreferencesInstanceRef;
+
 	private SharedPreferences preferences;
-	
-	public PreferencesManager(Context context)
-	{
+
+	private AppPreferences(Context context) {
 		preferences = PreferenceManager.getDefaultSharedPreferences(context);
 	}
+
+
+	/**
+	 * Este método se debe llamar al inicializar la aplicación
+	 *
+	 * @param context sContext
+	 */
+	public static void init(Context context) {
+		AppPreferences.sContext = context;
+	}
+
+	/**
+	 * Obtiene el contexto de la aplicación
+	 *
+	 * @return el contexto de la aplicación
+	 */
+	public static Context getApplicationContext() {
+		return AppPreferences.sContext;
+	}
+
+    public static AppPreferences instance() {
+        if (appPreferencesInstanceRef == null || appPreferencesInstanceRef.get() == null) {
+            if (sContext == null)
+                throw new InitializationException(AppPreferences.class);
+            appPreferencesInstanceRef = new SoftReference<>(new AppPreferences(sContext));
+        }
+        return appPreferencesInstanceRef.get();
+    }
+
 	
 	/**
 	 * Verifica si es que es la primera vez que se utiliza la aplicaci�n
@@ -46,21 +85,13 @@ public class PreferencesManager {
 	}
 	
 	/**
-	 * Asigna que la aplicaci�n ya se ha utilizado por lo menos una vez
-	 * @return la instancia actual de PreferencesManager
+	 * Asigna que la aplicación ya se ha utilizado por lo menos una vez
+	 * @return la instancia actual de AppPreferences
 	 */
-	public PreferencesManager setAppAlreadyUsed()
+	public AppPreferences setAppAlreadyUsed()
 	{
-		preferences.edit().putBoolean(FIRST_APP_USAGE, false).commit();
+		preferences.edit().putBoolean(FIRST_APP_USAGE, false).apply();
 		return this;
-	}
-	/**
-	 * Verifica si es que es la primera vez que se descarga las cuentas
-	 * @return true si es que es la primera vez
-	 */
-	public boolean isFirstLoadAccounts()
-	{
-		return preferences.getBoolean(FIRST_LOAD_ACCOUNTS, true);
 	}
 	/**
 	 * Verifica si es que es la primera vez que se descarga las ubicaciones
@@ -71,26 +102,18 @@ public class PreferencesManager {
 		return preferences.getBoolean(FIRST_LOAD_LOCATIONS, true);
 	}
 	/**
-	 * Asigna que la aplicaci�n ya descargo las localizaciones
-	 * @return la instancia actual de PreferencesManager
+	 * Asigna que la aplicación ya descargo las localizaciones
+	 * @return la instancia actual de AppPreferences
 	 */
-	public PreferencesManager setLoadLocationsAlreadyUsed()
+	public AppPreferences setLoadLocationsAlreadyUsed()
 	{
-		preferences.edit().putBoolean(FIRST_LOAD_LOCATIONS, false).commit();
+		preferences.edit().putBoolean(FIRST_LOAD_LOCATIONS, false).apply();
 		return this;
 	}
-	/**
-	 * Asigna que la aplicaci�n ya descargo las cuentas para un usuario
-	 * @return la instancia actual de PreferencesManager
-	 */
-	public PreferencesManager setLoadAccountsAlreadyUsed()
-	{
-		preferences.edit().putBoolean(FIRST_LOAD_ACCOUNTS, false).commit();
-		return this;
-	}
+
 	/**
 	 * Verifica si es que el cliente ha registrado al menos una cuenta de gmail
-	 * @return true si es que si registr� al menos una cuenta
+	 * @return true si es que si registró al menos una cuenta
 	 */
 	public boolean hasOneGmailAccount()
 	{
@@ -99,25 +122,28 @@ public class PreferencesManager {
 	
 	/**
 	 * Asigna que el cliente ha registrado por lo menos una cuenta de gmail
-	 * @return la instancia actual de PreferencesManager
+	 * @return la instancia actual de AppPreferences
 	 */
-	public PreferencesManager setHasOneGmailAccount()
+	public AppPreferences setHasOneGmailAccount()
 	{
-		preferences.edit().putBoolean(HAS_ONE_GMAIL_ACCOUNT, true).commit();
+		preferences.edit().putBoolean(HAS_ONE_GMAIL_ACCOUNT, true).apply();
 		return this;
 	}
 	
 	/**
-	 * Obtiene el tipo de punto de ubicaci�n que fu� seleccionado en los radio buttons de locationservices
+	 * Obtiene el tipo de punto de ubicación que fué seleccionado en los radio buttons de
+     * locationservices
 	 * @return
 	 */
 	public LocationPointType getSelectedLocationPointType()
 	{
-		return LocationPointType.get(Short.parseShort(preferences.getString(SELECTED_LOCATION_POINT_TYPE, ""+LocationPointType.BOTH.toShort())));
+		return LocationPointType.get(Short.parseShort(preferences.getString(
+                SELECTED_LOCATION_POINT_TYPE, ""+LocationPointType.BOTH.toShort())));
 	}
 	
 	/**
-	 * Guarda el tipo de punto de ubicaci�n que fu� seleccionado en los radio buttons de locationservices
+	 * Guarda el tipo de punto de ubicación que fué seleccionado en los radio buttons de
+     * locationservices
 	 * @param type
 	 */
 	public void setSelectedLocationPointType(LocationPointType type)
@@ -126,16 +152,19 @@ public class PreferencesManager {
 	}
 	
 	/**
-	 * Obtiene el tipo de distancia de los puntos de ubicaci�n, que fu� seleccionado en los radio buttons de locationservices
+	 * Obtiene el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio
+     * buttons de locationservices
 	 * @return
 	 */
 	public LocationDistance getSelectedLocationPointDistance()
 	{
-		return LocationDistance.get(Short.parseShort(preferences.getString(SELECTED_LOCATION_POINT_DISTANCE, ""+LocationDistance.ALL.toShort())));
+		return LocationDistance.get(Short.parseShort(preferences.getString(
+                SELECTED_LOCATION_POINT_DISTANCE, ""+LocationDistance.ALL.toShort())));
 	}
 	
 	/**
-	 * Guarda el tipo de distancia de los puntos de ubicaci�n, que fu� seleccionado en los radio buttons de locationservices
+	 * Guarda el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio
+     * buttons de locationservices
 	 * @param distance
 	 */
 	public void setSelectedLocationPointDistance(LocationDistance distance)
@@ -144,7 +173,7 @@ public class PreferencesManager {
 	}
 
 	/**
-	 * Obtiene la distancia configurada por el cliente para los servicios de ubicaci�n
+	 * Obtiene la distancia configurada por el cliente para los servicios de ubicación
 	 * @return
 	 */
 	public int getConfiguredDistance()
@@ -176,11 +205,11 @@ public class PreferencesManager {
 	 */
 	public void setGCMToken(String gcmToken)
 	{
-		preferences.edit().putString(GCM_TOKEN, gcmToken).commit();
+		preferences.edit().putString(GCM_TOKEN, gcmToken).apply();
 	}
 	
 	/**
-	 * Verifica si es que se tiene que realizar el env�o del token al servidor
+	 * Verifica si es que se tiene que realizar el envío del token al servidor
 	 * @return true si es que si 
 	 */
 	public boolean hasToUpdateGCMToken()
@@ -189,12 +218,12 @@ public class PreferencesManager {
 	}
 	
 	/**
-	 * Asigna que se tiene que realizar el env�o del token al servidor
-	 * @return la instancia actual de PreferencesManager
+	 * Asigna que se tiene que realizar el envío del token al servidor
+	 * @return la instancia actual de AppPreferences
 	 */
-	public PreferencesManager setHasToUpdateGCMToken(boolean hasToUpdateIt)
+	public AppPreferences setHasToUpdateGCMToken(boolean hasToUpdateIt)
 	{
-		preferences.edit().putBoolean(HAS_TO_UPDATE_GCM_TOKEN, hasToUpdateIt).commit();
+		preferences.edit().putBoolean(HAS_TO_UPDATE_GCM_TOKEN, hasToUpdateIt).apply();
 		return this;
 	}
 	

@@ -127,9 +127,9 @@ public class ViewAccountDetails extends AppCompatActivity implements
 
     @Override
     public void setEnergySupplyStatus(
-            AccountEnergySupplyStatus energySuppluStatus) {
+            AccountEnergySupplyStatus energySupplyStatus) {
         ((TextView) findViewById(R.id.txt_account_status))
-                .setText(energySuppluStatus.toString());
+                .setText(energySupplyStatus.toString());
     }
 
     @Override

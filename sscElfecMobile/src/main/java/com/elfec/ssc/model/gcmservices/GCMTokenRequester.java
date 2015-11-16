@@ -4,8 +4,8 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import com.activeandroid.util.Log;
-import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.model.events.GcmTokenCallback;
+import com.elfec.ssc.security.AppPreferences;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import java.io.IOException;
@@ -17,15 +17,15 @@ import java.io.IOException;
  */
 public class GCMTokenRequester extends AsyncTask<Void, Void, String> {
 
-    private Context context;
-    private GCMTokenReceivedCallback callback;
+    private Context mContext;
+    private GcmTokenCallback mCallback;
     private String currentTokenOnPreferences;
-    private PreferencesManager preferences;
-    private final String PROJECT_NUMBER = "302707079727";
+    private AppPreferences preferences;
+    private static final String PROJECT_NUMBER = "302707079727";
 
     public GCMTokenRequester(Context context) {
-        this.context = context;
-        this.preferences = new PreferencesManager(context);
+        this.mContext = context;
+        this.preferences = AppPreferences.instance();
         this.currentTokenOnPreferences = preferences.getGCMToken();
     }
 
@@ -33,7 +33,7 @@ public class GCMTokenRequester extends AsyncTask<Void, Void, String> {
     protected String doInBackground(Void... params) {
         String deviceToken = null;
         try {
-            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(context);
+            GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(mContext);
             deviceToken = gcm.register(PROJECT_NUMBER);
 
         } catch (IOException ex) {
@@ -46,22 +46,22 @@ public class GCMTokenRequester extends AsyncTask<Void, Void, String> {
     protected void onPostExecute(String deviceToken) {
         if (deviceToken != null && !deviceToken.isEmpty())
             preferences.setGCMToken(deviceToken);
-        if (callback != null)
-            callback.onGCMTokenReceived(deviceToken);
+        if (mCallback != null)
+            mCallback.onGcmTokenReceived(deviceToken);
     }
 
     /**
      * Obtiene el token del dispositivo de forma asincrona, en caso de que el token ya se
      * tuviera guardado en los shared preferences directamente
-     * se llama al <b>callback</b>, cuando se obtiene el token se lo guarda autom�ticamente en
+     * se llama al <b>mCallback</b>, cuando se obtiene el token se lo guarda automáticamente en
      * las shared preferences
      *
-     * @param callback callback de obtención de token
+     * @param callback mCallback de obtención de token
      */
-    public void getTokenAsync(GCMTokenReceivedCallback callback) {
-        this.callback = callback;
+    public void getTokenAsync(GcmTokenCallback callback) {
+        this.mCallback = callback;
         if (currentTokenOnPreferences != null)
-            callback.onGCMTokenReceived(currentTokenOnPreferences);
+            callback.onGcmTokenReceived(currentTokenOnPreferences);
         else {
             this.execute((Void[]) null);
         }

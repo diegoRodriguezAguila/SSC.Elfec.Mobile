@@ -10,13 +10,14 @@ import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
+import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
+import com.elfec.ssc.security.AppPreferences;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -25,17 +26,17 @@ import java.util.List;
 public class ViewAccountsPresenter {
 
     private IViewAccounts view;
-    private boolean isLoadingAccounts;
-    private boolean isRefreshing;
+    private boolean mIsLoadingAccounts;
+    private boolean mIsRefreshing;
 
     public ViewAccountsPresenter(IViewAccounts view) {
         this.view = view;
-        isLoadingAccounts = false;
-        isRefreshing = false;
+        mIsLoadingAccounts = false;
+        mIsRefreshing = false;
     }
 
     public void invokeRemoveAccountWS(final String nus) {
-        final String imei = view.getIMEI();
+        final String imei = view.getImei();
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -51,9 +52,9 @@ public class ViewAccountsPresenter {
                                     ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
                                     gatherAccounts();
                                     view.showAccountDeleted();
-                                    view.hideWSWaiting();
+                                    view.hideWaiting();
                                 } else {
-                                    view.hideWSWaiting();
+                                    view.hideWaiting();
                                     view.displayErrors(result.getErrors());
                                 }
                             }
@@ -76,25 +77,21 @@ public class ViewAccountsPresenter {
             public void run() {
                 Looper.prepare();
                 final Client client = Client.getActiveClient();
-                if (view.getPreferences().isFirstLoadAccounts()) {
                     GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
-                    gcmTokenRequester.getTokenAsync(new GCMTokenReceivedCallback() {
+                    gcmTokenRequester.getTokenAsync(new GcmTokenCallback() {
                         @Override
-                        public void onGCMTokenReceived(String deviceToken) {
-                            if (deviceToken == null) {
-                                view.hideWSWaiting();
+                        public void onGcmTokenReceived(String gcmToken) {
+                            if (gcmToken == null) {
+                                view.hideWaiting();
                                 List<Exception> errorsToShow = new ArrayList<>();
                                 errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet.\n\u25CF También verifique que tiene Google Play Services instalado."));
                                 view.showViewAccountsErrors(errorsToShow);
                                 view.showAccounts(null);
                             } else {
-                                callGetAllAccountsWebService(client);
+                                loadAccountsRemotely(client);
                             }
                         }
                     });
-                } else {
-                    loadLocalAccounts(client);
-                }
                 Looper.loop();
             }
         });
@@ -106,10 +103,12 @@ public class ViewAccountsPresenter {
         });
     }
 
-    public void getAllServiceAccounts() {
-        Client client = Client.getActiveClient();
-        isRefreshing = true;
-        callGetAllAccountsWebService(client);
+    /**
+     * Actualiza las cuentas a partir de los web services
+     */
+    public void refreshAccountsRemotely() {
+        mIsRefreshing = true;
+        loadAccountsRemotely(Client.getActiveClient());
     }
 
     /**
@@ -117,14 +116,14 @@ public class ViewAccountsPresenter {
      *
      * @param client cliente
      */
-    private void callGetAllAccountsWebService(final Client client) {
-        if (!isLoadingAccounts) {
-            isLoadingAccounts = true;
+    private void loadAccountsRemotely(final Client client) {
+        if (!mIsLoadingAccounts) {
+            mIsLoadingAccounts = true;
             view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {
                 @Override
                 public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
                     new AccountWS(wsTokenResult.getResult()).getAllAccounts(client.getGmail(),
-                        Build.BRAND, Build.MODEL, view.getIMEI(), view.getPreferences().getGCMToken(),
+                        Build.BRAND, Build.MODEL, view.getImei(), AppPreferences.instance().getGCMToken(),
                         new IWSFinishEvent<List<Account>>() {
                             @Override
                             public void executeOnFinished(final WSResponse<List<Account>> result) {
@@ -133,18 +132,17 @@ public class ViewAccountsPresenter {
                                     public void run() {
                                         if (result.getErrors().size() == 0) {
                                             final List<Account> accounts = ClientManager.registerClientAccounts(result.getResult());
-                                            view.getPreferences().setLoadAccountsAlreadyUsed();
-                                            view.hideWSWaiting();
+                                            view.hideWaiting();
                                             view.showAccounts(accounts);
                                         } else {
-                                            view.hideWSWaiting();
+                                            view.hideWaiting();
                                             view.showViewAccountsErrors(result.getErrors());
-                                            if (view.getPreferences().isFirstLoadAccounts() && !isRefreshing)
+                                            if (!mIsRefreshing)
                                                 view.showAccounts(null);
-                                            else loadLocalAccounts(client);
+                                            else loadAccountsLocally(client);
                                         }
-                                        isLoadingAccounts = false;
-                                        isRefreshing = false;
+                                        mIsLoadingAccounts = false;
+                                        mIsRefreshing = false;
                                     }
                                 }).start();
                             }
@@ -159,9 +157,9 @@ public class ViewAccountsPresenter {
      *
      * @param client cliente
      */
-    public void loadLocalAccounts(Client client) {
+    private void loadAccountsLocally(Client client) {
         List<Account> activeAccounts = client.getActiveAccounts();
-        view.hideWSWaiting();
+        view.hideWaiting();
         view.showAccounts(activeAccounts);
     }
 

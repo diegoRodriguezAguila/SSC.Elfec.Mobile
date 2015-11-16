@@ -2,12 +2,11 @@ package com.elfec.ssc.presenter.views;
 
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
-import com.elfec.ssc.security.PreferencesManager;
 
 import java.util.List;
 
 /***
- * Provee de una abstracci�n de la vista de registrar cuentas
+ * Provee de una abstracción de la vista de registrar cuentas
  * @author Diego
  *
  */
@@ -26,11 +25,6 @@ import java.util.List;
 	 void notifyAccountAlreadyRegistered();
 	 void notifyErrorsInFields();
 	 void showRegistrationErrors(List<Exception> errors);
-	/**
-	 * Obtiene el PreferencesManager con el contexto de la aplicaci�n global
-	 * @return {@link PreferencesManager}
-	 */
-	 PreferencesManager getPreferences();
 	/**
 	 * Obtiene el GCMTokenRequester con el contexto de la actividad actual
 	 * @return

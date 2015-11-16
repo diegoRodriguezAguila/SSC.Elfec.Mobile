@@ -14,7 +14,7 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.WelcomePresenter;
 import com.elfec.ssc.presenter.views.IWelcome;
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.view.controls.AccountPickerDialogService;
 import com.elfec.ssc.view.controls.events.OnAccountPicked;
 
@@ -91,7 +91,7 @@ public class Welcome extends AppCompatActivity implements IWelcome {
 	public void btnDeclineAccountClick(View view) {
 		if (ButtonClicksHelper.canClickButton()) {
 			goToMainMenu();
-			getPreferences().setAppAlreadyUsed();
+			AppPreferences.instance().setAppAlreadyUsed();
 		}
 	}
 
@@ -103,11 +103,6 @@ public class Welcome extends AppCompatActivity implements IWelcome {
 		startActivity(i);
 		overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
 		Welcome.this.finish();
-	}
-
-	@Override
-	public PreferencesManager getPreferences() {
-		return new PreferencesManager(getApplicationContext());
 	}
 
 	// #endregion

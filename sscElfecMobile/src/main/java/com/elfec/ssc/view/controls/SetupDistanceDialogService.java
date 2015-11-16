@@ -12,16 +12,16 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Esta clase provee de un servicio para mostrar un diálogo para la
- * configuración de distancia en los servicios de ubicación, cuando se
- * selecciona la opción aceptar guarda la distancia elegida en sharedpreferences
+ * Esta clase provee de un servicio para mostrar un diï¿½logo para la
+ * configuraciï¿½n de distancia en los servicios de ubicaciï¿½n, cuando se
+ * selecciona la opciï¿½n aceptar guarda la distancia elegida en sharedpreferences
  * 
  * @author Diego
  *
@@ -33,10 +33,9 @@ public class SetupDistanceDialogService {
 	private int mSelectedDistance;
 	protected @Bind(R.id.distance_seek_bar) SeekBar mDistanceSeekBar;
 	protected @Bind(R.id.txt_current_distance) TextView mTxtCurrentDistance;
-	private PreferencesManager preferencesManager;
 
 	/**
-	 * Construye el diálogo con lo necesario
+	 * Construye el diï¿½logo con lo necesario
 	 * 
 	 * @param context context
 	 * @param listener listener
@@ -50,8 +49,7 @@ public class SetupDistanceDialogService {
 	private SetupDistanceDialogService(final Context context,
 			OnDistanceSetup listener) {
 		this.mListener = listener;
-		preferencesManager = new PreferencesManager(context);
-		mSelectedDistance = preferencesManager.getConfiguredDistance();
+		mSelectedDistance = AppPreferences.instance().getConfiguredDistance();
 		View distanceSetupView = LayoutInflater.from(context).inflate(
 				R.layout.distance_setup_layout, null);
 		ButterKnife.bind(this, distanceSetupView);
@@ -82,7 +80,7 @@ public class SetupDistanceDialogService {
 				.setPositiveButton(R.string.btn_ok, new OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
-						preferencesManager
+						AppPreferences.instance()
 								.setConfiguredDistance(mSelectedDistance);
 						if (SetupDistanceDialogService.this.mListener != null)
 							SetupDistanceDialogService.this.mListener
@@ -92,7 +90,7 @@ public class SetupDistanceDialogService {
 	}
 
 	/**
-	 * Muestra el diálogo construido
+	 * Muestra el diï¿½logo construido
 	 */
 	public void show() {
 		mDialog.show();

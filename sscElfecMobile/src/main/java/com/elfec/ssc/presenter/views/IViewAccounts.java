@@ -3,7 +3,6 @@ package com.elfec.ssc.presenter.views;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
-import com.elfec.ssc.security.PreferencesManager;
 
 import java.util.List;
 
@@ -11,19 +10,15 @@ public interface IViewAccounts {
 	/**
 	 * Muestra una lista de cuentas, si se pasa null o una lista vacia
 	 * se muestra un mensaje por defecto al usuario de que no hay cuentas
-	 * @param result
+	 * @param accounts lista de cuentas
 	 */
-	void showAccounts(List<Account> result);
-	/**
-	 * Obtiene el PreferencesManager con el contexto de la aplicación global
-	 * @return {@link PreferencesManager}
-	 */
-	PreferencesManager getPreferences();
+	void showAccounts(List<Account> accounts);
+
 	/**
 	 * Obtiene el IMEI del dispositivo
 	 * @return
 	 */
-	String getIMEI();
+	String getImei();
 	/**
 	 * Muestra un mensaje de que la cuenta se borró exitosamente
 	 */
@@ -37,16 +32,11 @@ public interface IViewAccounts {
 	/**
 	 * Muestra un dialogo de espera
 	 */
-	void showWSWaiting();
+	void showWaiting();
 	/**
 	 * Oculta el dialogo de espera
 	 */
-	void hideWSWaiting();
-	/**
-	 * Indica si es que la lista se refrescó recientemente
-	 * @return
-	 */
-	boolean isRefreshed();
+	void hideWaiting();
 	/**
 	 * Muestra errores que podrían ocurrir al obtener las cuentas
 	 * @param errors

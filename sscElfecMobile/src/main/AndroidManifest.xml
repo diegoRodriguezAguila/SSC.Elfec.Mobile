@@ -83,6 +83,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:theme="@style/Theme.ElfecSsc.NoActionBar"
             android:name=".view.Welcome"
             android:label="@string/welcome"
             android:screenOrientation="portrait" >

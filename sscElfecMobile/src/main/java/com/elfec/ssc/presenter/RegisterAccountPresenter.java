@@ -8,7 +8,7 @@ import com.elfec.ssc.businesslogic.FieldValidator;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.events.GCMTokenReceivedCallback;
+import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
 import com.elfec.ssc.model.exceptions.MobileSideException;
@@ -18,6 +18,7 @@ import com.elfec.ssc.model.validations.ValidationRulesFactory;
 import com.elfec.ssc.model.validations.ValidationsAndParams;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
+import com.elfec.ssc.security.AppPreferences;
 
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -55,11 +56,11 @@ public class RegisterAccountPresenter {
 						GCMTokenRequester gcmTokenRequester = view
 								.getGCMTokenRequester();
 						gcmTokenRequester
-								.getTokenAsync(new GCMTokenReceivedCallback() {
+								.getTokenAsync(new GcmTokenCallback() {
 									@Override
-									public void onGCMTokenReceived(
-											String deviceToken) {
-										if (deviceToken == null) {
+									public void onGcmTokenReceived(
+											String gcmToken) {
+										if (gcmToken == null) {
 											view.hideWSWaiting();
 											List<Exception> errorsToShow = new ArrayList<Exception>();
 											errorsToShow
@@ -101,7 +102,7 @@ public class RegisterAccountPresenter {
 							view.getNUS(), client.getGmail(),
 							view.getPhoneNumber(), Build.BRAND, Build.MODEL,
 							view.getIMEI(),
-							view.getPreferences().getGCMToken(),
+							AppPreferences.instance().getGCMToken(),
 							new IWSFinishEvent<Account>() {
 								@Override
 								public void executeOnFinished(

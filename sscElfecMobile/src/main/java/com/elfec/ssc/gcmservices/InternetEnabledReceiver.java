@@ -1,19 +1,19 @@
 package com.elfec.ssc.gcmservices;
 
-import com.elfec.ssc.security.PreferencesManager;
-
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.support.v4.content.WakefulBroadcastReceiver;
 
+import com.elfec.ssc.security.AppPreferences;
+
 
 public class InternetEnabledReceiver extends WakefulBroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		if(new PreferencesManager(context).hasToUpdateGCMToken() && isNetworkAvaible(context))
+		if(AppPreferences.instance().hasToUpdateGCMToken() && isNetworkAvaible(context))
 		{
 			 ComponentName comp = new ComponentName(context.getPackageName(),
 					 UpdateGCMTokenService.class.getName());
@@ -22,9 +22,9 @@ public class InternetEnabledReceiver extends WakefulBroadcastReceiver {
 	}
 	
 	/**
-	 * Verifica si la conexión a la red está activa
+	 * Verifica si la conexiï¿½n a la red estï¿½ activa
 	 * @param context
-	 * @return true si es que está conectado a una red
+	 * @return true si es que estï¿½ conectado a una red
 	 */
 	public boolean isNetworkAvaible(Context context)
 	{

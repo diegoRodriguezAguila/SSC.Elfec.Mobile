@@ -17,6 +17,7 @@ import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
+import com.elfec.ssc.security.AppPreferences;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class LocationServicesPresenter {
         lastSelectedDistance = LocationDistance.ALL;
         lastSelectedType = LocationPointType.BOTH;
         this.view = view;
-        distanceRange = view.getPreferences().getConfiguredDistance();
+        distanceRange = AppPreferences.instance().getConfiguredDistance();
     }
 
     /**
@@ -66,7 +67,7 @@ public class LocationServicesPresenter {
         else
             points = LocationPoint.getPointsByType(selectedType);
         setSelectedDistance(lastSelectedDistance);
-        view.getPreferences().setSelectedLocationPointType(selectedType);
+        AppPreferences.instance().setSelectedLocationPointType(selectedType);
         view.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
     }
 
@@ -79,7 +80,7 @@ public class LocationServicesPresenter {
         lastSelectedDistance = distance;
         view.showLocationPoints((distance == LocationDistance.ALL) ?
                 points : LocationPointsManager.getNearestPoints(points, currentLocation, distanceRange));
-        view.getPreferences().setSelectedLocationPointDistance(distance);
+        AppPreferences.instance().setSelectedLocationPointDistance(distance);
         view.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
     }
 
@@ -145,8 +146,8 @@ public class LocationServicesPresenter {
         ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
             @Override
             public void threadReleased() {
-                lastSelectedDistance = view.getPreferences().getSelectedLocationPointDistance();
-                setSelectedType(view.getPreferences().getSelectedLocationPointType());
+                lastSelectedDistance = AppPreferences.instance().getSelectedLocationPointDistance();
+                setSelectedType(AppPreferences.instance().getSelectedLocationPointType());
             }
         });
     }

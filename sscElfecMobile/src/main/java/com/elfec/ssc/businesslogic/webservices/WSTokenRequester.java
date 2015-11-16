@@ -7,7 +7,7 @@ import com.elfec.ssc.model.events.WSTokenReceivedCallback;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.security.CredentialManager;
-import com.elfec.ssc.security.PreferencesManager;
+import com.elfec.ssc.security.AppPreferences;
 
 /**
  * Clase cuyo objetivo es obtener el WS token del dispositivo
@@ -17,12 +17,12 @@ import com.elfec.ssc.security.PreferencesManager;
  */
 public class WSTokenRequester {
 	private Context context;
-	private PreferencesManager preferences;
+	private AppPreferences preferences;
 	private WSToken currentTokenOnPreferences;
 
 	public WSTokenRequester(Context context) {
 		this.context = context;
-		this.preferences = new PreferencesManager(context);
+		this.preferences = AppPreferences.instance();
 		this.currentTokenOnPreferences = preferences.getWSToken();
 	}
 
@@ -30,7 +30,7 @@ public class WSTokenRequester {
 	 * Obtiene el token del dispositivo de forma asincrona, en caso de que el
 	 * token ya se tuviera guardado en los shared preferences directamente se
 	 * llama al <b>callback</b>, cuando se obtiene el token se lo guarda
-	 * automáticamente en las shared preferences
+	 * automï¿½ticamente en las shared preferences
 	 * 
 	 * @param callback
 	 */
