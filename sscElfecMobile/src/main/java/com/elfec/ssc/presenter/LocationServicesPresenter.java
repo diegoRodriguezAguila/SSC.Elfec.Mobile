@@ -13,6 +13,7 @@ import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
+import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
@@ -21,140 +22,147 @@ import java.util.List;
 
 public class LocationServicesPresenter {
 
-	private ILocationServices view;
-	private List<LocationPoint> points;
-	private LocationPointType lastSelectedType;
-	private LocationDistance lastSelectedDistance;
-	private Location currentLocation;
-	private int distanceRange;
-	private final int MIN_DISTANCE_DIFFERENCE = 250;
-	
-	
-	public LocationServicesPresenter(ILocationServices view) {
-		points=null;
-		lastSelectedDistance=LocationDistance.ALL;
-		lastSelectedType=LocationPointType.BOTH;
-		this.view = view;
-		distanceRange=view.getPreferences().getConfiguredDistance();
-	}
-	
-	/**
-	 * Asigna la distancia en metros para realizar la filtración de puntos, cuando la opción
-	 * de más cercanos es seleccionada
-	 * @param distance
-	 */
-	public void setDistanceRange(int distance)
-	{
-		if(distance != distanceRange)
-		{
-			distanceRange = distance;
-			if(lastSelectedDistance==LocationDistance.NEAREST)
-			{
-				setSelectedDistance(lastSelectedDistance);
-			}
-		}
-	}
-	
-	/**
-	 * Filtra la lista de puntos según el tipo de punto
-	 * @param selectedType
-	 */
-	public void setSelectedType(LocationPointType selectedType)
-	{
-		lastSelectedType = selectedType;
-		if(selectedType==LocationPointType.BOTH)
-			points=LocationPoint.getAll(LocationPoint.class);
-		else
-			points=LocationPoint.getPointsByType(selectedType);
-		setSelectedDistance(lastSelectedDistance);
-		view.getPreferences().setSelectedLocationPointType(selectedType);
-		view.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
-	}
-	
-	/**
-	 * Filtra la lista de puntos segón el tipo de proximidad definido, usando el punto de locación exacto
-	 * @param distance
-	 */
-	public void setSelectedDistance(LocationDistance distance, Location currentLocation)
-	{
-		lastSelectedDistance = distance;
-		view.showLocationPoints((distance==LocationDistance.ALL)?
-				points:LocationPointsManager.getNearestPoints(points, currentLocation, distanceRange));
-		view.getPreferences().setSelectedLocationPointDistance(distance);
-		view.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
-	}
-	
-	/**
-	 * Filtra la lista de puntos segón el tipo de proximidad definido, obteniendo la locación de la vista
-	 * @param distance
-	 */
-	public void setSelectedDistance(LocationDistance distance)
-	{
-		setSelectedDistance(distance, view.getCurrentLocation()==null?(new Location("gps")):view.getCurrentLocation());
-	}
-	
-	/**
-	 * Actualiza el filtro de ubicación si cuando la ubicación cambia o se obtiene una nueva ubicación
-	 */
-	public void updateSelectedDistancePoints(Location recievedLocation)
-	{
-		if(lastSelectedDistance==LocationDistance.NEAREST && 
-				(currentLocation==null || (recievedLocation.distanceTo(currentLocation)>MIN_DISTANCE_DIFFERENCE)))
-		{
-			currentLocation = recievedLocation;
-			setSelectedDistance(lastSelectedDistance, recievedLocation);
-		}
-	}
-	
-	/**
-	 * Obtiene la lista de puntos de ubicación en un hilo
-	 */
-	public void loadLocations()
-	{
-		new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				Looper.prepare();
-				view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {					
-					@Override
-					public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
-						new LocationPointWS(wsTokenResult.getResult())
-							.getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
-							@Override
-							public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
-								if(result.getErrors().size()==0)
-								{
-									LocationPointsManager.removeLocations(result.getResult());
-									LocationPointsManager.registerLocations(result.getResult());
-									verifyShowLocationPoints(result.getResult());
-								}
-								else {
-									verifyShowLocationPoints(null);
-									view.informNoInternetConnection();
-								}
-							}
-						});
-					}
-				});
-			Looper.loop();
-			}
-		}).start();
-	}
+    private ILocationServices view;
+    private List<LocationPoint> points;
+    private LocationPointType lastSelectedType;
+    private LocationDistance lastSelectedDistance;
+    private Location currentLocation;
+    private int distanceRange;
+    private final int MIN_DISTANCE_DIFFERENCE = 250;
 
-	/**
-	 * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
-	 * @param result
-	 */
-	private void verifyShowLocationPoints(final List<LocationPoint> result) {
-			ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {						
-				@Override
-				public void threadReleased() {
-					points=result;
-					lastSelectedDistance = view.getPreferences().getSelectedLocationPointDistance();
-					setSelectedType(view.getPreferences().getSelectedLocationPointType());
-				}
-			});
-	}
-	
+
+    public LocationServicesPresenter(ILocationServices view) {
+        points = null;
+        lastSelectedDistance = LocationDistance.ALL;
+        lastSelectedType = LocationPointType.BOTH;
+        this.view = view;
+        distanceRange = view.getPreferences().getConfiguredDistance();
+    }
+
+    /**
+     * Asigna la distancia en metros para realizar la filtración de puntos, cuando la opción
+     * de más cercanos es seleccionada
+     *
+     * @param distance
+     */
+    public void setDistanceRange(int distance) {
+        if (distance != distanceRange) {
+            distanceRange = distance;
+            if (lastSelectedDistance == LocationDistance.NEAREST) {
+                setSelectedDistance(lastSelectedDistance);
+            }
+        }
+    }
+
+    /**
+     * Filtra la lista de puntos según el tipo de punto
+     *
+     * @param selectedType
+     */
+    public void setSelectedType(LocationPointType selectedType) {
+        lastSelectedType = selectedType;
+        if (selectedType == LocationPointType.BOTH)
+            points = LocationPoint.getAll(LocationPoint.class);
+        else
+            points = LocationPoint.getPointsByType(selectedType);
+        setSelectedDistance(lastSelectedDistance);
+        view.getPreferences().setSelectedLocationPointType(selectedType);
+        view.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
+    }
+
+    /**
+     * Filtra la lista de puntos segón el tipo de proximidad definido, usando el punto de locación exacto
+     *
+     * @param distance
+     */
+    public void setSelectedDistance(LocationDistance distance, Location currentLocation) {
+        lastSelectedDistance = distance;
+        view.showLocationPoints((distance == LocationDistance.ALL) ?
+                points : LocationPointsManager.getNearestPoints(points, currentLocation, distanceRange));
+        view.getPreferences().setSelectedLocationPointDistance(distance);
+        view.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
+    }
+
+    /**
+     * Filtra la lista de puntos segón el tipo de proximidad definido, obteniendo la locación de la vista
+     *
+     * @param distance
+     */
+    public void setSelectedDistance(LocationDistance distance) {
+        setSelectedDistance(distance, view.getCurrentLocation() == null ? (new Location("gps")) : view.getCurrentLocation());
+    }
+
+    /**
+     * Actualiza el filtro de ubicación si cuando la ubicación cambia o se obtiene una nueva ubicación
+     */
+    public void updateSelectedDistancePoints(Location recievedLocation) {
+        if (lastSelectedDistance == LocationDistance.NEAREST &&
+                (currentLocation == null || (recievedLocation.distanceTo(currentLocation) > MIN_DISTANCE_DIFFERENCE))) {
+            currentLocation = recievedLocation;
+            setSelectedDistance(lastSelectedDistance, recievedLocation);
+        }
+    }
+
+    /**
+     * Obtiene la lista de puntos de ubicación en un hilo
+     */
+    public void loadLocations() {
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                Looper.prepare();
+                view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {
+                    @Override
+                    public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
+                        new LocationPointWS(wsTokenResult.getResult())
+                                .getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
+                                    @Override
+                                    public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
+                                        if (result.getErrors().size() == 0) {
+                                            LocationPointsManager.removeLocations(result.getResult());
+                                            LocationPointsManager.registerLocations(result.getResult());
+                                        } else {
+                                            if(isOutdatedApp(result.getErrors()))
+                                                view.showLocationServicesErrors(result.getErrors());
+                                            else view.informNoInternetConnection();
+                                        }
+                                        verifyShowLocationPoints();
+                                    }
+                                });
+                    }
+                });
+                Looper.loop();
+            }
+        }).start();
+    }
+
+    /**
+     * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
+     *
+     */
+    private void verifyShowLocationPoints() {
+        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
+            @Override
+            public void threadReleased() {
+                lastSelectedDistance = view.getPreferences().getSelectedLocationPointDistance();
+                setSelectedType(view.getPreferences().getSelectedLocationPointType());
+            }
+        });
+    }
+
+    /**
+     * Verifica si alguno de los errores contiene el error de versión
+     * de aplicación no actualizada
+     * @param errors errores
+     * @return true si es que contiene ese tipo de error
+     */
+    private boolean isOutdatedApp(List<Exception> errors){
+        for(Exception e : errors){
+            if(e instanceof OutdatedAppException)
+                return true;
+        }
+        return false;
+    }
+
 }

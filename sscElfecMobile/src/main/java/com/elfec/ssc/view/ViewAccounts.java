@@ -8,11 +8,13 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
@@ -41,7 +43,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     private boolean mIsDestroyed;
 
     private XListView mListViewAccounts;
-    private AlertDialog mWaitingDialog;
     private boolean mIsRefresh;
 
     @Override
@@ -99,11 +100,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         ViewPresenterManager.setPresenter(presenter);
         mIsRefresh = false;
         presenter.gatherAccounts();
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
     }
 
     @Override
@@ -189,8 +185,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     }
 
     @Override
-    public void refreshAccounts() {
-        presenter.gatherAccounts();
+    public void showAccountDeleted() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -218,7 +213,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                     builder.setTitle(R.string.errors_on_delete_account_title)
                             .setMessage(
                                     MessageListFormatter
-                                            .fotmatHTMLFromErrors(errors))
+                                            .formatHTMLFromErrors(errors))
                             .setPositiveButton(R.string.btn_ok, null).show();
                 }
             }
@@ -227,7 +222,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     @Override
     public void dialogRemove(final int position) {
-        (new AlertDialog.Builder(this))
+        AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.delete_account_title)
                 .setMessage(R.string.delete_account_msg)
                 .setPositiveButton(R.string.btn_confirm, new OnClickListener() {
@@ -239,23 +234,16 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                         showWSWaiting();
                         presenter.invokeRemoveAccountWS(account.getNUS());
                     }
-                }).setNegativeButton(R.string.btn_cancel, null).show();
+                }).setNegativeButton(R.string.btn_cancel, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        ((TextView)dialog.findViewById(android.R.id.message))
+                .setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
     public void showWSWaiting() {
-		/*
-		 * runOnUiThread(new Runnable() {
-		 * 
-		 * @Override public void run(){ mWaitingDialog = new
-		 * ProgressDialogPro(ViewAccounts.this,
-		 * R.style.Theme_FlavoredMaterialLight);
-		 * mWaitingDialog.setMessage(ViewAccounts
-		 * .this.getResources().getString(R.string.waiting_msg));
-		 * mWaitingDialog.setCancelable(false);
-		 * mWaitingDialog.setCanceledOnTouchOutside(false);
-		 * mWaitingDialog.show(); } });
-		 */
+
     }
 
     @Override
@@ -264,8 +252,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
             @Override
             public void run() {
                 if (!mIsDestroyed) {
-                    if (mWaitingDialog != null)
-                        mWaitingDialog.dismiss();
                     mListViewAccounts.stopRefresh();
                     findViewById(R.id.loading_view_accounts).setVisibility(
                             View.GONE);
@@ -288,8 +274,12 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                     builder.setTitle(R.string.errors_on_download_accounts_title)
                             .setMessage(
                                     MessageListFormatter
-                                            .fotmatHTMLFromErrors(errors))
-                            .setPositiveButton(R.string.btn_ok, null).show();
+                                            .formatHTMLFromErrors(errors))
+                            .setPositiveButton(R.string.btn_ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    ((TextView)dialog.findViewById(android.R.id.message))
+                            .setMovementMethod(LinkMovementMethod.getInstance());
                 }
             }
         });

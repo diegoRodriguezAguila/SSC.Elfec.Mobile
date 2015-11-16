@@ -7,6 +7,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.telephony.TelephonyManager;
 import android.text.Html;
+import android.text.method.LinkMovementMethod;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -155,7 +156,7 @@ public class RegisterAccount extends AppCompatActivity implements
      */
     public String getHTMLListFromErrors(List<String> validationErrors) {
         return "<font color='#006086'><b>" +
-                MessageListFormatter.fotmatHTMLFromStringList(validationErrors).toString() + "</b></font>";
+                MessageListFormatter.formatHTMLFromStringList(validationErrors).toString() + "</b></font>";
     }
 
     public void btnRegisterAccountClick(View view) {
@@ -304,8 +305,12 @@ public class RegisterAccount extends AppCompatActivity implements
                     builder.setTitle(R.string.errors_on_register_title)
                             .setMessage(
                                     MessageListFormatter
-                                            .fotmatHTMLFromErrors(errors))
-                            .setPositiveButton(R.string.btn_ok, null).show();
+                                            .formatHTMLFromErrors(errors))
+                            .setPositiveButton(R.string.btn_ok, null);
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+                    ((TextView)dialog.findViewById(android.R.id.message))
+                            .setMovementMethod(LinkMovementMethod.getInstance());
                 }
             }
         });

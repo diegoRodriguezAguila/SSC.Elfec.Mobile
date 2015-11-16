@@ -8,11 +8,13 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
@@ -269,8 +271,12 @@ public class LocationServices extends AppCompatActivity implements
 				AlertDialog.Builder builder = new AlertDialog.Builder(
 						LocationServices.this);
 				builder.setTitle(R.string.errors_on_get_points_title)
-						.setMessage(MessageListFormatter.fotmatHTMLFromErrors(errors))
-						.setPositiveButton(R.string.btn_ok, null).show();
+						.setMessage(MessageListFormatter.formatHTMLFromErrors(errors))
+						.setPositiveButton(R.string.btn_ok, null);
+				AlertDialog dialog = builder.create();
+				dialog.show();
+				((TextView)dialog.findViewById(android.R.id.message))
+						.setMovementMethod(LinkMovementMethod.getInstance());
 			}
 		});
 	}

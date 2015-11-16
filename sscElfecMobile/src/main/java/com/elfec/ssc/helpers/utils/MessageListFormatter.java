@@ -17,17 +17,14 @@ public class MessageListFormatter {
 	 * @param errors errores
 	 * @return mensaje formateado en html
 	 */
-	public static Spanned fotmatHTMLFromErrors(List<Exception> errors)
+	public static Spanned formatHTMLFromErrors(List<Exception> errors)
 	{
-		StringBuilder str = new StringBuilder();
-		int size = errors.size();
-		if(size==1)
-			return Html.fromHtml(str.append(errors.get(0).getMessage()).toString());
-		for (int i = 0; i < size; i++) {
-			str.append("\u25CF ").append(errors.get(i).getMessage());
-			str.append((i<size-1?"<br/>":""));
-		}
-		return Html.fromHtml(str.toString());
+        return formatHTMLFromObjectList(errors, new AttributePicker<String, Exception>() {
+            @Override
+            public String pickAttribute(Exception error) {
+                return error.getMessage();
+            }
+        });
 	}
 	
 	/**
@@ -35,17 +32,17 @@ public class MessageListFormatter {
 	 * @param objects lista de objetos
 	 * @return mensaje formateado en html
 	 */
-	public static <T> String fotmatHTMLStringFromObjectList(List<T> objects, AttributePicker<String, T> attributePicker)
+	public static <T> Spanned formatHTMLFromObjectList(List<T> objects, AttributePicker<String, T> attributePicker)
 	{
 		StringBuilder str = new StringBuilder();
 		int size = objects.size();
 		if(size==1)
-			return str.append(attributePicker.pickAttribute(objects.get(0))).toString();
+			return Html.fromHtml(str.append(attributePicker.pickAttribute(objects.get(0))).toString());
 		for (int i = 0; i < size; i++) {
 			str.append("\u25CF ").append(attributePicker.pickAttribute(objects.get(i)));
 			str.append((i<size-1?"<br/>":""));
 		}
-		return str.toString();
+		return Html.fromHtml(str.toString());
 	}
 	
 	/**
@@ -53,15 +50,13 @@ public class MessageListFormatter {
 	 * @param messages lista de cadenas
 	 * @return mensaje formateado en html
 	 */
-	public static Spanned fotmatHTMLFromStringList(List<String> messages)
+	public static Spanned formatHTMLFromStringList(List<String> messages)
 	{
-		StringBuilder str = new StringBuilder();
-		int size = messages.size();
-		if(size==1)
-			return Html.fromHtml(str.append(messages.get(0)).toString());
-		for (int i = 0; i < size; i++) {
-			str.append("\u25CF ").append(messages.get(i)).append((i<size-1)?"<br/>":"");
-		}
-		return Html.fromHtml(str.toString());
+        return formatHTMLFromObjectList(messages, new AttributePicker<String, String>() {
+            @Override
+            public String pickAttribute(String str) {
+                return str;
+            }
+        });
 	}
 }

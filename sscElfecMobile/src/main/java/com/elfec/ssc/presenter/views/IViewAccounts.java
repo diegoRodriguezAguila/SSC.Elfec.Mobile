@@ -1,11 +1,11 @@
 package com.elfec.ssc.presenter.views;
 
-import java.util.List;
-
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.security.PreferencesManager;
+
+import java.util.List;
 
 public interface IViewAccounts {
 	/**
@@ -13,53 +13,53 @@ public interface IViewAccounts {
 	 * se muestra un mensaje por defecto al usuario de que no hay cuentas
 	 * @param result
 	 */
-	public void showAccounts(List<Account> result);
+	void showAccounts(List<Account> result);
 	/**
-	 * Obtiene el PreferencesManager con el contexto de la aplicaciÛn global
+	 * Obtiene el PreferencesManager con el contexto de la aplicaci√≥n global
 	 * @return {@link PreferencesManager}
 	 */
-	public PreferencesManager getPreferences();
+	PreferencesManager getPreferences();
 	/**
 	 * Obtiene el IMEI del dispositivo
 	 * @return
 	 */
-	public String getIMEI();
+	String getIMEI();
 	/**
-	 * Refresca la lista de cuentas
+	 * Muestra un mensaje de que la cuenta se borr√≥ exitosamente
 	 */
-	public void refreshAccounts();
+	void showAccountDeleted();
 	/**
 	 * Muestra errores al usuario
 	 * @param errors
 	 */
-	public void displayErrors(List<Exception> errors);
-	public void dialogRemove(int position); 
+	void displayErrors(List<Exception> errors);
+	void dialogRemove(int position); 
 	/**
 	 * Muestra un dialogo de espera
 	 */
-	public void showWSWaiting();
+	void showWSWaiting();
 	/**
 	 * Oculta el dialogo de espera
 	 */
-	public void hideWSWaiting();
+	void hideWSWaiting();
 	/**
-	 * Indica si es que la lista se refrescÛ recientemente
+	 * Indica si es que la lista se refresc√≥ recientemente
 	 * @return
 	 */
-	public boolean isRefreshed();
+	boolean isRefreshed();
 	/**
-	 * Muestra errores que podrÌan ocurrir al obtener las cuentas
+	 * Muestra errores que podr√≠an ocurrir al obtener las cuentas
 	 * @param errors
 	 */
-	public void showViewAccountsErrors(List<Exception> errors);
+	void showViewAccountsErrors(List<Exception> errors);
 	/**
 	 * Obtiene el GCMTokenRequester con el contexto de la actividad actual
 	 * @return
 	 */
-	public GCMTokenRequester getGCMTokenRequester();
+	GCMTokenRequester getGCMTokenRequester();
 	/**
 	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
 	 * @return
 	 */
-	public WSTokenRequester getWSTokenRequester();
+	WSTokenRequester getWSTokenRequester();
 }

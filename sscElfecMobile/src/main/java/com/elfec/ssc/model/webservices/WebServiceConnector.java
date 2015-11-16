@@ -27,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase general para conexi√≥n con servicios web
+ * Clase general para conexiÛn con servicios web
  * 
  * @author Diego
  *
@@ -46,8 +46,8 @@ public class WebServiceConnector<TResult> extends
 	private WSResponse<TResult> resultWS;
 
 	/**
-	 * Construye un conector de webservice soap con los par√≥metros indicados y
-	 * con autenticaci√≥n por wsToken
+	 * Construye un conector de webservice soap con los par·metros indicados y
+	 * con autenticaciÛn por wsToken
 	 * 
 	 * @param url
 	 * @param soapAction
@@ -70,8 +70,8 @@ public class WebServiceConnector<TResult> extends
 	}
 
 	/**
-	 * Construye un conector de webservice soap con los par√°metros indicados y
-	 * con autenticaci√≥n por wsToken
+	 * Construye un conector de webservice soap con los par·metros indicados y
+	 * con autenticaciÛn por wsToken
 	 * 
 	 * @param url
 	 * @param soapAction
@@ -97,8 +97,8 @@ public class WebServiceConnector<TResult> extends
 	}
 
 	/**
-	 * Construye un conector de webservice soap con los par√°metros indicados sin
-	 * autenticaci√≥n
+	 * Construye un conector de webservice soap con los par·metros indicados sin
+	 * autenticaciÛn
 	 * 
 	 * @param url
 	 * @param soapAction
@@ -118,7 +118,7 @@ public class WebServiceConnector<TResult> extends
 	}
 
 	/**
-	 * Construye un conector de webservice soap con los par√°metros indicados sin
+	 * Construye un conector de webservice soap con los par·metros indicados sin
 	 * autenticaci+on
 	 * 
 	 * @param url
@@ -164,30 +164,30 @@ public class WebServiceConnector<TResult> extends
 			result = envelope.getResponse().toString();
 		} catch (HttpResponseException e) {
 			Log.d(methodName, "Error in url: " + url + " " + e.getMessage());
-			if (e.getStatusCode() == 403) // aplicaci√≥n ya no es v√°lida
+			if (e.getStatusCode() == 403) // aplicaciÛn ya no es v·lida
 				resultWS.addError(new OutdatedAppException());
 			else
 				resultWS.addError(e);
 		} catch (ConnectException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ConnectException(
-					"No fue posible conectarse con el servidor, porfavor revise su conexi√≥n a internet"));
+					"No fue posible conectarse con el servidor, porfavor revise su conexiÛn a internet"));
 
 		} catch (SocketTimeoutException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new SocketTimeoutException(
-					"No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexi√≥n a internet"));
+					"No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexiÛn a internet"));
 		} catch (IOException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ConnectException(
-					"Ocurrio un problema al conectarse con el servidor, porfavor revise su conexi√≥n a internet"));
+					"OcurriÛ un problema al conectarse con el servidor, porfavor revise su conexiÛn a internet"));
 		} catch (XmlPullParserException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ServerSideException());
 		} catch (Exception e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new Exception(
-					"OcurriÔøΩ un error inesperado al conectarse al servicio, lamentamos las molestias, int√©ntelo de nuevo mas tarde."));
+					"OcurriÛ un error inesperado al conectarse al servicio, lamentamos las molestias, intÈntelo de nuevo mas tarde."));
 		}
 		return converter.convert(resultWS.convertErrors(result));
 	}
@@ -195,7 +195,7 @@ public class WebServiceConnector<TResult> extends
 	/**
 	 * Verifica que el codigo http response sea 200
 	 * 
-	 * @param headers
+	 * @param headers lista de headers
 	 * @throws HttpResponseException
 	 */
 	private void checkHeaderStatus(List<HeaderProperty> headers)
