@@ -23,7 +23,6 @@ import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.view.adapters.AccountAdapter;
@@ -103,7 +102,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     protected void onResume() {
         super.onResume();
         ViewPresenterManager.setPresenter(presenter);
-        presenter.gatherAccounts();
+        presenter.loadAccounts();
     }
 
     @Override
@@ -270,11 +269,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                 }
             }
         });
-    }
-
-    @Override
-    public GCMTokenRequester getGCMTokenRequester() {
-        return new GCMTokenRequester(this);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.elfec.ssc.view.adapters;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ public class AccountAdapter extends ArrayAdapter<Account> {
 	private LayoutInflater mInflater;
 	private NumberFormat mNumFormat;
 
-	public AccountAdapter(Context context, int resource,
+	public AccountAdapter(Context context, @LayoutRes int resource,
 						  final List<Account> accounts) {
 		super(context, resource, accounts);
 		this.mResourceId = resource;

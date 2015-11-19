@@ -3,6 +3,7 @@
   <component name="Encoding" defaultCharsetForPropertiesFiles="windows-1252">
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/businesslogic/LocationPointsManager.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Account.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/GcmConnectException.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/InitializationException.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/MobileSideException.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/OutdatedAppException.java" charset="windows-1252" />

@@ -24,7 +24,6 @@ import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.ui.KeyboardHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
-import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
 import com.elfec.ssc.view.controls.ProgressDialogService;
@@ -315,10 +314,6 @@ public class RegisterAccount extends AppCompatActivity implements
         });
     }
 
-    @Override
-    public GCMTokenRequester getGCMTokenRequester() {
-        return new GCMTokenRequester(this);
-    }
 
     @Override
     public WSTokenRequester getWSTokenRequester() {

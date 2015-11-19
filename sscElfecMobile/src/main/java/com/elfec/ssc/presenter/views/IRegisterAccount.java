@@ -1,7 +1,6 @@
 package com.elfec.ssc.presenter.views;
 
 import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
-import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
 
 import java.util.List;
 
@@ -25,11 +24,7 @@ import java.util.List;
 	 void notifyAccountAlreadyRegistered();
 	 void notifyErrorsInFields();
 	 void showRegistrationErrors(List<Exception> errors);
-	/**
-	 * Obtiene el GCMTokenRequester con el contexto de la actividad actual
-	 * @return
-	 */
-	 GCMTokenRequester getGCMTokenRequester();
+
 	/**
 	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
 	 * @return

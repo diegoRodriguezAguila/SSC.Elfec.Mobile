@@ -50,8 +50,8 @@ public class NewAccountGCMHandler implements IGCMHandler {
 			ViewAccountsPresenter presenter = ViewPresenterManager
 					.getPresenter(ViewAccountsPresenter.class);
 			if (presenter != null)
-				presenter.gatherAccounts();
-			//Si la vista de ver notificaciones está activa
+				presenter.loadAccounts();
+			//Si la vista de ver notificaciones estï¿½ activa
 			ViewNotificationsPresenter notifPresenter = ViewPresenterManager
 					.getPresenter(ViewNotificationsPresenter.class);
 			if (notifPresenter != null)

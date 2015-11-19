@@ -17,7 +17,7 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 /**
- * Maneja las notificaciones de eliminación de cuentas
+ * Maneja las notificaciones de eliminaciï¿½n de cuentas
  * @author drodriguez
  *
  */
@@ -43,8 +43,8 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 				ViewAccountsPresenter presenter = ViewPresenterManager
 						.getPresenter(ViewAccountsPresenter.class);
 				if (presenter != null)
-					presenter.gatherAccounts();
-				//Si la vista de ver notificaciones está activa
+					presenter.loadAccounts();
+				//Si la vista de ver notificaciones estï¿½ activa
 				ViewNotificationsPresenter notifPresenter = ViewPresenterManager
 						.getPresenter(ViewNotificationsPresenter.class);
 				if (notifPresenter != null)

@@ -12,7 +12,7 @@ import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
 import com.elfec.ssc.model.exceptions.MobileSideException;
-import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
+import com.elfec.ssc.model.gcmservices.GcmTokenRequester;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.validations.ValidationRulesFactory;
 import com.elfec.ssc.model.validations.ValidationsAndParams;
@@ -20,8 +20,6 @@ import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
 import com.elfec.ssc.security.AppPreferences;
 
-import java.net.ConnectException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,9 +31,10 @@ import java.util.List;
 public class RegisterAccountPresenter {
 
 	private IRegisterAccount view;
-
+	private GcmTokenRequester mGcmTokenRequester;
 	public RegisterAccountPresenter(IRegisterAccount view) {
 		this.view = view;
+		mGcmTokenRequester = new GcmTokenRequester(AppPreferences.getApplicationContext());
 	}
 
 	/**
@@ -53,25 +52,20 @@ public class RegisterAccountPresenter {
 					if (!client.hasAccount(view.getNUS(),
 							view.getAccountNumber())) {
 						view.showWSWaiting();
-						GCMTokenRequester gcmTokenRequester = view
-								.getGCMTokenRequester();
-						gcmTokenRequester
+                        mGcmTokenRequester
 								.getTokenAsync(new GcmTokenCallback() {
 									@Override
 									public void onGcmTokenReceived(
 											String gcmToken) {
-										if (gcmToken == null) {
-											view.hideWSWaiting();
-											List<Exception> errorsToShow = new ArrayList<Exception>();
-											errorsToShow
-													.add(new ConnectException(
-															"No fue posible conectarse con el servidor, porfavor revise su conexión a internet"));
-											view.showRegistrationErrors(errorsToShow);
-										} else {
-											callRegisterWebService(client);
-										}
+                                        callRegisterWebService(client);
 									}
-								});
+
+                                    @Override
+                                    public void onGcmErrors(List<Exception> errors) {
+                                        view.hideWSWaiting();
+                                        view.showRegistrationErrors(errors);
+                                    }
+                                });
 					} else {
 						view.notifyAccountAlreadyRegistered();
 					}

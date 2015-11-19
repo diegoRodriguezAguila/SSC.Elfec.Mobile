@@ -13,14 +13,12 @@ import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.WSTokenReceivedCallback;
-import com.elfec.ssc.model.gcmservices.GCMTokenRequester;
+import com.elfec.ssc.model.gcmservices.GcmTokenRequester;
 import com.elfec.ssc.model.security.WSToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.security.AppPreferences;
 
-import java.net.ConnectException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ViewAccountsPresenter {
@@ -28,16 +26,18 @@ public class ViewAccountsPresenter {
     private IViewAccounts view;
     private boolean mIsLoadingAccounts;
     private boolean mIsRefreshing;
+    private GcmTokenRequester mGcmTokenRequester;
 
     public ViewAccountsPresenter(IViewAccounts view) {
         this.view = view;
         mIsLoadingAccounts = false;
         mIsRefreshing = false;
+        mGcmTokenRequester = new GcmTokenRequester(AppPreferences.getApplicationContext());
     }
 
     public void invokeRemoveAccountWS(final String nus) {
         final String imei = view.getImei();
-        Thread thread = new Thread(new Runnable() {
+        new Thread(new Runnable() {
             @Override
             public void run() {
                 Looper.prepare();
@@ -45,53 +45,52 @@ public class ViewAccountsPresenter {
                     @Override
                     public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
                         final Client client = Client.getActiveClient();
-                        new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(), nus, imei, new IWSFinishEvent<Boolean>() {
-                            @Override
-                            public void executeOnFinished(WSResponse<Boolean> result) {
-                                if (result.getResult()) {
-                                    ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
-                                    gatherAccounts();
-                                    view.showAccountDeleted();
-                                    view.hideWaiting();
-                                } else {
-                                    view.hideWaiting();
-                                    view.displayErrors(result.getErrors());
-                                }
-                            }
-                        });
+                        new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(),
+                                nus, imei, new IWSFinishEvent<Boolean>() {
+                                    @Override
+                                    public void executeOnFinished(WSResponse<Boolean> result) {
+                                        if (result.getResult()) {
+                                            ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
+                                            loadAccounts();
+                                            view.showAccountDeleted();
+                                            view.hideWaiting();
+                                        } else {
+                                            view.hideWaiting();
+                                            view.displayErrors(result.getErrors());
+                                        }
+                                    }
+                                });
                     }
                 });
 
                 Looper.loop();
             }
-        });
-        thread.start();
+        }).start();
     }
 
     /**
-     * Obtiene las cuentas del cliente tanto remota como localmente
+     * Obtiene las cuentas del cliente remotamente, si no hay conexión obtiene la
+     * versión local
      */
-    public void gatherAccounts() {
+    public void loadAccounts() {
         final Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 Looper.prepare();
                 final Client client = Client.getActiveClient();
-                    GCMTokenRequester gcmTokenRequester = view.getGCMTokenRequester();
-                    gcmTokenRequester.getTokenAsync(new GcmTokenCallback() {
-                        @Override
-                        public void onGcmTokenReceived(String gcmToken) {
-                            if (gcmToken == null) {
-                                view.hideWaiting();
-                                List<Exception> errorsToShow = new ArrayList<>();
-                                errorsToShow.add(new ConnectException("No fue posible conectarse con el servidor, porfavor revise su conexión a internet.\n\u25CF También verifique que tiene Google Play Services instalado."));
-                                view.showViewAccountsErrors(errorsToShow);
-                                view.showAccounts(null);
-                            } else {
-                                loadAccountsRemotely(client);
-                            }
-                        }
-                    });
+                mGcmTokenRequester.getTokenAsync(new GcmTokenCallback() {
+                    @Override
+                    public void onGcmTokenReceived(String gcmToken) {
+                        loadAccountsRemotely(client, gcmToken);
+                    }
+
+                    @Override
+                    public void onGcmErrors(List<Exception> errors) {
+                        view.hideWaiting();
+                        view.showViewAccountsErrors(errors);
+                        view.showAccounts(null);
+                    }
+                });
                 Looper.loop();
             }
         });
@@ -108,7 +107,7 @@ public class ViewAccountsPresenter {
      */
     public void refreshAccountsRemotely() {
         mIsRefreshing = true;
-        loadAccountsRemotely(Client.getActiveClient());
+        loadAccountsRemotely(Client.getActiveClient(), AppPreferences.instance().getGCMToken());
     }
 
     /**
@@ -116,37 +115,37 @@ public class ViewAccountsPresenter {
      *
      * @param client cliente
      */
-    private void loadAccountsRemotely(final Client client) {
+    private void loadAccountsRemotely(final Client client, final String gcmToken) {
         if (!mIsLoadingAccounts) {
             mIsLoadingAccounts = true;
             view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {
                 @Override
                 public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
                     new AccountWS(wsTokenResult.getResult()).getAllAccounts(client.getGmail(),
-                        Build.BRAND, Build.MODEL, view.getImei(), AppPreferences.instance().getGCMToken(),
-                        new IWSFinishEvent<List<Account>>() {
-                            @Override
-                            public void executeOnFinished(final WSResponse<List<Account>> result) {
-                                new Thread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (result.getErrors().size() == 0) {
-                                            final List<Account> accounts = ClientManager.registerClientAccounts(result.getResult());
-                                            view.hideWaiting();
-                                            view.showAccounts(accounts);
-                                        } else {
-                                            view.hideWaiting();
-                                            view.showViewAccountsErrors(result.getErrors());
-                                            if (!mIsRefreshing)
-                                                view.showAccounts(null);
-                                            else loadAccountsLocally(client);
+                            Build.BRAND, Build.MODEL, view.getImei(), gcmToken,
+                            new IWSFinishEvent<List<Account>>() {
+                                @Override
+                                public void executeOnFinished(final WSResponse<List<Account>> result) {
+                                    new Thread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            if (result.getErrors().size() == 0) {
+                                                final List<Account> accounts = ClientManager.registerClientAccounts(result.getResult());
+                                                view.hideWaiting();
+                                                view.showAccounts(accounts);
+                                            } else {
+                                                view.hideWaiting();
+                                                view.showViewAccountsErrors(result.getErrors());
+                                                if (!mIsRefreshing)
+                                                    view.showAccounts(null);
+                                                else loadAccountsLocally(client);
+                                            }
+                                            mIsLoadingAccounts = false;
+                                            mIsRefreshing = false;
                                         }
-                                        mIsLoadingAccounts = false;
-                                        mIsRefreshing = false;
-                                    }
-                                }).start();
-                            }
-                        });
+                                    }).start();
+                                }
+                            });
                 }
             });
         }
