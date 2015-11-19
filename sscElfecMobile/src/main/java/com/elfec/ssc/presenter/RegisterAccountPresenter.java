@@ -6,14 +6,15 @@ import android.os.Looper;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.FieldValidator;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
+import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.events.WSTokenReceivedCallback;
+import com.elfec.ssc.model.events.SscTokenReceivedCallback;
 import com.elfec.ssc.model.exceptions.MobileSideException;
 import com.elfec.ssc.model.gcmservices.GcmTokenRequester;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.validations.ValidationRulesFactory;
 import com.elfec.ssc.model.validations.ValidationsAndParams;
 import com.elfec.ssc.model.webservices.WSResponse;
@@ -32,9 +33,11 @@ public class RegisterAccountPresenter {
 
 	private IRegisterAccount view;
 	private GcmTokenRequester mGcmTokenRequester;
+    private SscTokenRequester mSscTokenRequester;
 	public RegisterAccountPresenter(IRegisterAccount view) {
 		this.view = view;
 		mGcmTokenRequester = new GcmTokenRequester(AppPreferences.getApplicationContext());
+        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
 	}
 
 	/**
@@ -49,7 +52,7 @@ public class RegisterAccountPresenter {
 				boolean accountNumberIsValid = validateAccountNumber();
 				if (nusIsValid && accountNumberIsValid) {
 					final Client client = Client.getActiveClient();
-					if (!client.hasAccount(view.getNUS(),
+					if (!client.hasAccount(view.getNus(),
 							view.getAccountNumber())) {
 						view.showWSWaiting();
                         mGcmTokenRequester
@@ -57,7 +60,7 @@ public class RegisterAccountPresenter {
 									@Override
 									public void onGcmTokenReceived(
 											String gcmToken) {
-                                        callRegisterWebService(client);
+                                        callRegisterWebService(client, gcmToken);
 									}
 
                                     @Override
@@ -82,45 +85,45 @@ public class RegisterAccountPresenter {
 	/**
 	 * Invoca a las clases necesarias para registrar una cuenta via web services
 	 * 
-	 * @param client
+	 * @param client cliente
+     * @param gcmToken token gcm
 	 */
-	private void callRegisterWebService(final Client client) {
-		view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {
-			@Override
-			public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
-				view.showRegistrationErrors(wsTokenResult.getErrors());
-				if (wsTokenResult.getResult() != null) {
-					AccountWS accountWebService = new AccountWS(wsTokenResult
-							.getResult());
-					accountWebService.registerAccount(view.getAccountNumber(),
-							view.getNUS(), client.getGmail(),
-							view.getPhoneNumber(), Build.BRAND, Build.MODEL,
-							view.getIMEI(),
-							AppPreferences.instance().getGCMToken(),
-							new IWSFinishEvent<Account>() {
-								@Override
-								public void executeOnFinished(
-										WSResponse<Account> result) {
-									view.hideWSWaiting();
-									if (result.getResult() != null) {
-										ElfecAccountsManager
-												.registerAccount(result
-														.getResult());
-										view.notifyAccountSuccessfulyRegistered();
-									} else if (!result.hasErrors())
-										result.addError(new MobileSideException());
-									view.showRegistrationErrors(result
-											.getErrors());
-								}
-							});
-				} else
-					view.hideWSWaiting();
-			}
+	private void callRegisterWebService(final Client client, final String gcmToken) {
+        mSscTokenRequester.getTokenAsync(new SscTokenReceivedCallback() {
+            @Override
+            public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
+                view.showRegistrationErrors(wsTokenResult.getErrors());
+                if (wsTokenResult.getResult() != null) {
+                    AccountWS accountWebService = new AccountWS(wsTokenResult
+                            .getResult());
+                    accountWebService.registerAccount(view.getAccountNumber(),
+                            view.getNus(), client.getGmail(),
+                            view.getPhoneNumber(), Build.BRAND, Build.MODEL,
+                            view.getImei(), gcmToken,
+                            new IWSFinishEvent<Account>() {
+                                @Override
+                                public void executeOnFinished(
+                                        WSResponse<Account> result) {
+                                    view.hideWSWaiting();
+                                    if (result.getResult() != null) {
+                                        ElfecAccountsManager
+                                                .registerAccount(result
+                                                        .getResult());
+                                        view.notifyAccountSuccessfullyRegistered();
+                                    } else if (!result.hasErrors())
+                                        result.addError(new MobileSideException());
+                                    view.showRegistrationErrors(result
+                                            .getErrors());
+                                }
+                            });
+                } else
+                    view.hideWSWaiting();
+            }
 		});
 	}
 
 	/**
-	 * Valida un campo con los parï¿½metros pasados
+	 * Valida un campo con los parámetros pasados
 	 */
 	private List<String> validateField(String fieldName,
 			boolean fieldIsMaleGender, String fieldValue, String validationRules) {
@@ -138,13 +141,13 @@ public class RegisterAccountPresenter {
 	 */
 	public boolean validateNUS() {
 		List<String> validationErrors = validateField("NUS", true,
-				view.getNUS(), view.getNUSValidationRules());
-		view.setNUSErrors(validationErrors);
+				view.getNus(), view.getNusValidationRules());
+		view.setNusErrors(validationErrors);
 		return validationErrors.size() == 0;
 	}
 
 	/**
-	 * Validael campo del nï¿½mero de cuenta
+	 * Validael campo del número de cuenta
 	 * 
 	 * @return true si no tiene errores
 	 */

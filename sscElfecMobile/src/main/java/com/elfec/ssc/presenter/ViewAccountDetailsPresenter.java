@@ -1,28 +1,32 @@
 package com.elfec.ssc.presenter;
 
-import java.util.List;
-
 import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
+import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.events.WSTokenReceivedCallback;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.events.SscTokenReceivedCallback;
+import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
+import com.elfec.ssc.security.AppPreferences;
+
+import java.util.List;
 
 public class ViewAccountDetailsPresenter {
 
 	private IViewAccountDetails view;
 	private Account accountToShow;
+	private SscTokenRequester mSscTokenRequester;
 
 	public ViewAccountDetailsPresenter(IViewAccountDetails view,
 			long accountToShowId) {
 		this.view = view;
 		this.accountToShow = Account.get(accountToShowId);
+        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
 	}
 
 	public void getUsage() {
@@ -31,11 +35,11 @@ public class ViewAccountDetailsPresenter {
 			public void run() {
 				Looper.prepare();
 				view.showUsage(accountToShow.getUsages());
-				view.getWSTokenRequester().getTokenAsync(
-						new WSTokenReceivedCallback() {
+                mSscTokenRequester.getTokenAsync(
+						new SscTokenReceivedCallback() {
 							@Override
-							public void onWSTokenReceived(
-									WSResponse<WSToken> wsTokenResult) {
+							public void onSscTokenReceived(
+									WSResponse<SscToken> wsTokenResult) {
 								if (wsTokenResult.getResult() != null)
 									new AccountWS(wsTokenResult.getResult()).getUsage(
 											accountToShow.getNUS(),
@@ -69,7 +73,7 @@ public class ViewAccountDetailsPresenter {
 	 */
 	public void setFields() {
 		view.setAccountNumber(accountToShow.getAccountNumber());
-		view.setNUS(accountToShow.getNUS());
+		view.setNus(accountToShow.getNUS());
 		view.setOwnerClient(accountToShow.getAccountOwner());
 		view.setClientAddress(accountToShow.getAddress());
 		view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
@@ -83,7 +87,7 @@ public class ViewAccountDetailsPresenter {
 	}
 
 	/**
-	 * LLama a los métodos necesarios para ir a la direcció
+	 * LLama a los mï¿½todos necesarios para ir a la direcciï¿½
 	 */
 	public void goToAddress() {
 		view.navigateToAddress(accountToShow);

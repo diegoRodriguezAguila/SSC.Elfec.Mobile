@@ -1,8 +1,5 @@
 package com.elfec.ssc.gcmservices;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.os.Bundle;
@@ -21,6 +18,9 @@ import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
 import com.elfec.ssc.view.ViewAccounts;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Maneja las notificaciones GCM de nuevas cuentas
  * @author Diego
@@ -28,7 +28,7 @@ import com.elfec.ssc.view.ViewAccounts;
  */
 public class NewAccountGCMHandler implements IGCMHandler {
 
-	private final int NOTIF_ID = 1;
+	private static final int NOTIF_ID = 1;
 	@Override
 	public Class<? extends Activity> getActivityClass() {
 		return ViewAccounts.class;
@@ -50,8 +50,8 @@ public class NewAccountGCMHandler implements IGCMHandler {
 			ViewAccountsPresenter presenter = ViewPresenterManager
 					.getPresenter(ViewAccountsPresenter.class);
 			if (presenter != null)
-				presenter.loadAccounts();
-			//Si la vista de ver notificaciones est� activa
+				presenter.loadAccounts(true);
+			//Si la vista de ver notificaciones está activa
 			ViewNotificationsPresenter notifPresenter = ViewPresenterManager
 					.getPresenter(ViewNotificationsPresenter.class);
 			if (notifPresenter != null)

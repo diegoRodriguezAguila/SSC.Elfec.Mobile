@@ -6,7 +6,7 @@ import android.util.Log;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.exceptions.ServerSideException;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.security.SscToken;
 
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
@@ -40,49 +40,49 @@ public class WebServiceConnector<TResult> extends
 	private String soapAction; // = "";
 	private String namespace;// = "http://DefaultNamespace";
 	private String methodName;
-	private WSToken wsToken;
+	private SscToken sscToken;
 	private IWSFinishEvent<TResult> onFinishedEvent;
 	private IWSResultConverter<TResult> converter;
 	private WSResponse<TResult> resultWS;
 
 	/**
 	 * Construye un conector de webservice soap con los parámetros indicados y
-	 * con autenticación por wsToken
+	 * con autenticación por sscToken
 	 * 
 	 * @param url
 	 * @param soapAction
 	 * @param namespace
 	 * @param methodName
-	 * @param wsToken
+	 * @param sscToken
 	 * @param converter
 	 */
 	public WebServiceConnector(String url, String soapAction, String namespace,
-			String methodName, WSToken wsToken,
+			String methodName, SscToken sscToken,
 			IWSResultConverter<TResult> converter) {
 		super();
 		this.url = WS_SERVER + url;
 		this.soapAction = soapAction;
 		this.namespace = namespace;
 		this.methodName = methodName;
-		this.wsToken = wsToken;
+		this.sscToken = sscToken;
 		this.converter = converter;
 		this.resultWS = new WSResponse<>();
 	}
 
 	/**
 	 * Construye un conector de webservice soap con los parámetros indicados y
-	 * con autenticación por wsToken
+	 * con autenticación por sscToken
 	 * 
 	 * @param url
 	 * @param soapAction
 	 * @param namespace
 	 * @param methodName
-	 * @param wsToken
+	 * @param sscToken
 	 * @param converter
 	 * @param onFinishedEvent
 	 */
 	public WebServiceConnector(String url, String soapAction, String namespace,
-			String methodName, WSToken wsToken,
+			String methodName, SscToken sscToken,
 			IWSResultConverter<TResult> converter,
 			IWSFinishEvent<TResult> onFinishedEvent) {
 		super();
@@ -90,7 +90,7 @@ public class WebServiceConnector<TResult> extends
 		this.soapAction = soapAction;
 		this.namespace = namespace;
 		this.methodName = methodName;
-		this.wsToken = wsToken;
+		this.sscToken = sscToken;
 		this.onFinishedEvent = onFinishedEvent;
 		this.converter = converter;
 		this.resultWS = new WSResponse<>();
@@ -154,9 +154,9 @@ public class WebServiceConnector<TResult> extends
 			List<HeaderProperty> headerPropertyArrayList = new ArrayList<>();
 			headerPropertyArrayList.add(new HeaderProperty("Connection",
 					"close"));
-			if (wsToken != null)
+			if (sscToken != null)
 				headerPropertyArrayList.add(new HeaderProperty("x-ws-token",
-						wsToken.toString()));
+						sscToken.toString()));
 			@SuppressWarnings("unchecked")
 			List<HeaderProperty> headers = ht.call(soapAction, envelope,
 					headerPropertyArrayList);

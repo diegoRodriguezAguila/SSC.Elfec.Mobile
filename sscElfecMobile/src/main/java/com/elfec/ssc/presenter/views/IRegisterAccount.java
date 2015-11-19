@@ -1,7 +1,5 @@
 package com.elfec.ssc.presenter.views;
 
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
-
 import java.util.List;
 
 /***
@@ -10,24 +8,18 @@ import java.util.List;
  *
  */
  public interface IRegisterAccount {
-	 String getNUS();
-	 String getNUSValidationRules();
-	 void setNUSErrors(List<String> validationErrors);
+	 String getNus();
+	 String getNusValidationRules();
+	 void setNusErrors(List<String> validationErrors);
 	 String getAccountNumber();
 	 String getAccountNumberValidationRules();
 	 void setAccountNumberErrors(List<String> validationErrors);
-	 String getIMEI();
+	 String getImei();
 	 String getPhoneNumber();
-	 void notifyAccountSuccessfulyRegistered();
+	 void notifyAccountSuccessfullyRegistered();
 	 void showWSWaiting();
 	 void hideWSWaiting();
 	 void notifyAccountAlreadyRegistered();
 	 void notifyErrorsInFields();
 	 void showRegistrationErrors(List<Exception> errors);
-
-	/**
-	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
-	 * @return
-	 */
-	 WSTokenRequester getWSTokenRequester();
 }

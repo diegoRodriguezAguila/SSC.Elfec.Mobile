@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import com.elfec.ssc.businesslogic.LocationPointsManager;
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
+import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.LocationServicesMessages;
@@ -12,9 +13,9 @@ import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.events.WSTokenReceivedCallback;
+import com.elfec.ssc.model.events.SscTokenReceivedCallback;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.security.AppPreferences;
@@ -29,6 +30,7 @@ public class LocationServicesPresenter {
     private LocationDistance lastSelectedDistance;
     private Location currentLocation;
     private int distanceRange;
+    private SscTokenRequester mSscTokenRequester;
     private final int MIN_DISTANCE_DIFFERENCE = 250;
 
 
@@ -38,13 +40,14 @@ public class LocationServicesPresenter {
         lastSelectedType = LocationPointType.BOTH;
         this.view = view;
         distanceRange = AppPreferences.instance().getConfiguredDistance();
+        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
     }
 
     /**
      * Asigna la distancia en metros para realizar la filtración de puntos, cuando la opción
      * de más cercanos es seleccionada
      *
-     * @param distance
+     * @param distance distancia
      */
     public void setDistanceRange(int distance) {
         if (distance != distanceRange) {
@@ -58,7 +61,7 @@ public class LocationServicesPresenter {
     /**
      * Filtra la lista de puntos según el tipo de punto
      *
-     * @param selectedType
+     * @param selectedType tipo
      */
     public void setSelectedType(LocationPointType selectedType) {
         lastSelectedType = selectedType;
@@ -74,7 +77,7 @@ public class LocationServicesPresenter {
     /**
      * Filtra la lista de puntos segón el tipo de proximidad definido, usando el punto de locación exacto
      *
-     * @param distance
+     * @param distance distancia
      */
     public void setSelectedDistance(LocationDistance distance, Location currentLocation) {
         lastSelectedDistance = distance;
@@ -87,7 +90,7 @@ public class LocationServicesPresenter {
     /**
      * Filtra la lista de puntos segón el tipo de proximidad definido, obteniendo la locación de la vista
      *
-     * @param distance
+     * @param distance distancia
      */
     public void setSelectedDistance(LocationDistance distance) {
         setSelectedDistance(distance, view.getCurrentLocation() == null ? (new Location("gps")) : view.getCurrentLocation());
@@ -113,9 +116,9 @@ public class LocationServicesPresenter {
             @Override
             public void run() {
                 Looper.prepare();
-                view.getWSTokenRequester().getTokenAsync(new WSTokenReceivedCallback() {
+                mSscTokenRequester.getTokenAsync(new SscTokenReceivedCallback() {
                     @Override
-                    public void onWSTokenReceived(WSResponse<WSToken> wsTokenResult) {
+                    public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
                         new LocationPointWS(wsTokenResult.getResult())
                                 .getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
                                     @Override
@@ -124,7 +127,7 @@ public class LocationServicesPresenter {
                                             LocationPointsManager.removeLocations(result.getResult());
                                             LocationPointsManager.registerLocations(result.getResult());
                                         } else {
-                                            if(isOutdatedApp(result.getErrors()))
+                                            if (isOutdatedApp(result.getErrors()))
                                                 view.showLocationServicesErrors(result.getErrors());
                                             else view.informNoInternetConnection();
                                         }

@@ -17,7 +17,6 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
@@ -130,11 +129,6 @@ public class LocationServices extends AppCompatActivity implements
 			overridePendingTransition(R.anim.slide_right_in,
 					R.anim.slide_right_out);
 		}
-	}
-
-	@Override
-	public WSTokenRequester getWSTokenRequester() {
-		return new WSTokenRequester(this);
 	}
 
 	/**

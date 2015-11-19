@@ -5,14 +5,14 @@ package com.elfec.ssc.model.security;
  * @author drodriguez
  *
  */
-public class WSCredential {
+public class SscCredential {
 	private String imei;
 	private String signature;
 	private String salt;
 	private int versionCode;
 	
-	public WSCredential(String imei, String signature, String salt,
-			int versionCode) {
+	public SscCredential(String imei, String signature, String salt,
+						 int versionCode) {
 		this.imei = imei;
 		this.signature = signature;
 		this.salt = salt;

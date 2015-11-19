@@ -8,11 +8,11 @@ import org.json.JSONObject;
  * @author drodriguez
  *
  */
-public class WSToken {
+public class SscToken {
 	private String imei;
 	private String token;
 	
-	public WSToken(String imei, String token) {
+	public SscToken(String imei, String token) {
 		this.imei = imei;
 		this.token = token;
 	}

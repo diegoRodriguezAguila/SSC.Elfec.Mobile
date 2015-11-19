@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.GoogleMapsHelper;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
@@ -109,7 +108,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
     }
 
     @Override
-    public void setNUS(String nus) {
+    public void setNus(String nus) {
         ((TextView) findViewById(R.id.txt_nus)).setText(nus);
     }
 
@@ -184,11 +183,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
             }
         });
     }
-
-    @Override
-    public WSTokenRequester getWSTokenRequester() {
-        return new WSTokenRequester(this);
-    }
+    
 
     @Override
     public void navigateToAddress(Account account) {

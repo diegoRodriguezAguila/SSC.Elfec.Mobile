@@ -1,6 +1,7 @@
 package com.elfec.ssc.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
@@ -20,7 +21,6 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.ui.KeyboardHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
@@ -40,6 +40,15 @@ import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class RegisterAccount extends AppCompatActivity implements
         IRegisterAccount {
+
+    /**
+     * Codigo para startActivityForResult
+     */
+    public static final int REGISTER_REQUEST_CODE = 213;
+    /**
+     * Constante para obtener el resultado de bundle de registrar
+     */
+    public static final String REGISTER_SUCCESS = "AccountRegistered";
 
     private RegisterAccountPresenter presenter;
     protected
@@ -117,7 +126,7 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     /**
-     * Asigna los onFocusChange listeners del txtNus y el mTxtAccountNumber
+     * Asigna los onFocusChange listeners del mTxtNus y el mTxtAccountNumber
      */
     public void setOnFocusChangedListeners() {
         Thread thread = new Thread(new Runnable() {
@@ -161,10 +170,10 @@ public class RegisterAccount extends AppCompatActivity implements
         presenter.processAccountData();
     }
 
-    // #region Interface IRegisterAccount methods
+    //region Interface IRegisterAccount methods
 
     @Override
-    public void setNUSErrors(final List<String> validationErrors) {
+    public void setNusErrors(final List<String> validationErrors) {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -192,7 +201,7 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public String getNUS() {
+    public String getNus() {
         return mTxtNus.getText().toString();
     }
 
@@ -202,7 +211,7 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public String getIMEI() {
+    public String getImei() {
         return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
                 .getDeviceId();
     }
@@ -215,7 +224,7 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public String getNUSValidationRules() {
+    public String getNusValidationRules() {
         return mTxtNus.getTag().toString();
     }
 
@@ -225,7 +234,7 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public void notifyAccountSuccessfulyRegistered() {
+    public void notifyAccountSuccessfullyRegistered() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -234,6 +243,9 @@ public class RegisterAccount extends AppCompatActivity implements
                         SuperToast.Duration.LONG,
                         Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
                         .show();
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra(REGISTER_SUCCESS, true);
+                setResult(RESULT_OK, returnIntent);
                 onBackPressed();
             }
         });
@@ -314,11 +326,5 @@ public class RegisterAccount extends AppCompatActivity implements
         });
     }
 
-
-    @Override
-    public WSTokenRequester getWSTokenRequester() {
-        return new WSTokenRequester(this);
-    }
-
-    // #endregion
+    //endregion
 }

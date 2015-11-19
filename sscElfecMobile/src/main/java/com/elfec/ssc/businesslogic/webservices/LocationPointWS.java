@@ -2,7 +2,7 @@ package com.elfec.ssc.businesslogic.webservices;
 
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
 import com.elfec.ssc.model.webservices.converters.GetAllLocationPointsWSConverter;
 
@@ -15,20 +15,20 @@ import java.util.List;
  */
 public class LocationPointWS {
 
-	private WSToken wsToken;
+	private SscToken sscToken;
 	
-	public LocationPointWS(WSToken wsToken){
-		this.wsToken = wsToken;
+	public LocationPointWS(SscToken sscToken){
+		this.sscToken = sscToken;
 	}
 	/**
 	 * Obtiene todos los puntos de pago activos
-	 * @param eventHandler
+	 * @param eventHandler handler del evento
 	 */
 	public void getAllLocationPoints(IWSFinishEvent<List<LocationPoint>> eventHandler)
 	{
 		WebServiceConnector<List<LocationPoint>> paypointWSConnector = 
 				new WebServiceConnector<>("LocationPointWS.php?wsdl", "",
-						"ssc_elfec", "GetAllLocationPoints", wsToken, new GetAllLocationPointsWSConverter(), eventHandler);
+						"ssc_elfec", "GetAllLocationPoints", sscToken, new GetAllLocationPointsWSConverter(), eventHandler);
 		paypointWSConnector.execute();
 	}
 }

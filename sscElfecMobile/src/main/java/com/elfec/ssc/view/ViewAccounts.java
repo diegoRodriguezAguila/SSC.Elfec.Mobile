@@ -18,7 +18,6 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
@@ -96,13 +95,14 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                 }
             }
         });
+
+        presenter.loadAccounts(true);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         ViewPresenterManager.setPresenter(presenter);
-        presenter.loadAccounts();
     }
 
     @Override
@@ -137,8 +137,8 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     public void btnRegisterAccountClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            Intent i = new Intent(ViewAccounts.this, RegisterAccount.class);
-            startActivity(i);
+            startActivityForResult(new Intent(ViewAccounts.this, RegisterAccount.class),
+                    RegisterAccount.REGISTER_REQUEST_CODE);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
         }
@@ -149,6 +149,22 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         finish();// go back to the previous Activity
         overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == RegisterAccount.REGISTER_REQUEST_CODE) {
+
+            if (resultCode == RESULT_OK) {
+                boolean updateList = data.getBooleanExtra(RegisterAccount.REGISTER_SUCCESS, false);
+                if(updateList){
+                    presenter.loadAccounts(true);
+                }
+
+            }
+        }
+    }
+
+    //region interface Methods
 
     @Override
     public void showAccounts(final List<Account> accounts) {
@@ -220,7 +236,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                         Account account = (Account) mListViewAccounts
                                 .getAdapter().getItem(position);
                         showWaiting();
-                        presenter.invokeRemoveAccountWS(account.getNUS());
+                        presenter.removeAccount(account.getNUS());
                     }
                 }).setNegativeButton(R.string.btn_cancel, null);
         AlertDialog dialog = builder.create();
@@ -271,9 +287,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         });
     }
 
-    @Override
-    public WSTokenRequester getWSTokenRequester() {
-        return new WSTokenRequester(this);
-    }
+    //endregion
 
 }

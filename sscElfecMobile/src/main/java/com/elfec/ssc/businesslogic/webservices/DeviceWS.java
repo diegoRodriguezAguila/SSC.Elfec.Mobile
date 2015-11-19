@@ -1,7 +1,7 @@
 package com.elfec.ssc.businesslogic.webservices;
 
 import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
 import com.elfec.ssc.model.webservices.converters.UpdateDeviceGCMTokenConverter;
@@ -12,24 +12,24 @@ import com.elfec.ssc.model.webservices.converters.UpdateDeviceGCMTokenConverter;
  *
  */
 public class DeviceWS {
-	private WSToken wsToken;
+	private SscToken sscToken;
 	
-	public DeviceWS(WSToken wsToken){
-		this.wsToken = wsToken;
+	public DeviceWS(SscToken sscToken){
+		this.sscToken = sscToken;
 	}
 
 	/**
 	 * Registra una cuenta por medio de servicios web
-	 * @param lastToken
-	 * @param IMEI
-	 * @param newToken
-	 * @param eventHandler
+	 * @param lastToken ultimo token registrado
+	 * @param Imei Imei dispositivo
+	 * @param newToken nuevo token
+	 * @param eventHandler handler del evento
 	 */
-	public void updateDeviceGCMToken(String lastToken, String IMEI, String newToken, IWSFinishEvent<Boolean> eventHandler )
+	public void updateDeviceGCMToken(String lastToken, String Imei, String newToken, IWSFinishEvent<Boolean> eventHandler )
 	{
 		WebServiceConnector<Boolean> accountWSConnector = 
-				new WebServiceConnector<Boolean>("DeviceWS.php?wsdl", "", 
-						"ssc_elfec", "UpdateDeviceGCMToken", wsToken, new UpdateDeviceGCMTokenConverter(), eventHandler);
-		accountWSConnector.execute(new WSParam("LastToken", lastToken), new WSParam("IMEI", IMEI), new WSParam("NewToken", newToken));
+				new WebServiceConnector<>("DeviceWS.php?wsdl", "",
+						"ssc_elfec", "UpdateDeviceGCMToken", sscToken, new UpdateDeviceGCMTokenConverter(), eventHandler);
+		accountWSConnector.execute(new WSParam("LastToken", lastToken), new WSParam("IMEI", Imei), new WSParam("NewToken", newToken));
 	}
 }

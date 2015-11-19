@@ -1,5 +1,10 @@
 package com.elfec.ssc.gcmservices;
 
+import android.app.Activity;
+import android.app.NotificationManager;
+import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.ElfecNotificationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
@@ -11,11 +16,6 @@ import com.elfec.ssc.model.enums.NotificationType;
 import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
 import com.elfec.ssc.view.ViewAccounts;
-
-import android.app.Activity;
-import android.app.NotificationManager;
-import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 /**
  * Maneja las notificaciones de eliminaci�n de cuentas
  * @author drodriguez
@@ -23,7 +23,7 @@ import android.support.v4.app.NotificationCompat;
  */
 public class AccountDeletedGCMHandler implements IGCMHandler {
 
-	private final int NOTIF_ID = 2;
+	private static final int NOTIF_ID = 2;
 	@Override
 	public Class<? extends Activity> getActivityClass() {
 		return ViewAccounts.class;
@@ -43,8 +43,8 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 				ViewAccountsPresenter presenter = ViewPresenterManager
 						.getPresenter(ViewAccountsPresenter.class);
 				if (presenter != null)
-					presenter.loadAccounts();
-				//Si la vista de ver notificaciones est� activa
+					presenter.loadAccounts(true);
+				//Si la vista de ver notificaciones está activa
 				ViewNotificationsPresenter notifPresenter = ViewPresenterManager
 						.getPresenter(ViewNotificationsPresenter.class);
 				if (notifPresenter != null)

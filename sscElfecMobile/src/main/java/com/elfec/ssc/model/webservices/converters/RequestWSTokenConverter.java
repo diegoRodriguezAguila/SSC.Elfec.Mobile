@@ -1,21 +1,24 @@
 package com.elfec.ssc.model.webservices.converters;
 
+import android.util.Log;
+
+import com.elfec.ssc.model.security.SscToken;
+import com.elfec.ssc.model.webservices.IWSResultConverter;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.elfec.ssc.model.security.WSToken;
-import com.elfec.ssc.model.webservices.IWSResultConverter;
-
-public class RequestWSTokenConverter implements IWSResultConverter<WSToken>{
+public class RequestWSTokenConverter implements IWSResultConverter<SscToken>{
 
 	@Override
-	public WSToken convert(String result) {
+	public SscToken convert(String result) {
 		try {
 			JSONObject json = new JSONObject(result);
-			return new WSToken(json.getString("imei"), json.getString("token"));
+			return new SscToken(json.getString("imei"), json.getString("token"));
 		} 
-		catch (JSONException e) {}
-		catch (NullPointerException e) {}
+		catch (JSONException  | NullPointerException e) {
+			Log.d("Convert Exception", e.getMessage());
+		}
 		return null;
 	}
 

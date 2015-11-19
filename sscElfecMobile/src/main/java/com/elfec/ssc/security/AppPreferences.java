@@ -7,7 +7,7 @@ import android.preference.PreferenceManager;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.exceptions.InitializationException;
-import com.elfec.ssc.model.security.WSToken;
+import com.elfec.ssc.model.security.SscToken;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,7 +29,7 @@ public class AppPreferences {
 	private final String SETUP_DISTANCE = "SetupDistance";
 	private final String GCM_TOKEN = "GCMToken";
 	private final String HAS_TO_UPDATE_GCM_TOKEN = "HasToUpdateGCMToken";
-	private final String WS_TOKEN = "WSToken";
+	private final String WS_TOKEN = "SscToken";
     
 	/**
 	 * Contexto
@@ -183,7 +183,7 @@ public class AppPreferences {
 
 	/**
 	 * Guarda la distancia configurada por el cliente para los servicios de ubicación
-	 * @param distance
+	 * @param distance distancia
 	 */
 	public void setConfiguredDistance(int distance)
 	{
@@ -201,7 +201,7 @@ public class AppPreferences {
 	
 	/**
 	 * Guarda el GCM token del dispositivo
-	 * @param gcmToken
+	 * @param gcmToken gcm token
 	 */
 	public void setGCMToken(String gcmToken)
 	{
@@ -228,23 +228,23 @@ public class AppPreferences {
 	}
 	
 	/**
-	 * Guarda el wsToken
-	 * @param wsToken
+	 * Guarda el sscToken
+	 * @param sscToken ssc token
 	 */
-	public void setWSToken(WSToken wsToken)
+	public void setWSToken(SscToken sscToken)
 	{
-		preferences.edit().putString(WS_TOKEN, wsToken!=null?wsToken.toString():null).commit();
+		preferences.edit().putString(WS_TOKEN, sscToken !=null? sscToken.toString():null).commit();
 	}
 	
 	/**
 	 * Obtiene el wsToken
 	 * @return wsToken
 	 */
-	public WSToken getWSToken()
+	public SscToken getWSToken()
 	{
 		try {
 			JSONObject json = new JSONObject(preferences.getString(WS_TOKEN, null));
-			return new WSToken(json.getString("imei"), json.getString("token"));
+			return new SscToken(json.getString("imei"), json.getString("token"));
 		} 
 		catch (JSONException | NullPointerException ignored) {}
         return null;

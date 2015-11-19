@@ -1,6 +1,5 @@
 package com.elfec.ssc.presenter.views;
 
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.Account;
 
 import java.util.List;
@@ -15,7 +14,7 @@ public interface IViewAccounts {
 
 	/**
 	 * Obtiene el IMEI del dispositivo
-	 * @return
+	 * @return imei dispositivo
 	 */
 	String getImei();
 	/**
@@ -24,7 +23,7 @@ public interface IViewAccounts {
 	void showAccountDeleted();
 	/**
 	 * Muestra errores al usuario
-	 * @param errors
+	 * @param errors errores
 	 */
 	void displayErrors(List<Exception> errors);
 	void dialogRemove(int position); 
@@ -38,13 +37,8 @@ public interface IViewAccounts {
 	void hideWaiting();
 	/**
 	 * Muestra errores que podrían ocurrir al obtener las cuentas
-	 * @param errors
+	 * @param errors errores
 	 */
 	void showViewAccountsErrors(List<Exception> errors);
 
-	/**
-	 * Obtiene el WSTokenRequester con el contexto de la actividad actual
-	 * @return
-	 */
-	WSTokenRequester getWSTokenRequester();
 }

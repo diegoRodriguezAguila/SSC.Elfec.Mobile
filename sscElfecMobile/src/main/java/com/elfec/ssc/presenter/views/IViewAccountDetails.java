@@ -1,6 +1,5 @@
 package com.elfec.ssc.presenter.views;
 
-import com.elfec.ssc.businesslogic.webservices.WSTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
@@ -10,12 +9,12 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Provee de una abstracci�n de la vista de información de una cuenta
+ * Provee de una abstracción de la vista de información de una cuenta
  */
 public interface IViewAccountDetails {
     void setAccountNumber(String accountNumber);
 
-    void setNUS(String nus);
+    void setNus(String nus);
 
     void setOwnerClient(String ownerClient);
 
@@ -32,10 +31,4 @@ public interface IViewAccountDetails {
 
     void navigateToAddress(Account account);
 
-    /**
-     * Obtiene el WSTokenRequester con el contexto de la actividad actual
-     *
-     * @return
-     */
-    WSTokenRequester getWSTokenRequester();
 }

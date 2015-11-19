@@ -5,7 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.telephony.TelephonyManager;
 
-import com.elfec.ssc.model.security.WSCredential;
+import com.elfec.ssc.model.security.SscCredential;
 /**
  * Se encarga de la logica de generar credenciales de webservices
  * @author drodriguez
@@ -19,10 +19,10 @@ public class CredentialManager {
 		this.context = context;
 	}
 
-	public WSCredential generateWSCredentials(){
+	public SscCredential generateSscCredentials(){
 		AuthenticationManager am = new AuthenticationManager(context);
 		SignatureManager sm = new SignatureManager(context);
-		return new WSCredential(getIMEI(), sm.getSignatureString(), am.getSalt(), getVersionCode());
+		return new SscCredential(getImei(), sm.getSignatureString(), am.getSalt(), getVersionCode());
 	}
 	
 	/**
@@ -42,7 +42,7 @@ public class CredentialManager {
 	 * Obtiene la versión de la aplicación
 	 * @return entero representando la version en el manifest
 	 */
-	private String getIMEI(){
+	private String getImei(){
 		return ((TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
 	}
 }
