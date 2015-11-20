@@ -9,6 +9,7 @@ import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
+import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GcmTokenCallback;
@@ -40,7 +41,7 @@ public class ViewAccountsPresenter {
 
     /**
      * Invoca a los webservices necesarios para eliminar una cuenta
-     * @param nus
+     * @param nus nus
      */
     public void removeAccount(final String nus) {
         final String imei = view.getImei();
@@ -146,7 +147,8 @@ public class ViewAccountsPresenter {
                                                 view.showAccounts(accounts);
                                             } else {
                                                 view.hideWaiting();
-                                                if (mIsRefreshing)
+                                                if (mIsRefreshing || ErrorVerifierHelper.isOutdatedApp(result
+                                                        .getErrors()))
                                                     view.showViewAccountsErrors(result.getErrors());
                                             }
                                             mIsLoadingAccounts = false;

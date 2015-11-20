@@ -8,13 +8,13 @@ import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
+import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.helpers.utils.LocationServicesMessages;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.events.SscTokenReceivedCallback;
-import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
@@ -127,7 +127,8 @@ public class LocationServicesPresenter {
                                             LocationPointsManager.removeLocations(result.getResult());
                                             LocationPointsManager.registerLocations(result.getResult());
                                         } else {
-                                            if (isOutdatedApp(result.getErrors()))
+                                            if (ErrorVerifierHelper.isOutdatedApp(result
+                                                    .getErrors()))
                                                 view.showLocationServicesErrors(result.getErrors());
                                             else view.informNoInternetConnection();
                                         }
@@ -154,19 +155,4 @@ public class LocationServicesPresenter {
             }
         });
     }
-
-    /**
-     * Verifica si alguno de los errores contiene el error de versión
-     * de aplicación no actualizada
-     * @param errors errores
-     * @return true si es que contiene ese tipo de error
-     */
-    private boolean isOutdatedApp(List<Exception> errors){
-        for(Exception e : errors){
-            if(e instanceof OutdatedAppException)
-                return true;
-        }
-        return false;
-    }
-
 }
