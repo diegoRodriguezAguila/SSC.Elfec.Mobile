@@ -23,19 +23,21 @@ public class JsonToAccountConverter {
 	/**
 	 * Convierte un JSONObject a una cuenta con todas sus deudas
 	 * 
-	 * @param accObj
-	 * @return
+	 * @param accObj json object of account
+	 * @return account
 	 */
 	public static Account convert(JSONObject accObj) {
 		try {
+            String latitudeStr = accObj
+                    .getString("Latitude");
+            String longitudeStr = accObj.getString("Longitude");
 			Account account = new Account(Client.getActiveClient(),
 					accObj.getString("AccountNumber"), accObj.getString("NUS"),
 					accObj.getString("AccountOwner"),
-					accObj.getString("Address"), Double.parseDouble(accObj
-							.getString("Latitude").replace(',', '.')),
-					Double.parseDouble(accObj.getString("Longitude").replace(
-							',', '.')), Short.parseShort(accObj
-							.getString("EnergySupplyStatus")));
+					accObj.getString("Address"),
+					isStringNull(latitudeStr)?0:Double.parseDouble(latitudeStr.replace(',', '.')),
+					isStringNull(longitudeStr)?0:Double.parseDouble(longitudeStr.replace(',', '.')),
+                    Short.parseShort(accObj.getString("EnergySupplyStatus")));
 			JSONArray debtArr = accObj.getJSONArray("Debts");
 			int lenght = debtArr.length();
 			for (int i = 0; i < lenght; i++) {
@@ -57,8 +59,14 @@ public class JsonToAccountConverter {
 			}
 			return account;
 		} catch (JSONException e) {
+            e.printStackTrace();
 		}
 		return null;
 	}
+
+    private static boolean isStringNull(String string){
+        return string==null || string.equals("null")
+                || string.equals("\"null\"") || string.equals("'null'");
+    }
 
 }

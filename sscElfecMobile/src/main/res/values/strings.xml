@@ -108,6 +108,10 @@
     <string name="list_item_debt_expiration_date">Fecha de vencimiento:</string>
     <string name="list_item_receipt_number_date">N° de comprobante:</string>
     <string name="lbl_usage">Evolución de consumo:</string>
+    <string name="title_no_location_avaible">UBICACIÓN NO DISPONIBLE</string>
+    <string name="msg_no_location_avaible">Actualmente no se cuenta con la ubicación de
+        este suministro. Esto puede deberse a que el suministro es nuevo o está en proceso
+        de traslado.</string>
 
     <!-- Image captions -->
     <string name="logo_elfec_caption">Logo Elfec</string>

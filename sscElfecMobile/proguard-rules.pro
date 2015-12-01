@@ -32,3 +32,7 @@
 # most people aren't, so it's helpful to include it.
 -dontwarn org.joda.convert.FromString
 -dontwarn org.joda.convert.ToString
+
+#Google classes
+ -keep class com.google.android.gms.** { *; }
+ -dontwarn com.google.android.gms.**
