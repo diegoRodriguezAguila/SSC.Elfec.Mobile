@@ -9,8 +9,8 @@ android {
         applicationId "com.elfec.ssc"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 7
-        versionName "1.0.4.1"
+        versionName "1.0.5"
+        versionCode 8
     }
 
     buildTypes {
