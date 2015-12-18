@@ -18,7 +18,7 @@ public class RequestWSTokenConverter implements IWSResultConverter<SscToken>{
 			JSONObject json = new JSONObject(result);
 			return new SscToken(json.getString("imei"), json.getString("token"));
 		} 
-		catch (JSONException e) {
+		catch (JSONException |NullPointerException e) {
 			Log.d("Convert Exception", e.toString());
 		}
 		return null;
