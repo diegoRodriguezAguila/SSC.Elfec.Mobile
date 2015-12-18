@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
+import com.elfec.ssc.model.exceptions.ServerDownException;
 import com.elfec.ssc.model.exceptions.ServerSideException;
 import com.elfec.ssc.model.security.SscToken;
 
@@ -166,8 +167,9 @@ public class WebServiceConnector<TResult> extends
 			Log.d(methodName, "Error in url: " + url + " " + e.getMessage());
 			if (e.getStatusCode() == 403) // aplicación ya no es válida
 				resultWS.addError(new OutdatedAppException());
-			else
-				resultWS.addError(e);
+			else if(e.getStatusCode() == 503)
+                resultWS.addError(new ServerDownException());
+			else resultWS.addError(e);
 		} catch (ConnectException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ConnectException(
