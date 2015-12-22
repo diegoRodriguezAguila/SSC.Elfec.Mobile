@@ -17,7 +17,7 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
                 GcmMessageService.class.getName());
         String deviceToken = intent.getExtras().getString("registration_id");   
         if(deviceToken != null && !deviceToken.equals("")) {
-            AppPreferences.instance().setGCMToken(deviceToken);
+            AppPreferences.instance().setGcmToken(deviceToken);
         } 
         else {
 	        // Start the service, keeping the device awake while it is launching.

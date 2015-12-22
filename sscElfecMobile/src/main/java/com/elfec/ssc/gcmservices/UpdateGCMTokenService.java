@@ -30,11 +30,11 @@ public class UpdateGCMTokenService extends IntentService {
         final String lastToken = preferences.getGCMToken();
         //Eliminamos token ssc antiguo para que renueve con variables
         //de nueva versión de aplicación
-        preferences.setWSToken(null);
+        preferences.setSscToken(null);
         //Ejecutar solo si existe antiguo token
         if(lastToken!=null) {
             final String imei = new CredentialManager(this).getDeviceIdentifier();
-            preferences.setGCMToken(null);
+            preferences.setGcmToken(null);
             new SscTokenRequester(this).getTokenAsync(new SscTokenReceivedCallback() {
                 @Override
                 public void onSscTokenReceived(
@@ -49,28 +49,27 @@ public class UpdateGCMTokenService extends IntentService {
                                                 @Override
                                                 public void executeOnFinished(
                                                         WSResponse<Boolean> result) {
-                                                    if (result
-                                                            .hasErrors()) {
-                                                        preferences
-                                                                .setGCMToken(lastToken);
-                                                        preferences
-                                                                .setHasToUpdateGCMToken(true);
-                                                    } else
-                                                        preferences
-                                                                .setHasToUpdateGCMToken(false);
+                                                    if (result.hasErrors())
+                                                        resetGcmToken(preferences, lastToken);
+                                                    else preferences
+                                                                .setHasToUpdateGcmToken(false);
                                                 }
                                             });
                                 }
 
                                 @Override
                                 public void onGcmErrors(List<Exception> errors) {
-                                    preferences.setGCMToken(lastToken);
-                                    preferences.setHasToUpdateGCMToken(true);
+                                    resetGcmToken(preferences, lastToken);
                                 }
                             });
                 }
             });
         }
+    }
+
+    private void resetGcmToken(AppPreferences preferences, String lastToken) {
+        preferences.setGcmToken(lastToken);
+        preferences.setHasToUpdateGcmToken(true);
     }
 
 }

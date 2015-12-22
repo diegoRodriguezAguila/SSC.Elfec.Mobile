@@ -23,7 +23,7 @@ public class SscTokenRequester {
 	public SscTokenRequester(Context context) {
 		this.context = context;
 		this.preferences = AppPreferences.instance();
-		this.currentTokenOnPreferences = preferences.getWSToken();
+		this.currentTokenOnPreferences = preferences.getSscToken();
 	}
 
 	/**
@@ -44,7 +44,7 @@ public class SscTokenRequester {
 				@Override
 				public void executeOnFinished(WSResponse<SscToken> result) {
 					if (!result.hasErrors() && result.getResult() != null)
-						preferences.setWSToken(result.getResult());
+						preferences.setSscToken(result.getResult());
 					if (callback != null)
 						callback.onSscTokenReceived(result);
 				}

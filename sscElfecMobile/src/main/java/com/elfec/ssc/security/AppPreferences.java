@@ -15,7 +15,7 @@ import org.json.JSONObject;
 import java.lang.ref.SoftReference;
 
 /**
- * Maneja las sharedpreferences de toda la aplicaci�n
+ * Maneja las sharedpreferences de toda la aplicación
  * @author Diego
  *
  */
@@ -76,7 +76,7 @@ public class AppPreferences {
 
 	
 	/**
-	 * Verifica si es que es la primera vez que se utiliza la aplicaci�n
+	 * Verifica si es que es la primera vez que se utiliza la aplicación
 	 * @return true si es que es la primera vez
 	 */
 	public boolean isFirstAppUsage()
@@ -203,7 +203,7 @@ public class AppPreferences {
 	 * Guarda el GCM token del dispositivo
 	 * @param gcmToken gcm token
 	 */
-	public void setGCMToken(String gcmToken)
+	public void setGcmToken(String gcmToken)
 	{
 		preferences.edit().putString(GCM_TOKEN, gcmToken).apply();
 	}
@@ -221,7 +221,7 @@ public class AppPreferences {
 	 * Asigna que se tiene que realizar el envío del token al servidor
 	 * @return la instancia actual de AppPreferences
 	 */
-	public AppPreferences setHasToUpdateGCMToken(boolean hasToUpdateIt)
+	public AppPreferences setHasToUpdateGcmToken(boolean hasToUpdateIt)
 	{
 		preferences.edit().putBoolean(HAS_TO_UPDATE_GCM_TOKEN, hasToUpdateIt).apply();
 		return this;
@@ -231,16 +231,16 @@ public class AppPreferences {
 	 * Guarda el sscToken
 	 * @param sscToken ssc token
 	 */
-	public void setWSToken(SscToken sscToken)
+	public void setSscToken(SscToken sscToken)
 	{
 		preferences.edit().putString(WS_TOKEN, sscToken !=null? sscToken.toString():null).commit();
 	}
 	
 	/**
-	 * Obtiene el wsToken
-	 * @return wsToken
+	 * Obtiene el SscToken
+	 * @return SscToken
 	 */
-	public SscToken getWSToken()
+	public SscToken getSscToken()
 	{
 		try {
 			JSONObject json = new JSONObject(preferences.getString(WS_TOKEN, null));
