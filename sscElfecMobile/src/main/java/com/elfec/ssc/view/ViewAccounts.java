@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.View;
@@ -122,11 +121,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
-    @Override
-    public String getImei() {
-        return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
-                .getDeviceId();
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

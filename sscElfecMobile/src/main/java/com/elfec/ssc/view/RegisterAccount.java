@@ -211,12 +211,6 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public String getImei() {
-        return ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
-                .getDeviceId();
-    }
-
-    @Override
     public String getPhoneNumber() {
         String phoneNumber = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
                 .getLine1Number();

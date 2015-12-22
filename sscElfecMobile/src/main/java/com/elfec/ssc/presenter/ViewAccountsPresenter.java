@@ -1,5 +1,6 @@
 package com.elfec.ssc.presenter;
 
+import android.content.Context;
 import android.os.Build;
 import android.os.Looper;
 
@@ -20,6 +21,7 @@ import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.security.AppPreferences;
+import com.elfec.ssc.security.CredentialManager;
 
 import java.util.List;
 
@@ -30,13 +32,17 @@ public class ViewAccountsPresenter {
     private boolean mIsRefreshing;
     private GcmTokenRequester mGcmTokenRequester;
     private SscTokenRequester mSscTokenRequester;
+    private final String mImei;
 
     public ViewAccountsPresenter(IViewAccounts view) {
         this.view = view;
         mIsLoadingAccounts = false;
         mIsRefreshing = false;
-        mGcmTokenRequester = new GcmTokenRequester(AppPreferences.getApplicationContext());
-        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
+        Context context = AppPreferences.getApplicationContext();
+        mGcmTokenRequester = new GcmTokenRequester(context);
+        mSscTokenRequester = new SscTokenRequester(context);
+        mImei = new CredentialManager(context)
+                .getDeviceIdentifier();
     }
 
     /**
@@ -44,7 +50,6 @@ public class ViewAccountsPresenter {
      * @param nus nus
      */
     public void removeAccount(final String nus) {
-        final String imei = view.getImei();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -54,7 +59,7 @@ public class ViewAccountsPresenter {
                     public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
                         final Client client = Client.getActiveClient();
                         new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(),
-                                nus, imei, new IWSFinishEvent<Boolean>() {
+                                nus, mImei, new IWSFinishEvent<Boolean>() {
                                     @Override
                                     public void executeOnFinished(WSResponse<Boolean> result) {
                                         if (result.getResult()) {
@@ -133,7 +138,7 @@ public class ViewAccountsPresenter {
                 @Override
                 public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
                     new AccountWS(wsTokenResult.getResult()).getAllAccounts(client.getGmail(),
-                            Build.BRAND, Build.MODEL, view.getImei(), gcmToken,
+                            Build.BRAND, Build.MODEL, mImei, gcmToken,
                             new IWSFinishEvent<List<Account>>() {
                                 @Override
                                 public void executeOnFinished(final WSResponse<List<Account>> result) {

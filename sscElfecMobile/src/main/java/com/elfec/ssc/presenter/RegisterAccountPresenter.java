@@ -20,6 +20,7 @@ import com.elfec.ssc.model.validations.ValidationsAndParams;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
 import com.elfec.ssc.security.AppPreferences;
+import com.elfec.ssc.security.CredentialManager;
 
 import java.util.List;
 
@@ -89,6 +90,8 @@ public class RegisterAccountPresenter {
      * @param gcmToken token gcm
 	 */
 	private void callRegisterWebService(final Client client, final String gcmToken) {
+		final String imei = new CredentialManager(AppPreferences.getApplicationContext())
+                .getDeviceIdentifier();
         mSscTokenRequester.getTokenAsync(new SscTokenReceivedCallback() {
             @Override
             public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
@@ -99,7 +102,7 @@ public class RegisterAccountPresenter {
                     accountWebService.registerAccount(view.getAccountNumber(),
                             view.getNus(), client.getGmail(),
                             view.getPhoneNumber(), Build.BRAND, Build.MODEL,
-                            view.getImei(), gcmToken,
+                            imei, gcmToken,
                             new IWSFinishEvent<Account>() {
                                 @Override
                                 public void executeOnFinished(

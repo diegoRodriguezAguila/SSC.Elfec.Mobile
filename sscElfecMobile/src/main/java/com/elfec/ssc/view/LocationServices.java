@@ -141,6 +141,7 @@ public class LocationServices extends AppCompatActivity implements
         waitingMapDialog = new ProgressDialogService(this);
         waitingMapDialog.setMessage(this.getResources().getString(
                 R.string.waiting_map_msg));
+        waitingMapDialog.setNegativeButton(R.string.btn_cancel, null);
         waitingMapDialog.setCancelable(false);
         waitingMapDialog.setCanceledOnTouchOutside(false);
         waitingMapDialog.show();

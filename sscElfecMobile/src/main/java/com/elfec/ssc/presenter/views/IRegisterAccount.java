@@ -14,7 +14,6 @@ import java.util.List;
 	 String getAccountNumber();
 	 String getAccountNumberValidationRules();
 	 void setAccountNumberErrors(List<String> validationErrors);
-	 String getImei();
 	 String getPhoneNumber();
 	 void notifyAccountSuccessfullyRegistered();
 	 void showWSWaiting();

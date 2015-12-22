@@ -11,12 +11,6 @@ public interface IViewAccounts {
 	 * @param accounts lista de cuentas
 	 */
 	void showAccounts(List<Account> accounts);
-
-	/**
-	 * Obtiene el IMEI del dispositivo
-	 * @return imei dispositivo
-	 */
-	String getImei();
 	/**
 	 * Muestra un mensaje de que la cuenta se borró exitosamente
 	 */

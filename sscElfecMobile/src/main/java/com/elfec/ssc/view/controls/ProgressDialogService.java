@@ -18,13 +18,14 @@ import static com.elfec.ssc.R.layout.progress_dialog_material;
 public class ProgressDialogService implements DialogInterface {
 
     private AlertDialog mDialog;
+    private AlertDialog.Builder mDialogBuilder;
     private View mRootView;
     private TextView mTxtMessage;
 
     public ProgressDialogService(Context context){
         mRootView = LayoutInflater.from(context).inflate(
                 progress_dialog_material, null, false);
-        mDialog = new AlertDialog.Builder(context).setView(mRootView).create();
+        mDialogBuilder = new AlertDialog.Builder(context).setView(mRootView);
         mTxtMessage = (TextView) mRootView.findViewById(R.id.txt_progress_message);
     }
 
@@ -37,18 +38,25 @@ public class ProgressDialogService implements DialogInterface {
     }
 
     public void setTitle(CharSequence title){
-        mDialog.setTitle(title);
+        mDialogBuilder.setTitle(title);
     }
 
     public void setTitle(@StringRes int titleId){
-        mDialog.setTitle(titleId);
+        mDialogBuilder.setTitle(titleId);
     }
 
     public void setCancelable(boolean cancelable){
-        mDialog.setCancelable(cancelable);
+        mDialogBuilder.setCancelable(cancelable);
+    }
+
+    public void setNegativeButton(@StringRes int buttonLabel, DialogInterface.OnClickListener
+            listener){
+        mDialogBuilder.setNegativeButton(buttonLabel, listener);
     }
 
     public void setCanceledOnTouchOutside(boolean cancel){
+        if(mDialog==null)
+            mDialog = mDialogBuilder.create();
         mDialog.setCanceledOnTouchOutside(cancel);
     }
 
@@ -58,11 +66,15 @@ public class ProgressDialogService implements DialogInterface {
 
     @Override
     public void cancel() {
+        if(mDialog==null)
+            mDialog = mDialogBuilder.create();
         mDialog.cancel();
     }
 
     @Override
     public void dismiss() {
+        if(mDialog==null)
+            mDialog = mDialogBuilder.create();
         mDialog.dismiss();
     }
 }
