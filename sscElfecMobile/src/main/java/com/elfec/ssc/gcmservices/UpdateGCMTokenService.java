@@ -1,9 +1,7 @@
 package com.elfec.ssc.gcmservices;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
-import android.telephony.TelephonyManager;
 
 import com.elfec.ssc.businesslogic.webservices.DeviceWS;
 import com.elfec.ssc.businesslogic.webservices.SSLConection;
@@ -15,6 +13,7 @@ import com.elfec.ssc.model.gcmservices.GcmTokenRequester;
 import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.security.AppPreferences;
+import com.elfec.ssc.security.CredentialManager;
 
 import java.util.List;
 
@@ -29,45 +28,49 @@ public class UpdateGCMTokenService extends IntentService {
         SSLConection.allowSelfSignedElfecSSL(this);
         final AppPreferences preferences = AppPreferences.instance();
         final String lastToken = preferences.getGCMToken();
-        final String IMEI = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
-                .getDeviceId();
-        preferences.setGCMToken(null);
+        //Eliminamos token ssc antiguo para que renueve con variables
+        //de nueva versión de aplicación
         preferences.setWSToken(null);
-        new SscTokenRequester(this).getTokenAsync(new SscTokenReceivedCallback() {
-            @Override
-            public void onSscTokenReceived(
-                    final WSResponse<SscToken> wsTokenResult) {
-                new GcmTokenRequester(UpdateGCMTokenService.this)
-                        .getTokenAsync(new GcmTokenCallback() {
-                            @Override
-                            public void onGcmTokenReceived(String gcmToken) {
-                                new DeviceWS(wsTokenResult.getResult()).updateDeviceGCMToken(
-                                        lastToken, IMEI, gcmToken,
-                                        new IWSFinishEvent<Boolean>() {
-                                            @Override
-                                            public void executeOnFinished(
-                                                    WSResponse<Boolean> result) {
-                                                if (result
-                                                        .hasErrors()) {
-                                                    preferences
-                                                            .setGCMToken(lastToken);
-                                                    preferences
-                                                            .setHasToUpdateGCMToken(true);
-                                                } else
-                                                    preferences
-                                                            .setHasToUpdateGCMToken(false);
-                                            }
-                                        });
-                            }
+        //Ejecutar solo si existe antiguo token
+        if(lastToken!=null) {
+            final String imei = new CredentialManager(this).getDeviceIdentifier();
+            preferences.setGCMToken(null);
+            new SscTokenRequester(this).getTokenAsync(new SscTokenReceivedCallback() {
+                @Override
+                public void onSscTokenReceived(
+                        final WSResponse<SscToken> wsTokenResult) {
+                    new GcmTokenRequester(UpdateGCMTokenService.this)
+                            .getTokenAsync(new GcmTokenCallback() {
+                                @Override
+                                public void onGcmTokenReceived(String gcmToken) {
+                                    new DeviceWS(wsTokenResult.getResult()).updateDeviceGCMToken(
+                                            lastToken, imei, gcmToken,
+                                            new IWSFinishEvent<Boolean>() {
+                                                @Override
+                                                public void executeOnFinished(
+                                                        WSResponse<Boolean> result) {
+                                                    if (result
+                                                            .hasErrors()) {
+                                                        preferences
+                                                                .setGCMToken(lastToken);
+                                                        preferences
+                                                                .setHasToUpdateGCMToken(true);
+                                                    } else
+                                                        preferences
+                                                                .setHasToUpdateGCMToken(false);
+                                                }
+                                            });
+                                }
 
-                            @Override
-                            public void onGcmErrors(List<Exception> errors) {
-                                preferences.setGCMToken(lastToken);
-                                preferences.setHasToUpdateGCMToken(true);
-                            }
-                        });
-            }
-        });
+                                @Override
+                                public void onGcmErrors(List<Exception> errors) {
+                                    preferences.setGCMToken(lastToken);
+                                    preferences.setHasToUpdateGCMToken(true);
+                                }
+                            });
+                }
+            });
+        }
     }
 
 }

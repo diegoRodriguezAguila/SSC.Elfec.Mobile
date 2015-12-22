@@ -36,7 +36,8 @@ import java.util.List;
  */
 public class WebServiceConnector<TResult> extends
 		AsyncTask<WSParam, TResult, TResult> {
-	private final String WS_SERVER = "https://ssc.elfec.bo:4343/";// "http://192.168.50.56/SSC.Elfec/web_services/";//
+	private final String WS_SERVER = "https://ssc.elfec.bo:4343/";//"http://192.168.50" +
+            //".56/ssc_elfec/web_services/";
 	private String url;
 	private String soapAction; // = "";
 	private String namespace;// = "http://DefaultNamespace";

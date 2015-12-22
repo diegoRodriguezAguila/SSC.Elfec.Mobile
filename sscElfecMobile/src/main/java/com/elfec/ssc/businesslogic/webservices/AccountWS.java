@@ -56,7 +56,7 @@ public class AccountWS
 			String gCMtoken, IWSFinishEvent<List<Account>> eventHandler)
 	{
 		WebServiceConnector<List<Account>> accountWSConnector = 
-				new WebServiceConnector<List<Account>>("AccountWS.php?wsdl", "", 
+				new WebServiceConnector<>("AccountWS.php?wsdl", "",
 						"ssc_elfec", "GetAllAccounts", sscToken, new GetAllAccountsWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("GMail", gmail), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
 				new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
@@ -72,7 +72,7 @@ public class AccountWS
 	public void removeAccount(String gmail,String nus,String imei,IWSFinishEvent<Boolean> eventHandler)
 	{
 		WebServiceConnector<Boolean> accountWSConnector = 
-				new WebServiceConnector<Boolean>("AccountWS.php?wsdl", "", 
+				new WebServiceConnector<>("AccountWS.php?wsdl", "",
 						"ssc_elfec", "DeleteAccount", sscToken, new RemoveAccountWSConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("IMEI", imei),new WSParam("NUS", nus),new WSParam("GMail", gmail));
 
@@ -80,13 +80,13 @@ public class AccountWS
 
 	/**
 	 * Elimina la cuenta que corresponde a los parametros, por medio de servicios web
-	 * @param nus
-	 * @param eventHandler
+	 * @param nus nus
+	 * @param eventHandler handler
 	 */
 	public void getUsage(String nus,IWSFinishEvent<List<Usage>> eventHandler)
 	{
 		WebServiceConnector<List<Usage>> accountWSConnector = 
-				new WebServiceConnector<List<Usage>>("AccountWS.php?wsdl", "", 
+				new WebServiceConnector<>("AccountWS.php?wsdl", "",
 						"ssc_elfec", "GetUsage", sscToken, new GetUsageConverter(), eventHandler);
 		accountWSConnector.execute(new WSParam("NUS", nus));
 

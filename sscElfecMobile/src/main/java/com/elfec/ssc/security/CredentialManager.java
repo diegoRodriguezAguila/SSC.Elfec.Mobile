@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.provider.Settings;
+import android.telephony.TelephonyManager;
 
 import com.elfec.ssc.model.security.SscCredential;
 
@@ -65,9 +66,8 @@ public class CredentialManager {
      * @return entero representando la version en el manifest
      */
     private String getImei() {
-        return null;
-        //return ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
-                //.getDeviceId();
+        return ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
+                .getDeviceId();
     }
 
     /**
