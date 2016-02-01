@@ -13,6 +13,6 @@
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/RegisterAccountPresenter.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/ViewAccountsPresenter.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/ViewNotificationsPresenter.java" charset="windows-1252" />
-    <file url="PROJECT" charset="windows-1252" />
+    <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

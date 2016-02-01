@@ -204,20 +204,21 @@ public class LocationServices extends AppCompatActivity implements
     private void putPointsInMapAsync(final List<LocationPoint> points) {
         final int range = 10;
         final int delay = 70;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int size = points.size();
-                int iterations = (size / range) + 1;
-                int topRange;
-                for (int i = 0; i < iterations; i++) {
-                    topRange = range * (i + 1);
-                    putPointsInMapUI(
-                            points.subList(range * i, topRange < size ? topRange : size)
-                            , i * delay);
+        if (points != null && points.size() > 0)
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int size = points.size();
+                    int iterations = (size / range) + 1;
+                    int topRange;
+                    for (int i = 0; i < iterations; i++) {
+                        topRange = range * (i + 1);
+                        putPointsInMapUI(
+                                points.subList(range * i, topRange < size ? topRange : size)
+                                , i * delay);
+                    }
                 }
-            }
-        }).start();
+            }).start();
     }
 
     /**

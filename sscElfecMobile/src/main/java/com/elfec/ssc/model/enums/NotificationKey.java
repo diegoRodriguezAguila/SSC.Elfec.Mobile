@@ -8,40 +8,40 @@ package com.elfec.ssc.model.enums;
  */
 public enum NotificationKey {
 	/**
-	 * Notificaci�n de que se agreg� una nueva cuenta para ese cliente en otro
+	 * Notificación de que se agregó una nueva cuenta para ese cliente en otro
 	 * dispositivo
 	 */
 	NEW_ACCOUNT("NewAccount"),
 	/**
-	 * Notificaci�n de que se elimin� una cuenta del cliente en otro dispositivo
+	 * Notificación de que se eliminó una cuenta del cliente en otro dispositivo
 	 */
 	ACCOUNT_DELETED("AccountDeleted"),
 	/**
-	 * Notificaci�n de que se a�adieron puntos de ubicaci�n
+	 * Notificación de que se añadieron puntos de ubicación
 	 */
 	POINTS_UPDATE("PointsUpdate"),
 	/**
-	 * Notificaci�n de que se actualizaron los contactos de la empresa
+	 * Notificación de que se actualizaron los contactos de la empresa
 	 */
 	CONTACTS_UPDATE("ContactsUpdate"),
 	/**
-	 * Notificaci�n de corte programado
+	 * Notificación de corte programado
 	 */
 	SCHEDULED_OUTAGE("ScheduledOutage"),
 	/**
-	 * Notificaci�n de corte fortuito por incidente
+	 * Notificación de corte fortuito por incidente
 	 */
 	INCIDENTAL_OUTAGE("IncidentalOutage"),
 	/**
-	 * Notificaci�n de corte por no pago
+	 * Notificacion de corte por no pago
 	 */
 	NONPAYMENT_OUTAGE("NonpaymentOutage"),
 	/**
-	 * Key de Notificaci�n indefinido
+	 * Key de Notificaci´´on indefinido
 	 */
 	MISCELLANEOUS("Miscellaneous"),
 	/**
-	 * Notificaci�n de vencimiento de factura
+	 * Notificación de vencimiento de factura
 	 */
 	EXPIRED_DEBT("ExpiredDebt");
 
@@ -57,10 +57,10 @@ public enum NotificationKey {
 	}
 
 	/**
-	 * Obtiene la key de notificaci�n que corresponde al short provisto
+	 * Obtiene la key de notificación que corresponde al short provisto
 	 * 
-	 * @param status
-	 * @return
+	 * @param status status
+	 * @return enum that matches the short status
 	 */
 	public static NotificationKey get(short status) {
 		return NotificationKey.values()[status];
@@ -69,8 +69,8 @@ public enum NotificationKey {
 	/**
 	 * Obtiene el NotificationKey correspondiente a la key en cadena provista
 	 * 
-	 * @param keyAsString
-	 * @return
+	 * @param keyAsString status string key
+	 * @return enum that matches the string status
 	 */
 	public static NotificationKey get(String keyAsString) {
 		NotificationKey[] notifKeys = NotificationKey.values();
@@ -82,9 +82,9 @@ public enum NotificationKey {
 	}
 
 	/**
-	 * Convierte la key de notificaci�n a su short equivalente
+	 * Convierte la key de notificación a su short equivalente
 	 * 
-	 * @return Short equivalente a la key de notificaci�n
+	 * @return Short equivalente a la key de notificación
 	 */
 	public short toShort() {
 		return (short) this.ordinal();

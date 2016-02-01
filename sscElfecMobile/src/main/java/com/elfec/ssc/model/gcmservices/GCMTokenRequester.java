@@ -71,7 +71,7 @@ public class GcmTokenRequester {
         @Override
         protected void onPostExecute(String deviceToken) {
             if (deviceToken != null && !deviceToken.isEmpty()) {
-                mPreferences.setGCMToken(deviceToken);
+                mPreferences.setGcmToken(deviceToken);
                 mCallback.onGcmTokenReceived(deviceToken);
             }
             else mCallback.onGcmErrors(mExceptions);

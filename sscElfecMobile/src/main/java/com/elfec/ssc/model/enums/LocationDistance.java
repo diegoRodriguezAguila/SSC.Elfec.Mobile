@@ -1,8 +1,8 @@
 package com.elfec.ssc.model.enums;
 
 /**
- * Enum que sirve para diferenciar los distintos tipos de puntos de ubicación
- * según la proximidad al cliente
+ * Enum que sirve para diferenciar los distintos tipos de puntos de ubicaciÃ³n
+ * segÃºn la proximidad al cliente
  * @author Diego
  *
  */
@@ -16,7 +16,7 @@ public enum LocationDistance {
 	 */
 	ALL("Todos");
 	private String string;
-	private LocationDistance(String string)
+	LocationDistance(String string)
 	{
 		this.string = string;
 	}

@@ -7,21 +7,21 @@ package com.elfec.ssc.model.enums;
  */
 public enum LocationPointType {
 	/**
-	 * Tipo de punto de ubicaci�n de una oficina
+	 * Tipo de punto de ubicación de una oficina
 	 */
 	OFFICE("Oficinas"), 
 	/**
-	 * Tipo de punto de ubicaci�n de un punto de pago
+	 * Tipo de punto de ubicación de un punto de pago
 	 */
 	PAYPOINT("Puntos de pago"),
 	/**
-	 * Tipo de punto de ubicaci�n indefinido
+	 * Tipo de punto de ubicación indefinido
 	 */
 	BOTH("Oficinas y Puntos de pago");
 	/**
-	 * Obtiene el tipo del punto de ubicaci�n equivalente al short provisto
-	 * @param type
-	 * @return
+	 * Obtiene el tipo del punto de ubicación equivalente al short provisto
+	 * @param type tipo
+	 * @return location type
 	 */
 	public static LocationPointType get(short type)
 	{
@@ -40,7 +40,7 @@ public enum LocationPointType {
 	   }
 	
 	/**
-	 * Convierte el tipo de punto de ubicaci�n actual a su short equivalente
+	 * Convierte el tipo de punto de ubicación actual a su short equivalente
 	 * @return Short equivalente al tipo
 	 */
 	public short toShort()

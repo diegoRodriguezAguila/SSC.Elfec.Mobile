@@ -7,6 +7,7 @@ import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
@@ -25,12 +26,14 @@ public class AccountPickerDialogService {
     private OnAccountPicked onAccountPicked;
     private int mSelectedItem;
     private ArrayList<String> mGoogleAccounts;
+    private Context mContext;
 
     public AccountPickerDialogService(Activity activity, OnAccountPicked onAccountPicked) {
         this(activity, onAccountPicked, null);
     }
 
     public AccountPickerDialogService(final Activity activity, OnAccountPicked onAccountPicked, String activeClientGmail) {
+        mContext = activity;
         this.onAccountPicked = onAccountPicked;
         if (activeClientGmail == null)
             initializePickList(activity);
@@ -78,7 +81,7 @@ public class AccountPickerDialogService {
                 defaultItem++;
             }
         }
-        mGoogleAccounts.add("Agregar cuenta");
+        mGoogleAccounts.add(mContext.getResources().getString(R.string.opt_select_account));
     }
 
     /**
@@ -96,7 +99,7 @@ public class AccountPickerDialogService {
                 mGoogleAccounts.add(ac.name);
             }
         }
-        mGoogleAccounts.add("Agregar cuenta");
+        mGoogleAccounts.add(mContext.getResources().getString(R.string.opt_select_account));
     }
 
     private void handleAccountPick(final Activity activity) {
@@ -108,10 +111,10 @@ public class AccountPickerDialogService {
                     Bundle res;
                     try {
                         res = future.getResult();
-                        String gmailNuevo = res
+                        String newGmail = res
                                 .getString(AccountManager.KEY_ACCOUNT_NAME);
                         AccountPickerDialogService.this.onAccountPicked
-                                .onAccountPicked(gmailNuevo);
+                                .onAccountPicked(newGmail);
                     } catch (OperationCanceledException e) {
                         AccountPickerDialogService.this.onAccountPicked
                                 .onPickedCanceled();

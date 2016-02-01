@@ -19,9 +19,9 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 /**
- * Esta clase provee de un servicio para mostrar un di�logo para la
- * configuraci�n de distancia en los servicios de ubicaci�n, cuando se
- * selecciona la opci�n aceptar guarda la distancia elegida en sharedpreferences
+ * Esta clase provee de un servicio para mostrar un diálogo para la
+ * configuración de distancia en los servicios de ubicación, cuando se
+ * selecciona la opción aceptar guarda la distancia elegida en sharedpreferences
  * 
  * @author Diego
  *
@@ -35,7 +35,7 @@ public class SetupDistanceDialogService {
 	protected @Bind(R.id.txt_current_distance) TextView mTxtCurrentDistance;
 
 	/**
-	 * Construye el di�logo con lo necesario
+	 * Construye el diálogo con lo necesario
 	 * 
 	 * @param context context
 	 * @param listener listener
@@ -58,7 +58,7 @@ public class SetupDistanceDialogService {
 		mTxtCurrentDistance.setText(String.valueOf(mSelectedDistance));
 		mDistanceSeekBar
 				.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-					// #region unusable
+					//region unusable
 					@Override
 					public void onStopTrackingTouch(SeekBar seekBar) {
 					}
@@ -67,7 +67,7 @@ public class SetupDistanceDialogService {
 					public void onStartTrackingTouch(SeekBar seekBar) {
 					}
 
-					// #endregion
+					//endregion
 					@Override
 					public void onProgressChanged(SeekBar seekBar,
 												  int progress, boolean fromUser) {
@@ -90,7 +90,7 @@ public class SetupDistanceDialogService {
 	}
 
 	/**
-	 * Muestra el di�logo construido
+	 * Muestra el diálogo construido
 	 */
 	public void show() {
 		mDialog.show();

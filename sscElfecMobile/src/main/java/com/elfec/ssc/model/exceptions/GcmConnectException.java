@@ -1,9 +1,11 @@
 package com.elfec.ssc.model.exceptions;
 
+import com.elfec.ssc.R;
+
 /**
  * Excepción que se lanza cuando no se pudo obtener el token de conección de google
  */
-public class GcmConnectException extends Exception{
+public class GcmConnectException extends BaseApiException{
     @Override
     public String getMessage() {
         return "No fue posible conectarse con el servidor, porfavor revise su conexión a internet" +
@@ -12,4 +14,8 @@ public class GcmConnectException extends Exception{
                 "Google Play Services</a> instalado.";
     }
 
+    @Override
+    public int getMessageStringRes() {
+        return R.string.gcm_connect_exception;
+    }
 }

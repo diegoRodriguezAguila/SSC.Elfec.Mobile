@@ -1,7 +1,7 @@
 package com.elfec.ssc.model.enums;
 
 /**
- * Enum que define los estados del suministro de energía
+ * Enum que define los estados del suministro de energï¿½a
  * @author drodriguez
  *
  */
@@ -15,20 +15,20 @@ public enum AccountEnergySupplyStatus {
 	 */
 	NORMAL("Normal"),
 	/**
-	 * Estado que indica que el tramite para conexión del suministro
+	 * Estado que indica que el tramite para conexiÃ³n del suministro
 	 * ya fue hecho
 	 */
-	CONNECTION_PENDING("Pendiente de conexión"),
+	CONNECTION_PENDING("Pendiente de conexiÃ³n"),
 	/**
-	 * Estado que indica que se va a desconectar el suministro de energía
+	 * Estado que indica que se va a desconectar el suministro de energÃ­a
 	 */
-	DISCONNECTION_PENDING("Pendiente de desconexión"),
+	DISCONNECTION_PENDING("Pendiente de desconexiÃ³n"),
 	/**
-	 * Estado de que se cortó el suministro de energía por falta de pago (4)
+	 * Estado de que se cortÃ³ el suministro de energÃ­a por falta de pago (4)
 	 */
 	NONPAYMENT_OUTAGE("Cortado por mora"),
 	/**
-	 * Estado que indica que el suministro se dió de baja
+	 * Estado que indica que el suministro se diÃ³ de baja
 	 */
 	CANCELED_ACCOUNT("Dado de baja"),
 	/**
@@ -36,7 +36,7 @@ public enum AccountEnergySupplyStatus {
 	 */
 	IRRECOVERABLE("Incobrable"),
 	/**
-	 * Estado de que se cortó el suministro de energía por falta de pago (7)
+	 * Estado de que se cortÃ³ el suministro de energÃ­a por falta de pago (7)
 	 */
 	NONPAYMENT_OUTAGE2("Cortado por mora");
 	

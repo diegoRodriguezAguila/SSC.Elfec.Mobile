@@ -8,11 +8,11 @@ package com.elfec.ssc.model.enums;
 public enum ClientStatus {
 
 	/**
-	 * Estado cuando un cliente fué registrado en la aplicación pero otro es el que esta activo
+	 * Estado cuando un cliente fuÃ© registrado en la aplicaciÃ³n pero otro es el que esta activo
 	 */
 	REGISTERED("Registrado"), 
 	/**
-	 * Estado cuando un cliente es el activo y que se utiliza para la aplicación
+	 * Estado cuando un cliente es el activo y que se utiliza para la aplicaciÃ³n
 	 */
 	ACTIVE("Activo");
 	/**

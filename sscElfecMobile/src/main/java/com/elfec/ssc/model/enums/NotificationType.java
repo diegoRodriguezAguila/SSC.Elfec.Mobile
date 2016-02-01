@@ -8,7 +8,7 @@ package com.elfec.ssc.model.enums;
  */
 public enum NotificationType {
 	/**
-	 * Grupo de notificaciones de tipo de corte de luz o de informaciónes
+	 * Grupo de notificaciones de tipo de corte de luz o de informaciones
 	 */
 	OUTAGE_OR_INFO,
 	/**
@@ -21,19 +21,19 @@ public enum NotificationType {
 	OTHERS;
 
 	/**
-	 * Obtiene el tipo de notificación que corresponde al short provisto
+	 * Obtiene el tipo de notificaciÃ³n que corresponde al short provisto
 	 * 
-	 * @param status
-	 * @return
+	 * @param status status short
+	 * @return notification Type that matches the status
 	 */
 	public static NotificationType get(short status) {
 		return NotificationType.values()[status];
 	}
 
 	/**
-	 * Convierte el tipo de notificación a su short equivalente
+	 * Convierte el tipo de notificaciÃ³n a su short equivalente
 	 * 
-	 * @return Short equivalente al tipo de notificación
+	 * @return Short equivalente al tipo de notificaciÃ³n
 	 */
 	public short toShort() {
 		return (short) this.ordinal();
