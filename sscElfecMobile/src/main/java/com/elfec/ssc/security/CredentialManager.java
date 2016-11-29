@@ -1,5 +1,6 @@
 package com.elfec.ssc.security;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -54,10 +55,7 @@ public class CredentialManager {
      * @return Identificador para el dispositivo
      */
     public String getDeviceIdentifier() {
-        String imei = getImei();
-        if (imei == null)
-            return getAndroidId();
-        return imei;
+        return getAndroidId();
     }
 
     /**
@@ -65,6 +63,7 @@ public class CredentialManager {
      *
      * @return entero representando la version en el manifest
      */
+    @SuppressLint("HardwareIds")
     private String getImei() {
         return ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE))
                 .getDeviceId();
@@ -75,6 +74,7 @@ public class CredentialManager {
      *
      * @return Android Id
      */
+    @SuppressLint("HardwareIds")
     private String getAndroidId() {
         return Settings.Secure.getString(context.getContentResolver(),
                 Settings.Secure.ANDROID_ID);

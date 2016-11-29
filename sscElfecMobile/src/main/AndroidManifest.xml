@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.elfec.ssc">
-
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
    
     <permission
         android:name="com.elfec.ssc.permission.C2D_MESSAGE"
@@ -49,10 +46,14 @@
         -->
         <meta-data
             android:name="AA_DB_NAME"
-            android:value="SSC_ELFEC.db" />
+            android:value="ssc.db" />
         <meta-data
             android:name="AA_DB_VERSION"
-            android:value="14" />
+            android:value="40" />
+        <meta-data android:name="AA_MODELS"
+                   android:value="com.elfec.ssc.model.Account,com.elfec.ssc.model.Client,
+                   com.elfec.ssc.model.Contact,com.elfec.ssc.model.Debt, com.elfec.ssc.model.LocationPoint,
+                   com.elfec.ssc.model.Notification,com.elfec.ssc.model.Usage"/>
         <meta-data
             android:name="AA_SERIALIZERS"
             android:value="com.elfec.ssc.model.serializers.JodaDateTimeSerializer" />
