@@ -9,8 +9,8 @@ import java.util.List;
  */
 public class ErrorVerifierHelper {
     /**
-     * Verifica si alguno de los errores contiene el error de versión
-     * de aplicación no actualizada
+     * Verifica si alguno de los errores contiene el error de versiÃ³n
+     * de aplicaciÃ³n no actualizada
      * @param errors errores
      * @return true si es que contiene ese tipo de error
      */

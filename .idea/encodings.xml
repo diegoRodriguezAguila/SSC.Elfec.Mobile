@@ -1,18 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="Encoding" defaultCharsetForPropertiesFiles="windows-1252">
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/businesslogic/LocationPointsManager.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Account.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/GcmConnectException.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/InitializationException.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/MobileSideException.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/OutdatedAppException.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/ServerSideException.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/webservices/WebServiceConnector.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/MainMenuPresenter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/RegisterAccountPresenter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/ViewAccountsPresenter.java" charset="windows-1252" />
-    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/ViewNotificationsPresenter.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/build.gradle" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/businesslogic/LocationPointsManager.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/gcmservices/ContactsUpdateGCMHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/gcmservices/GCMHandlerFactory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/gcmservices/IGCMHandler.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/helpers/ui/DrawableCache.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/helpers/utils/AccountFormatter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/helpers/utils/ErrorVerifierHelper.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/helpers/utils/NotificationDrawablePicker.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/helpers/utils/PhoneFormatter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Account.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Client.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Debt.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/GcmConnectException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/InitializationException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/MobileSideException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/OutdatedAppException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/ServerSideException.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/validations/IValidationRule.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/validations/MaxLenghtValidationRule.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/validations/MinLenghtValidationRule.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/validations/NumericValidationRule.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/validations/ValidationRulesFactory.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/validations/ValidationsAndParams.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/webservices/IWSResultConverter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/webservices/MarshalDouble.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/webservices/WSParam.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/webservices/WebServiceConnector.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/MainMenuPresenter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/RegisterAccountPresenter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/ViewAccountsPresenter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/presenter/ViewNotificationsPresenter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/view/adapters/ViewUsageAdapter.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/view/adapters/viewholders/AccountViewHolder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/view/adapters/viewholders/NotificationViewHolder.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/view/controls/RegisterInformationDialogService.java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.util.SparseArray;
 
 /**
- * Clase que sirve para cachear un conjunto de im·genes, no olvidar llamar
+ * Clase que sirve para cachear un conjunto de im√°genes, no olvidar llamar
  * recycle
  * 
  * @author drodriguez

@@ -3,14 +3,14 @@ package com.elfec.ssc.helpers.utils;
 import java.security.InvalidParameterException;
 
 /**
- * Clase que con métodos para formatear numéros de teléfono
+ * Clase que con mÃ©todos para formatear numÃ©ros de telÃ©fono
  * @author Diego
  *
  */
 public class PhoneFormatter {
 
 	/**
-	 * Formatea el numero de teléfono con espacios
+	 * Formatea el numero de telÃ©fono con espacios
 	 * @param phone
 	 * @return phone con espacios
 	 */
@@ -36,7 +36,7 @@ public class PhoneFormatter {
 	}
 	
 	/**
-	 * Formatea un número de teléfono que tenga 9 dígitos o más
+	 * Formatea un nÃºmero de telÃ©fono que tenga 9 dÃ­gitos o mÃ¡s
 	 * @param phone
 	 * @return
 	 */
@@ -45,7 +45,7 @@ public class PhoneFormatter {
 		StringBuilder str = new StringBuilder(phone);
 		int length = str.length();
 		if(length < 9)
-			throw new InvalidParameterException("El teléfono proporcionado tiene que tener al menos 9 dígitos");
+			throw new InvalidParameterException("El telÃ©fono proporcionado tiene que tener al menos 9 dÃ­gitos");
 		String ending = str.substring(length-4, length);
 		String start = str.substring(0, 3);
 		String middle = str.substring(3, length-4);

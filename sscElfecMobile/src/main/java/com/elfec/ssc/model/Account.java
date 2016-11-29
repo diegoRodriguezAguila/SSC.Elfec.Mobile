@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * AbstracciÛn de las cuentas de usuario
+ * Abstracci√≥n de las cuentas de usuario
  * 
  * @author Diego
  *
@@ -87,7 +87,7 @@ public class Account extends Model {
 	private List<Usage> Usages;
 
 	/**
-	 * Copia los atributos de la cuenta del par·metro a la cuenta actual. Los
+	 * Copia los atributos de la cuenta del par√°metro a la cuenta actual. Los
 	 * atributos que se copian son:
 	 * <ul>
 	 *     <li>AccountOwner</li>
@@ -271,7 +271,7 @@ public class Account extends Model {
 	}
 
 	/**
-	 * Busca una cuenta que coincida con los par·metros
+	 * Busca una cuenta que coincida con los par√°metros
 	 * 
 	 * @param gmail
 	 * @param nus

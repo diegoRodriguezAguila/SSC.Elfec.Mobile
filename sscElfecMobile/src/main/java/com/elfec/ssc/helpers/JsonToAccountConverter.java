@@ -1,5 +1,7 @@
 package com.elfec.ssc.helpers;
 
+import android.util.Log;
+
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Debt;
@@ -19,6 +21,7 @@ import java.math.BigDecimal;
  *
  */
 public class JsonToAccountConverter {
+	private static final String TAG = "JsonToAccountConverter";
 
 	/**
 	 * Convierte un JSONObject a una cuenta con todas sus deudas
@@ -28,7 +31,8 @@ public class JsonToAccountConverter {
 	 */
 	public static Account convert(JSONObject accObj) {
 		try {
-            String latitudeStr = accObj
+			Log.d(TAG, "Received: "+accObj.toString());
+			String latitudeStr = accObj
                     .getString("Latitude");
             String longitudeStr = accObj.getString("Longitude");
 			Account account = new Account(Client.getActiveClient(),

@@ -22,7 +22,7 @@ public class NumericValidationRule implements IValidationRule<String> {
 
 	@Override
 	public String getErrorMessage(String fieldName, boolean isMaleGender) {
-		return (isMaleGender?"El ":"La ")+fieldName+" tiene que ser "+(isMaleGender?"numérico-":"numérica.");
+		return (isMaleGender?"El ":"La ")+fieldName+" tiene que ser "+(isMaleGender?"numÃ©rico-":"numÃ©rica.");
 	}
 
 }

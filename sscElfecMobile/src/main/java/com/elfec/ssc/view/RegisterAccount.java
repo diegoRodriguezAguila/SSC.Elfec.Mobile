@@ -309,7 +309,8 @@ public class RegisterAccount extends AppCompatActivity implements
                     builder.setTitle(R.string.errors_on_register_title)
                             .setMessage(
                                     MessageListFormatter
-                                            .formatHTMLFromErrors(errors))
+                                            .formatHTMLFromErrors(RegisterAccount
+                                                    .this, errors))
                             .setPositiveButton(R.string.btn_ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();

@@ -60,14 +60,14 @@
     <string name="view_accounts_title">&#160;&#160;Accounts</string>
     <string name="no_accounts_registered">You currently have no registered accounts</string>
     <string name="use_button_add">Press the button</string>
-    <string name="lbl_for_register">for register</string>
+    <string name="lbl_for_register">to register</string>
     <string name="lbl_an_account">an account.\n\nGetting your Elfec accounts registered
         has many advantages like:\n
-        ● Permite que le lleguen notificaciones sobre cualquier evento que afecten al suministro de energía de su cuenta.
-        Como cortes fortuitos (ej. Camión choca con un poste), cortes programados y 
-        retraso en el pago de sus facturas, antes de que se le proceda a cortar.\n
-       ● Ver el estado de su suministro de energía, y de sus deudas.\n
-       ● Ver la evolución de su consumo.</string>
+        ● Getting notifications about any event which could affect the energy supply of any of
+        your accounts. That includes incidental outages (e.g. A truck crashed into a light pole),
+        scheduled outages and late payment of your bills prior to the cut-off of the energy supply.\n
+       ● View the status of your energy supply and your current debts.\n
+       ● View your electricity usage.</string>
     <string name="lbl_loading_accounts">Loading your accounts&#8230;</string>
     <string name="lbl_account_list_item_name">Name:</string>
     <string name="errors_on_download_accounts_title">ACCOUNTS DOWNLOAD ERROR</string>
@@ -82,8 +82,8 @@
 
     <!-- Location Services -->
     <string name="location_services_title">&#160;&#160;Location services</string>
-    <string name="waiting_map_msg">Please wait, connecting with google maps&#8230;</string>
-    <string name="no_internet_msg">Couldn\'t connect with the server. check your internet
+    <string name="waiting_map_msg">Please wait, connecting to google maps&#8230;</string>
+    <string name="no_internet_msg">Couldn\'t connect to the server. check your internet
         connection!</string>
     <string name="errors_on_get_points_title">LOCATION SERVICES ERROR</string>
     <!-- Location Services: Markers -->
@@ -176,16 +176,17 @@
     <string name="xlistview_footer_hint_ready">Release to load older notifications</string>
 
     <!-- Api Exceptions -->
-    <string name="gcm_connect_exception"><![CDATA[Couldn\'t connect with the server, please check your
-        internet connection.\nIf your do have internet connection, please check that you have <a
+    <string name="gcm_connect_exception"><![CDATA[Couldn\'t connect to the server, please check your
+        internet connection.\nIf you do have internet connection, please check that you have <a
             href="https://play.google.com/store/apps/details?id=com.google.android.gms&amp;hl=es_419/"
             >Google Play Services</a> installed.]]></string>
 
     <string name="mobile_side_exception">An error occurred while processing the server
         response, we apologize for the inconvenience, please try again later.</string>
 
-    <string name="outdated_app_exception"><![CDATA[Couldn\'t connect with the web services because the
-        version of the application is outdated. We recommend you to download the <b>latest
+    <string
+        name="outdated_app_exception"><![CDATA[Couldn\'t connect to the web services because this
+        application\'s version is outdated. We encourage you to download the <b>latest
             version</b> from playstore: <a
             href="https://play.google.com/store/apps/details?id=com.elfec.ssc">
             Get latest version</a>.]]></string>

@@ -3,7 +3,7 @@ package com.elfec.ssc.model.exceptions;
 import com.elfec.ssc.R;
 
 /**
- * Esta excepción es lanzada cuando ha ocurrido una excepción no controlada en el lado del servidor
+ * Esta excepciÃ³n es lanzada cuando ha ocurrido una excepciÃ³n no controlada en el lado del servidor
  * @author Diego
  *
  */
@@ -17,7 +17,7 @@ public class ServerSideException extends BaseApiException {
 	@Override
 	public String getMessage()
 	{
-		return "Ocurrió un error en el servidor, porfavor intentelo nuevamente mas tarde";
+		return "OcurriÃ³ un error en el servidor, porfavor intentelo nuevamente mas tarde";
 	}
 
 	@Override

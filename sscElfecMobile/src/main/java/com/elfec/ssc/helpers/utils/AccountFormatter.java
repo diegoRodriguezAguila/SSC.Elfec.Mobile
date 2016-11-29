@@ -1,14 +1,14 @@
 package com.elfec.ssc.helpers.utils;
 
 /**
- * Clase con métodos para formatear una número cuenta
+ * Clase con mÃ©todos para formatear una nÃºmero cuenta
  * @author drodriguez
  *
  */
 public class AccountFormatter {
 
 	/**
-	 * Formatea una cuenta sin guiones a una con guiones con tamaño de 10 digitos fijo
+	 * Formatea una cuenta sin guiones a una con guiones con tamaÃ±o de 10 digitos fijo
 	 * @param accountNumber
 	 * @return
 	 */

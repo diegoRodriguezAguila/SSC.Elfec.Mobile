@@ -13,7 +13,7 @@ import java.util.List;
 
 public class LocationPointsManager {
 	/**
-	 * Registra el conjunto de puntos de ubicación
+	 * Registra el conjunto de puntos de ubicaciÃ³n
 	 * @param points
 	 */
 	public static void registerLocations(final List<LocationPoint> points)
@@ -29,7 +29,7 @@ public class LocationPointsManager {
 	}
 	
 	/**
-	 * Registra el conjunto de puntos de ubicación
+	 * Registra el conjunto de puntos de ubicaciÃ³n
 	 * @param points
 	 */
 	public static void removeLocations(final List<LocationPoint> points)
@@ -56,7 +56,7 @@ public class LocationPointsManager {
 	}
 
 	/**
-	 * Obtiene los puntos cercanos a la ubicación dada, y con la distancia definida
+	 * Obtiene los puntos cercanos a la ubicaciÃ³n dada, y con la distancia definida
 	 * @param points
 	 * @param current
 	 * @param maxDistance

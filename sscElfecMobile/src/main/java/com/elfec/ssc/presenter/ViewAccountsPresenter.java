@@ -82,8 +82,8 @@ public class ViewAccountsPresenter {
     }
 
     /**
-     * Obtiene las cuentas del cliente remotamente, si no hay conexión obtiene la
-     * versión local
+     * Obtiene las cuentas del cliente remotamente, si no hay conexiÃ³n obtiene la
+     * versiÃ³n local
      * @param preLoad si es verdadero se cargan las cuentas locales antes
      *                de intentar realizar una llamada remota
      */

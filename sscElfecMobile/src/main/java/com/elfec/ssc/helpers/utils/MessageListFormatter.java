@@ -1,7 +1,10 @@
 package com.elfec.ssc.helpers.utils;
 
+import android.content.Context;
 import android.text.Html;
 import android.text.Spanned;
+
+import com.elfec.ssc.model.exceptions.BaseApiException;
 
 import java.util.List;
 
@@ -17,12 +20,14 @@ public class MessageListFormatter {
 	 * @param errors errores
 	 * @return mensaje formateado en html
 	 */
-	public static Spanned formatHTMLFromErrors(List<Exception> errors)
+	public static Spanned formatHTMLFromErrors(final Context context, List<Exception> errors)
 	{
         return formatHTMLFromObjectList(errors, new AttributePicker<String, Exception>() {
             @Override
             public String pickAttribute(Exception error) {
-                return error.getMessage();
+                return error instanceof BaseApiException? context.getResources()
+                        .getString(((BaseApiException) error).getMessageStringRes())
+                        :error.getMessage();
             }
         });
 	}

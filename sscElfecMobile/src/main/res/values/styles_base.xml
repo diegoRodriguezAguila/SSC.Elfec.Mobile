@@ -90,7 +90,6 @@
     </style>
 
     <style name="Base.Widget.ElfecSsc.ListView" parent="Widget.AppCompat.ListView">
-        <item name="android:listSelector">@drawable/ssc_elfec_list_selector_holo_light</item>
     </style>
 
     <style name="Base.TextAppearance.ElfecSsc.AlertDialog.Title" parent="TextAppearance.AppCompat.Title">

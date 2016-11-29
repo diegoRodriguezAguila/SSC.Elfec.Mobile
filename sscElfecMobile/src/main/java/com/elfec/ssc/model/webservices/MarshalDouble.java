@@ -1,7 +1,5 @@
 package com.elfec.ssc.model.webservices;
 
-import java.io.IOException;
-
 import org.ksoap2.serialization.Marshal;
 import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
@@ -9,8 +7,10 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import java.io.IOException;
+
 /**
- * Extensión Marshal de KSoap para soportar servicios web que retornen Doubles
+ * ExtensiÃ³n Marshal de KSoap para soportar servicios web que retornen Doubles
  * @author Diego
  *
  */

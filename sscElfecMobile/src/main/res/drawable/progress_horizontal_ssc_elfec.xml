@@ -22,11 +22,6 @@
     <item android:id="@android:id/background"
           android:drawable="@drawable/progress_bg_ssc_elfec" />
 
-    <item android:id="@android:id/secondaryProgress">
-        <scale android:scaleWidth="100%"
-               android:drawable="@drawable/progress_secondary_ssc_elfec" />
-    </item>
-
     <item android:id="@android:id/progress">
         <scale android:scaleWidth="100%"
                android:drawable="@drawable/progress_primary_ssc_elfec" />

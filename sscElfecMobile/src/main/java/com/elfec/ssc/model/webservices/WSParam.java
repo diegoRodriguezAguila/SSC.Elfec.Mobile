@@ -1,7 +1,7 @@
 package com.elfec.ssc.model.webservices;
 
 /**
- * Clase que sirve como par·metros para los servicios web
+ * Clase que sirve como par√°metros para los servicios web
  * @author Diego
  *
  */

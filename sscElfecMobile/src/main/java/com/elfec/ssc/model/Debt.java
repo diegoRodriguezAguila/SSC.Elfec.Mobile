@@ -1,18 +1,18 @@
 package com.elfec.ssc.model;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Column.ForeignKeyAction;
 import com.activeandroid.annotation.Table;
 
+import org.joda.time.DateTime;
+
+import java.io.Serializable;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 /**
- * Abstracción de las deudas del usuario
+ * AbstracciÃ³n de las deudas del usuario
  * @author drodriguez
  *
  */

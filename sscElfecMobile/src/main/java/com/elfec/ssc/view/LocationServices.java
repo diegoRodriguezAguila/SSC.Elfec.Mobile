@@ -264,7 +264,8 @@ public class LocationServices extends AppCompatActivity implements
                 AlertDialog.Builder builder = new AlertDialog.Builder(
                         LocationServices.this);
                 builder.setTitle(R.string.errors_on_get_points_title)
-                        .setMessage(MessageListFormatter.formatHTMLFromErrors(errors))
+                        .setMessage(MessageListFormatter.formatHTMLFromErrors(LocationServices
+                                .this, errors))
                         .setPositiveButton(R.string.btn_ok, null);
                 AlertDialog dialog = builder.create();
                 dialog.show();

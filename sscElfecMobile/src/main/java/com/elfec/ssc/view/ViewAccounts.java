@@ -212,7 +212,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                     builder.setTitle(R.string.errors_on_delete_account_title)
                             .setMessage(
                                     MessageListFormatter
-                                            .formatHTMLFromErrors(errors))
+                                            .formatHTMLFromErrors(ViewAccounts.this, errors))
                             .setPositiveButton(R.string.btn_ok, null).show();
                 }
             }
@@ -270,7 +270,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                     builder.setTitle(R.string.errors_on_download_accounts_title)
                             .setMessage(
                                     MessageListFormatter
-                                            .formatHTMLFromErrors(errors))
+                                            .formatHTMLFromErrors(ViewAccounts.this, errors))
                             .setPositiveButton(R.string.btn_ok, null);
                     AlertDialog dialog = builder.create();
                     dialog.show();

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
 /**
- * Factory para la creaci髇 de reglas, nuevas reglas a馻didas deben a馻dirse 
- * en el constructor est醫ico
+ * Factory para la creaci贸n de reglas, nuevas reglas a帽adidas deben a帽adirse 
+ * en el constructor est谩tico
  * @author Diego
  *
  */
@@ -32,9 +32,9 @@ public class ValidationRulesFactory {
 	}
 	
 	/**
-	 * Se debe llamar a esta funci髇 antes de llamar a getValidationParams, crea las reglas de validaci髇 a partir de una cadena
+	 * Se debe llamar a esta funci贸n antes de llamar a getValidationParams, crea las reglas de validaci贸n a partir de una cadena
 	 * @param validationRules
-	 * @return las reglas de validaci髇 y sus par醡etros en una clase Wrapper ValidationsAndParams
+	 * @return las reglas de validaci贸n y sus par谩metros en una clase Wrapper ValidationsAndParams
 	 */
 	@SuppressWarnings("unchecked")
 	public static <T> ValidationsAndParams<T> createValidationRulesWithParams(String validationRules)

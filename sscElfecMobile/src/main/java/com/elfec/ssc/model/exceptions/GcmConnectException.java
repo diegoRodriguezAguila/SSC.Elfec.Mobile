@@ -3,13 +3,13 @@ package com.elfec.ssc.model.exceptions;
 import com.elfec.ssc.R;
 
 /**
- * Excepci髇 que se lanza cuando no se pudo obtener el token de conecci髇 de google
+ * Excepci贸n que se lanza cuando no se pudo obtener el token de conecci贸n de google
  */
 public class GcmConnectException extends BaseApiException{
     @Override
     public String getMessage() {
-        return "No fue posible conectarse con el servidor, porfavor revise su conexi髇 a internet" +
-                ".<br/>Si su conexi髇 a internet es correcta, porfavor verifique que tiene " +
+        return "No fue posible conectarse con el servidor, porfavor revise su conexi贸n a internet" +
+                ".<br/>Si su conexi贸n a internet es correcta, porfavor verifique que tiene " +
                 "<a href=\"https://play.google.com/store/apps/details?id=com.google.android.gms&hl=es_419/\">" +
                 "Google Play Services</a> instalado.";
     }

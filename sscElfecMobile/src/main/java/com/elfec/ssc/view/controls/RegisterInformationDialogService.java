@@ -23,7 +23,7 @@ public class RegisterInformationDialogService {
 	}
 
 	/**
-	 * Muestra el di·logo construido
+	 * Muestra el di√°logo construido
 	 */
 	public void show() {
 		mDialog.show();

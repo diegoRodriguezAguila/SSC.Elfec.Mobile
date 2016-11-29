@@ -3,6 +3,7 @@ package com.elfec.ssc.model.webservices;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.elfec.ssc.BuildConfig;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.exceptions.ServerDownException;
@@ -28,7 +29,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Clase general para conexiÛn con servicios web
+ * Clase general para conexi√≥n con servicios web
  * 
  * @author Diego
  *
@@ -36,8 +37,7 @@ import java.util.List;
  */
 public class WebServiceConnector<TResult> extends
 		AsyncTask<WSParam, TResult, TResult> {
-	private final String WS_SERVER = "https://ssc.elfec.bo:4343/";//"http://192.168.50" +
-            //".56/ssc_elfec/web_services/";
+	private final String WS_SERVER = BuildConfig.WS_SERVER_URL;
 	private String url;
 	private String soapAction; // = "";
 	private String namespace;// = "http://DefaultNamespace";
@@ -48,8 +48,8 @@ public class WebServiceConnector<TResult> extends
 	private WSResponse<TResult> resultWS;
 
 	/**
-	 * Construye un conector de webservice soap con los par·metros indicados y
-	 * con autenticaciÛn por sscToken
+	 * Construye un conector de webservice soap con los par√°metros indicados y
+	 * con autenticaci√≥n por sscToken
 	 * 
 	 * @param url
 	 * @param soapAction
@@ -72,8 +72,8 @@ public class WebServiceConnector<TResult> extends
 	}
 
 	/**
-	 * Construye un conector de webservice soap con los par·metros indicados y
-	 * con autenticaciÛn por sscToken
+	 * Construye un conector de webservice soap con los par√°metros indicados y
+	 * con autenticaci√≥n por sscToken
 	 * 
 	 * @param url
 	 * @param soapAction
@@ -99,8 +99,8 @@ public class WebServiceConnector<TResult> extends
 	}
 
 	/**
-	 * Construye un conector de webservice soap con los par·metros indicados sin
-	 * autenticaciÛn
+	 * Construye un conector de webservice soap con los par√°metros indicados sin
+	 * autenticaci√≥n
 	 * 
 	 * @param url
 	 * @param soapAction
@@ -120,7 +120,7 @@ public class WebServiceConnector<TResult> extends
 	}
 
 	/**
-	 * Construye un conector de webservice soap con los par·metros indicados sin
+	 * Construye un conector de webservice soap con los par√°metros indicados sin
 	 * autenticaci+on
 	 * 
 	 * @param url
@@ -166,7 +166,7 @@ public class WebServiceConnector<TResult> extends
 			result = envelope.getResponse().toString();
 		} catch (HttpResponseException e) {
 			Log.d(methodName, "Error in url: " + url + " " + e.getMessage());
-			if (e.getStatusCode() == 403) // aplicaciÛn ya no es v·lida
+			if (e.getStatusCode() == 403) // aplicaci√≥n ya no es v√°lida
 				resultWS.addError(new OutdatedAppException());
 			else if(e.getStatusCode() == 503)
                 resultWS.addError(new ServerDownException());
@@ -174,23 +174,23 @@ public class WebServiceConnector<TResult> extends
 		} catch (ConnectException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ConnectException(
-					"No fue posible conectarse con el servidor, porfavor revise su conexiÛn a internet"));
+					"No fue posible conectarse con el servidor, porfavor revise su conexi√≥n a internet"));
 
 		} catch (SocketTimeoutException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new SocketTimeoutException(
-					"No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexiÛn a internet"));
+					"No fue posible conectarse con el servidor, puede que el servidor no se encuentre disponible temporalmente, porfavor verifique su conexi√≥n a internet"));
 		} catch (IOException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ConnectException(
-					"OcurriÛ un problema al conectarse con el servidor, porfavor revise su conexiÛn a internet"));
+					"Ocurri√≥ un problema al conectarse con el servidor, porfavor revise su conexi√≥n a internet"));
 		} catch (XmlPullParserException e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new ServerSideException());
 		} catch (Exception e) {
 			Log.d(methodName, e.toString());
 			resultWS.addError(new Exception(
-					"OcurriÛ un error inesperado al conectarse al servicio, lamentamos las molestias, intÈntelo de nuevo mas tarde."));
+					"Ocurri√≥ un error inesperado al conectarse al servicio, lamentamos las molestias, int√©ntelo de nuevo mas tarde."));
 		}
 		return converter.convert(resultWS.convertErrors(result));
 	}

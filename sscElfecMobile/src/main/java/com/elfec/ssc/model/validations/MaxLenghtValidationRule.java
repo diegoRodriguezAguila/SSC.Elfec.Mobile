@@ -1,8 +1,8 @@
 package com.elfec.ssc.model.validations;
 
 /**
- * Valida si el tamaño de una cadena es válido, es decir si su longitud es menor o hasta igual que el tamaño
- * máximo establecido
+ * Valida si el tamaÃ±o de una cadena es vÃ¡lido, es decir si su longitud es menor o hasta igual que el tamaÃ±o
+ * mÃ¡ximo establecido
  * @author Diego
  *
  */

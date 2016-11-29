@@ -16,7 +16,7 @@ public class MainMenuPresenter {
     }
 
     /**
-     * Verifica si es que ya se definió el cliente activo para obtener sus cuentas caso contrario
+     * Verifica si es que ya se definiÃ³ el cliente activo para obtener sus cuentas caso contrario
      * se le advierte al usuario
      */
     public void verifyAccountsRequirements() {

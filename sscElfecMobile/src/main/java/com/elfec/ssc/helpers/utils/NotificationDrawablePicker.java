@@ -6,7 +6,7 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.model.enums.NotificationKey;
 
 /**
- * Clase que ayuda a seleccionar el correcto drawable con relación a la key de
+ * Clase que ayuda a seleccionar el correcto drawable con relaciÃ³n a la key de
  * las notificaciones
  * 
  * @author drodriguez

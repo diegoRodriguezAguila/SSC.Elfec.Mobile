@@ -11,10 +11,10 @@ public class OutdatedAppException extends BaseApiException {
 
 	@Override
 	public String getMessage() {
-		return "No se pudo comunicar con los servicios debido a que la versi髇 de la aplicaci髇 " +
-				"no es la m醩 actual. Le recomendamos descargar la <b>鷏tima versi髇</b> de la " +
+		return "No se pudo comunicar con los servicios debido a que la versi贸n de la aplicaci贸n " +
+				"no es la m谩s actual. Le recomendamos descargar la <b>煤ltima versi贸n</b> de la " +
 				"playstore:  <a href=\"https://play.google.com/store/apps/details?id=com.elfec" +
-				".ssc&hl=es-419/\">Obtener 鷏tima versi髇</a>.";
+				".ssc&hl=es-419/\">Obtener 煤ltima versi贸n</a>.";
 	}
 
 	@Override

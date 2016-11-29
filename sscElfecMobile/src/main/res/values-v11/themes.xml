@@ -11,9 +11,7 @@
         <item name="android:textSelectHandleLeft">@drawable/ssc_elfec_text_select_handle_left</item>
         <item name="android:textSelectHandleRight">@drawable/ssc_elfec_text_select_handle_right</item>
         <item name="android:textSelectHandle">@drawable/ssc_elfec_text_select_handle_middle</item>
-        <item name="android:listChoiceBackgroundIndicator">@drawable/ssc_elfec_list_selector_holo_light</item>
         <item name="android:activatedBackgroundIndicator">@drawable/ssc_elfec_activated_background_holo_light</item>
-        <item name="android:fastScrollThumbDrawable">@drawable/ssc_elfec_fastscroll_thumb_holo</item>
         <item name="android:actionButtonStyle">@style/Widget.ElfecSsc.ActionButton</item>
         <item name="android:actionBarStyle">@style/Widget.ElfecSsc.ActionBar</item>
     </style>

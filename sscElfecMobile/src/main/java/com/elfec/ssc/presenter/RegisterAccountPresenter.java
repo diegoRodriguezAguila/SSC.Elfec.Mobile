@@ -42,7 +42,7 @@ public class RegisterAccountPresenter {
 	}
 
 	/**
-	 * Obtiene la información provista por el usuario y del dispositivo
+	 * Obtiene la informaciÃ³n provista por el usuario y del dispositivo
 	 */
 	public void processAccountData() {
 		new Thread(new Runnable() {
@@ -126,7 +126,7 @@ public class RegisterAccountPresenter {
 	}
 
 	/**
-	 * Valida un campo con los parámetros pasados
+	 * Valida un campo con los parÃ¡metros pasados
 	 */
 	private List<String> validateField(String fieldName,
 			boolean fieldIsMaleGender, String fieldValue, String validationRules) {
@@ -150,7 +150,7 @@ public class RegisterAccountPresenter {
 	}
 
 	/**
-	 * Validael campo del número de cuenta
+	 * Validael campo del nÃºmero de cuenta
 	 * 
 	 * @return true si no tiene errores
 	 */

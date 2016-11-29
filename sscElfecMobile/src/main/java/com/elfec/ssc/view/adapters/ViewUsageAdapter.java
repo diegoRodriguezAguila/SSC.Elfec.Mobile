@@ -1,10 +1,5 @@
 package com.elfec.ssc.view.adapters;
 
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.List;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +10,11 @@ import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.model.Usage;
+
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.List;
 
 public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 	private List<Usage> usage;
@@ -39,9 +39,9 @@ public class ViewUsageAdapter extends ArrayAdapter<Usage> {
 	}
 	
 	/**
-	 * Obtiene el m·ximo consumo de todos de la lista de consumos
+	 * Obtiene el m√°ximo consumo de todos de la lista de consumos
 	 * @param usages
-	 * @return m·ximo consumo
+	 * @return m√°ximo consumo
 	 */
 	private int maxConsume(List<Usage> usages)
 	{

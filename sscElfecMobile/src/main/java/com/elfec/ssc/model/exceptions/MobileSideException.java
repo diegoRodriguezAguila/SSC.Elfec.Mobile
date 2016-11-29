@@ -3,7 +3,7 @@ package com.elfec.ssc.model.exceptions;
 import com.elfec.ssc.R;
 
 /**
- * Excepción que se lanza cuando ocurrió un error en el lado móvil
+ * ExcepciÃ³n que se lanza cuando ocurriÃ³ un error en el lado mÃ³vil
  * 
  * @author drodriguez
  *
@@ -17,7 +17,7 @@ public class MobileSideException extends BaseApiException {
 
 	@Override
 	public String getMessage() {
-		return "Ocurrió un error al procesar la resupesta del servidor, disculpe las molestias,  " +
+		return "OcurriÃ³ un error al procesar la resupesta del servidor, disculpe las molestias,  " +
 				"porfavor intentelo nuevamente mas tarde";
 	}
 

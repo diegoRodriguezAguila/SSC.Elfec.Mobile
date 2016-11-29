@@ -21,7 +21,7 @@ public class ViewNotificationsPresenter {
 	}
 
 	/**
-	 * Crea un hilo para cargar la información de ambas listas, de cuentas y de
+	 * Crea un hilo para cargar la informaciÃ³n de ambas listas, de cuentas y de
 	 * cortes
 	 */
 	public void loadNotifications() {
@@ -65,7 +65,7 @@ public class ViewNotificationsPresenter {
 
 	/**
 	 * Vuelve a cargar la lista de notificaciones de cortes, tomando en cuenta
-	 * el límite actual
+	 * el lÃ­mite actual
 	 */
 	public void refreshOutageNotifications() {
 		Thread thread = new Thread(new Runnable() {
@@ -79,7 +79,7 @@ public class ViewNotificationsPresenter {
 
 	/**
 	 * Vuelve a cargar la lista de notificaciones de cuentas, tomando en cuenta
-	 * el límite actual
+	 * el lÃ­mite actual
 	 */
 	public void refreshAccountNotifications() {
 		Thread thread = new Thread(new Runnable() {
@@ -93,7 +93,7 @@ public class ViewNotificationsPresenter {
 
 	/**
 	 * Carga mas items a la lista de notificaciones de cortes, auentando el
-	 * límite actual, en un hilo
+	 * lÃ­mite actual, en un hilo
 	 */
 	public void loadMoreOutageNotifications() {
 		Thread thread = new Thread(new Runnable() {
@@ -118,7 +118,7 @@ public class ViewNotificationsPresenter {
 
 	/**
 	 * Carga mas items a la lista de notificaciones de cuentas, auentando el
-	 * límite actual, en un hilo
+	 * lÃ­mite actual, en un hilo
 	 */
 	public void loadMoreAccountNotifications() {
 		Thread thread = new Thread(new Runnable() {
@@ -175,7 +175,7 @@ public class ViewNotificationsPresenter {
 	}
 
 	/**
-	 * Cuando llega una notificación de cortes y se quiere aumentar al principio
+	 * Cuando llega una notificaciÃ³n de cortes y se quiere aumentar al principio
 	 * de la lista se debe utilizar este metodo
 	 * 
 	 * @param notif
@@ -190,7 +190,7 @@ public class ViewNotificationsPresenter {
 	}
 
 	/**
-	 * Cuando llega una notificación de cuentas y se quiere aumentar al
+	 * Cuando llega una notificaciÃ³n de cuentas y se quiere aumentar al
 	 * principio de la lista se debe utilizar este metodo
 	 * 
 	 * @param notif

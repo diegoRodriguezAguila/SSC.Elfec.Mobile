@@ -31,7 +31,7 @@ public class LocationServicesPresenter {
     private Location currentLocation;
     private int distanceRange;
     private SscTokenRequester mSscTokenRequester;
-    private final int MIN_DISTANCE_DIFFERENCE = 250;
+    private static final int MIN_DISTANCE_DIFFERENCE = 250;
 
 
     public LocationServicesPresenter(ILocationServices view) {

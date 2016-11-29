@@ -20,9 +20,9 @@ public interface IGCMHandler {
 	 */
 	public void handleGCMessage(Bundle messageInfo, NotificationManager notifManager, Builder builder);
 	/**
-	 * Obtiene el tipo de actividad que se iniciar· al presionar en una notificaciÛn
-	 * en caso de tener una notificaciÛn que debe llevar a una vista
-	 * @return la clase de actividad que se mostrar·
+	 * Obtiene el tipo de actividad que se iniciar√° al presionar en una notificaci√≥n
+	 * en caso de tener una notificaci√≥n que debe llevar a una vista
+	 * @return la clase de actividad que se mostrar√°
 	 */
 	public Class<? extends Activity> getActivityClass();
 }

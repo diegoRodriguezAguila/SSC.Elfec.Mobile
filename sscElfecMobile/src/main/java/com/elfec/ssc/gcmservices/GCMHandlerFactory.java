@@ -1,11 +1,11 @@
 package com.elfec.ssc.gcmservices;
 
-import java.util.Hashtable;
-
 import com.elfec.ssc.model.enums.NotificationKey;
 
+import java.util.Hashtable;
+
 /**
- * Factory para crear GCM handlers según su key
+ * Factory para crear GCM handlers segÃºn su key
  * 
  * @author Diego
  *

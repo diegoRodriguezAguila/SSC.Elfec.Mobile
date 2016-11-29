@@ -3,7 +3,7 @@ package com.elfec.ssc.model.validations;
 import java.util.List;
 
 /**
- * Wraper class para las reglas de validación junto con sus parametros
+ * Wraper class para las reglas de validaciÃ³n junto con sus parametros
  * @author Diego
  *
  * @param <T>

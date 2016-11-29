@@ -2,7 +2,7 @@ package com.elfec.ssc.model.webservices;
 
 /**
  * Interfaz que sirve para convertir la cadena resultado de un servicio web
- * a un tipo específico
+ * a un tipo especÃ­fico
  * @author Diego
  *
  * @param <TResult>

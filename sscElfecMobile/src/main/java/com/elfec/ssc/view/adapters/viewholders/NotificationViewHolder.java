@@ -31,7 +31,7 @@ public class NotificationViewHolder {
 	}
 
 	/**
-	 * Asigna la información a los campos de la vista
+	 * Asigna la informaciÃ³n a los campos de la vista
 	 * 
 	 * @param notification
 	 */

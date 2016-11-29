@@ -1,8 +1,8 @@
 package com.elfec.ssc.model.validations;
 
 /**
- * Valida si el tamaÒo de una cadena es v·lido, es decir si su longitud es mayor o igual que el tamaÒo
- * mÌnimo requerido
+ * Valida si el tama√±o de una cadena es v√°lido, es decir si su longitud es mayor o igual que el tama√±o
+ * m√≠nimo requerido
  * @author Diego
  *
  */

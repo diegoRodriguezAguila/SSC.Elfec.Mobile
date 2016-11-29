@@ -1,18 +1,18 @@
 package com.elfec.ssc.model;
 
-import java.io.Serializable;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.ClientStatus;
 
+import org.joda.time.DateTime;
+
+import java.io.Serializable;
+import java.util.List;
+
 /**
- * Guarda la información del cliente que utiliza la aplicación
+ * Guarda la informaciÃ³n del cliente que utiliza la aplicaciÃ³n
  * @author Diego
  */
 @Table(name = "Clients")
@@ -102,7 +102,7 @@ public class Client extends Model implements Serializable {
 	
 	/**
 	 * Obtiene el cliente que tenga estado activo
-	 * @return el cliente activo, null si es que no se registró ningun cliente aún
+	 * @return el cliente activo, null si es que no se registrÃ³ ningun cliente aÃºn
 	 */
 	public static Client getActiveClient()
 	{
