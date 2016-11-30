@@ -8,7 +8,6 @@ import com.elfec.ssc.businesslogic.ClientManager;
 import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
-import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.model.Account;
@@ -88,33 +87,27 @@ public class ViewAccountsPresenter {
      *                de intentar realizar una llamada remota
      */
     public void loadAccounts(final boolean preLoad) {
-        ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(new OnReleaseThread() {
-            @Override
-            public void threadReleased() {
-                final Client client = Client.getActiveClient();
-                if(preLoad)
-                    loadAccountsLocally(client);
-                new Thread(new Runnable() {
+        ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(() -> {
+            final Client client = Client.getActiveClient();
+            if(preLoad)
+                loadAccountsLocally(client);
+            new Thread(() -> {
+                Looper.prepare();
+                mGcmTokenRequester.getTokenAsync(new GcmTokenCallback() {
                     @Override
-                    public void run() {
-                        Looper.prepare();
-                        mGcmTokenRequester.getTokenAsync(new GcmTokenCallback() {
-                            @Override
-                            public void onGcmTokenReceived(String gcmToken) {
-                                loadAccountsRemotely(client, gcmToken);
-                            }
-
-                            @Override
-                            public void onGcmErrors(List<Exception> errors) {
-                                view.hideWaiting();
-                                view.showViewAccountsErrors(errors);
-                                view.showAccounts(null);
-                            }
-                        });
-                        Looper.loop();
+                    public void onGcmTokenReceived(String gcmToken) {
+                        loadAccountsRemotely(client, gcmToken);
                     }
-                }).start();
-            }
+
+                    @Override
+                    public void onGcmErrors(List<Exception> errors) {
+                        view.hideWaiting();
+                        view.showViewAccountsErrors(errors);
+                        view.showAccounts(null);
+                    }
+                });
+                Looper.loop();
+            }).start();
         });
     }
 
@@ -134,36 +127,24 @@ public class ViewAccountsPresenter {
     private void loadAccountsRemotely(final Client client, final String gcmToken) {
         if (!mIsLoadingAccounts) {
             mIsLoadingAccounts = true;
-            mSscTokenRequester.getTokenAsync(new SscTokenReceivedCallback() {
-                @Override
-                public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
+            mSscTokenRequester.getTokenAsync(wsTokenResult ->
                     new AccountWS(wsTokenResult.getResult()).getAllAccounts(client.getGmail(),
-                            Build.BRAND, Build.MODEL, mImei, gcmToken,
-                            new IWSFinishEvent<List<Account>>() {
-                                @Override
-                                public void executeOnFinished(final WSResponse<List<Account>> result) {
-                                    new Thread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            if (result.getErrors().size() == 0) {
-                                                final List<Account> accounts =
-                                                        ClientManager.registerClientAccounts(result.getResult());
-                                                view.hideWaiting();
-                                                view.showAccounts(accounts);
-                                            } else {
-                                                view.hideWaiting();
-                                                if (mIsRefreshing || ErrorVerifierHelper.isOutdatedApp(result
-                                                        .getErrors()))
-                                                    view.showViewAccountsErrors(result.getErrors());
-                                            }
-                                            mIsLoadingAccounts = false;
-                                            mIsRefreshing = false;
-                                        }
-                                    }).start();
+                    Build.BRAND, Build.MODEL, mImei, gcmToken,
+                            result -> new Thread(() -> {
+                                if (result.getErrors().size() == 0) {
+                                    final List<Account> accounts =
+                                            ClientManager.registerClientAccounts(result.getResult());
+                                    view.hideWaiting();
+                                    view.showAccounts(accounts);
+                                } else {
+                                    view.hideWaiting();
+                                    if (mIsRefreshing || ErrorVerifierHelper.isOutdatedApp(result
+                                            .getErrors()))
+                                        view.showViewAccountsErrors(result.getErrors());
                                 }
-                            });
-                }
-            });
+                                mIsLoadingAccounts = false;
+                                mIsRefreshing = false;
+                            }).start()));
         }
     }
 

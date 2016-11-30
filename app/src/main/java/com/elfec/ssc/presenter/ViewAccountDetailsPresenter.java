@@ -6,91 +6,61 @@ import com.elfec.ssc.businesslogic.ElfecAccountsManager;
 import com.elfec.ssc.businesslogic.webservices.AccountWS;
 import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.Usage;
-import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.events.SscTokenReceivedCallback;
-import com.elfec.ssc.model.security.SscToken;
-import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
 import com.elfec.ssc.security.AppPreferences;
 
-import java.util.List;
-
 public class ViewAccountDetailsPresenter {
 
-	private IViewAccountDetails view;
-	private Account accountToShow;
-	private SscTokenRequester mSscTokenRequester;
+    private IViewAccountDetails view;
+    private Account accountToShow;
+    private SscTokenRequester mSscTokenRequester;
 
-	public ViewAccountDetailsPresenter(IViewAccountDetails view,
-			long accountToShowId) {
-		this.view = view;
-		this.accountToShow = Account.get(accountToShowId);
+    public ViewAccountDetailsPresenter(IViewAccountDetails view,
+                                       long accountToShowId) {
+        this.view = view;
+        this.accountToShow = Account.get(accountToShowId);
         mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
-	}
+    }
 
-	public void getUsage() {
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				Looper.prepare();
-				view.showUsage(accountToShow.getUsages());
-                mSscTokenRequester.getTokenAsync(
-						new SscTokenReceivedCallback() {
-							@Override
-							public void onSscTokenReceived(
-									WSResponse<SscToken> wsTokenResult) {
-								if (wsTokenResult.getResult() != null)
-									new AccountWS(wsTokenResult.getResult()).getUsage(
-											accountToShow.getNUS(),
-											new IWSFinishEvent<List<Usage>>() {
+    public void getUsage() {
+        new Thread(() -> {
+            Looper.prepare();
+            view.showUsage(accountToShow.getUsages());
+            mSscTokenRequester.getTokenAsync(wsTokenResult -> {
+                if (wsTokenResult.getResult() == null) return;
+                new AccountWS(wsTokenResult.getResult())
+                        .getUsage(accountToShow.getNUS(), result -> {
+                            if (result.getErrors().size() > 0) return;
+                            accountToShow.removeUsages();
+                            ElfecAccountsManager
+                                    .registerAccountUsages(accountToShow,result.getResult());
+                            view.showUsage(result.getResult());
+                        });
+            });
+            Looper.loop();
+        }).start();
+    }
 
-												@Override
-												public void executeOnFinished(
-														final WSResponse<List<Usage>> result) {
-													if (result.getErrors()
-															.size() == 0) {
-														accountToShow
-																.removeUsages();
-														ElfecAccountsManager
-																.registerAccountUsages(
-																		accountToShow,
-																		result.getResult());
-														view.showUsage(result
-																.getResult());
-													}
-												}
-											});
-							}
-						});
-				Looper.loop();
-			}
-		}).start();
-	}
+    /**
+     * Asigna los datos a la vista
+     */
+    public void setFields() {
+        view.setAccountNumber(accountToShow.getAccountNumber());
+        view.setNus(accountToShow.getNUS());
+        view.setOwnerClient(accountToShow.getAccountOwner());
+        view.setClientAddress(accountToShow.getAddress());
+        view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
+        new Thread(() -> {
+            view.showDebts(accountToShow.getDebts());
+            view.setTotalDebt(accountToShow.getTotalDebt());
+        }).start();
+    }
 
-	/**
-	 * Asigna los datos a la vista
-	 */
-	public void setFields() {
-		view.setAccountNumber(accountToShow.getAccountNumber());
-		view.setNus(accountToShow.getNUS());
-		view.setOwnerClient(accountToShow.getAccountOwner());
-		view.setClientAddress(accountToShow.getAddress());
-		view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				view.showDebts(accountToShow.getDebts());
-				view.setTotalDebt(accountToShow.getTotalDebt());
-			}
-		}).start();
-	}
-
-	/**
-	 * LLama a los m�todos necesarios para ir a la direcci�
-	 */
-	public void goToAddress() {
-		view.navigateToAddress(accountToShow);
-	}
+    /**
+     * LLama a los m�todos necesarios para ir a la direcci�
+     */
+    public void goToAddress() {
+        view.navigateToAddress(accountToShow);
+    }
 
 }

@@ -1,16 +1,5 @@
 package com.elfec.ssc.view.adapters;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.NumberFormat;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-
-import org.joda.time.DateTime;
-
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +11,16 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.utils.TextFormatter;
 import com.elfec.ssc.model.Debt;
 
+import org.joda.time.DateTime;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.text.NumberFormat;
+import java.util.Collections;
+import java.util.List;
+
 public class DebtAdapter extends ArrayAdapter<Debt> {
 
 	private List<Debt> debts;
@@ -31,13 +30,9 @@ public class DebtAdapter extends ArrayAdapter<Debt> {
 
 	public DebtAdapter(Context context, int resource, final List<Debt> debts) {
 		super(context, resource, debts);
-		Collections.sort(debts, new Comparator<Debt>() {
-			public int compare(Debt debt1, Debt debt2) {
-				return (new DateTime(debt2.getYear(), debt2.getMonth(), 1, 0, 0)
-						.compareTo(new DateTime(debt1.getYear(), debt1
-								.getMonth(), 1, 0, 0)));
-			}
-		});
+		Collections.sort(debts, (debt1, debt2) -> (new DateTime(debt2.getYear(), debt2.getMonth(), 1, 0, 0)
+                .compareTo(new DateTime(debt1.getYear(), debt1
+                        .getMonth(), 1, 0, 0))));
 		this.debts = debts;
 		this.resource = resource;
 		inflater = (LayoutInflater) context
