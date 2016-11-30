@@ -8,17 +8,14 @@ import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import org.joda.time.DateTime;
-import org.joda.time.format.DateTimeFormat;
-import org.joda.time.format.DateTimeFormatter;
-import org.joda.time.format.ISODateTimeFormat;
-
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 
 /**
- * GSON serialiser/deserialiser for converting Joda {@link DateTime} objects.
+ * GSON serialiser/deserialiser for converting {@link BigDecimal} objects.
  */
-public class DateTimeConverter implements JsonSerializer<DateTime>, JsonDeserializer<DateTime> {
+public class BigDecimalConverter implements JsonSerializer<BigDecimal>, JsonDeserializer<BigDecimal> {
     /**
      * Gson invokes this call-back method during serialization when it encounters a field of the
      * specified type. <p>
@@ -29,14 +26,18 @@ public class DateTimeConverter implements JsonSerializer<DateTime>, JsonDeserial
      * {@code src} object itself since that will cause an infinite loop (Gson will call your
      * call-back method again).
      *
-     * @param src       the object that needs to be converted to Json.
+     * @param bd       the object that needs to be converted to Json.
      * @param typeOfSrc the actual type (fully genericized version) of the source object.
      * @return a JsonElement corresponding to the specified object.
      */
     @Override
-    public JsonElement serialize(DateTime src, Type typeOfSrc, JsonSerializationContext context) {
-        final DateTimeFormatter fmt = ISODateTimeFormat.dateTime();
-        return new JsonPrimitive(fmt.print(src));
+    public JsonElement serialize(BigDecimal bd, Type typeOfSrc, JsonSerializationContext context) {
+        bd = bd.setScale(2, BigDecimal.ROUND_DOWN);
+        DecimalFormat df = new DecimalFormat();
+        df.setMaximumFractionDigits(2);
+        df.setMinimumFractionDigits(0);
+        df.setGroupingUsed(false);
+        return new JsonPrimitive(df.format(bd));
     }
 
     /**
@@ -55,17 +56,16 @@ public class DateTimeConverter implements JsonSerializer<DateTime>, JsonDeserial
      * @throws JsonParseException if json is not in the expected format of {@code typeOfT}
      */
     @Override
-    public DateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
+    public BigDecimal deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context)
             throws JsonParseException {
         // Do not try to deserialize null or empty values
         if (json.getAsString() == null || json.getAsString().isEmpty()) {
             return null;
         }
         try {
-            final DateTimeFormatter fmt = ISODateTimeFormat.dateTimeParser();
-            return fmt.parseDateTime(json.getAsString());
+            return new BigDecimal(json.getAsString().replace(',', '.'));
         } catch (Exception e) {
-            return DateTimeFormat.forPattern("dd/MM/yy").parseDateTime(json.getAsString());
+            return null;
         }
     }
 }

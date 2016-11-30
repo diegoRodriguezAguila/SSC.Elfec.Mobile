@@ -6,10 +6,7 @@ public class RemoveAccountWSConverter implements IWSResultConverter<Boolean> {
 
 	@Override
 	public Boolean convert(String result) {
-		if (result != null) {
-			return Boolean.parseBoolean(result);
-		}
-		return false;
+		return result != null && Boolean.parseBoolean(result);
 	}
 
 }

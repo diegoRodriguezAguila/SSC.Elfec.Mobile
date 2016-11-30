@@ -1,5 +1,6 @@
 package com.elfec.ssc.helpers.utils;
 
+import com.elfec.ssc.model.webservices.serializers.BigDecimalConverter;
 import com.elfec.ssc.model.webservices.serializers.DateTimeConverter;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -9,6 +10,7 @@ import org.joda.time.DateTime;
 
 import java.lang.ref.SoftReference;
 import java.lang.reflect.Modifier;
+import java.math.BigDecimal;
 
 /**
  * Created by Diego on 21/8/2016.
@@ -25,6 +27,7 @@ public class GsonUtils {
             sGsonCache = new SoftReference<>(new GsonBuilder().setFieldNamingPolicy(
                     FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                     .registerTypeAdapter(DateTime.class, new DateTimeConverter())
+                    .registerTypeAdapter(BigDecimal.class, new BigDecimalConverter())
                     .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                     .create());
         return sGsonCache.get();

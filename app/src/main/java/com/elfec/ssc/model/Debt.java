@@ -4,6 +4,7 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Column.ForeignKeyAction;
 import com.activeandroid.annotation.Table;
+import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
@@ -13,136 +14,144 @@ import java.math.RoundingMode;
 
 /**
  * Abstracción de las deudas del usuario
- * @author drodriguez
  *
+ * @author drodriguez
  */
 @Table(name = "Debts")
 public class Debt extends Model implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4328967895169344533L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 4328967895169344533L;
 
-	@Column(name = "Account", notNull=true, onDelete=ForeignKeyAction.CASCADE)
-	private Account Account;
-	
-	@Column(name = "Amount", notNull=true)
-	private BigDecimal Amount = BigDecimal.ZERO;
-	
-	@Column(name = "Year", notNull=true)
-    private int Year;
-	
-	@Column(name = "Month", notNull=true)
-    private short Month;
-	
-	@Column(name = "ReceiptNumber")
-    private int ReceiptNumber;
-	
-	@Column(name = "ExpirationDate")
-    private DateTime ExpirationDate;
-	
-	@Column(name = "Status", notNull=true)
-    private short Status;
-    
-    @Column(name = "InsertDate", notNull=true)
-    private DateTime InsertDate;
-    
+    @Column(name = "Account", notNull = true, onDelete = ForeignKeyAction.CASCADE)
+    private Account account;
+
+    @SerializedName("Amount")
+    @Column(name = "Amount", notNull = true)
+    private BigDecimal amount = BigDecimal.ZERO;
+
+    @SerializedName("Year")
+    @Column(name = "Year", notNull = true)
+    private int year;
+
+    @SerializedName("Month")
+    @Column(name = "Month", notNull = true)
+    private short month;
+
+    @SerializedName("ReceiptNumber")
+    @Column(name = "ReceiptNumber")
+    private int receiptNumber;
+
+    @SerializedName("ExpirationDate")
+    @Column(name = "ExpirationDate")
+    private DateTime expirationDate;
+
+    @SerializedName("Status")
+    @Column(name = "Status", notNull = true)
+    private short status;
+
+    @SerializedName("created_at")
+    @Column(name = "InsertDate", notNull = true)
+    private DateTime insertDate;
+
+    @SerializedName("updated_at")
     @Column(name = "UpdateDate")
-    private DateTime UpdateDate;
-    
+    private DateTime updateDate;
+
     public Debt() {
-		super();
-	}
+        super();
+    }
 
-	public Debt(Account fromAccount, BigDecimal amount, int year,
-			short month, int receiptNumber, DateTime expirationDate) {
-		super();
-		this.Account = fromAccount;
-		this.Amount = amount.setScale(2, RoundingMode.CEILING);
-		this.Year = year;
-		this.Month = month;
-		this.ReceiptNumber = receiptNumber;
-		this.ExpirationDate = expirationDate;
-		this.Status = 1;
-	}
-	
-	
-	//#region Getters y Setters
-	
+    public Debt(Account fromAccount, BigDecimal amount, int year,
+                short month, int receiptNumber, DateTime expirationDate) {
+        super();
+        this.account = fromAccount;
+        this.amount = amount.setScale(2, RoundingMode.CEILING);
+        this.year = year;
+        this.month = month;
+        this.receiptNumber = receiptNumber;
+        this.expirationDate = expirationDate;
+        this.status = 1;
+    }
 
-	public Account getAccount() {
-		return Account;
-	}
 
-	public void setAccount(Account account) {
-		Account = account;
-	}
+    //region Getters y Setters
 
-	public BigDecimal getAmount() {
-		return Amount;
-	}
 
-	public void setAmount(BigDecimal amount) {
-		Amount = amount.setScale(2, RoundingMode.CEILING);
-	}
+    public Account getAccount() {
+        return account;
+    }
 
-	public int getYear() {
-		return Year;
-	}
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 
-	public void setYear(int year) {
-		Year = year;
-	}
+    public BigDecimal getAmount() {
+        return amount;
+    }
 
-	public short getMonth() {
-		return Month;
-	}
+    public void setAmount(BigDecimal amount) {
+        this.amount = amount.setScale(2, RoundingMode.CEILING);
+    }
 
-	public void setMonth(short month) {
-		Month = month;
-	}
+    public int getYear() {
+        return year;
+    }
 
-	public int getReceiptNumber() {
-		return ReceiptNumber;
-	}
+    public void setYear(int year) {
+        this.year = year;
+    }
 
-	public void setReceiptNumber(int receiptNumber) {
-		ReceiptNumber = receiptNumber;
-	}
+    public short getMonth() {
+        return month;
+    }
 
-	public DateTime getExpirationDate() {
-		return ExpirationDate;
-	}
+    public void setMonth(short month) {
+        this.month = month;
+    }
 
-	public void setExpirationDate(DateTime expirationDate) {
-		ExpirationDate = expirationDate;
-	}
+    public int getReceiptNumber() {
+        return receiptNumber;
+    }
 
-	public short getStatus() {
-		return Status;
-	}
+    public void setReceiptNumber(int receiptNumber) {
+        this.receiptNumber = receiptNumber;
+    }
 
-	public void setStatus(short status) {
-		Status = status;
-	}
+    public DateTime getExpirationDate() {
+        return expirationDate;
+    }
 
-	public DateTime getInsertDate() {
-		return InsertDate;
-	}
+    public void setExpirationDate(DateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 
-	public void setInsertDate(DateTime insertDate) {
-		InsertDate = insertDate;
-	}
+    public short getStatus() {
+        return status;
+    }
 
-	public DateTime getUpdateDate() {
-		return UpdateDate;
-	}
+    public void setStatus(short status) {
+        this.status = status;
+    }
 
-	public void setUpdateDate(DateTime updateDate) {
-		UpdateDate = updateDate;
-	}
-	//#endregion
-    
-    
+    public DateTime getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(DateTime insertDate) {
+        this.insertDate = insertDate;
+    }
+
+    public DateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(DateTime updateDate) {
+        this.updateDate = updateDate;
+    }
+    //endregion
+
+
 }
