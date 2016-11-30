@@ -11,17 +11,17 @@ import com.elfec.ssc.helpers.utils.PhoneFormatter;
 import com.google.android.gms.maps.GoogleMap.InfoWindowAdapter;
 import com.google.android.gms.maps.model.Marker;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MarkerPopupAdapter implements InfoWindowAdapter {
 
 	private View mPopupView;
-    protected @Bind(R.id.marker_location_type) TextView mTxtLocationType;
-    protected @Bind(R.id.marker_title) TextView mTxtTitle;
-    protected @Bind(R.id.txt_marker_address) TextView mTxtAddress;
-    protected @Bind(R.id.txt_marker_phone) TextView mTxtPhone;
-    protected @Bind(R.id.txt_marker_bussines_hours) TextView mTxtBussiness;
+    protected @BindView(R.id.marker_location_type) TextView mTxtLocationType;
+    protected @BindView(R.id.marker_title) TextView mTxtTitle;
+    protected @BindView(R.id.txt_marker_address) TextView mTxtAddress;
+    protected @BindView(R.id.txt_marker_phone) TextView mTxtPhone;
+    protected @BindView(R.id.txt_marker_bussines_hours) TextView mTxtBussiness;
 
     private LayoutInflater inflater;
 

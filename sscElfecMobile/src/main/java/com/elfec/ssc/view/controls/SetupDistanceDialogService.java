@@ -15,14 +15,14 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * Esta clase provee de un servicio para mostrar un diálogo para la
  * configuración de distancia en los servicios de ubicación, cuando se
  * selecciona la opción aceptar guarda la distancia elegida en sharedpreferences
- * 
+ *
  * @author Diego
  *
  */
@@ -31,8 +31,8 @@ public class SetupDistanceDialogService {
 	private AlertDialog mDialog;
 	private OnDistanceSetup mListener;
 	private int mSelectedDistance;
-	protected @Bind(R.id.distance_seek_bar) SeekBar mDistanceSeekBar;
-	protected @Bind(R.id.txt_current_distance) TextView mTxtCurrentDistance;
+	protected @BindView(R.id.distance_seek_bar) SeekBar mDistanceSeekBar;
+	protected @BindView(R.id.txt_current_distance) TextView mTxtCurrentDistance;
 
 	/**
 	 * Construye el diálogo con lo necesario

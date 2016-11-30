@@ -13,6 +13,7 @@
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/helpers/utils/PhoneFormatter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Account.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Client.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Contact.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/Debt.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/GcmConnectException.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/sscElfecMobile/src/main/java/com/elfec/ssc/model/exceptions/InitializationException.java" charset="UTF-8" />

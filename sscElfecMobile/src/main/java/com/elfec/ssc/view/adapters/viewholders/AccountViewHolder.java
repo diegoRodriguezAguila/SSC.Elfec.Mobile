@@ -15,20 +15,20 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
  * ViewHolder para cuentas
  */
 public class AccountViewHolder {
-    protected @Bind(R.id.row_account_value) TextView mTxtAccountNumber;
-    protected @Bind(R.id.row_nus_value) TextView mTxtNus;
-    protected @Bind(R.id.row_name_value) TextView mTxtAccountOwner;
-    protected @Bind(R.id.row_address_value) TextView mTxtAddress;
-    protected @Bind(R.id.total_amount) TextView mTxtDebtTotalAmount;
-    protected @Bind(R.id.total_amount_decimal) TextView mTxtDebtDecimalAmount;
-    protected @Bind(R.id.layout_decimal_debt)
+    protected @BindView(R.id.row_account_value) TextView mTxtAccountNumber;
+    protected @BindView(R.id.row_nus_value) TextView mTxtNus;
+    protected @BindView(R.id.row_name_value) TextView mTxtAccountOwner;
+    protected @BindView(R.id.row_address_value) TextView mTxtAddress;
+    protected @BindView(R.id.total_amount) TextView mTxtDebtTotalAmount;
+    protected @BindView(R.id.total_amount_decimal) TextView mTxtDebtDecimalAmount;
+    protected @BindView(R.id.layout_decimal_debt)
     LinearLayout mLayoutDebtDecimal;
 
     public AccountViewHolder(View convertView) {

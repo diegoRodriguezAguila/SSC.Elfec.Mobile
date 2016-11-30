@@ -1,13 +1,17 @@
 package com.elfec.ssc.view;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.IntentSender;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,7 +21,6 @@ import android.widget.TextView;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.ViewPresenterManager;
-import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
@@ -30,12 +33,19 @@ import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.view.adapters.MarkerPopupAdapter;
 import com.elfec.ssc.view.controls.ProgressDialogService;
 import com.elfec.ssc.view.controls.SetupDistanceDialogService;
-import com.elfec.ssc.view.controls.events.OnDistanceSetup;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.PendingResult;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResult;
+import com.google.android.gms.location.LocationSettingsStates;
+import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.GoogleMapOptions;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -48,14 +58,19 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
+import permissions.dispatcher.NeedsPermission;
+import permissions.dispatcher.RuntimePermissions;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class LocationServices extends AppCompatActivity implements
+@RuntimePermissions
+public class LocationServicesActivity extends AppCompatActivity implements
         ILocationServices, OnMapReadyCallback {
 
+    public static final String TAG = "LocationServices";
+    private static final int REQUEST_CHECK_SETTINGS = 55;
     private static final double LAT_ELFEC = -17.3934795;
     private static final double LNG_ELFEC = -66.1651093;
     private static final float DEFAULT_ZOOM = 15.5f;
@@ -71,10 +86,10 @@ public class LocationServices extends AppCompatActivity implements
     private BitmapDescriptor mBitmapOffice;
     private BitmapDescriptor mBitmapPayPoint;
     protected
-    @Bind(R.id.map_show_distance)
+    @BindView(R.id.map_show_distance)
     RadioGroup mMapShowDistance;
     protected
-    @Bind(R.id.map_show_type)
+    @BindView(R.id.map_show_type)
     RadioGroup mMapShowType;
 
     @Override
@@ -110,6 +125,67 @@ public class LocationServices extends AppCompatActivity implements
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    }
+
+    @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+    void enableMyLocation() {
+        if(map==null)
+            return;
+        map.setMyLocationEnabled(true);
+        map.setOnMyLocationChangeListener(receivedLocation ->
+                presenter.updateSelectedDistancePoints(receivedLocation));
+        map.setOnMyLocationButtonClickListener(() -> {
+            showSettingsGps();
+            return false;
+        });
+    }
+
+    public void showSettingsGps(){
+        GoogleApiClient client = getApiClient();
+        client.connect();
+        LocationRequest locationRequest = LocationRequest.create()
+                .setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+        LocationSettingsRequest request = new LocationSettingsRequest.Builder()
+                .addLocationRequest(locationRequest)
+                .setAlwaysShow(true)
+                .build();
+        PendingResult<LocationSettingsResult> result =
+                LocationServices.SettingsApi.checkLocationSettings(client, request);
+        result.setResultCallback(locationSettingsResult -> {
+            final Status status = locationSettingsResult.getStatus();
+            switch (status.getStatusCode()) {
+                case LocationSettingsStatusCodes.SUCCESS:
+                    break;
+                case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
+                    try{
+                        status.startResolutionForResult(
+                                LocationServicesActivity.this,
+                                REQUEST_CHECK_SETTINGS);
+                    } catch (IntentSender.SendIntentException e) {
+                        // Ignore the error.
+                    }
+                    break;
+                case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
+                    break;
+            }
+        });
+    }
+
+    public GoogleApiClient getApiClient(){
+        return new GoogleApiClient.Builder(this)
+                .addApi(LocationServices.API)
+                .addConnectionCallbacks(new ConnectionCallbacks() {
+                    @Override
+                    public void onConnected(@Nullable Bundle bundle) {
+                        Log.d(TAG, "GPS connected!");
+                    }
+                    @Override
+                    public void onConnectionSuspended(int i) {
+                        Log.d(TAG, "GPS connection suspended!");
+                    }
+                })
+                .addOnConnectionFailedListener(connectionResult -> Log.d(TAG, "GPS connection failed!"))
+                .build();
     }
 
     @Override
@@ -152,22 +228,19 @@ public class LocationServices extends AppCompatActivity implements
      * elfec como centro
      */
     private void setupMap() {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (!isFinishing()) {
-                    GoogleMapOptions options = new GoogleMapOptions();
-                    options.rotateGesturesEnabled(false)
-                            .camera(new CameraPosition(new LatLng(LAT_ELFEC,
-                                    LNG_ELFEC), DEFAULT_ZOOM, 0, 0))
-                            .tiltGesturesEnabled(false)
-                            .zoomControlsEnabled(false);
-                    SupportMapFragment mapFragment = SupportMapFragment.newInstance(options);
-                    mapFragment.getMapAsync(LocationServices.this);
-                    getSupportFragmentManager().beginTransaction()
-                            .add(R.id.google_map_container, mapFragment)
-                            .commit();
-                }
+        mHandler.postDelayed(() -> {
+            if (!isFinishing()) {
+                GoogleMapOptions options = new GoogleMapOptions();
+                options.rotateGesturesEnabled(false)
+                        .camera(new CameraPosition(new LatLng(LAT_ELFEC,
+                                LNG_ELFEC), DEFAULT_ZOOM, 0, 0))
+                        .tiltGesturesEnabled(false)
+                        .zoomControlsEnabled(false);
+                SupportMapFragment mapFragment = SupportMapFragment.newInstance(options);
+                mapFragment.getMapAsync(LocationServicesActivity.this);
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.google_map_container, mapFragment)
+                        .commit();
             }
         }, 500);
     }
@@ -179,19 +252,10 @@ public class LocationServices extends AppCompatActivity implements
     private void initializeMapOptions() {
         ThreadMutex.instance("LoadMap").setFree();
         map.setInfoWindowAdapter(new MarkerPopupAdapter(getLayoutInflater()));
-        map.setMyLocationEnabled(true);
-        map.setOnMyLocationChangeListener(new OnMyLocationChangeListener() {
-            @Override
-            public void onMyLocationChange(Location recievedLocation) {
-                presenter.updateSelectedDistancePoints(recievedLocation);
-            }
-        });
-        map.setOnMarkerClickListener(new OnMarkerClickListener() {
-            @Override
-            public boolean onMarkerClick(Marker marker) {
-                lastOpenedMarker = marker;
-                return false;
-            }
+        LocationServicesActivityPermissionsDispatcher.enableMyLocationWithCheck(this);
+        map.setOnMarkerClickListener(marker -> {
+            lastOpenedMarker = marker;
+            return false;
         });
     }
 
@@ -205,18 +269,15 @@ public class LocationServices extends AppCompatActivity implements
         final int range = 10;
         final int delay = 70;
         if (points != null && points.size() > 0)
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    int size = points.size();
-                    int iterations = (size / range) + 1;
-                    int topRange;
-                    for (int i = 0; i < iterations; i++) {
-                        topRange = range * (i + 1);
-                        putPointsInMapUI(
-                                points.subList(range * i, topRange < size ? topRange : size)
-                                , i * delay);
-                    }
+            new Thread(() -> {
+                int size = points.size();
+                int iterations = (size / range) + 1;
+                int topRange;
+                for (int i = 0; i < iterations; i++) {
+                    topRange = range * (i + 1);
+                    putPointsInMapUI(
+                            points.subList(range * i, topRange < size ? topRange : size)
+                            , i * delay);
                 }
             }).start();
     }
@@ -229,12 +290,9 @@ public class LocationServices extends AppCompatActivity implements
      * @param delay  el tiempo delay en el que se pondrá en la UI los puntos
      */
     private void putPointsInMapUI(final List<LocationPoint> points, int delay) {
-        mHandler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                for (LocationPoint point : points) {
-                    addMarker(point);
-                }
+        mHandler.postDelayed(() -> {
+            for (LocationPoint point : points) {
+                addMarker(point);
             }
         }, delay);
     }
@@ -243,34 +301,29 @@ public class LocationServices extends AppCompatActivity implements
     // #region Interface Methods
     @Override
     public void showLocationPoints(final List<LocationPoint> points) {
-        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(
-                new OnReleaseThread() {
-                    @Override
-                    public void threadReleased() {
-                        map.clear();
-                        mBitmapOffice = BitmapDescriptorFactory.fromResource(R.drawable.office_marker);
-                        mBitmapPayPoint = BitmapDescriptorFactory.fromResource(R.drawable.paypoint_marker);
-                        putPointsInMapAsync(points);
-                    }
+        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(() -> {
+                    map.clear();
+                    mBitmapOffice = BitmapDescriptorFactory.fromResource(R.drawable.office_marker);
+                    mBitmapPayPoint = BitmapDescriptorFactory.fromResource(R.drawable.paypoint_marker);
+                    putPointsInMapAsync(points);
                 });
 
     }
 
     @Override
     public void showLocationServicesErrors(final List<Exception> errors) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        LocationServices.this);
-                builder.setTitle(R.string.errors_on_get_points_title)
-                        .setMessage(MessageListFormatter.formatHTMLFromErrors(LocationServices
-                                .this, errors))
-                        .setPositiveButton(R.string.btn_ok, null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                ((TextView) dialog.findViewById(android.R.id.message))
-                        .setMovementMethod(LinkMovementMethod.getInstance());
+        runOnUiThread(() -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(
+                    LocationServicesActivity.this);
+            builder.setTitle(R.string.errors_on_get_points_title)
+                    .setMessage(MessageListFormatter.formatHTMLFromErrors(LocationServicesActivity
+                            .this, errors))
+                    .setPositiveButton(R.string.btn_ok, null);
+            AlertDialog dialog = builder.create();
+            dialog.show();
+            TextView txtMessage = (TextView) dialog.findViewById(android.R.id.message);
+            if (txtMessage != null) {
+                txtMessage.setMovementMethod(LinkMovementMethod.getInstance());
             }
         });
     }
@@ -397,12 +450,7 @@ public class LocationServices extends AppCompatActivity implements
     public void menuItemSetupDistanceClick(MenuItem item) {
         if (ButtonClicksHelper.canClickButton()) {
             SetupDistanceDialogService.instanceService(this,
-                    new OnDistanceSetup() {
-                        @Override
-                        public void onDistanceSelected(int selectedDistance) {
-                            presenter.setDistanceRange(selectedDistance);
-                        }
-                    }).show();
+                    selectedDistance -> presenter.setDistanceRange(selectedDistance)).show();
         }
     }
 
@@ -416,14 +464,9 @@ public class LocationServices extends AppCompatActivity implements
 
     @Override
     public void informNoInternetConnection() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                SuperToast.create(LocationServices.this,
-                        R.string.no_internet_msg, SuperToast.Duration.SHORT,
-                        Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
-                        .show();
-            }
-        });
+        runOnUiThread(() -> SuperToast.create(LocationServicesActivity.this,
+                R.string.no_internet_msg, SuperToast.Duration.SHORT,
+                Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
+                .show());
     }
 }

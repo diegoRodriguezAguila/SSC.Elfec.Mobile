@@ -10,7 +10,7 @@ import com.elfec.ssc.businesslogic.LocationPointsManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
-import com.elfec.ssc.view.LocationServices;
+import com.elfec.ssc.view.LocationServicesActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -56,7 +56,7 @@ public class PointsUpdateGCMHandler implements IGCMHandler {
 
 	@Override
 	public Class<? extends Activity> getActivityClass() {
-		return LocationServices.class;
+		return LocationServicesActivity.class;
 	}
 
 }

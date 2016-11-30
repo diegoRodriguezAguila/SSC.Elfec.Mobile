@@ -90,7 +90,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".view.LocationServices"
+            android:name=".view.LocationServicesActivity"
             android:label="@string/location_services_title"
             android:screenOrientation="portrait" >
         </activity>

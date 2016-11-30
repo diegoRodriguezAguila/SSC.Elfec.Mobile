@@ -10,7 +10,7 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.view.adapters.ExpandableItem;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -20,11 +20,11 @@ import butterknife.ButterKnife;
  *
  */
 public class NotificationViewHolder {
-	public @Bind(R.id.list_item_notification_message) TextView lblMessage;
-	protected @Bind(R.id.notification_image) ImageView mImgNotification;
-	protected @Bind(R.id.list_item_notification_title) TextView mLblTitle;
-	protected @Bind(R.id.list_item_notification_date) TextView mLblDate;
-	protected @Bind(R.id.list_item_notification_time) TextView mLblHour;
+	public @BindView(R.id.list_item_notification_message) TextView lblMessage;
+	protected @BindView(R.id.notification_image) ImageView mImgNotification;
+	protected @BindView(R.id.list_item_notification_title) TextView mLblTitle;
+	protected @BindView(R.id.list_item_notification_date) TextView mLblDate;
+	protected @BindView(R.id.list_item_notification_time) TextView mLblHour;
 
 	public NotificationViewHolder(View convertView) {
 		ButterKnife.bind(this, convertView);

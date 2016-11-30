@@ -31,7 +31,7 @@ import java.text.DecimalFormatSymbols;
 import java.text.NumberFormat;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -43,8 +43,8 @@ public class ViewAccountDetails extends AppCompatActivity implements
     private ViewAccountDetailsPresenter presenter;
 
     public boolean horizontal;
-    protected @Bind(R.id.listview_account_debts) LayoutListView mListViewDebts;
-    protected @Bind(R.id.list_usage) LayoutListView mListViewUsages;
+    protected @BindView(R.id.listview_account_debts) LayoutListView mListViewDebts;
+    protected @BindView(R.id.list_usage) LayoutListView mListViewUsages;
 
     protected NumberFormat mNumFormat;
 

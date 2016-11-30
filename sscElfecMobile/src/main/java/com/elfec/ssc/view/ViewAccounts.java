@@ -31,7 +31,7 @@ import com.github.johnpersano.supertoasts.util.Style;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -41,11 +41,11 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     private boolean mIsDestroyed;
 
-    protected @Bind(R.id.accounts_list) XListView mListViewAccounts;
-    protected @Bind(R.id.layout_loading_accounts) View mLayoutLoadingAccounts;
-    protected @Bind(R.id.layout_how_to_add_accounts)
+    protected @BindView(R.id.accounts_list) XListView mListViewAccounts;
+    protected @BindView(R.id.layout_loading_accounts) View mLayoutLoadingAccounts;
+    protected @BindView(R.id.layout_how_to_add_accounts)
     ScrollView mLayoutHowToAddAccounts;
-    protected @Bind(R.id.lbl_no_accounts_registered) TextView mTxtNoAccounts;
+    protected @BindView(R.id.lbl_no_accounts_registered) TextView mTxtNoAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -32,7 +32,7 @@ import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -50,14 +50,14 @@ public class ViewNotifications extends AppCompatActivity implements
     private int halfSize = -1;
     private int fullSize = -1;
 
-    protected @Bind(R.id.outage_group) CheckBox mCheckOutageGroup;
-    protected @Bind(R.id.outage_listview) XListView outageListView;
-    protected @Bind(R.id.accounts_group) CheckBox mCheckAccountsGroup;
-    protected @Bind(R.id.accounts_listview) XListView accountsListView;
-    protected @Bind(R.id.lbl_no_outage_notifications) TextView mLblNoOutageNotifications;
-    protected @Bind(R.id.lbl_no_account_notifications) TextView mLblNoAccountNotifications;
-    protected @Bind(R.id.outage_listlayout) LinearLayout outageLayout;
-    protected @Bind(R.id.accounts_listlayout) LinearLayout accountsLayout;
+    protected @BindView(R.id.outage_group) CheckBox mCheckOutageGroup;
+    protected @BindView(R.id.outage_listview) XListView outageListView;
+    protected @BindView(R.id.accounts_group) CheckBox mCheckAccountsGroup;
+    protected @BindView(R.id.accounts_listview) XListView accountsListView;
+    protected @BindView(R.id.lbl_no_outage_notifications) TextView mLblNoOutageNotifications;
+    protected @BindView(R.id.lbl_no_account_notifications) TextView mLblNoAccountNotifications;
+    protected @BindView(R.id.outage_listlayout) LinearLayout outageLayout;
+    protected @BindView(R.id.accounts_listlayout) LinearLayout accountsLayout;
 
     private NotificationAdapter mOutagesAdapter;
     private NotificationAdapter mAccountsAdapter;

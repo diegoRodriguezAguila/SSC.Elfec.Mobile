@@ -33,7 +33,7 @@ import com.github.johnpersano.supertoasts.util.Style;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
@@ -52,13 +52,13 @@ public class RegisterAccount extends AppCompatActivity implements
 
     private RegisterAccountPresenter presenter;
     protected
-    @Bind(R.id.txt_nus)
+    @BindView(R.id.txt_nus)
     EditText mTxtNus;
     protected
-    @Bind(R.id.txt_accountNumber)
+    @BindView(R.id.txt_accountNumber)
     EditText mTxtAccountNumber;
     protected
-    @Bind(R.id.view_content)
+    @BindView(R.id.view_content)
     RelativeLayout mRootLayout;
     private de.keyboardsurfer.android.widget.crouton.Style mCroutonStyle;
     private ProgressDialogService mWaitingDialog;

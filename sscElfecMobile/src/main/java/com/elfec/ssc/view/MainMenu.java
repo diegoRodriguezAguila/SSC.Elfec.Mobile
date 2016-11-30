@@ -30,16 +30,16 @@ import com.elfec.ssc.view.controls.events.OnAccountPicked;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class MainMenu extends AppCompatActivity implements IMainMenu {
 
 	private MainMenuPresenter presenter;
-	protected @Bind(R.id.btn_switch_client) ImageButton mBtnSwitchClient;
-	protected @Bind(R.id.txt_active_client) TextView mTxtActiveClient;
-	protected @Bind(R.id.txt_active_client_info) TextView mTxtActiveClientInfo;
+	protected @BindView(R.id.btn_switch_client) ImageButton mBtnSwitchClient;
+	protected @BindView(R.id.txt_active_client) TextView mTxtActiveClient;
+	protected @BindView(R.id.txt_active_client_info) TextView mTxtActiveClientInfo;
 	private String mActiveClientGmail;
 
 	@Override
@@ -104,7 +104,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
 	public void btnLocationServicesClick(View view) {
 		if (ButtonClicksHelper.canClickButton()) {
-			Intent i = new Intent(MainMenu.this, LocationServices.class);
+			Intent i = new Intent(MainMenu.this, LocationServicesActivity.class);
 			startActivity(i);
 			overridePendingTransition(R.anim.slide_left_in,
 					R.anim.slide_left_out);
