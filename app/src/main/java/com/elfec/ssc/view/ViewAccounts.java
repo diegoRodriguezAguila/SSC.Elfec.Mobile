@@ -1,18 +1,12 @@
 package com.elfec.ssc.view;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
-import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -69,29 +63,20 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         });
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
         mListViewAccounts
-                .setOnItemLongClickListener(new OnItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(AdapterView<?> adapter,
-                                                   View view, int position, long arg3) {
-                        dialogRemove(position);
-                        return true;
-                    }
+                .setOnItemLongClickListener((adapter, view, position, arg3) -> {
+                    dialogRemove(position);
+                    return true;
                 });
-        mListViewAccounts.setOnItemClickListener(new OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View view, int pos,
-                                    long arg3) {
-                if (ButtonClicksHelper.canClickButton()) {
-                    Intent i = new Intent(ViewAccounts.this,
-                            ViewAccountDetails.class);
-                    Long id = ((Account) adapter.getItemAtPosition(pos))
-                            .getId();
-                    i.putExtra(ViewAccountDetails.SELECTED_ACCOUNT_ID, id);
-                    startActivity(i);
-                    overridePendingTransition(R.anim.slide_left_in,
-                            R.anim.slide_left_out);
-                }
+        mListViewAccounts.setOnItemClickListener((adapter, view, pos, arg3) -> {
+            if (ButtonClicksHelper.canClickButton()) {
+                Intent i = new Intent(ViewAccounts.this,
+                        ViewAccountDetails.class);
+                Long id = ((Account) adapter.getItemAtPosition(pos))
+                        .getId();
+                i.putExtra(ViewAccountDetails.SELECTED_ACCOUNT_ID, id);
+                startActivity(i);
+                overridePendingTransition(R.anim.slide_left_in,
+                        R.anim.slide_left_out);
             }
         });
 
@@ -119,14 +104,6 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     @Override
     protected void attachBaseContext(Context newBase) {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.view_accounts, menu);
-        return true;
     }
 
     public void btnRegisterAccountClick(View view) {
@@ -162,22 +139,19 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     @Override
     public void showAccounts(final List<Account> accounts) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!mIsDestroyed) {
-                    if (accounts != null && accounts.size() > 0) {
-                        mListViewAccounts.setAdapter(new AccountAdapter(
-                                ViewAccounts.this, R.layout.account_list_item,
-                                accounts));
-                        mLayoutHowToAddAccounts.setVisibility(View.GONE);
-                        mTxtNoAccounts.setVisibility(View.GONE);
-                        mListViewAccounts.setVisibility(View.VISIBLE);
-                    } else {
-                        mLayoutHowToAddAccounts.setVisibility(View.VISIBLE);
-                        mTxtNoAccounts.setVisibility(View.VISIBLE);
-                        mListViewAccounts.setVisibility(View.GONE);
-                    }
+        runOnUiThread(() -> {
+            if (!mIsDestroyed) {
+                if (accounts != null && accounts.size() > 0) {
+                    mListViewAccounts.setAdapter(new AccountAdapter(
+                            ViewAccounts.this, R.layout.account_list_item,
+                            accounts));
+                    mLayoutHowToAddAccounts.setVisibility(View.GONE);
+                    mTxtNoAccounts.setVisibility(View.GONE);
+                    mListViewAccounts.setVisibility(View.VISIBLE);
+                } else {
+                    mLayoutHowToAddAccounts.setVisibility(View.VISIBLE);
+                    mTxtNoAccounts.setVisibility(View.VISIBLE);
+                    mListViewAccounts.setVisibility(View.GONE);
                 }
             }
         });
@@ -185,36 +159,30 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     @Override
     public void showAccountDeleted() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!mIsDestroyed) {
-                    SuperToast.cancelAllSuperToasts();
-                    SuperToast.create(
-                            ViewAccounts.this,
-                            R.string.account_successfully_deleted,
-                            SuperToast.Duration.LONG,
-                            Style.getStyle(Style.BLUE,
-                                    SuperToast.Animations.FADE)).show();
-                }
+        runOnUiThread(() -> {
+            if (!mIsDestroyed) {
+                SuperToast.cancelAllSuperToasts();
+                SuperToast.create(
+                        ViewAccounts.this,
+                        R.string.account_successfully_deleted,
+                        SuperToast.Duration.LONG,
+                        Style.getStyle(Style.BLUE,
+                                SuperToast.Animations.FADE)).show();
             }
         });
     }
 
     @Override
     public void displayErrors(final List<Exception> errors) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!mIsDestroyed && errors.size() > 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            ViewAccounts.this);
-                    builder.setTitle(R.string.errors_on_delete_account_title)
-                            .setMessage(
-                                    MessageListFormatter
-                                            .formatHTMLFromErrors(ViewAccounts.this, errors))
-                            .setPositiveButton(R.string.btn_ok, null).show();
-                }
+        runOnUiThread(() -> {
+            if (!mIsDestroyed && errors.size() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        ViewAccounts.this);
+                builder.setTitle(R.string.errors_on_delete_account_title)
+                        .setMessage(
+                                MessageListFormatter
+                                        .formatHTMLFromErrors(ViewAccounts.this, errors))
+                        .setPositiveButton(R.string.btn_ok, null).show();
             }
         });
     }
@@ -224,14 +192,11 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(R.string.delete_account_title)
                 .setMessage(R.string.delete_account_msg)
-                .setPositiveButton(R.string.btn_confirm, new OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Account account = (Account) mListViewAccounts
-                                .getAdapter().getItem(position);
-                        showWaiting();
-                        presenter.removeAccount(account.getNUS());
-                    }
+                .setPositiveButton(R.string.btn_confirm, (dialog, which) -> {
+                    Account account = (Account) mListViewAccounts
+                            .getAdapter().getItem(position);
+                    showWaiting();
+                    presenter.removeAccount(account.getNUS());
                 }).setNegativeButton(R.string.btn_cancel, null);
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -246,37 +211,31 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     @Override
     public void hideWaiting() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!mIsDestroyed) {
-                    mListViewAccounts.stopRefresh();
-                    mLayoutLoadingAccounts.setVisibility(
-                            View.GONE);
-                }
-
+        runOnUiThread(() -> {
+            if (!mIsDestroyed) {
+                mListViewAccounts.stopRefresh();
+                mLayoutLoadingAccounts.setVisibility(
+                        View.GONE);
             }
+
         });
     }
 
     @Override
     public void showViewAccountsErrors(final List<Exception> errors) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (!mIsDestroyed && errors.size() > 0) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(
-                            ViewAccounts.this);
-                    builder.setTitle(R.string.errors_on_download_accounts_title)
-                            .setMessage(
-                                    MessageListFormatter
-                                            .formatHTMLFromErrors(ViewAccounts.this, errors))
-                            .setPositiveButton(R.string.btn_ok, null);
-                    AlertDialog dialog = builder.create();
-                    dialog.show();
-                    ((TextView)dialog.findViewById(android.R.id.message))
-                            .setMovementMethod(LinkMovementMethod.getInstance());
-                }
+        runOnUiThread(() -> {
+            if (!mIsDestroyed && errors.size() > 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(
+                        ViewAccounts.this);
+                builder.setTitle(R.string.errors_on_download_accounts_title)
+                        .setMessage(
+                                MessageListFormatter
+                                        .formatHTMLFromErrors(ViewAccounts.this, errors))
+                        .setPositiveButton(R.string.btn_ok, null);
+                AlertDialog dialog = builder.create();
+                dialog.show();
+                ((TextView)dialog.findViewById(android.R.id.message))
+                        .setMovementMethod(LinkMovementMethod.getInstance());
             }
         });
     }

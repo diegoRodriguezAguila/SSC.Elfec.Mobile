@@ -29,7 +29,6 @@ public class PointsUpdateGCMHandler implements IGCMHandler {
 			NotificationManager notifManager, Builder builder) {
 		try
 		{
-			
 			JSONArray result=new JSONArray(messageInfo.getString("points"));
 			int length=result.length();
 			List<LocationPoint> points=new ArrayList<>();
