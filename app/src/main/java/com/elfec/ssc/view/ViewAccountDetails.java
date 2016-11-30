@@ -11,6 +11,7 @@ import com.elfec.ssc.helpers.GoogleMapsHelper;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
 import com.elfec.ssc.helpers.utils.TextFormatter;
+import com.elfec.ssc.helpers.utils.WordUtils;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
@@ -20,8 +21,6 @@ import com.elfec.ssc.presenter.views.IViewAccountDetails;
 import com.elfec.ssc.view.adapters.DebtAdapter;
 import com.elfec.ssc.view.adapters.ViewUsageAdapter;
 import com.elfec.ssc.view.controls.widget.LayoutListView;
-
-import org.apache.commons.lang3.text.WordUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -126,54 +125,41 @@ public class ViewAccountDetails extends AppCompatActivity implements
     @Override
     public void setTotalDebt(final BigDecimal totalDebt) {
         final TextView txtTotalAmount = ((TextView) findViewById(R.id.total_amount));
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (totalDebt.compareTo(BigDecimal.ZERO) == 0) {
-                    (findViewById(R.id.layout_decimal_debt))
-                            .setVisibility(View.GONE);
-                    (findViewById(R.id.lbl_debt_detail))
-                            .setVisibility(View.GONE);
-                    txtTotalAmount.setTextSize(18);
-                    txtTotalAmount.setText(R.string.lbl_no_debts);
-                } else {
-                    txtTotalAmount.setText(mNumFormat.format(totalDebt.toBigInteger()
-                            .doubleValue()));
+        runOnUiThread(() -> {
+            if (totalDebt.compareTo(BigDecimal.ZERO) == 0) {
+                (findViewById(R.id.layout_decimal_debt))
+                        .setVisibility(View.GONE);
+                (findViewById(R.id.lbl_debt_detail))
+                        .setVisibility(View.GONE);
+                txtTotalAmount.setTextSize(18);
+                txtTotalAmount.setText(R.string.lbl_no_debts);
+            } else {
+                txtTotalAmount.setText(mNumFormat.format(totalDebt.toBigInteger()
+                        .doubleValue()));
 
-                    String decimalPart = (totalDebt.remainder(BigDecimal.ONE)
-                            .multiply(new BigDecimal("100"))
-                            .setScale(0, RoundingMode.CEILING).toString());
-                    if (decimalPart.equals("0"))
-                        decimalPart += "0";
-                    ((TextView) findViewById(R.id.total_amount_decimal))
-                            .setText(decimalPart);
-                }
+                String decimalPart = (totalDebt.remainder(BigDecimal.ONE)
+                        .multiply(new BigDecimal("100"))
+                        .setScale(0, RoundingMode.CEILING).toString());
+                if (decimalPart.equals("0"))
+                    decimalPart += "0";
+                ((TextView) findViewById(R.id.total_amount_decimal))
+                        .setText(decimalPart);
             }
         });
     }
 
     @Override
     public void showUsage(final List<Usage> usage) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mListViewUsages.setAdapter(new ViewUsageAdapter(
-                        ViewAccountDetails.this, R.layout.usage_row, usage));
-            }
-        });
+        runOnUiThread(() -> mListViewUsages.setAdapter(new ViewUsageAdapter(
+                ViewAccountDetails.this, R.layout.usage_row, usage)));
 
     }
 
     @Override
     public void showDebts(final List<Debt> debts) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mListViewDebts
-                        .setAdapter(new DebtAdapter(ViewAccountDetails.this,
-                                R.layout.debt_list_item, debts));
-            }
-        });
+        runOnUiThread(() -> mListViewDebts
+                .setAdapter(new DebtAdapter(ViewAccountDetails.this,
+                        R.layout.debt_list_item, debts)));
     }
     
 

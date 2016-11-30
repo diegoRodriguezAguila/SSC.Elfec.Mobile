@@ -1,11 +1,10 @@
 package com.elfec.ssc.model.webservices;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableList.Builder;
-import com.google.common.collect.Iterables;
-
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
@@ -31,11 +30,11 @@ public class CompositeX509TrustManager implements X509TrustManager {
     private final List<X509TrustManager> trustManagers;
 
     public CompositeX509TrustManager(X509TrustManager... trustManagers) {
-        this.trustManagers = ImmutableList.copyOf(trustManagers);
+        this.trustManagers = Arrays.asList(trustManagers);
     }
 
     public CompositeX509TrustManager(List<X509TrustManager> trustManagers) {
-        this.trustManagers = ImmutableList.copyOf(trustManagers);
+        this.trustManagers = trustManagers;
     }
 
     @Override
@@ -70,11 +69,11 @@ public class CompositeX509TrustManager implements X509TrustManager {
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-        Builder<X509Certificate> certificates = ImmutableList.builder();
+        List<X509Certificate> certificates = new ArrayList<>();
         for (X509TrustManager trustManager : trustManagers) {
-            certificates.add(trustManager.getAcceptedIssuers());
+            Collections.addAll(certificates, trustManager.getAcceptedIssuers());
         }
-        return Iterables.toArray(certificates.build(), X509Certificate.class);
+        return certificates.toArray(new X509Certificate[certificates.size()]);
     }
 
 }

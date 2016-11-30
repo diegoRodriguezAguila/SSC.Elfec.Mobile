@@ -28,7 +28,7 @@ public class Debt extends Model implements Serializable {
 	private Account Account;
 	
 	@Column(name = "Amount", notNull=true)
-	private BigDecimal Amount;
+	private BigDecimal Amount = BigDecimal.ZERO;
 	
 	@Column(name = "Year", notNull=true)
     private int Year;

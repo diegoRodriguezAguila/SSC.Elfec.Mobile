@@ -7,9 +7,8 @@ import android.widget.TextView;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.utils.AccountFormatter;
 import com.elfec.ssc.helpers.utils.TextFormatter;
+import com.elfec.ssc.helpers.utils.WordUtils;
 import com.elfec.ssc.model.Account;
-
-import org.apache.commons.lang3.text.WordUtils;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
