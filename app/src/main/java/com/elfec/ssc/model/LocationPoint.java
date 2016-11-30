@@ -7,224 +7,232 @@ import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.LocationPointType;
+import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
 import java.util.List;
 
 /**
- * Guarda la informaci�n de los puntos de pago para mostrarlos en el mapa
+ * Guarda la información de los puntos de pago para mostrarlos en el mapa
+ *
  * @author Diego
  */
 @Table(name = "LocationPoints")
 public class LocationPoint extends Model {
-	
-	@Column(name = "InstitutionName", notNull = true)
-	private String InstitutionName;
-	
-	@Column(name = "Address", notNull = true)
-	private String Address;
-	
-	@Column(name = "Phone", notNull = true)
-	private String Phone;
-	
-	@Column(name = "StartAttention")
-	private String StartAttention;
-	
-	@Column(name = "EndAttention")
-	private String EndAttention;
-	
-	@Column(name = "Latitude", notNull = true)
-	private double Latitude;
-	
-	@Column(name = "Longitude", notNull = true)
-	private double Longitude;
-	
-	/**
-	 * Los diferentes tipos de puntos de ubicaci�n seg�n {@link LocationPointType} representados en enteros
-	 */
-	@Column(name = "Type", notNull = true, index = true)
-	private short Type;
-	
-	@Column(name = "Status", notNull = true)
-	private short Status;
 
-	@Column(name = "InsertDate", notNull = true)
-	private DateTime InsertDate;
+    @Column(name = "InstitutionName", notNull = true)
+    private String institutionName;
 
-	@Column(name = "UpdateDate")
-	private DateTime UpdateDate;
+    @Column(name = "Address", notNull = true)
+    private String address;
 
-	
-	public LocationPoint() {
-		super();
-	}
-	
-	/**
-	 * Inicializa un punto de pago con los par�metros especificados y con Status = 1
-	 * @param address
-	 * @param phone
-	 * @param startAttention
-	 * @param endAttention
-	 * @param latitude
-	 * @param longitude
-	 */
-	public LocationPoint(String institutionName, String address, String phone, String startAttention,
-			String endAttention, double latitude, double longitude,short type) {
-		super();
-		this.InstitutionName = institutionName;
-		this.Address = address;
-		this.Phone = phone;
-		this.StartAttention = startAttention;
-		this.EndAttention = endAttention;
-		this.Latitude = latitude;
-		this.Longitude = longitude;
-		this.Type=type;
-		this.Status = (short)1;
-	}
-	
-	public static List<LocationPoint> getPointsByType(LocationPointType type)
-	{
-		return new Select().from(LocationPoint.class).where("Type=?",type.toShort()).execute();
-	}
-	
-	/**
-	 * Calcula la distancia en metros desde una ubicaci�n de gps y este punto de ubicaci�n
-	 * @param location
-	 * @return
-	 */
-	public double distanceFrom(Location location)
-	{
-		Location thisLocation = new Location(Address);
-		thisLocation.setLatitude(Latitude);
-		thisLocation.setLongitude(Longitude);
-		return location.distanceTo(thisLocation);
-	}
-	
-	/**
-	 * Compara todos los atributos de locationpoint
-	 * @param location
-	 * @return si son iguales da true
-	 */
-	public boolean compare(LocationPoint location)
-	{
-		return InstitutionName.equals(location.InstitutionName) &&
-			   Address.equals(location.Address) &&
-			   Phone.equals(location.Phone) &&
-			   StartAttention.equals(location.StartAttention) &&
-			   EndAttention.equals(location.EndAttention) &&
-			   Latitude == location.Latitude &&
-			   Longitude == location.Longitude &&
-			   Type==location.Type;
-			   
-	}
-	
-	/**
-	 * Compara todos los puntos
-	 * @param point
-	 * @return
-	 */
-	public static boolean existPoint(LocationPoint point)
-	{
+    @Column(name = "Phone", notNull = true)
+    private String phone;
+
+    @Column(name = "StartAttention")
+    private String startAttention;
+
+    @Column(name = "EndAttention")
+    private String endAttention;
+
+    @Column(name = "Latitude", notNull = true)
+    private double latitude;
+
+    @Column(name = "Longitude", notNull = true)
+    private double longitude;
+
+    /**
+     * Los diferentes tipos de puntos de ubicación según {@link LocationPointType} representados
+     * en enteros
+     */
+    @Column(name = "Type", notNull = true, index = true)
+    private short type;
+
+    @Column(name = "Status", notNull = true)
+    private short status;
+
+    @SerializedName("created_at")
+    @Column(name = "InsertDate", notNull = true)
+    private DateTime insertDate;
+
+    @SerializedName("updated_at")
+    @Column(name = "UpdateDate")
+    private DateTime updateDate;
+
+
+    public LocationPoint() {
+        super();
+        status = 1;
+    }
+
+    /**
+     * Inicializa un punto de pago con los parámetros especificados y con status = 1
+     * @param institutionName institutionName
+     * @param address address
+     * @param phone phone
+     * @param startAttention startAttention
+     * @param endAttention endAttention
+     * @param latitude latitude
+     * @param longitude longitude
+     * @param type type
+     */
+    public LocationPoint(String institutionName, String address, String phone, String startAttention,
+                         String endAttention, double latitude, double longitude, short type) {
+        super();
+        this.institutionName = institutionName;
+        this.address = address;
+        this.phone = phone;
+        this.startAttention = startAttention;
+        this.endAttention = endAttention;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.type = type;
+        this.status = (short) 1;
+    }
+
+    public static List<LocationPoint> getPointsByType(LocationPointType type) {
+        return new Select().from(LocationPoint.class).where("type=?", type.toShort()).execute();
+    }
+
+    /**
+     * Calcula la distancia en metros desde una ubicación de gps y este punto de ubicación
+     *
+     * @param location
+     * @return
+     */
+    public double distanceFrom(Location location) {
+        Location thisLocation = new Location(address);
+        thisLocation.setLatitude(latitude);
+        thisLocation.setLongitude(longitude);
+        return location.distanceTo(thisLocation);
+    }
+
+    /**
+     * Compara todos los atributos de locationpoint
+     *
+     * @param location
+     * @return si son iguales da true
+     */
+    public boolean compare(LocationPoint location) {
+        return institutionName.equals(location.institutionName) &&
+                address.equals(location.address) &&
+                phone.equals(location.phone) &&
+                startAttention.equals(location.startAttention) &&
+                endAttention.equals(location.endAttention) &&
+                latitude == location.latitude &&
+                longitude == location.longitude &&
+                type == location.type;
+
+    }
+
+    /**
+     * Compara todos los puntos
+     *
+     * @param point
+     * @return
+     */
+    public static boolean existPoint(LocationPoint point) {
         return new Select().from(LocationPoint.class)
-				.where("InstitutionName=? and Address=? and Phone=? and "
-						+ "StartAttention=? and EndAttention=? and "
-						+ "Latitude=? And Longitude=? and Type=? ",
-						point.InstitutionName,point.Address, (point.Phone==null?"NULL":point.Phone),
-						(point.StartAttention==null?"NULL":point.StartAttention),
-						(point.EndAttention==null?"NULL":point.EndAttention),
-						point.Latitude, point.Longitude, point.Type).executeSingle()!=null;
-	}
-	//#region Getters y Setters
-	public String getInstitutionName() {
-		return InstitutionName;
-	}
+                .where("institutionName=? and address=? and phone=? and "
+                                + "startAttention=? and endAttention=? and "
+                                + "latitude=? And longitude=? and type=? ",
+                        point.institutionName, point.address, (point.phone == null ? "NULL" : point.phone),
+                        (point.startAttention == null ? "NULL" : point.startAttention),
+                        (point.endAttention == null ? "NULL" : point.endAttention),
+                        point.latitude, point.longitude, point.type).executeSingle() != null;
+    }
 
-	public void setInstitutionName(String institutionName) {
-		InstitutionName = institutionName;
-	}
+    //region Getters y Setters
+    public String getInstitutionName() {
+        return institutionName;
+    }
 
-	
-	public String getAddress() {
-		return Address;
-	}
+    public void setInstitutionName(String institutionName) {
+        this.institutionName = institutionName;
+    }
 
-	public void setAddress(String address) {
-		Address = address;
-	}
 
-	public String getPhone() {
-		return Phone;
-	}
+    public String getAddress() {
+        return address;
+    }
 
-	public void setPhone(String phone) {
-		Phone = phone;
-	}
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-	public String getStartAttention() {
-		return StartAttention;
-	}
+    public String getPhone() {
+        return phone;
+    }
 
-	public void setStartAttention(String startAttention) {
-		StartAttention = startAttention;
-	}
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
-	public String getEndAttention() {
-		return EndAttention;
-	}
+    public String getStartAttention() {
+        return startAttention;
+    }
 
-	public void setEndAttention(String endAttention) {
-		EndAttention = endAttention;
-	}
+    public void setStartAttention(String startAttention) {
+        this.startAttention = startAttention;
+    }
 
-	public double getLatitude() {
-		return Latitude;
-	}
+    public String getEndAttention() {
+        return endAttention;
+    }
 
-	public void setLatitude(double latitude) {
-		Latitude = latitude;
-	}
+    public void setEndAttention(String endAttention) {
+        this.endAttention = endAttention;
+    }
 
-	public double getLongitude() {
-		return Longitude;
-	}
+    public double getLatitude() {
+        return latitude;
+    }
 
-	public void setLongitude(double longitude) {
-		Longitude = longitude;
-	}
-	
-	public LocationPointType getType() {
-		return LocationPointType.get(Type);
-	}
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
 
-	public void setType(LocationPointType type) {
-		Type = type.toShort();
-	}
+    public double getLongitude() {
+        return longitude;
+    }
 
-	public short getStatus() {
-		return Status;
-	}
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
 
-	public void setStatus(short status) {
-		Status = status;
-	}
+    public LocationPointType getType() {
+        return LocationPointType.get(type);
+    }
 
-	public DateTime getInsertDate() {
-		return InsertDate;
-	}
+    public void setType(LocationPointType type) {
+        this.type = type.toShort();
+    }
 
-	public void setInsertDate(DateTime insertDate) {
-		InsertDate = insertDate;
-	}
+    public short getStatus() {
+        return status;
+    }
 
-	public DateTime getUpdateDate() {
-		return UpdateDate;
-	}
+    public void setStatus(short status) {
+        this.status = status;
+    }
 
-	public void setUpdateDate(DateTime updateDate) {
-		UpdateDate = updateDate;
-	}
-	
-	//#endregion
-	
+    public DateTime getInsertDate() {
+        return insertDate;
+    }
+
+    public void setInsertDate(DateTime insertDate) {
+        this.insertDate = insertDate;
+    }
+
+    public DateTime getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(DateTime updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    //endregion
+
 }

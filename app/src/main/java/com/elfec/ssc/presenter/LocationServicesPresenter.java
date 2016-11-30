@@ -6,17 +6,12 @@ import android.os.Looper;
 import com.elfec.ssc.businesslogic.LocationPointsManager;
 import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
 import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
-import com.elfec.ssc.helpers.threading.OnReleaseThread;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.helpers.utils.LocationServicesMessages;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
-import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.events.SscTokenReceivedCallback;
-import com.elfec.ssc.model.security.SscToken;
-import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.security.AppPreferences;
 
@@ -93,7 +88,8 @@ public class LocationServicesPresenter {
      * @param distance distancia
      */
     public void setSelectedDistance(LocationDistance distance) {
-        setSelectedDistance(distance, view.getCurrentLocation() == null ? (new Location("gps")) : view.getCurrentLocation());
+        setSelectedDistance(distance, view.getCurrentLocation() == null ? (new Location("gps")) :
+                view.getCurrentLocation());
     }
 
     /**
@@ -111,34 +107,23 @@ public class LocationServicesPresenter {
      * Obtiene la lista de puntos de ubicación en un hilo
      */
     public void loadLocations() {
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                Looper.prepare();
-                mSscTokenRequester.getTokenAsync(new SscTokenReceivedCallback() {
-                    @Override
-                    public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
-                        new LocationPointWS(wsTokenResult.getResult())
-                                .getAllLocationPoints(new IWSFinishEvent<List<LocationPoint>>() {
-                                    @Override
-                                    public void executeOnFinished(final WSResponse<List<LocationPoint>> result) {
-                                        if (result.getErrors().size() == 0) {
-                                            LocationPointsManager.removeLocations(result.getResult());
-                                            LocationPointsManager.registerLocations(result.getResult());
-                                        } else {
-                                            if (ErrorVerifierHelper.isOutdatedApp(result
-                                                    .getErrors()))
-                                                view.showLocationServicesErrors(result.getErrors());
-                                            else view.informNoInternetConnection();
-                                        }
-                                        verifyShowLocationPoints();
-                                    }
-                                });
-                    }
-                });
-                Looper.loop();
-            }
+        new Thread(() -> {
+            Looper.prepare();
+            mSscTokenRequester.getTokenAsync(wsTokenResult ->
+                    new LocationPointWS(wsTokenResult.getResult())
+                    .getAllLocationPoints(result -> {
+                        if (result.getErrors().size() == 0) {
+                            LocationPointsManager.removeLocations(result.getResult());
+                            LocationPointsManager.registerLocations(result.getResult());
+                        } else {
+                            if (ErrorVerifierHelper.isOutdatedApp(result
+                                    .getErrors()))
+                                view.showLocationServicesErrors(result.getErrors());
+                            else view.informNoInternetConnection();
+                        }
+                        verifyShowLocationPoints();
+                    }));
+            Looper.loop();
         }).start();
     }
 
@@ -147,12 +132,9 @@ public class LocationServicesPresenter {
      *
      */
     private void verifyShowLocationPoints() {
-        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(new OnReleaseThread() {
-            @Override
-            public void threadReleased() {
-                lastSelectedDistance = AppPreferences.instance().getSelectedLocationPointDistance();
-                setSelectedType(AppPreferences.instance().getSelectedLocationPointType());
-            }
+        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(() -> {
+            lastSelectedDistance = AppPreferences.instance().getSelectedLocationPointDistance();
+            setSelectedType(AppPreferences.instance().getSelectedLocationPointType());
         });
     }
 }

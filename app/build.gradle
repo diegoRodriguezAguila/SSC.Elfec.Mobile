@@ -51,8 +51,13 @@ dependencies {
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    //Permissions
     compile 'com.github.hotchemi:permissionsdispatcher:2.2.0'
     apt 'com.github.hotchemi:permissionsdispatcher-processor:2.2.0'
+
+    //Gson Json process
+    compile 'com.google.code.gson:gson:2.8.0'
 
     compile files('libs/ActiveAndroid.jar')
     compile files('libs/crouton-1.8.5.jar')

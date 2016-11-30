@@ -1,36 +1,22 @@
 package com.elfec.ssc.model.webservices.converters;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.webservices.IWSResultConverter;
+import com.google.gson.Gson;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GetAllLocationPointsWSConverter implements
-		IWSResultConverter<List<LocationPoint>> {
+        IWSResultConverter<List<LocationPoint>> {
 
-	@Override
-	public List<LocationPoint> convert(String result) {
-		List<LocationPoint> payPoints=new ArrayList<LocationPoint>();
-		if (result != null) {
-			try {
-				JSONArray array = new JSONArray(result);
-				for (int i = 0; i < array.length(); i++) {
-					JSONObject object = (JSONObject) array.get(i);
-					payPoints.add(new LocationPoint(object.getString("institution_name"),object.getString("address"), 
-							object.getString("phone"), object.isNull("start_attention")?null:object.getString("start_attention"), 
-									object.isNull("end_attention")?null:object.getString("end_attention"), object.getDouble("latitude"), 
-							object.getDouble("longitude"),Short.parseShort(object.getString("type"))));
-				}
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-		}	
-		return payPoints;
-	}
-
+    @Override
+    public List<LocationPoint> convert(String result) {
+        if(result==null)
+            return new ArrayList<>();
+        Gson gson = GsonUtils.generateGson();
+        return Arrays.asList(gson.fromJson(result, LocationPoint[].class));
+    }
 }
