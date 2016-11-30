@@ -1,2 +1,2 @@
 include ':supertoasts'
-include ':sscElfecMobile'
+include ':app'

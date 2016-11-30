@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Elfec Móvil</string>
+    <string name="about">Acerca de&#8230;</string>
+
+    <!-- Welcome -->
+    <string name="welcome_to_app">Bienvenido(a) al</string>
+    <string name="welcome_description">Para poder utilizar todas las funcionalidades de la aplicación, se necesita una cuenta de Gmail</string>
+    <string name="welcome_create_gmail">desea seleccionar una cuenta?</string>
+    <string name="btn_select_account">SELECCIONAR</string>
+    <string name="btn_decline_account">NO, POR AHORA</string>
+    <string name="opt_select_account">Agregar cuenta</string>
+    <string name="sign_in_failed">No se pudo autenticar el usuario, no se seleccionó
+        ninguna cuenta de gmail</string>
+
+    <!-- Register Account -->
+    <string name="register_account_title">&#160;&#160;Registrar cuenta</string>
+    <string name="nus_sample">Ej. 261724</string>
+    <string name="account_sample">Ej. 34&#8211;453&#8211;321&#8211;65</string>
+    <string name="btn_register">Registrar</string>
+    <string name="account_img">Cuenta</string>
+    <string name="account_mask">##-###-###-##</string>
+    <string name="waiting_msg">Porfavor espere, se esta procesando su solicitud&#8230;</string>
+    <string name="account_successfully_reg">¡La cuenta fue registrada exitosamente!</string>
+    <string name="errors_in_fields">Los campos tienen errores, reviselos para poder continuar</string>
+    <string name="account_already_reg_title">CUENTA YA REGISTRADA</string>
+    <string name="account_already_reg_msg">La información que proporcionó corresponde a una cuenta que ya tiene registrada</string>
+    <string name="errors_on_register_title">ERROR AL REGISTRAR LA CUENTA</string>
+    <string name="register_account_information">Información sobre registro</string>
+    <string name="title_register_account_information">INFORMACIÓN DE REGISTRO</string>
+    <string name="btn_understanded">Entendido</string>
+    <string name="msg_register_account_info">Para registrar una cuenta necesita la información provista en el aviso de cobranza. 
+        El aviso de cobranza es la papeleta que se ve como en la imagen. De ella podrá obtener su NUS y su Cuenta. Intoduzca ambos valores
+        en los campos y presione <i>\"Registrar\"</i>.\n Si desea eliminar una cuenta registrada, podrá hacerlo con un click largo sobre ella, en la vista de Cuentas.</string>
+    <string name="img_collection_notice">Aviso de Cobranza</string>
+
+    <!-- Main Menu -->
+    <string name="app_title">Sistema de Servicios al Cliente</string>
+    <string name="welcome">Bienvenido(a)</string>
+    <string name="btn_accounts">Cuentas</string>
+    <string name="btn_location_services">Servicios de ubicación</string>
+    <string name="btn_notifications">Notificaciones</string>
+    <string name="btn_contacts">Contactos</string>
+    <string name="content_switch_client">Cambiar cliente</string>
+    <string name="lbl_current_client">Cuenta de usuario</string>
+    <string name="lbl_no_active_client">No se seleccionó ninguna cuenta de Gmail</string>
+    <!-- Main Menu : Switch Client -->
+    <string name="switch_client_title">CAMBIO DE CUENTA DE USUARIO</string>
+    <string name="switch_client_msg">Se procederá a cambiar la cuenta de Gmail relacionada con la aplicación, 
+        tome en cuenta que ésta se utiliza para:\n
+        ● Relacionar las cuentas de elfec con su usuario\n
+        ● Obtener las cuentas de elfec registradas por su usuario\n
+        ● Recibir notificaciones de las cuentas de elfec relacionadas a su usuario</string>
+
+    <!-- View Accounts -->
+    <string name="view_accounts_title">&#160;&#160;Cuentas</string>
+    <string name="no_accounts_registered">Actualmente no tiene cuentas registradas</string>
+    <string name="use_button_add">Utilice el botón</string>
+    <string name="lbl_for_register">para agregar</string>
+    <string name="lbl_an_account">una cuenta.\n\nRegistrar sus cuentas de elfec le trae muchas ventajas, entre ellas:\n
+        ● Permite que le lleguen notificaciones sobre cualquier evento que afecten al suministro de energía de su cuenta.
+        Como cortes fortuitos (ej. Camión choca con un poste), cortes programados y 
+        retraso en el pago de sus facturas, antes de que se le proceda a cortar.\n
+       ● Ver el estado de su suministro de energía, y de sus deudas.\n
+       ● Ver la evolución de su consumo.</string>
+    <string name="lbl_loading_accounts">Cargando sus cuentas&#8230;</string>
+    <string name="lbl_account_list_item_name">Nombre:</string>
+    <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
+    <!-- View Accounts: Delete Account -->
+    <string name="delete_account_title">ELIMINAR CUENTA</string>
+    <string name="delete_account_msg">¿Esta seguro que desea eliminar esta cuenta?</string>
+    <string name="account_successfully_deleted">¡La cuenta se eliminó exitosamente!</string>
+    <string name="errors_on_delete_account_title">ERROR AL ELIMINAR LA CUENTA</string>
+    <!-- View Accounts: Rows -->
+    <string name="lbl_no_debts">Sin deudas</string>
+    <string name="lbl_currency">Bs.</string>
+
+    <!-- Location Services -->
+    <string name="location_services_title">&#160;&#160;Servicios de ubicación</string>
+    <string name="waiting_map_msg">Porfavor espere, conectando con google maps&#8230;</string>
+    <string name="no_internet_msg">No se pudo contactar con el servidor, revise su conexión a internet!</string>
+    <string name="errors_on_get_points_title">ERROR AL OBTENER PUNTOS DE UBICACIÓN</string>
+    <!-- Location Services: Markers -->
+    <string name="lbl_marker_address">Dirección:</string>
+    <string name="lbl_marker_phone">Teléfono:</string>
+    <string name="lbl_marker_bussines_hours">Horario de atención:</string>
+
+    <!-- Contacts -->
+    <string name="contacts_title">&#160;&#160;Contactos</string>
+    <string name="lbl_visit_us_facebook">Visítanos en facebook</string>
+    <string name="title_phone_pick">ELIJA UN NÚMERO TELEFÓNICO</string>
+    <string name="btn_dial">Marcar</string>
+
+    <!-- Notificaciones -->
+
+    <string name="notifications_title">&#160;&#160;Notificaciones</string>
+    <string name="outage_group">Cortes e información</string>
+    <string name="accounts_group">Cuentas</string>
+    <string name="lbl_no_outage_notifications">Actualmente no tiene ninguna notificación de cortes ni informaciones</string>
+    <string name="lbl_no_account_notifications">Actualmente no tiene ninguna notificación de sus cuentas</string>
+    <string name="delete_notifications_title">ELIMINAR NOTIFICACIONES</string>
+    <string name="delete_outage_notifications_msg">Está apunto de eliminar el historial de las notificaciones de cortes ¿confirma que desea hacerlo?</string>
+    <string name="delete_account_notifications_msg">Está apunto de eliminar el historial de las notificaciones de cuentas ¿confirma que desea hacerlo?</string>
+
+    <!-- View Account Details -->
+    <string name="view_account_details_title">&#160;&#160;Información de cuenta</string>
+    <string name="lbl_account_status">Estado:</string>
+    <string name="lbl_total_debt">Deuda total:</string>
+    <string name="lbl_debt_detail">Detalle deuda:</string>
+    <string name="list_item_debt_expiration_date">Fecha de vencimiento:</string>
+    <string name="list_item_receipt_number_date">N° de comprobante:</string>
+    <string name="lbl_usage">Evolución de consumo:</string>
+    <string name="title_no_location_avaible">UBICACIÓN NO DISPONIBLE</string>
+    <string name="msg_no_location_avaible">Actualmente no se cuenta con la ubicación de
+        este suministro. Esto puede deberse a que el suministro es nuevo o está en proceso
+        de traslado.</string>
+
+    <!-- Image captions -->
+    <string name="logo_elfec_caption">Logo Elfec</string>
+    <string name="setup_distance">Configurar distancia</string>
+    <string name="delete_notifications_caption">Eliminar notificaciones</string>
+
+    <!-- Account Picker Dialog -->
+    <string name="account_picker_title">SELECCIONE UNA CUENTA</string>
+
+    <!-- No Gmail Account Dialog -->
+    <string name="no_gmail_account_title">OPCIÓN NO DISPONIBLE</string>
+    <string name="no_gmail_account_message">Para utilizar esta opción es necesario que seleccione una cuenta de Gmail, desea hacerlo en este momento?</string>
+
+    <!-- Setup Distance Layout -->
+    <string name="setup_distance_title">CONFIGURE LA DISTANCIA</string>
+    <string name="lbl_meters">metros</string>
+    <string name="minimun_distance">500</string>
+    <string name="maximun_distance">10000</string>
+
+    <!-- Botones Dialogos -->
+    <string name="btn_ok">Aceptar</string>
+    <string name="btn_confirm">Confirmar</string>
+    <string name="btn_cancel">Cancelar</string>
+    <string name="btn_yes">Si</string>
+    <string name="btn_no">No</string>
+
+    <!-- Samples -->
+    <string name="account_deleted_sample">Cuenta eliminada</string>
+    <string name="date_sample">06 Ago 2014</string>
+    <string name="time_sample">19:03</string>
+    <string name="notification_message_sample">Se agregó la cuenta: 231234123 con el nus: 22322</string>
+    <string name="name_sample">Jarry Pedro Perez</string>
+    <string name="address_sample">Av Cap. V. Ustariz 01323</string>
+    <string name="account_balance_sample">1.923</string>
+    <string name="decimal_balance_sample">70</string>
+    <string name="gmail_sample">ssc.elfec@gmail.com</string>
+    <string name="account_status_sample">Cortado por mora</string>
+    <string name="month_year_sample">Diciembre 2014</string>
+    <string name="simple_date_sample">06/09/2014</string>
+    <string name="short_date_sample">2014/12</string>
+    <string name="usage_sample">431</string>
+
+    <!-- XListView -->
+    <string name="xlistview_header_hint_normal">Actualizar</string>
+    <string name="xlistview_header_hint_ready">Suelte para actualizar</string>
+    <string name="xlistview_header_hint_loading">Actualizando&#8230;</string>
+    <string name="xlistview_header_last_time">Actualizado a las: </string>
+    <string name="xlistview_footer_hint_normal">Ver más notificaciones</string>
+    <string name="xlistview_footer_hint_ready">Suelte para cargar notificaciones más antiguas</string>
+
+    <!-- Api Exceptions -->
+    <string name="gcm_connect_exception"><![CDATA[No fue posible conectarse con el servidor, porfavor
+        revise su conexión a internet.\nSi su conexión a internet es correcta, porfavor verifique
+        que tiene <a href="https://play.google.com/store/apps/details?id=com.google.android.gms&amp;hl=es_419/"
+        >Google Play Services</a> instalado.]]></string>
+
+    <string name="mobile_side_exception">Ocurrió un error al procesar la resupesta del servidor,
+        disculpe las molestias, porfavor intentelo nuevamente mas tarde</string>
+
+    <string name="outdated_app_exception"><![CDATA[No se pudo comunicar con los servicios debido a que
+        la versión de la aplicación no es la más actual. Le recomendamos descargar la
+        <b>última versión</b> de la playstore:  <a
+            href="https://play.google.com/store/apps/details?id=com.elfec.ssc&amp;hl=es-419/">
+            Obtener última versión</a>.]]></string>
+
+    <string name="server_down_exception">El servidor está temporalmente fuera de servicio o se
+        encuentra en mantenimiento. Por favor, inténtelo de nuevo más tarde, lamentamos las molestias.</string>
+
+    <string name="server_side_exception">Ocurrió un error en el servidor, porfavor intentelo
+        nuevamente mas tarde.</string>
+
+</resources>

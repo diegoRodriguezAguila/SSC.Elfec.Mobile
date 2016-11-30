@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/view_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="view.RegisterAccount">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:paddingLeft="@dimen/register_horizontal_padding"
+        android:paddingRight="@dimen/register_horizontal_padding"
+        android:gravity="center"
+        android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center_vertical"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/nus_mini_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/ssc_elfec_color"
+            android:contentDescription="@string/account_img"
+            android:padding="8dp"
+            android:src="@drawable/nus_mini" />
+
+        <EditText
+            android:id="@+id/txt_nus"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/nus_sample"
+            android:inputType="number"
+            android:maxLength="10"
+            android:tag="NotNullOrEmpty; MinLenght, 4"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.EditText" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/account_mini_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/ssc_elfec_color"
+            android:contentDescription="@string/account_img"
+            android:padding="8dp"
+            android:src="@drawable/account_mini" />
+
+        <com.elfec.ssc.view.controls.widget.MaskedEditText
+            android:id="@+id/txt_accountNumber"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/account_sample"
+            android:inputType="number"
+            android:tag="NotNullOrEmpty; MinLenght, 10"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.EditText"
+            app:mask="@string/account_mask" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_register_account"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="btnRegisterAccountClick"
+        android:text="@string/btn_register" />
+    </LinearLayout>
+</RelativeLayout>

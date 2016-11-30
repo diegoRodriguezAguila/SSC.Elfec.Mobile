@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.elfec.ssc">
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+   
+    <permission
+        android:name="com.elfec.ssc.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.elfec.ssc.permission.C2D_MESSAGE" />
+	<uses-permission android:name="android.permission.C2D_MESSAGE" />
+
+    <!-- This app has permission to register and receive data message. -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+    <!-- Network State Permissions to detect Internet status -->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <!-- Permission to vibrate -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+
+    <application
+        android:name="com.elfec.ssc.ElfecApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:installLocation="preferExternal"
+        android:label="@string/app_name"
+        android:theme="@style/Theme.ElfecSsc" >
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyAnuJ_uAGrMok6r-aSsR6MMsz6A1pObYcE" />
+        <!--
+             <meta-data
+		    android:name="com.google.android.gms.version"
+		    android:value="@integer/google_play_services_version" />
+
+
+        -->
+        <meta-data
+            android:name="AA_DB_NAME"
+            android:value="ssc.db" />
+        <meta-data
+            android:name="AA_DB_VERSION"
+            android:value="40" />
+        <meta-data android:name="AA_MODELS"
+                   android:value="com.elfec.ssc.model.Account,com.elfec.ssc.model.Client,
+                   com.elfec.ssc.model.Contact,com.elfec.ssc.model.Debt, com.elfec.ssc.model.LocationPoint,
+                   com.elfec.ssc.model.Notification,com.elfec.ssc.model.Usage"/>
+        <meta-data
+            android:name="AA_SERIALIZERS"
+            android:value="com.elfec.ssc.model.serializers.JodaDateTimeSerializer" />
+
+        <activity
+            android:name=".view.LauncherActivity"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".view.MainMenu"
+            android:theme="@style/Theme.ElfecSsc.NoActionBar"
+            android:label="@string/app_title"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".view.ViewAccounts"
+            android:label="@string/view_accounts_title"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".view.RegisterAccount"
+            android:label="@string/register_account_title"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:theme="@style/Theme.ElfecSsc.NoActionBar"
+            android:name=".view.Welcome"
+            android:label="@string/welcome"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".view.LocationServicesActivity"
+            android:label="@string/location_services_title"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".view.Contacts"
+            android:label="@string/contacts_title" >
+        </activity>
+        <activity
+            android:name=".view.ViewNotifications"
+            android:label="@string/notifications_title" >
+        </activity>
+        <activity
+            android:name="com.elfec.ssc.view.ViewAccountDetails"
+            android:label="@string/view_account_details_title" >
+        </activity>
+        
+        <receiver
+            android:name=".gcmservices.GcmBroadcastReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.elfec.ssc" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name=".gcmservices.GcmMessageService" />
+        
+		<receiver android:name=".gcmservices.UpdateReceiver">
+		     <intent-filter>
+		          <action android:name="android.intent.action.PACKAGE_REPLACED" />
+		          <data android:path="com.elfec.ssc"
+		          android:scheme="package" />
+		     </intent-filter>
+		</receiver>
+
+		<service android:name=".gcmservices.UpdateGCMTokenService" />
+		
+		<receiver android:name=".gcmservices.InternetEnabledReceiver" >
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
