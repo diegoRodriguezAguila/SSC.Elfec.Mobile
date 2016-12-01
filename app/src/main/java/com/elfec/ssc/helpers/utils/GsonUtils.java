@@ -1,5 +1,7 @@
 package com.elfec.ssc.helpers.utils;
 
+import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.webservices.serializers.AccountDeserializer;
 import com.elfec.ssc.model.webservices.serializers.BigDecimalConverter;
 import com.elfec.ssc.model.webservices.serializers.DateTimeConverter;
 import com.elfec.ssc.model.webservices.serializers.DoubleConverter;
@@ -19,6 +21,10 @@ import java.math.BigDecimal;
  */
 public class GsonUtils {
     /**
+     * Base Gson caché
+     */
+    private static SoftReference<Gson> sBaseGsonCache;
+    /**
      * Gson caché
      */
     private static SoftReference<Gson> sGsonCache;
@@ -31,8 +37,22 @@ public class GsonUtils {
                     .registerTypeAdapter(BigDecimal.class, new BigDecimalConverter())
                     .registerTypeAdapter(double.class, new DoubleConverter())
                     .registerTypeAdapter(Double.class, new DoubleConverter())
+                    .registerTypeAdapter(Account.class, new AccountDeserializer())
                     .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
                     .create());
         return sGsonCache.get();
+    }
+
+    public static Gson generateBaseGson() {
+        if (sBaseGsonCache == null || sBaseGsonCache.get() == null)
+            sBaseGsonCache = new SoftReference<>(new GsonBuilder().setFieldNamingPolicy(
+                    FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .registerTypeAdapter(DateTime.class, new DateTimeConverter())
+                    .registerTypeAdapter(BigDecimal.class, new BigDecimalConverter())
+                    .registerTypeAdapter(double.class, new DoubleConverter())
+                    .registerTypeAdapter(Double.class, new DoubleConverter())
+                    .excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC)
+                    .create());
+        return sBaseGsonCache.get();
     }
 }
