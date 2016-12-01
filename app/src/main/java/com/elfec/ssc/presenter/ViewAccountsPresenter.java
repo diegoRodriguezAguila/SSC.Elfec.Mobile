@@ -4,10 +4,10 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Looper;
 
-import com.elfec.ssc.businesslogic.ClientManager;
-import com.elfec.ssc.businesslogic.ElfecAccountsManager;
-import com.elfec.ssc.businesslogic.webservices.AccountWS;
-import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
+import com.elfec.ssc.business_logic.ClientManager;
+import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.web_services.AccountWS;
+import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.model.Account;

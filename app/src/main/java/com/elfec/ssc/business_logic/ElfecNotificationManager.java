@@ -1,4 +1,4 @@
-package com.elfec.ssc.businesslogic;
+package com.elfec.ssc.business_logic;
 
 import com.activeandroid.query.Delete;
 import com.elfec.ssc.model.Notification;

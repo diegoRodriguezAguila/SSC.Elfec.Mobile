@@ -1,6 +1,6 @@
 package com.elfec.ssc.presenter;
 
-import com.elfec.ssc.businesslogic.ClientManager;
+import com.elfec.ssc.business_logic.ClientManager;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.presenter.views.IMainMenu;

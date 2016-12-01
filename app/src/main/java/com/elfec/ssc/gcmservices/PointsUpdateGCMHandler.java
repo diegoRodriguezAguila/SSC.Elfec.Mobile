@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
 
 import com.activeandroid.util.Log;
-import com.elfec.ssc.businesslogic.LocationPointsManager;
+import com.elfec.ssc.business_logic.LocationPointsManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.presenter.LocationServicesPresenter;

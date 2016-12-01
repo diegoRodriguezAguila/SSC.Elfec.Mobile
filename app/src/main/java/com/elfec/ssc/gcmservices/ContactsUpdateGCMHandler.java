@@ -5,7 +5,7 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
 
-import com.elfec.ssc.businesslogic.ContactsManager;
+import com.elfec.ssc.business_logic.ContactsManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.presenter.ContactPresenter;
 import com.elfec.ssc.view.Contacts;

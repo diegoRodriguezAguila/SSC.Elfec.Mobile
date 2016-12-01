@@ -14,7 +14,7 @@ public class GetAllAccountsWSConverter implements IWSResultConverter<List<Accoun
 
     @Override
     public List<Account> convert(String result) {
-        if(result==null)return new ArrayList<>();
+        if (result == null) return new ArrayList<>();
         Gson gson = GsonUtils.generateGson();
         return Arrays.asList(gson.fromJson(result, Account[].class));
     }

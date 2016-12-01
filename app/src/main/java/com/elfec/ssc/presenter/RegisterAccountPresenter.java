@@ -3,10 +3,10 @@ package com.elfec.ssc.presenter;
 import android.os.Build;
 import android.os.Looper;
 
-import com.elfec.ssc.businesslogic.ElfecAccountsManager;
-import com.elfec.ssc.businesslogic.FieldValidator;
-import com.elfec.ssc.businesslogic.webservices.AccountWS;
-import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
+import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.business_logic.FieldValidator;
+import com.elfec.ssc.web_services.AccountWS;
+import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GcmTokenCallback;

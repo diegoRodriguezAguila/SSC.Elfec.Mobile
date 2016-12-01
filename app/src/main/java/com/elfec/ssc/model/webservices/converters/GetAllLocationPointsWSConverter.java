@@ -14,7 +14,7 @@ public class GetAllLocationPointsWSConverter implements
 
     @Override
     public List<LocationPoint> convert(String result) {
-        if(result==null)
+        if (result == null)
             return new ArrayList<>();
         Gson gson = GsonUtils.generateGson();
         return Arrays.asList(gson.fromJson(result, LocationPoint[].class));

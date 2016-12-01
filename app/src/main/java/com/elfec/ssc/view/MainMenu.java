@@ -19,7 +19,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.businesslogic.webservices.SSLConection;
+import com.elfec.ssc.web_services.SSLConection;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenu;

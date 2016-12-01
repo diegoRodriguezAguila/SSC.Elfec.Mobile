@@ -3,9 +3,9 @@ package com.elfec.ssc.presenter;
 import android.location.Location;
 import android.os.Looper;
 
-import com.elfec.ssc.businesslogic.LocationPointsManager;
-import com.elfec.ssc.businesslogic.webservices.LocationPointWS;
-import com.elfec.ssc.businesslogic.webservices.SscTokenRequester;
+import com.elfec.ssc.business_logic.LocationPointsManager;
+import com.elfec.ssc.web_services.LocationPointWS;
+import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.helpers.utils.LocationServicesMessages;

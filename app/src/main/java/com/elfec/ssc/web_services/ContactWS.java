@@ -1,4 +1,4 @@
-package com.elfec.ssc.businesslogic.webservices;
+package com.elfec.ssc.web_services;
 
 import com.elfec.ssc.model.Contact;
 import com.elfec.ssc.model.events.IWSFinishEvent;

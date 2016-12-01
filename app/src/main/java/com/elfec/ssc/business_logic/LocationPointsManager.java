@@ -1,4 +1,4 @@
-package com.elfec.ssc.businesslogic;
+package com.elfec.ssc.business_logic;
 
 import android.location.Location;
 

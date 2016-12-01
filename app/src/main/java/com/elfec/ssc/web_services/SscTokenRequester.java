@@ -1,4 +1,4 @@
-package com.elfec.ssc.businesslogic.webservices;
+package com.elfec.ssc.web_services;
 
 import android.content.Context;
 

@@ -5,8 +5,8 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.elfec.ssc.businesslogic.ElfecAccountsManager;
-import com.elfec.ssc.businesslogic.ElfecNotificationManager;
+import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.business_logic.ElfecNotificationManager;
 import com.elfec.ssc.helpers.JsonToAccountConverter;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
