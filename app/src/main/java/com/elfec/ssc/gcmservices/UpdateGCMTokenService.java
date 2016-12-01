@@ -35,7 +35,7 @@ public class UpdateGCMTokenService extends IntentService {
         if(lastToken!=null) {
             final String imei = new CredentialManager(this).getDeviceIdentifier();
             preferences.setGcmToken(null);
-            new SscTokenRequester(this).getTokenAsync(new SscTokenReceivedCallback() {
+            new SscTokenRequester().getTokenAsync(new SscTokenReceivedCallback() {
                 @Override
                 public void onSscTokenReceived(
                         final WSResponse<SscToken> wsTokenResult) {

@@ -39,7 +39,7 @@ public class ViewAccountsPresenter {
         mIsRefreshing = false;
         Context context = AppPreferences.getApplicationContext();
         mGcmTokenRequester = new GcmTokenRequester(context);
-        mSscTokenRequester = new SscTokenRequester(context);
+        mSscTokenRequester = new SscTokenRequester();
         mImei = new CredentialManager(context)
                 .getDeviceIdentifier();
     }

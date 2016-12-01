@@ -38,7 +38,7 @@ public class RegisterAccountPresenter {
 	public RegisterAccountPresenter(IRegisterAccount view) {
 		this.view = view;
 		mGcmTokenRequester = new GcmTokenRequester(AppPreferences.getApplicationContext());
-        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
+        mSscTokenRequester = new SscTokenRequester();
 	}
 
 	/**

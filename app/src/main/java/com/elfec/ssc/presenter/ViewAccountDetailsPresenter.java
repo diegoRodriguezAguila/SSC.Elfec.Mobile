@@ -3,11 +3,10 @@ package com.elfec.ssc.presenter;
 import android.os.Looper;
 
 import com.elfec.ssc.business_logic.ElfecAccountsManager;
-import com.elfec.ssc.web_services.AccountWS;
-import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
-import com.elfec.ssc.security.AppPreferences;
+import com.elfec.ssc.web_services.AccountWS;
+import com.elfec.ssc.web_services.SscTokenRequester;
 
 public class ViewAccountDetailsPresenter {
 
@@ -19,7 +18,7 @@ public class ViewAccountDetailsPresenter {
                                        long accountToShowId) {
         this.view = view;
         this.accountToShow = Account.get(accountToShowId);
-        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
+        mSscTokenRequester = new SscTokenRequester();
     }
 
     public void getUsage() {
