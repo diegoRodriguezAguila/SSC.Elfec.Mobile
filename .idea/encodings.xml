@@ -26,8 +26,8 @@
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/validations/NumericValidationRule.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/validations/ValidationRulesFactory.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/validations/ValidationsAndParams.java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/webservices/IWSResultConverter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/webservices/MarshalDouble.java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/webservices/ResultConverter.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/webservices/WSParam.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/model/webservices/WebServiceConnector.java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/app/src/main/java/com/elfec/ssc/presenter/MainMenuPresenter.java" charset="UTF-8" />

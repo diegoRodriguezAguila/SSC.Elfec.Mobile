@@ -4,9 +4,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.elfec.ssc.model.Contact;
-import com.elfec.ssc.model.webservices.IWSResultConverter;
+import com.elfec.ssc.model.webservices.ResultConverter;
 
-public class GetContactUpdateWSConverter implements IWSResultConverter<Contact>{
+public class GetContactUpdateWSConverter implements ResultConverter<Contact> {
 
 	@Override
 	public Contact convert(String result) {

@@ -7,7 +7,7 @@ package com.elfec.ssc.model.webservices;
  *
  * @param <TResult>
  */
-public interface IWSResultConverter<TResult> 
+public interface ResultConverter<TResult>
 {
-	public TResult convert(String result);
+	TResult convert(String result);
 }

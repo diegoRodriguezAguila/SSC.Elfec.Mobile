@@ -44,7 +44,7 @@ public class WebServiceConnector<TResult> extends
 	private String methodName;
 	private SscToken sscToken;
 	private IWSFinishEvent<TResult> onFinishedEvent;
-	private IWSResultConverter<TResult> converter;
+	private ResultConverter<TResult> converter;
 	private WSResponse<TResult> resultWS;
 
 	/**
@@ -60,7 +60,7 @@ public class WebServiceConnector<TResult> extends
 	 */
 	public WebServiceConnector(String url, String soapAction, String namespace,
 			String methodName, SscToken sscToken,
-			IWSResultConverter<TResult> converter) {
+			ResultConverter<TResult> converter) {
 		super();
 		this.url = WS_SERVER + url;
 		this.soapAction = soapAction;
@@ -85,7 +85,7 @@ public class WebServiceConnector<TResult> extends
 	 */
 	public WebServiceConnector(String url, String soapAction, String namespace,
 			String methodName, SscToken sscToken,
-			IWSResultConverter<TResult> converter,
+			ResultConverter<TResult> converter,
 			IWSFinishEvent<TResult> onFinishedEvent) {
 		super();
 		this.url = WS_SERVER + url;
@@ -109,7 +109,7 @@ public class WebServiceConnector<TResult> extends
 	 * @param converter
 	 */
 	public WebServiceConnector(String url, String soapAction, String namespace,
-			String methodName, IWSResultConverter<TResult> converter) {
+			String methodName, ResultConverter<TResult> converter) {
 		super();
 		this.url = WS_SERVER + url;
 		this.soapAction = soapAction;
@@ -131,7 +131,7 @@ public class WebServiceConnector<TResult> extends
 	 * @param onFinishedEvent
 	 */
 	public WebServiceConnector(String url, String soapAction, String namespace,
-			String methodName, IWSResultConverter<TResult> converter,
+			String methodName, ResultConverter<TResult> converter,
 			IWSFinishEvent<TResult> onFinishedEvent) {
 		super();
 		this.url = WS_SERVER + url;

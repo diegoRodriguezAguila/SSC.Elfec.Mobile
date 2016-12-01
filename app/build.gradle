@@ -9,7 +9,7 @@ android {
         applicationId "com.elfec.ssc"
         minSdkVersion 16
         targetSdkVersion 25
-        versionName "1.0.7"
+        versionName "1.1.0"
         versionCode 10
     }
 
@@ -19,8 +19,8 @@ android {
         }
         release {
             buildConfigField "String", "WS_SERVER_URL", '"https://ssc.elfec.bo:4343/"'
-            minifyEnabled false
-            shrinkResources false
+            minifyEnabled true
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),
                     'proguard-rules.pro'
         }

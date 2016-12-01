@@ -2,9 +2,9 @@ package com.elfec.ssc.model.webservices.converters;
 
 import com.elfec.ssc.helpers.JsonToAccountConverter;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.webservices.IWSResultConverter;
+import com.elfec.ssc.model.webservices.ResultConverter;
 
-public class RegisterAccountWSConverter implements IWSResultConverter<Account> {
+public class RegisterAccountWSConverter implements ResultConverter<Account> {
 
     @Override
     public Account convert(String result) {

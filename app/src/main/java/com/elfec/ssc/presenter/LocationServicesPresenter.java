@@ -4,7 +4,7 @@ import android.location.Location;
 import android.os.Looper;
 
 import com.elfec.ssc.business_logic.LocationPointsManager;
-import com.elfec.ssc.web_services.LocationPointWS;
+import com.elfec.ssc.web_services.LocationPointService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
@@ -35,7 +35,7 @@ public class LocationServicesPresenter {
         lastSelectedType = LocationPointType.BOTH;
         this.view = view;
         distanceRange = AppPreferences.instance().getConfiguredDistance();
-        mSscTokenRequester = new SscTokenRequester(AppPreferences.getApplicationContext());
+        mSscTokenRequester = new SscTokenRequester();
     }
 
     /**
@@ -110,7 +110,7 @@ public class LocationServicesPresenter {
         new Thread(() -> {
             Looper.prepare();
             mSscTokenRequester.getTokenAsync(wsTokenResult ->
-                    new LocationPointWS(wsTokenResult.getResult())
+                    new LocationPointService(wsTokenResult.getResult())
                     .getAllLocationPoints(result -> {
                         if (result.getErrors().size() == 0) {
                             LocationPointsManager.removeLocations(result.getResult());

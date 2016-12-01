@@ -2,7 +2,7 @@ package com.elfec.ssc.model.webservices.converters;
 
 import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.webservices.IWSResultConverter;
+import com.elfec.ssc.model.webservices.ResultConverter;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import java.util.Arrays;
 import java.util.List;
 
 
-public class GetAllAccountsWSConverter implements IWSResultConverter<List<Account>> {
+public class GetAllAccountsWSConverter implements ResultConverter<List<Account>> {
 
     @Override
     public List<Account> convert(String result) {
