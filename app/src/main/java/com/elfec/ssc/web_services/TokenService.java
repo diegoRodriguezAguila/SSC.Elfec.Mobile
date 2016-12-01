@@ -29,7 +29,7 @@ public class TokenService {
      */
     public void requestSscToken(IWSFinishEvent<SscToken> eventHandler) {
         WebServiceConnector<SscToken> payPointWSConnector =
-                new WebServiceConnector<>("TokenService.php?wsdl", "",
+                new WebServiceConnector<>("TokenWS.php?wsdl", "",
                         "ssc_elfec", "RequestToken", new SscTokenConverter(), eventHandler);
         payPointWSConnector.execute(new WSParam("IMEI", credentials.getImei()), new WSParam("Signature", credentials.getSignature()),
                 new WSParam("Salt", credentials.getSalt()), new WSParam("VersionCode", credentials.getVersionCode()));
@@ -40,7 +40,7 @@ public class TokenService {
      * provistos
      */
     public Observable<SscToken> requestSscToken() {
-        return new ServiceConnector<>("TokenService.php?wsdl", "RequestToken", new
+        return new ServiceConnector<>("TokenWS.php?wsdl", "RequestToken", new
                 SscTokenConverter())
                 .execute(new WSParam("IMEI", credentials.getImei()), 
                         new WSParam("Signature", credentials.getSignature()),

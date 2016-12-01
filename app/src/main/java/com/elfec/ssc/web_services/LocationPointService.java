@@ -30,7 +30,7 @@ public class LocationPointService {
      */
     public void getAllLocationPoints(IWSFinishEvent<List<LocationPoint>> eventHandler) {
         WebServiceConnector<List<LocationPoint>> paypointWSConnector =
-                new WebServiceConnector<>("LocationPointService.php?wsdl", "",
+                new WebServiceConnector<>("LocationPointWS.php?wsdl", "",
                         "ssc_elfec", "GetAllLocationPoints", sscToken,
                         new LocationPointsConverter(), eventHandler);
         paypointWSConnector.execute();
@@ -40,7 +40,7 @@ public class LocationPointService {
      * Obtiene todos los puntos de pago activos
      */
     public Observable<List<LocationPoint>> getLocationPoints() {
-        return new ServiceConnector<>("LocationPointService.php?wsdl",
+        return new ServiceConnector<>("LocationPointWS.php?wsdl",
                 "GetAllLocationPoints", sscToken, new LocationPointsConverter())
                 .execute();
     }
