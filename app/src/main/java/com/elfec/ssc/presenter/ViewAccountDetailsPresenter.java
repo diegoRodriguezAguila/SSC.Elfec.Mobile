@@ -29,7 +29,7 @@ public class ViewAccountDetailsPresenter {
             mSscTokenRequester.getTokenAsync(wsTokenResult -> {
                 if (wsTokenResult.getResult() == null) return;
                 new AccountWS(wsTokenResult.getResult())
-                        .getUsage(accountToShow.getNUS(), result -> {
+                        .getUsage(accountToShow.getNus(), result -> {
                             if (result.getErrors().size() > 0) return;
                             accountToShow.removeUsages();
                             ElfecAccountsManager
@@ -46,7 +46,7 @@ public class ViewAccountDetailsPresenter {
      */
     public void setFields() {
         view.setAccountNumber(accountToShow.getAccountNumber());
-        view.setNus(accountToShow.getNUS());
+        view.setNus(accountToShow.getNus());
         view.setOwnerClient(accountToShow.getAccountOwner());
         view.setClientAddress(accountToShow.getAddress());
         view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());

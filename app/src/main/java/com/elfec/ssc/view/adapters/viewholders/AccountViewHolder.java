@@ -43,7 +43,7 @@ public class AccountViewHolder {
 
         mTxtAccountNumber.setText(AccountFormatter.formatAccountNumber(account
                 .getAccountNumber()));
-        mTxtNus.setText(account.getNUS());
+        mTxtNus.setText(account.getNus());
         mTxtAccountOwner.setText(TextFormatter.capitalize(account.getAccountOwner()));
         mTxtAddress.setText(WordUtils.capitalizeFully(account.getAddress(),
                 new char[]{'.', ' '}));

@@ -196,7 +196,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                     Account account = (Account) mListViewAccounts
                             .getAdapter().getItem(position);
                     showWaiting();
-                    presenter.removeAccount(account.getNUS());
+                    presenter.removeAccount(account.getNus());
                 }).setNegativeButton(R.string.btn_cancel, null);
         AlertDialog dialog = builder.create();
         dialog.show();

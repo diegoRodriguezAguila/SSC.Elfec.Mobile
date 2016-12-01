@@ -26,7 +26,7 @@ public class ElfecAccountsManager {
      */
     public static Account registerAccount(Account account) {
         Account newAccount = Account.findAccount(
-                account.getClient().getGmail(), account.getNUS());
+                account.getClient().getGmail(), account.getNus());
         if (newAccount == null) {
             newAccount = account;
             newAccount.setInsertDate(DateTime.now());
