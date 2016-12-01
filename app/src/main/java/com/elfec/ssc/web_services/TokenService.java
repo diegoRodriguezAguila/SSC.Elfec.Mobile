@@ -40,8 +40,7 @@ public class TokenService {
      * provistos
      */
     public Observable<SscToken> requestSscToken() {
-        return new ServiceConnector<>("TokenWS.php?wsdl", "RequestToken", new
-                SscTokenConverter())
+        return new ServiceConnector<SscToken>("TokenWS.php?wsdl", "RequestToken")
                 .execute(new WSParam("IMEI", credentials.getImei()), 
                         new WSParam("Signature", credentials.getSignature()),
                 new WSParam("Salt", credentials.getSalt()), new WSParam("VersionCode", 

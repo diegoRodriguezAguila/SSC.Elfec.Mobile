@@ -40,8 +40,8 @@ public class LocationPointService {
      * Obtiene todos los puntos de pago activos
      */
     public Observable<List<LocationPoint>> getLocationPoints() {
-        return new ServiceConnector<>("LocationPointWS.php?wsdl",
-                "GetAllLocationPoints", sscToken, new LocationPointsConverter())
+        return new ServiceConnector<List<LocationPoint>>("LocationPointWS.php?wsdl",
+                "GetAllLocationPoints", sscToken)
                 .execute();
     }
 }

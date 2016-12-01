@@ -47,9 +47,9 @@ public class SscTokenRequester {
     }
 
     /**
-     * Obtiene el token del dispositivo de forma asincrona, en caso de que el
-     * token ya se tuviera guardado en los shared preferences directamente se retorna el valor
-     * cuando se obtiene el token se lo guarda
+     * Obtiene el token del dispositivoa, en caso de que el
+     * token ya se tuviera guardado en los shared preferences directamente se retorna el valor,
+     * caso contrario lo obtiene de los web services. Una vez se obtiene el token se lo guarda
      * automáticamente en shared preferences
      *
      * @return observable de token
@@ -59,6 +59,10 @@ public class SscTokenRequester {
             return Observable.just(currentToken);
         return new TokenService(new CredentialManager(AppPreferences
                 .getApplicationContext())
-                .generateSscCredentials()).requestSscToken();
+                .generateSscCredentials()).requestSscToken()
+                .map(sscToken -> {
+                    AppPreferences.instance().setSscToken(sscToken);
+                    return sscToken;
+                });
     }
 }

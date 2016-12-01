@@ -5,9 +5,9 @@ import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.DataResult;
 import com.elfec.ssc.model.webservices.MarshalDouble;
-import com.elfec.ssc.model.webservices.ResultConverter;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
@@ -17,6 +17,7 @@ import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
 import org.ksoap2.transport.HttpsTransportSE;
 
+import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.Proxy;
 import java.net.URL;
@@ -39,37 +40,31 @@ public class ServiceConnector<T> {
     private String url;
     private String methodName;
     private SscToken sscToken;
-    private ResultConverter<T> converter;
 
     /**
      * Construye un conector de webservice soap con los parámetros indicados y
      * con autenticación por sscToken
      *
-     * @param endpoint
-     * @param methodName
-     * @param sscToken
-     * @param converter
+     * @param endpoint   endpoint
+     * @param methodName soap method
+     * @param sscToken   ssc token
      */
-    public ServiceConnector(String endpoint, String methodName, SscToken sscToken,
-                            ResultConverter<T> converter) {
+    public ServiceConnector(String endpoint, String methodName, SscToken sscToken) {
         this.url = WS_SERVER + endpoint;
         this.methodName = methodName;
         this.sscToken = sscToken;
-        this.converter = converter;
     }
 
     /**
      * Construye un conector de webservice soap con los parámetros indicados y
      * sin autenticación
      *
-     * @param endpoint
-     * @param methodName
-     * @param converter
+     * @param endpoint   endpoint
+     * @param methodName soap method
      */
-    public ServiceConnector(String endpoint, String methodName, ResultConverter<T> converter) {
+    public ServiceConnector(String endpoint, String methodName) {
         this.url = WS_SERVER + endpoint;
         this.methodName = methodName;
-        this.converter = converter;
     }
 
     public Observable<T> execute(WSParam... params) {
@@ -104,10 +99,11 @@ public class ServiceConnector<T> {
         checkHeaderStatus(headers);
         String result = envelope.getResponse().toString();
         Gson gson = GsonUtils.generateGson();
-        DataResult dataResult = gson.fromJson(result, DataResult.class);
+        Type collectionType = new TypeToken<DataResult<T>>() {}.getType();
+        DataResult<T> dataResult = gson.fromJson(result, collectionType);
         if (dataResult.hasErrors())
             throw dataResult.getErrors().get(0);
-        return converter.convert(dataResult.getResponse());
+        return dataResult.getData();
     }
 
     /**

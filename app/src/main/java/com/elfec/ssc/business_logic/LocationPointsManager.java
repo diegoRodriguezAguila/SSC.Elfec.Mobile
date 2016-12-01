@@ -7,8 +7,6 @@ import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.web_services.LocationPointService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 
-import org.joda.time.DateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,43 +36,6 @@ public class LocationPointsManager {
                         new LocationPointService(sscToken).getLocationPoints());
     }
 
-    
-    /**
-     * Registra el conjunto de puntos de ubicación
-     *
-     * @param points
-     */
-    public static void registerLocations(final List<LocationPoint> points) {
-        for (LocationPoint point : points) {
-            if (!LocationPoint.existPoint(point)) {
-                point.setInsertDate(DateTime.now());
-                point.save();
-            }
-        }
-    }
-
-    /**
-     * Registra el conjunto de puntos de ubicación
-     *
-     * @param points
-     */
-    public static void removeLocations(final List<LocationPoint> points) {
-        List<LocationPoint> allPoints = LocationPoint.getAll(LocationPoint.class);
-        for (LocationPoint point : allPoints) {
-            if (notExists(point, points)) {
-                point.delete();
-            }
-        }
-    }
-
-    private static boolean notExists(LocationPoint point,
-                                     List<LocationPoint> points) {
-        for (LocationPoint p : points) {
-            if (p.compare(point))
-                return false;
-        }
-        return true;
-    }
 
     /**
      * Obtiene los puntos cercanos a la ubicación dada, y con la distancia definida

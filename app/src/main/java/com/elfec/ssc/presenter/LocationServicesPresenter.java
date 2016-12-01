@@ -1,41 +1,38 @@
 package com.elfec.ssc.presenter;
 
 import android.location.Location;
-import android.os.Looper;
 
 import com.elfec.ssc.business_logic.LocationPointsManager;
-import com.elfec.ssc.web_services.LocationPointService;
-import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
-import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.helpers.utils.LocationServicesMessages;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.security.AppPreferences;
+import com.elfec.ssc.web_services.SscTokenRequester;
 
 import java.util.List;
 
-public class LocationServicesPresenter {
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-    private ILocationServices view;
+public class LocationServicesPresenter extends BasePresenter<ILocationServices> {
+
     private List<LocationPoint> points;
     private LocationPointType lastSelectedType;
     private LocationDistance lastSelectedDistance;
     private Location currentLocation;
     private int distanceRange;
-    private SscTokenRequester mSscTokenRequester;
     private static final int MIN_DISTANCE_DIFFERENCE = 250;
 
 
-    public LocationServicesPresenter(ILocationServices view) {
+    public LocationServicesPresenter(ILocationServices mView) {
+        super(mView);
         points = null;
         lastSelectedDistance = LocationDistance.ALL;
         lastSelectedType = LocationPointType.BOTH;
-        this.view = view;
         distanceRange = AppPreferences.instance().getConfiguredDistance();
-        mSscTokenRequester = new SscTokenRequester();
     }
 
     /**
@@ -66,7 +63,7 @@ public class LocationServicesPresenter {
             points = LocationPoint.getPointsByType(selectedType);
         setSelectedDistance(lastSelectedDistance);
         AppPreferences.instance().setSelectedLocationPointType(selectedType);
-        view.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
+        mView.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
     }
 
     /**
@@ -76,10 +73,10 @@ public class LocationServicesPresenter {
      */
     public void setSelectedDistance(LocationDistance distance, Location currentLocation) {
         lastSelectedDistance = distance;
-        view.showLocationPoints((distance == LocationDistance.ALL) ?
+        mView.onLoaded((distance == LocationDistance.ALL) ?
                 points : LocationPointsManager.getNearestPoints(points, currentLocation, distanceRange));
         AppPreferences.instance().setSelectedLocationPointDistance(distance);
-        view.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
+        mView.showDetailMessage(LocationServicesMessages.buildMessage(lastSelectedType, distance));
     }
 
     /**
@@ -88,8 +85,8 @@ public class LocationServicesPresenter {
      * @param distance distancia
      */
     public void setSelectedDistance(LocationDistance distance) {
-        setSelectedDistance(distance, view.getCurrentLocation() == null ? (new Location("gps")) :
-                view.getCurrentLocation());
+        setSelectedDistance(distance, mView.getCurrentLocation() == null ? (new Location("gps")) :
+                mView.getCurrentLocation());
     }
 
     /**
@@ -104,32 +101,21 @@ public class LocationServicesPresenter {
     }
 
     /**
-     * Obtiene la lista de puntos de ubicación en un hilo
+     * Obtiene la lista de puntos de ubicación
      */
-    public void loadLocations() {
-        new Thread(() -> {
-            Looper.prepare();
-            mSscTokenRequester.getTokenAsync(wsTokenResult ->
-                    new LocationPointService(wsTokenResult.getResult())
-                    .getAllLocationPoints(result -> {
-                        if (result.getErrors().size() == 0) {
-                            LocationPointsManager.removeLocations(result.getResult());
-                            LocationPointsManager.registerLocations(result.getResult());
-                        } else {
-                            if (ErrorVerifierHelper.isOutdatedApp(result
-                                    .getErrors()))
-                                view.showLocationServicesErrors(result.getErrors());
-                            else view.informNoInternetConnection();
-                        }
-                        verifyShowLocationPoints();
-                    }));
-            Looper.loop();
-        }).start();
+    public void loadLocationPoints() {
+        new SscTokenRequester().getSscToken()
+                .flatMap(sscToken ->
+                        LocationPointsManager.syncLocationPoints())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(locationPoints -> {
+                    verifyShowLocationPoints();
+                }, mView::onError);
     }
 
     /**
      * Verifica si los recursos de google maps cargaron para mostrar los puntos de ubicacion
-     *
      */
     private void verifyShowLocationPoints() {
         ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(() -> {

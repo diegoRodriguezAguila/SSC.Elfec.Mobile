@@ -1,14 +1,21 @@
 package com.elfec.ssc.web_services;
 
+import com.elfec.ssc.model.exceptions.OutdatedAppException;
+import com.elfec.ssc.model.exceptions.ServerDownException;
 import com.elfec.ssc.model.exceptions.ServerSideException;
 import com.google.gson.JsonParseException;
 
+import org.ksoap2.transport.HttpResponseException;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.zip.DataFormatException;
+
+import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
+import static java.net.HttpURLConnection.HTTP_INTERNAL_ERROR;
+import static java.net.HttpURLConnection.HTTP_UNAVAILABLE;
 
 
 /**
@@ -29,6 +36,15 @@ public class ServiceErrorFactory {
      */
     public static Throwable fromThrowable(Throwable throwable) {
         throwable.printStackTrace();
+        if (throwable instanceof HttpResponseException) {
+            int code = ((HttpResponseException) throwable).getStatusCode();
+            if (code == HTTP_INTERNAL_ERROR)
+                return new ServerSideException();
+            if (code == HTTP_FORBIDDEN)
+                return new OutdatedAppException();
+            if (code == HTTP_UNAVAILABLE)
+                return new ServerDownException();
+        }
         if (throwable instanceof JsonParseException)
             return new DataFormatException("La información recibida del servidor no es válida, " +
                     "detalles: " + throwable.getMessage());

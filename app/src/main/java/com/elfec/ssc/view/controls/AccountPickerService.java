@@ -3,10 +3,11 @@ package com.elfec.ssc.view.controls;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.elfec.ssc.R;
 import com.elfec.ssc.view.controls.events.AccountPickListener;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -70,7 +71,7 @@ public class AccountPickerService implements Closeable {
     }
 
     public void show() {
-        if(mGoogleApiClient.isConnected()) {
+        if (mGoogleApiClient.isConnected()) {
             mGoogleApiClient.clearDefaultAccountAndReconnect();
         }
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
@@ -93,7 +94,8 @@ public class AccountPickerService implements Closeable {
     private void handleSignInResult(GoogleSignInResult result) {
         Log.d(TAG, "handleSignInResult: " + result.getStatus().getStatusCode());
         if (!result.isSuccess()) {
-            Toast.makeText(mActivity, R.string.sign_in_failed, Toast.LENGTH_LONG).show();
+            SuperToast.create(mActivity, R.string.sign_in_failed, SuperToast.Duration.LONG,
+                    Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
             return;
         }
         // Signed in successfully, show authenticated UI.

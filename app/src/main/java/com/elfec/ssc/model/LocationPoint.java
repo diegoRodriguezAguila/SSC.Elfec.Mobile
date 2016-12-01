@@ -2,62 +2,33 @@ package com.elfec.ssc.model;
 
 import android.location.Location;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Select;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
-
-import java.util.List;
 
 /**
  * Guarda la información de los puntos de pago para mostrarlos en el mapa
  *
  * @author Diego
  */
-@Table(name = "LocationPoints")
-public class LocationPoint extends Model {
-
-    @Column(name = "InstitutionName", notNull = true)
+public class LocationPoint{
     private String institutionName;
-
-    @Column(name = "Address", notNull = true)
     private String address;
-
-    @Column(name = "Phone", notNull = true)
     private String phone;
-
-    @Column(name = "StartAttention")
     private String startAttention;
-
-    @Column(name = "EndAttention")
     private String endAttention;
-
-    @Column(name = "Latitude", notNull = true)
     private double latitude;
-
-    @Column(name = "Longitude", notNull = true)
     private double longitude;
-
     /**
      * Los diferentes tipos de puntos de ubicación según {@link LocationPointType} representados
      * en enteros
      */
-    @Column(name = "Type", notNull = true, index = true)
     private short type;
-
-    @Column(name = "Status", notNull = true)
     private short status;
-
     @SerializedName("created_at")
-    @Column(name = "InsertDate", notNull = true)
     private DateTime insertDate;
-
     @SerializedName("updated_at")
-    @Column(name = "UpdateDate")
     private DateTime updateDate;
 
 
@@ -91,15 +62,11 @@ public class LocationPoint extends Model {
         this.status = (short) 1;
     }
 
-    public static List<LocationPoint> getPointsByType(LocationPointType type) {
-        return new Select().from(LocationPoint.class).where("type=?", type.toShort()).execute();
-    }
-
     /**
      * Calcula la distancia en metros desde una ubicación de gps y este punto de ubicación
      *
-     * @param location
-     * @return
+     * @param location location
+     * @return distance
      */
     public double distanceFrom(Location location) {
         Location thisLocation = new Location(address);
@@ -111,7 +78,7 @@ public class LocationPoint extends Model {
     /**
      * Compara todos los atributos de locationpoint
      *
-     * @param location
+     * @param location location
      * @return si son iguales da true
      */
     public boolean compare(LocationPoint location) {
@@ -124,23 +91,6 @@ public class LocationPoint extends Model {
                 longitude == location.longitude &&
                 type == location.type;
 
-    }
-
-    /**
-     * Compara todos los puntos
-     *
-     * @param point
-     * @return
-     */
-    public static boolean existPoint(LocationPoint point) {
-        return new Select().from(LocationPoint.class)
-                .where("institutionName=? and address=? and phone=? and "
-                                + "startAttention=? and endAttention=? and "
-                                + "latitude=? And longitude=? and type=? ",
-                        point.institutionName, point.address, (point.phone == null ? "NULL" : point.phone),
-                        (point.startAttention == null ? "NULL" : point.startAttention),
-                        (point.endAttention == null ? "NULL" : point.endAttention),
-                        point.latitude, point.longitude, point.type).executeSingle() != null;
     }
 
     //region Getters y Setters

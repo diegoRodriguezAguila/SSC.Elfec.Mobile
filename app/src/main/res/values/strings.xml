@@ -184,7 +184,7 @@
             >Google Play Services</a> installed.]]></string>
 
     <string name="mobile_side_exception">An error occurred while processing the server
-        response, we apologize for the inconvenience, please try again later.</string>
+        data, we apologize for the inconvenience, please try again later.</string>
 
     <string
         name="outdated_app_exception"><![CDATA[Couldn\'t connect to the web services because this

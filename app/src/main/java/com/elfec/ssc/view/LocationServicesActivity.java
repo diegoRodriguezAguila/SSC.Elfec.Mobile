@@ -7,6 +7,7 @@ import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.Nullable;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +44,6 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.location.LocationSettingsRequest;
 import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
 import com.google.android.gms.location.LocationSettingsStatusCodes;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -101,7 +101,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
         ButterKnife.bind(this);
         setupMap();
         ThreadMutex.instance("LoadMap").setBusy();
-        presenter.loadLocations();
+        presenter.loadLocationPoints();
         setSelectedOptions();
         croutonStyle = new de.keyboardsurfer.android.widget.crouton.Style.Builder()
                 .setFontName("fonts/segoe_ui_semilight.ttf")
@@ -129,8 +129,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
 
     @NeedsPermission(Manifest.permission.ACCESS_FINE_LOCATION)
     void enableMyLocation() {
-        if(map==null)
-            return;
+        if (map == null) return;
         map.setMyLocationEnabled(true);
         map.setOnMyLocationChangeListener(receivedLocation ->
                 presenter.updateSelectedDistancePoints(receivedLocation));
@@ -140,7 +139,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
         });
     }
 
-    public void showSettingsGps(){
+    public void showSettingsGps() {
         GoogleApiClient client = getApiClient();
         client.connect();
         LocationRequest locationRequest = LocationRequest.create()
@@ -157,7 +156,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
                 case LocationSettingsStatusCodes.SUCCESS:
                     break;
                 case LocationSettingsStatusCodes.RESOLUTION_REQUIRED:
-                    try{
+                    try {
                         status.startResolutionForResult(
                                 LocationServicesActivity.this,
                                 REQUEST_CHECK_SETTINGS);
@@ -171,7 +170,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
         });
     }
 
-    public GoogleApiClient getApiClient(){
+    public GoogleApiClient getApiClient() {
         return new GoogleApiClient.Builder(this)
                 .addApi(LocationServices.API)
                 .addConnectionCallbacks(new ConnectionCallbacks() {
@@ -179,6 +178,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
                     public void onConnected(@Nullable Bundle bundle) {
                         Log.d(TAG, "GPS connected!");
                     }
+
                     @Override
                     public void onConnectionSuspended(int i) {
                         Log.d(TAG, "GPS connection suspended!");
@@ -298,17 +298,7 @@ public class LocationServicesActivity extends AppCompatActivity implements
     }
 
 
-    // #region Interface Methods
-    @Override
-    public void showLocationPoints(final List<LocationPoint> points) {
-        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(() -> {
-                    map.clear();
-                    mBitmapOffice = BitmapDescriptorFactory.fromResource(R.drawable.office_marker);
-                    mBitmapPayPoint = BitmapDescriptorFactory.fromResource(R.drawable.paypoint_marker);
-                    putPointsInMapAsync(points);
-                });
-
-    }
+    //region Interface Methods
 
     @Override
     public void showLocationServicesErrors(final List<Exception> errors) {
@@ -343,7 +333,30 @@ public class LocationServicesActivity extends AppCompatActivity implements
         Crouton.makeText(this, message, croutonStyle, R.id.view_content).show();
     }
 
-    // #endregion
+    @Override
+    public void onLoading(@StringRes int message) {
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        SuperToast.create(LocationServicesActivity.this,
+                e.getMessage(), SuperToast.Duration.SHORT,
+                Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
+    }
+
+    @Override
+    public void onLoaded(final List<LocationPoint> points) {
+        ThreadMutex.instance("LoadMap").addOnThreadReleasedEvent(() -> {
+            map.clear();
+            mBitmapOffice = BitmapDescriptorFactory.fromResource(R.drawable.office_marker);
+            mBitmapPayPoint = BitmapDescriptorFactory.fromResource(R.drawable.paypoint_marker);
+            putPointsInMapAsync(points);
+        });
+
+    }
+
+    //endregion
 
     /**
      * Añade un marker al mapa
@@ -469,4 +482,5 @@ public class LocationServicesActivity extends AppCompatActivity implements
                 Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
                 .show());
     }
+
 }
