@@ -66,9 +66,9 @@ public class Account extends Model {
     private DateTime updateDate;
 
     @SerializedName("Debts")
-    private List<Debt> Debts;
+    private List<Debt> debts;
 
-    private List<Usage> Usages;
+    private List<Usage> usages;
 
     public Account() {
         super();
@@ -79,21 +79,6 @@ public class Account extends Model {
         this.client = ownerClient;
         this.accountNumber = accountNumber;
         this.nus = nus;
-        this.status = 1;
-    }
-
-    public Account(Client client, String accountNumber, String nUS,
-                   String accountOwner, String address, double latitude,
-                   double longitude, short energySupplyStatus) {
-        super();
-        this.client = client;
-        this.accountNumber = accountNumber;
-        this.nus = nUS;
-        this.accountOwner = accountOwner;
-        this.address = address;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.energySupplyStatus = energySupplyStatus;
         this.status = 1;
     }
 
@@ -222,14 +207,14 @@ public class Account extends Model {
      * @return Lista de deudas relacionadas
      */
     public List<Debt> getDebts() {
-        if (Debts == null) {
+        if (debts == null) {
             try {
-                Debts = getMany(Debt.class, "Account");
+                debts = getMany(Debt.class, "Account");
             } catch (NullPointerException e) {
-                Debts = new ArrayList<>();
+                debts = new ArrayList<>();
             }
         }
-        return Debts;
+        return debts;
     }
 
     /**
@@ -238,21 +223,21 @@ public class Account extends Model {
      * @return Lista de consumos relacionadas
      */
     public List<Usage> getUsages() {
-        if (Usages == null) {
+        if (usages == null) {
             try {
-                Usages = getMany(Usage.class, "Account");
+                usages = getMany(Usage.class, "Account");
             } catch (NullPointerException e) {
-                Usages = new ArrayList<>();
+                usages = new ArrayList<>();
             }
         }
-        return Usages;
+        return usages;
     }
 
     /**
      * Elimina todos los consumos relacionados a la cuenta
      */
     public void removeUsages() {
-        Usages = null;
+        usages = null;
         new Delete().from(Usage.class).where("Account=?", getId()).execute();
     }
 
@@ -268,7 +253,7 @@ public class Account extends Model {
      * Elimina todas las deudas de esta cuenta
      */
     public void removeAllDebts() {
-        Debts = null;
+        debts = null;
         new Delete().from(Debt.class).where("Account=?", getId()).execute();
     }
 

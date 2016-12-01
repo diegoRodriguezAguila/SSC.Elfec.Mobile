@@ -18,46 +18,43 @@ import com.elfec.ssc.presenter.ViewAccountsPresenter;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
 import com.elfec.ssc.view.ViewAccounts;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 /**
  * Maneja las notificaciones GCM de nuevas cuentas
- * @author Diego
  *
+ * @author Diego
  */
 public class NewAccountGCMHandler implements IGCMHandler {
 
-	private static final int NOTIF_ID = 1;
-	@Override
-	public Class<? extends Activity> getActivityClass() {
-		return ViewAccounts.class;
-	}
+    private static final int NOTIF_ID = 1;
 
-	@Override
-	public void handleGCMessage(Bundle messageInfo,	NotificationManager notifManager, NotificationCompat.Builder builder) {
-		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
-		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
-		{
-			try {
-				ElfecAccountsManager.registerAccount(JsonToAccountConverter.convert(new JSONObject(messageInfo.getString("account"))));
-			} catch (JSONException e) {
-				e.printStackTrace();
-			}
-			Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
-					NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
-			//Si la vista de ver cuentas esta activa
-			ViewAccountsPresenter presenter = ViewPresenterManager
-					.getPresenter(ViewAccountsPresenter.class);
-			if (presenter != null)
-				presenter.loadAccounts(true);
-			//Si la vista de ver notificaciones está activa
-			ViewNotificationsPresenter notifPresenter = ViewPresenterManager
-					.getPresenter(ViewNotificationsPresenter.class);
-			if (notifPresenter != null)
-				notifPresenter.addNewAccountNotificationUpdate(notif);
-			notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
-		}
-	}
+    @Override
+    public Class<? extends Activity> getActivityClass() {
+        return ViewAccounts.class;
+    }
+
+    @Override
+    public void handleGCMessage(Bundle messageInfo, NotificationManager notifManager, NotificationCompat.Builder builder) {
+        Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
+        if (ownerClient != null && ownerClient.getStatus() == ClientStatus.ACTIVE) {
+            try {
+                ElfecAccountsManager.registerAccount(JsonToAccountConverter.convert(messageInfo.getString("account")));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
+                    NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
+            //Si la vista de ver cuentas esta activa
+            ViewAccountsPresenter presenter = ViewPresenterManager
+                    .getPresenter(ViewAccountsPresenter.class);
+            if (presenter != null)
+                presenter.loadAccounts(true);
+            //Si la vista de ver notificaciones está activa
+            ViewNotificationsPresenter notifPresenter = ViewPresenterManager
+                    .getPresenter(ViewNotificationsPresenter.class);
+            if (notifPresenter != null)
+                notifPresenter.addNewAccountNotificationUpdate(notif);
+            notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
+        }
+    }
 
 }
