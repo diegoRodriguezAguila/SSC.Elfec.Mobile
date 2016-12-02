@@ -1,10 +1,7 @@
 package com.elfec.ssc.web_services;
 
 import com.elfec.ssc.model.LocationPoint;
-import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.security.SscToken;
-import com.elfec.ssc.model.webservices.WebServiceConnector;
-import com.elfec.ssc.model.webservices.converters.LocationPointsConverter;
 
 import java.util.List;
 
@@ -25,23 +22,10 @@ public class LocationPointService {
 
     /**
      * Obtiene todos los puntos de pago activos
-     *
-     * @param eventHandler handler del evento
-     */
-    public void getAllLocationPoints(IWSFinishEvent<List<LocationPoint>> eventHandler) {
-        WebServiceConnector<List<LocationPoint>> paypointWSConnector =
-                new WebServiceConnector<>("LocationPointWS.php?wsdl", "",
-                        "ssc_elfec", "GetAllLocationPoints", sscToken,
-                        new LocationPointsConverter(), eventHandler);
-        paypointWSConnector.execute();
-    }
-
-    /**
-     * Obtiene todos los puntos de pago activos
      */
     public Observable<List<LocationPoint>> getLocationPoints() {
         return new ServiceConnector<List<LocationPoint>>("LocationPointWS.php?wsdl",
-                "GetAllLocationPoints", sscToken)
+                "GetAllLocationPoints", sscToken){}
                 .execute();
     }
 }

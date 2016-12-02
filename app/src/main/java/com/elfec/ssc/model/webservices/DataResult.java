@@ -8,11 +8,14 @@ import java.util.List;
  * Created by Diego on 13/8/2016.
  * Describes a web service result with a data field
  */
-public class DataResult<T> {
+public class DataResult<T>{
+    @SerializedName("Response")
+    protected T data;
+
     @SerializedName("Errors")
     private List<Exception> errors;
-    @SerializedName("Response")
-    private T data;
+
+    //region getter setters
 
     public boolean hasErrors() {
         return errors != null && errors.size() > 0;
@@ -33,5 +36,6 @@ public class DataResult<T> {
     public void setData(T data) {
         this.data = data;
     }
+    //endregion
 }
 

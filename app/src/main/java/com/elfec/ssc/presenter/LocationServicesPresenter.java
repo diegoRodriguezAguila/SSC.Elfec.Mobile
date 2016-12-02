@@ -19,6 +19,7 @@ import rx.schedulers.Schedulers;
 
 public class LocationServicesPresenter extends BasePresenter<ILocationServices> {
 
+    private List<LocationPoint> allPoints;
     private List<LocationPoint> points;
     private LocationPointType lastSelectedType;
     private LocationDistance lastSelectedDistance;
@@ -58,9 +59,9 @@ public class LocationServicesPresenter extends BasePresenter<ILocationServices> 
     public void setSelectedType(LocationPointType selectedType) {
         lastSelectedType = selectedType;
         if (selectedType == LocationPointType.BOTH)
-            points = LocationPoint.getAll(LocationPoint.class);
+            points = allPoints;
         else
-            points = LocationPoint.getPointsByType(selectedType);
+            points = LocationPointsManager.filterByType(allPoints, selectedType);
         setSelectedDistance(lastSelectedDistance);
         AppPreferences.instance().setSelectedLocationPointType(selectedType);
         mView.showDetailMessage(LocationServicesMessages.buildMessage(selectedType, lastSelectedDistance));
@@ -110,6 +111,7 @@ public class LocationServicesPresenter extends BasePresenter<ILocationServices> 
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(locationPoints -> {
+                    allPoints = locationPoints;
                     verifyShowLocationPoints();
                 }, mView::onError);
     }

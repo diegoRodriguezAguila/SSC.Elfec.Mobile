@@ -4,6 +4,7 @@ import android.location.Location;
 
 import com.elfec.ssc.local_storage.LocationPointStorage;
 import com.elfec.ssc.model.LocationPoint;
+import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.web_services.LocationPointService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 
@@ -36,6 +37,17 @@ public class LocationPointsManager {
                         new LocationPointService(sscToken).getLocationPoints());
     }
 
+    public static List<LocationPoint> filterByType(List<LocationPoint> points,
+                                                   LocationPointType type){
+        List<LocationPoint> result = new ArrayList<>();
+        for (LocationPoint point : points) {
+            if (point.getType()==type) {
+                result.add(point);
+            }
+        }
+        return result;
+    }
+
 
     /**
      * Obtiene los puntos cercanos a la ubicación dada, y con la distancia definida
@@ -45,7 +57,8 @@ public class LocationPointsManager {
      * @param maxDistance
      * @return
      */
-    public static List<LocationPoint> getNearestPoints(List<LocationPoint> points, Location current, double maxDistance) {
+    public static List<LocationPoint> getNearestPoints(List<LocationPoint> points,
+                                                       Location current, double maxDistance) {
         List<LocationPoint> result = new ArrayList<>();
         for (LocationPoint point : points) {
             if (point.distanceFrom(current) <= maxDistance) {

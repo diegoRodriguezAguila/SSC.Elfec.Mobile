@@ -4,10 +4,10 @@ import com.elfec.ssc.BuildConfig;
 import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.DataResult;
+import com.elfec.ssc.model.webservices.DataResultParametrizedType;
 import com.elfec.ssc.model.webservices.MarshalDouble;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
@@ -17,6 +17,7 @@ import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
 import org.ksoap2.transport.HttpsTransportSE;
 
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.net.MalformedURLException;
 import java.net.Proxy;
@@ -27,12 +28,14 @@ import java.util.List;
 import rx.Observable;
 
 /**
- * Clase general para conexión con servicios web
+ * General object for web service connection.
+ * This is an abstract class so it must be called with braces at the end:<br>
+ * <code>new ServiceConnector(&hellip;){}</code>
  *
  * @param <T>
  * @author Diego
  */
-public class ServiceConnector<T> {
+public abstract class ServiceConnector<T> {
     private static final String WS_SERVER = BuildConfig.WS_SERVER_URL;
     private static final String SOAP_ACTION = "";
     private static final String NAMESPACE = "ssc_elfec";
@@ -40,10 +43,13 @@ public class ServiceConnector<T> {
     private String url;
     private String methodName;
     private SscToken sscToken;
+    private Type type;
 
     /**
      * Construye un conector de webservice soap con los parámetros indicados y
-     * con autenticación por sscToken
+     * con autenticación por sscToken.
+     * This is an abstract class so it must be called with braces at the end:<br>
+     * <code>new ServiceConnector(&hellip;){}</code>
      *
      * @param endpoint   endpoint
      * @param methodName soap method
@@ -53,18 +59,22 @@ public class ServiceConnector<T> {
         this.url = WS_SERVER + endpoint;
         this.methodName = methodName;
         this.sscToken = sscToken;
+        ParameterizedType c = (ParameterizedType) getClass().getGenericSuperclass();
+        Type type = c.getActualTypeArguments()[0];
+        this.type = new DataResultParametrizedType(type);
     }
 
     /**
      * Construye un conector de webservice soap con los parámetros indicados y
-     * sin autenticación
+     * sin autenticación.
+     * This is an abstract class so it must be called with braces at the end:<br>
+     * <code>new ServiceConnector(&hellip;){}</code>
      *
      * @param endpoint   endpoint
      * @param methodName soap method
      */
     public ServiceConnector(String endpoint, String methodName) {
-        this.url = WS_SERVER + endpoint;
-        this.methodName = methodName;
+        this(endpoint, methodName, null);
     }
 
     public Observable<T> execute(WSParam... params) {
@@ -97,14 +107,14 @@ public class ServiceConnector<T> {
         List<HeaderProperty> headers = ht.call(SOAP_ACTION, envelope,
                 headerPropertyArrayList);
         checkHeaderStatus(headers);
-        String result = envelope.getResponse().toString();
+        String response = envelope.getResponse().toString();
         Gson gson = GsonUtils.generateGson();
-        Type collectionType = new TypeToken<DataResult<T>>() {}.getType();
-        DataResult<T> dataResult = gson.fromJson(result, collectionType);
+        DataResult<T> dataResult = gson.fromJson(response, type);
         if (dataResult.hasErrors())
             throw dataResult.getErrors().get(0);
         return dataResult.getData();
     }
+
 
     /**
      * Verifica que el codigo http response sea 200
