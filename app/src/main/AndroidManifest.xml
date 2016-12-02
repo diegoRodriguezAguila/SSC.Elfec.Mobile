@@ -73,7 +73,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".view.ViewAccounts"
+            android:name=".view.AccountsActivity"
             android:label="@string/view_accounts_title"
             android:screenOrientation="portrait" >
         </activity>

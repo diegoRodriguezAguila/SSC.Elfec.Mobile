@@ -161,7 +161,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
     @Override
     public void goToViewAccounts() {
-        Intent i = new Intent(MainMenu.this, ViewAccounts.class);
+        Intent i = new Intent(MainMenu.this, AccountsActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }

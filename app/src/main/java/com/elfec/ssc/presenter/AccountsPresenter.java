@@ -12,25 +12,24 @@ import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.gcmservices.GcmTokenRequester;
-import com.elfec.ssc.presenter.views.IViewAccounts;
+import com.elfec.ssc.presenter.views.IAccountsView;
 import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.security.CredentialManager;
-import com.elfec.ssc.web_services.AccountWS;
+import com.elfec.ssc.web_services.AccountService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 
 import java.util.List;
 
-public class ViewAccountsPresenter {
+public class AccountsPresenter extends BasePresenter<IAccountsView> {
 
-    private IViewAccounts view;
     private boolean mIsLoadingAccounts;
     private boolean mIsRefreshing;
     private GcmTokenRequester mGcmTokenRequester;
     private SscTokenRequester mSscTokenRequester;
     private final String mImei;
 
-    public ViewAccountsPresenter(IViewAccounts view) {
-        this.view = view;
+    public AccountsPresenter(IAccountsView view) {
+        super(view);
         mIsLoadingAccounts = false;
         mIsRefreshing = false;
         Context context = AppPreferences.getApplicationContext();
@@ -49,16 +48,16 @@ public class ViewAccountsPresenter {
             Looper.prepare();
             mSscTokenRequester.getTokenAsync(wsTokenResult -> {
                 final Client client = Client.getActiveClient();
-                new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(),
+                new AccountService(wsTokenResult.getResult()).removeAccount(client.getGmail(),
                         nus, mImei, result -> {
                             if (result.getResult()) {
                                 ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
                                 loadAccounts(true);
-                                view.showAccountDeleted();
-                                view.hideWaiting();
+                                mView.showAccountDeleted();
+                                mView.hideWaiting();
                             } else {
-                                view.hideWaiting();
-                                view.displayErrors(result.getErrors());
+                                mView.hideWaiting();
+                                mView.onError(result.getErrors().get(0));
                             }
                         });
             });
@@ -88,9 +87,9 @@ public class ViewAccountsPresenter {
 
                     @Override
                     public void onGcmErrors(List<Exception> errors) {
-                        view.hideWaiting();
-                        view.showViewAccountsErrors(errors);
-                        view.showAccounts(null);
+                        mView.hideWaiting();
+                        mView.onError(errors.get(0));
+                        mView.onLoaded(null);
                     }
                 });
                 Looper.loop();
@@ -115,19 +114,19 @@ public class ViewAccountsPresenter {
         if (!mIsLoadingAccounts) {
             mIsLoadingAccounts = true;
             mSscTokenRequester.getTokenAsync(wsTokenResult ->
-                    new AccountWS(wsTokenResult.getResult()).getAllAccounts(client.getGmail(),
+                    new AccountService(wsTokenResult.getResult()).getAllAccounts(client.getGmail(),
                     Build.BRAND, Build.MODEL, mImei, gcmToken,
                             result -> new Thread(() -> {
                                 if (result.getErrors().size() == 0) {
                                     final List<Account> accounts =
                                             ClientManager.registerClientAccounts(result.getResult());
-                                    view.hideWaiting();
-                                    view.showAccounts(accounts);
+                                    mView.hideWaiting();
+                                    mView.onLoaded(accounts);
                                 } else {
-                                    view.hideWaiting();
+                                    mView.hideWaiting();
                                     if (mIsRefreshing || ErrorVerifierHelper.isOutdatedApp(result
                                             .getErrors()))
-                                        view.showViewAccountsErrors(result.getErrors());
+                                        mView.onError(result.getErrors().get(0));
                                 }
                                 mIsLoadingAccounts = false;
                                 mIsRefreshing = false;
@@ -142,8 +141,8 @@ public class ViewAccountsPresenter {
      */
     public void loadAccountsLocally(Client client) {
         List<Account> activeAccounts = client.getActiveAccounts();
-        view.hideWaiting();
-        view.showAccounts(activeAccounts);
+        mView.hideWaiting();
+        mView.onLoaded(activeAccounts);
     }
 
 }

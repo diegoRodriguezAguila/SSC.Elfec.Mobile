@@ -15,11 +15,11 @@ import java.util.List;
  * @author Diego
  *
  */
-public class AccountWS 
+public class AccountService
 {
 	private SscToken sscToken;
 	
-	public AccountWS(SscToken sscToken){
+	public AccountService(SscToken sscToken){
 		this.sscToken = sscToken;
 	}
 	

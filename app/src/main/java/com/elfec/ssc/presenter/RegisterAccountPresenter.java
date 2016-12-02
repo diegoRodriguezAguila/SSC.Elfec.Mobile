@@ -5,7 +5,7 @@ import android.os.Looper;
 
 import com.elfec.ssc.business_logic.ElfecAccountsManager;
 import com.elfec.ssc.business_logic.FieldValidator;
-import com.elfec.ssc.web_services.AccountWS;
+import com.elfec.ssc.web_services.AccountService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
@@ -97,7 +97,7 @@ public class RegisterAccountPresenter {
             public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
                 view.showRegistrationErrors(wsTokenResult.getErrors());
                 if (wsTokenResult.getResult() != null) {
-                    AccountWS accountWebService = new AccountWS(wsTokenResult
+                    AccountService accountWebService = new AccountService(wsTokenResult
                             .getResult());
                     accountWebService.registerAccount(view.getAccountNumber(),
                             view.getNus(), client.getGmail(),

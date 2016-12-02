@@ -14,9 +14,9 @@ import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.model.enums.ClientStatus;
 import com.elfec.ssc.model.enums.NotificationKey;
 import com.elfec.ssc.model.enums.NotificationType;
-import com.elfec.ssc.presenter.ViewAccountsPresenter;
+import com.elfec.ssc.presenter.AccountsPresenter;
 import com.elfec.ssc.presenter.ViewNotificationsPresenter;
-import com.elfec.ssc.view.ViewAccounts;
+import com.elfec.ssc.view.AccountsActivity;
 
 /**
  * Maneja las notificaciones GCM de nuevas cuentas
@@ -29,7 +29,7 @@ public class NewAccountGCMHandler implements IGCMHandler {
 
     @Override
     public Class<? extends Activity> getActivityClass() {
-        return ViewAccounts.class;
+        return AccountsActivity.class;
     }
 
     @Override
@@ -44,8 +44,8 @@ public class NewAccountGCMHandler implements IGCMHandler {
             Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
                     NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
             //Si la vista de ver cuentas esta activa
-            ViewAccountsPresenter presenter = ViewPresenterManager
-                    .getPresenter(ViewAccountsPresenter.class);
+            AccountsPresenter presenter = ViewPresenterManager
+                    .getPresenter(AccountsPresenter.class);
             if (presenter != null)
                 presenter.loadAccounts(true);
             //Si la vista de ver notificaciones está activa

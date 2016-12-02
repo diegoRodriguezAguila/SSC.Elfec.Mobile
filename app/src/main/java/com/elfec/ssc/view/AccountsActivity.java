@@ -3,6 +3,7 @@ package com.elfec.ssc.view;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
@@ -13,10 +14,9 @@ import android.widget.TextView;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
-import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.presenter.ViewAccountsPresenter;
-import com.elfec.ssc.presenter.views.IViewAccounts;
+import com.elfec.ssc.presenter.AccountsPresenter;
+import com.elfec.ssc.presenter.views.IAccountsView;
 import com.elfec.ssc.view.adapters.AccountAdapter;
 import com.elfec.ssc.view.controls.xlistview.XListView;
 import com.elfec.ssc.view.controls.xlistview.XListView.IXListViewListener;
@@ -29,28 +29,35 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
+public class AccountsActivity extends AppCompatActivity implements IAccountsView {
 
-    private ViewAccountsPresenter presenter;
+    private AccountsPresenter presenter;
 
     private boolean mIsDestroyed;
 
-    protected @BindView(R.id.accounts_list) XListView mListViewAccounts;
-    protected @BindView(R.id.layout_loading_accounts) View mLayoutLoadingAccounts;
-    protected @BindView(R.id.layout_how_to_add_accounts)
+    protected
+    @BindView(R.id.accounts_list)
+    XListView mAccountList;
+    protected
+    @BindView(R.id.layout_loading_accounts)
+    View mLayoutLoadingAccounts;
+    protected
+    @BindView(R.id.layout_how_to_add_accounts)
     ScrollView mLayoutHowToAddAccounts;
-    protected @BindView(R.id.lbl_no_accounts_registered) TextView mTxtNoAccounts;
+    protected
+    @BindView(R.id.lbl_no_accounts_registered)
+    TextView mTxtNoAccounts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
         mIsDestroyed = false;
-        presenter = new ViewAccountsPresenter(this);
+        presenter = new AccountsPresenter(this);
         ButterKnife.bind(this);
-        mListViewAccounts.setPullLoadEnable(false);
-        mListViewAccounts.setPullRefreshEnable(true);
-        mListViewAccounts.setXListViewListener(new IXListViewListener() {
+        mAccountList.setPullLoadEnable(false);
+        mAccountList.setPullRefreshEnable(true);
+        mAccountList.setXListViewListener(new IXListViewListener() {
             @Override
             public void onRefresh() {
                 presenter.refreshAccountsRemotely();
@@ -62,14 +69,14 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
             }
         });
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-        mListViewAccounts
+        mAccountList
                 .setOnItemLongClickListener((adapter, view, position, arg3) -> {
                     dialogRemove(position);
                     return true;
                 });
-        mListViewAccounts.setOnItemClickListener((adapter, view, pos, arg3) -> {
+        mAccountList.setOnItemClickListener((adapter, view, pos, arg3) -> {
             if (ButtonClicksHelper.canClickButton()) {
-                Intent i = new Intent(ViewAccounts.this,
+                Intent i = new Intent(AccountsActivity.this,
                         ViewAccountDetails.class);
                 Long id = ((Account) adapter.getItemAtPosition(pos))
                         .getId();
@@ -108,7 +115,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
     public void btnRegisterAccountClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            startActivityForResult(new Intent(ViewAccounts.this, RegisterAccount.class),
+            startActivityForResult(new Intent(AccountsActivity.this, RegisterAccount.class),
                     RegisterAccount.REGISTER_REQUEST_CODE);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
@@ -127,7 +134,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
 
             if (resultCode == RESULT_OK) {
                 boolean updateList = data.getBooleanExtra(RegisterAccount.REGISTER_SUCCESS, false);
-                if(updateList){
+                if (updateList) {
                     presenter.loadAccounts(true);
                 }
 
@@ -138,21 +145,20 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     //region interface Methods
 
     @Override
-    public void showAccounts(final List<Account> accounts) {
+    public void onLoaded(List<Account> accounts) {
         runOnUiThread(() -> {
-            if (!mIsDestroyed) {
-                if (accounts != null && accounts.size() > 0) {
-                    mListViewAccounts.setAdapter(new AccountAdapter(
-                            ViewAccounts.this, R.layout.account_list_item,
-                            accounts));
-                    mLayoutHowToAddAccounts.setVisibility(View.GONE);
-                    mTxtNoAccounts.setVisibility(View.GONE);
-                    mListViewAccounts.setVisibility(View.VISIBLE);
-                } else {
-                    mLayoutHowToAddAccounts.setVisibility(View.VISIBLE);
-                    mTxtNoAccounts.setVisibility(View.VISIBLE);
-                    mListViewAccounts.setVisibility(View.GONE);
-                }
+            if (mIsDestroyed) return;
+            if (accounts != null && accounts.size() > 0) {
+                mAccountList.setAdapter(new AccountAdapter(
+                        AccountsActivity.this, R.layout.account_list_item,
+                        accounts));
+                mLayoutHowToAddAccounts.setVisibility(View.GONE);
+                mTxtNoAccounts.setVisibility(View.GONE);
+                mAccountList.setVisibility(View.VISIBLE);
+            } else {
+                mLayoutHowToAddAccounts.setVisibility(View.VISIBLE);
+                mTxtNoAccounts.setVisibility(View.VISIBLE);
+                mAccountList.setVisibility(View.GONE);
             }
         });
     }
@@ -163,26 +169,11 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
             if (!mIsDestroyed) {
                 SuperToast.cancelAllSuperToasts();
                 SuperToast.create(
-                        ViewAccounts.this,
+                        AccountsActivity.this,
                         R.string.account_successfully_deleted,
                         SuperToast.Duration.LONG,
                         Style.getStyle(Style.BLUE,
                                 SuperToast.Animations.FADE)).show();
-            }
-        });
-    }
-
-    @Override
-    public void displayErrors(final List<Exception> errors) {
-        runOnUiThread(() -> {
-            if (!mIsDestroyed && errors.size() > 0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        ViewAccounts.this);
-                builder.setTitle(R.string.errors_on_delete_account_title)
-                        .setMessage(
-                                MessageListFormatter
-                                        .formatHTMLFromErrors(ViewAccounts.this, errors))
-                        .setPositiveButton(R.string.btn_ok, null).show();
             }
         });
     }
@@ -193,14 +184,14 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
                 .setTitle(R.string.delete_account_title)
                 .setMessage(R.string.delete_account_msg)
                 .setPositiveButton(R.string.btn_confirm, (dialog, which) -> {
-                    Account account = (Account) mListViewAccounts
+                    Account account = (Account) mAccountList
                             .getAdapter().getItem(position);
                     showWaiting();
                     presenter.removeAccount(account.getNus());
                 }).setNegativeButton(R.string.btn_cancel, null);
         AlertDialog dialog = builder.create();
         dialog.show();
-        ((TextView)dialog.findViewById(android.R.id.message))
+        ((TextView) dialog.findViewById(android.R.id.message))
                 .setMovementMethod(LinkMovementMethod.getInstance());
     }
 
@@ -213,7 +204,7 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     public void hideWaiting() {
         runOnUiThread(() -> {
             if (!mIsDestroyed) {
-                mListViewAccounts.stopRefresh();
+                mAccountList.stopRefresh();
                 mLayoutLoadingAccounts.setVisibility(
                         View.GONE);
             }
@@ -222,20 +213,23 @@ public class ViewAccounts extends AppCompatActivity implements IViewAccounts {
     }
 
     @Override
-    public void showViewAccountsErrors(final List<Exception> errors) {
+    public void onLoading(@StringRes int message) {
+
+    }
+
+    @Override
+    public void onError(Throwable e) {
         runOnUiThread(() -> {
-            if (!mIsDestroyed && errors.size() > 0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        ViewAccounts.this);
-                builder.setTitle(R.string.errors_on_download_accounts_title)
-                        .setMessage(
-                                MessageListFormatter
-                                        .formatHTMLFromErrors(ViewAccounts.this, errors))
-                        .setPositiveButton(R.string.btn_ok, null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                ((TextView)dialog.findViewById(android.R.id.message))
-                        .setMovementMethod(LinkMovementMethod.getInstance());
+            if (mIsDestroyed) return;
+            AlertDialog dialog = new AlertDialog.Builder(
+                    AccountsActivity.this)
+                    .setTitle(R.string.errors_on_download_accounts_title)
+                    .setMessage(e.getMessage())
+                    .setPositiveButton(R.string.btn_ok, null).create();
+            dialog.show();
+            TextView txtMessage = (TextView) dialog.findViewById(android.R.id.message);
+            if (txtMessage != null) {
+                txtMessage.setMovementMethod(LinkMovementMethod.getInstance());
             }
         });
     }
