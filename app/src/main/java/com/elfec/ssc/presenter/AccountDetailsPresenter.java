@@ -3,18 +3,18 @@ package com.elfec.ssc.presenter;
 import com.elfec.ssc.business_logic.UsageManager;
 import com.elfec.ssc.local_storage.UsageStorage;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.presenter.views.IViewAccountDetails;
+import com.elfec.ssc.presenter.views.IAccountDetailsView;
 
 import java.net.ConnectException;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class ViewAccountDetailsPresenter extends BasePresenter<IViewAccountDetails> {
+public class AccountDetailsPresenter extends BasePresenter<IAccountDetailsView> {
     private Account account;
 
-    public ViewAccountDetailsPresenter(IViewAccountDetails view,
-                                       long accountId) {
+    public AccountDetailsPresenter(IAccountDetailsView view,
+                                   long accountId) {
         super(view);
         this.account = Account.get(accountId);
     }

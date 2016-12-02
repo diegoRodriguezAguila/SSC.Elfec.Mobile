@@ -77,10 +77,10 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
         mAccountList.setOnItemClickListener((adapter, view, pos, arg3) -> {
             if (ButtonClicksHelper.canClickButton()) {
                 Intent i = new Intent(AccountsActivity.this,
-                        ViewAccountDetails.class);
+                        AccountDetailsActivity.class);
                 Long id = ((Account) adapter.getItemAtPosition(pos))
                         .getId();
-                i.putExtra(ViewAccountDetails.SELECTED_ACCOUNT_ID, id);
+                i.putExtra(AccountDetailsActivity.SELECTED_ACCOUNT_ID, id);
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_left_in,
                         R.anim.slide_left_out);

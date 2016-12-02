@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Provee de una abstracción de la vista de información de una cuenta
  */
-public interface IViewAccountDetails extends IBaseView {
+public interface IAccountDetailsView extends IBaseView {
     void setAccountNumber(String accountNumber);
 
     void setNus(String nus);

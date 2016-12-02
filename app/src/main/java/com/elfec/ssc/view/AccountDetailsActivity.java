@@ -16,8 +16,8 @@ import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
 import com.elfec.ssc.model.Usage;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
-import com.elfec.ssc.presenter.ViewAccountDetailsPresenter;
-import com.elfec.ssc.presenter.views.IViewAccountDetails;
+import com.elfec.ssc.presenter.AccountDetailsPresenter;
+import com.elfec.ssc.presenter.views.IAccountDetailsView;
 import com.elfec.ssc.view.adapters.DebtAdapter;
 import com.elfec.ssc.view.adapters.ViewUsageAdapter;
 import com.elfec.ssc.view.controls.widget.LayoutListView;
@@ -35,12 +35,12 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ViewAccountDetails extends AppCompatActivity implements
-        IViewAccountDetails {
+public class AccountDetailsActivity extends AppCompatActivity implements
+        IAccountDetailsView {
 
     public static final String SELECTED_ACCOUNT_ID = "SelectedAccountId";
 
-    private ViewAccountDetailsPresenter presenter;
+    private AccountDetailsPresenter presenter;
 
     public boolean horizontal;
     protected
@@ -58,7 +58,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
         setContentView(R.layout.activity_view_account_details);
         ButterKnife.bind(this);
         initializeDecimalFormatter();
-        presenter = new ViewAccountDetailsPresenter(this, getIntent()
+        presenter = new AccountDetailsPresenter(this, getIntent()
                 .getLongExtra(SELECTED_ACCOUNT_ID, -1));
         presenter.setFields();
         presenter.getUsages();
@@ -159,7 +159,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
         runOnUiThread(() -> {
             if (usage == null || usage.size() == 0) return;
             mListViewUsages.setAdapter(new ViewUsageAdapter(
-                    ViewAccountDetails.this, R.layout.usage_row, usage));
+                    AccountDetailsActivity.this, R.layout.usage_row, usage));
         });
 
     }
@@ -167,7 +167,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
     @Override
     public void showDebts(final List<Debt> debts) {
         runOnUiThread(() -> mListViewDebts
-                .setAdapter(new DebtAdapter(ViewAccountDetails.this,
+                .setAdapter(new DebtAdapter(AccountDetailsActivity.this,
                         R.layout.debt_list_item, debts)));
     }
 
@@ -181,7 +181,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
 
     @Override
     public void onError(Throwable e) {
-        runOnUiThread(() -> SuperToast.create(ViewAccountDetails.this,
+        runOnUiThread(() -> SuperToast.create(AccountDetailsActivity.this,
                 e.getMessage(), SuperToast.Duration.SHORT,
                 Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
                 .show());

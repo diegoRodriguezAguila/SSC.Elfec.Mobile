@@ -102,7 +102,7 @@
             android:label="@string/notifications_title" >
         </activity>
         <activity
-            android:name="com.elfec.ssc.view.ViewAccountDetails"
+            android:name="com.elfec.ssc.view.AccountDetailsActivity"
             android:label="@string/view_account_details_title" >
         </activity>
         
