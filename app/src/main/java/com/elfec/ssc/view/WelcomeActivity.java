@@ -12,13 +12,13 @@ import android.view.animation.AnimationUtils;
 import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.WelcomePresenter;
-import com.elfec.ssc.presenter.views.IWelcome;
+import com.elfec.ssc.presenter.views.IWelcomeView;
 import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.view.controls.AccountPickerService;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class Welcome extends AppCompatActivity implements IWelcome {
+public class WelcomeActivity extends AppCompatActivity implements IWelcomeView {
 
     private WelcomePresenter presenter;
     private AccountPickerService mAccountPickService;
@@ -94,10 +94,10 @@ public class Welcome extends AppCompatActivity implements IWelcome {
 
     @Override
     public void goToMainMenu() {
-        Intent i = new Intent(Welcome.this, MainMenu.class);
+        Intent i = new Intent(WelcomeActivity.this, MainMenuActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-        Welcome.this.finish();
+        WelcomeActivity.this.finish();
     }
 
     // #endregion

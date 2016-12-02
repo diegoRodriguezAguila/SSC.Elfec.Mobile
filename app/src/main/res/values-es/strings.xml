@@ -4,7 +4,7 @@
     <string name="app_name">Elfec Móvil</string>
     <string name="about">Acerca de&#8230;</string>
 
-    <!-- Welcome -->
+    <!-- WelcomeActivity -->
     <string name="welcome_to_app">Bienvenido(a) al</string>
     <string name="welcome_description">Para poder utilizar todas las funcionalidades de la aplicación, se necesita una cuenta de Gmail</string>
     <string name="welcome_create_gmail">desea seleccionar una cuenta?</string>

@@ -26,7 +26,8 @@ public class OutageGCMHandler implements INotificationHandler {
 	@Override
 	public void handleNotification(Bundle messageInfo,
 								   NotificationManager notifManager, Builder builder) {
-		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
+		Client ownerClient =null;//TODO current client Client.getClientByGmail(messageInfo
+		// .getString("gmail"));
 		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
 		{
 			Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),

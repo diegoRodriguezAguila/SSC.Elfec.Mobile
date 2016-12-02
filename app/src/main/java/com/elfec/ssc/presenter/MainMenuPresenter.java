@@ -1,18 +1,19 @@
 package com.elfec.ssc.presenter;
 
 import com.elfec.ssc.business_logic.ClientManager;
-import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.model.Client;
-import com.elfec.ssc.presenter.views.IMainMenu;
+import com.elfec.ssc.model.enums.ClientStatus;
+import com.elfec.ssc.presenter.views.IMainMenuView;
 import com.elfec.ssc.security.AppPreferences;
 
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-public class MainMenuPresenter {
 
-    private IMainMenu view;
+public class MainMenuPresenter extends BasePresenter<IMainMenuView> {
 
-    public MainMenuPresenter(IMainMenu view) {
-        this.view = view;
+    public MainMenuPresenter(IMainMenuView view) {
+        super(view);
     }
 
     /**
@@ -21,37 +22,30 @@ public class MainMenuPresenter {
      */
     public void verifyAccountsRequirements() {
         if (AppPreferences.instance().hasOneGmailAccount())
-            view.goToViewAccounts();
-        else
-            view.warnUserHasNoAccounts();
+            mView.goToViewAccounts();
+        else mView.warnUserHasNoAccounts();
     }
 
     public void handlePickedGmailAccount(final String gmail) {
-        ThreadMutex.instance("ActiveClient").setBusy();
-        view.setCurrentClient(gmail);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                ClientManager.registerActiveClient(gmail);
-                AppPreferences.instance().setHasOneGmailAccount();
-                ThreadMutex.instance("ActiveClient").setFree();
-            }
-        });
-        thread.start();
-        view.goToViewAccounts();
+        mView.setCurrentClient(gmail);
+        ClientManager.registerActiveClient(new Client(gmail, ClientStatus.ACTIVE))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(client -> {
+                    mView.goToViewAccounts();
+                }, e -> {
+                });
     }
 
     /**
      * obtiene el cliente actual
      */
     public void loadCurrentClient() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Client client = Client.getActiveClient();
-                view.setCurrentClient(client == null ? null : client.getGmail());
-            }
-        });
-        thread.start();
+        ClientManager.activeClient().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(client -> {
+                    mView.setCurrentClient(client == null ? null : client.getGmail());
+                }, e -> {
+                });
     }
 }

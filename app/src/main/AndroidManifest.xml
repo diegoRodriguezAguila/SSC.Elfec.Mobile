@@ -67,7 +67,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.MainMenu"
+            android:name=".view.MainMenuActivity"
             android:theme="@style/Theme.ElfecSsc.NoActionBar"
             android:label="@string/app_title"
             android:screenOrientation="portrait" >
@@ -84,7 +84,7 @@
         </activity>
         <activity
             android:theme="@style/Theme.ElfecSsc.NoActionBar"
-            android:name=".view.Welcome"
+            android:name=".view.WelcomeActivity"
             android:label="@string/welcome"
             android:screenOrientation="portrait" >
         </activity>

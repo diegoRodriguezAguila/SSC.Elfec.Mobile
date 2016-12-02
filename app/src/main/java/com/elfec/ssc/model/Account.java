@@ -251,9 +251,7 @@ public class Account extends Model {
      * @return
      */
     public static Account findAccount(String gmail, String nus) {
-        return new Select().from(Account.class).as("a").join(Client.class)
-                .as("c").on("a.Client=c.Id")
-                .where("NUS=? AND Gmail=?", nus, gmail).executeSingle();
+        return null;
     }
 
 

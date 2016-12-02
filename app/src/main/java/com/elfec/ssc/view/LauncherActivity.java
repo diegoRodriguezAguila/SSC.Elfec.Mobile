@@ -13,7 +13,7 @@ public class LauncherActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Intent i = new Intent(LauncherActivity.this,
 				AppPreferences.instance().isFirstAppUsage()?
-                        Welcome.class : MainMenu.class);
+                        WelcomeActivity.class : MainMenuActivity.class);
 		startActivity(i);
 		LauncherActivity.this.finish();
 	}

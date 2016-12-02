@@ -22,7 +22,7 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.web_services.SSLConection;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.MainMenuPresenter;
-import com.elfec.ssc.presenter.views.IMainMenu;
+import com.elfec.ssc.presenter.views.IMainMenuView;
 import com.elfec.ssc.view.controls.AccountPickerService;
 
 import java.security.MessageDigest;
@@ -32,7 +32,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class MainMenu extends AppCompatActivity implements IMainMenu {
+public class MainMenuActivity extends AppCompatActivity implements IMainMenuView {
 
     private MainMenuPresenter presenter;
     @BindView(R.id.btn_switch_client)
@@ -122,7 +122,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
     public void btnLocationServicesClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            Intent i = new Intent(MainMenu.this, LocationServicesActivity.class);
+            Intent i = new Intent(MainMenuActivity.this, LocationServicesActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
@@ -131,7 +131,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
     public void btnNotificationsClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            Intent i = new Intent(MainMenu.this, ViewNotifications.class);
+            Intent i = new Intent(MainMenuActivity.this, ViewNotifications.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
@@ -140,7 +140,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
     public void btnContactsClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            Intent i = new Intent(MainMenu.this, Contacts.class);
+            Intent i = new Intent(MainMenuActivity.this, Contacts.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
@@ -161,7 +161,7 @@ public class MainMenu extends AppCompatActivity implements IMainMenu {
 
     @Override
     public void goToViewAccounts() {
-        Intent i = new Intent(MainMenu.this, AccountsActivity.class);
+        Intent i = new Intent(MainMenuActivity.this, AccountsActivity.class);
         startActivity(i);
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
     }

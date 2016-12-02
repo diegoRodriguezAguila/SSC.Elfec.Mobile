@@ -1,6 +1,6 @@
 package com.elfec.ssc.presenter.views;
 
-public interface IMainMenu {
+public interface IMainMenuView extends IBaseView {
 
 	/**
 	 * Invoca los metodos necesarios para cambiar a la vista de ver las cuentas

@@ -52,7 +52,8 @@ public class RegisterAccountPresenter {
 				boolean nusIsValid = validateNUS();
 				boolean accountNumberIsValid = validateAccountNumber();
 				if (nusIsValid && accountNumberIsValid) {
-					final Client client = Client.getActiveClient();
+					final Client client =null;//TODO current client Client.getClientByGmail(messageInfo
+					// .getString("gmail"));
 					if (!client.hasAccount(view.getNus(),
 							view.getAccountNumber())) {
 						view.showWSWaiting();

@@ -4,7 +4,6 @@ import android.util.Log;
 
 import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.Account;
-import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Debt;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -60,7 +59,7 @@ public class AccountDeserializer implements JsonDeserializer<Account> {
     private Account convert(JsonElement json, Type typeOfT) {
         Log.d(TAG, "Received: " + json.toString());
         Account account = GsonUtils.generateBaseGson().fromJson(json, typeOfT);
-        account.setClient(Client.getActiveClient());
+        //account.setClient(Client.getActiveClient());
         filterDebts(account);
         return account;
     }

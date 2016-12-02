@@ -47,7 +47,8 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
         new Thread(() -> {
             Looper.prepare();
             mSscTokenRequester.getTokenAsync(wsTokenResult -> {
-                final Client client = Client.getActiveClient();
+                final Client client =null;//TODO current client Client.getClientByGmail(messageInfo
+                // .getString("gmail"));
                 new AccountService(wsTokenResult.getResult()).removeAccount(client.getGmail(),
                         nus, mImei, result -> {
                             if (result.getResult()) {
@@ -71,10 +72,11 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
      * versión local
      * @param preLoad si es verdadero se cargan las cuentas locales antes
      *                de intentar realizar una llamada remota
-     */
+    */
     public void loadAccounts(final boolean preLoad) {
         ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(() -> {
-            final Client client = Client.getActiveClient();
+            final Client client =null;//TODO current client Client.getClientByGmail(messageInfo
+            // .getString("gmail"));
             if(preLoad)
                 loadAccountsLocally(client);
             new Thread(() -> {
@@ -95,6 +97,35 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
                 Looper.loop();
             }).start();
         });
+    }
+
+    /**
+     * Obtiene las cuentas del cliente remotamente, si no hay conexión obtiene la
+     * versión local
+     */
+    public void loadAccounts() {
+        /*ThreadMutex.instance("ActiveClient").addOnThreadReleasedEvent(() -> {
+            final Client client = Client.getActiveClient();
+            if(preLoad)
+                loadAccountsLocally(client);
+            new Thread(() -> {
+                Looper.prepare();
+                mGcmTokenRequester.getTokenAsync(new GcmTokenCallback() {
+                    @Override
+                    public void onGcmTokenReceived(String gcmToken) {
+                        loadAccountsRemotely(client, gcmToken);
+                    }
+
+                    @Override
+                    public void onGcmErrors(List<Exception> errors) {
+                        mView.hideWaiting();
+                        mView.onError(errors.get(0));
+                        mView.onLoaded(null);
+                    }
+                });
+                Looper.loop();
+            }).start();
+        });*/
     }
 
     /**

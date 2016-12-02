@@ -19,40 +19,40 @@ import com.elfec.ssc.view.AccountsActivity;
 
 /**
  * Maneja las notificaciones de eliminaci�n de cuentas
- * @author drodriguez
  *
+ * @author drodriguez
  */
 public class AccountDeletedGCMHandler implements INotificationHandler {
 
-	private static final int NOTIF_ID = 2;
-	@Override
-	public Class<? extends Activity> getActivityClass() {
-		return AccountsActivity.class;
-	}
+    private static final int NOTIF_ID = 2;
 
-	@Override
-	public void handleNotification(Bundle messageInfo, NotificationManager notifManager, NotificationCompat.Builder builder) {
-		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
-		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
-		{
-			boolean res = ElfecAccountsManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
-			if(res)
-			{
-				Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
-						NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
-				//Si la vista de ver cuentas esta activa
-				AccountsPresenter presenter = ViewPresenterManager
-						.getPresenter(AccountsPresenter.class);
-				if (presenter != null)
-					presenter.loadAccounts(true);
-				//Si la vista de ver notificaciones está activa
-				ViewNotificationsPresenter notifPresenter = ViewPresenterManager
-						.getPresenter(ViewNotificationsPresenter.class);
-				if (notifPresenter != null)
-					notifPresenter.addNewAccountNotificationUpdate(notif);
-				notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
-			}
-		}
-	}
+    @Override
+    public Class<? extends Activity> getActivityClass() {
+        return AccountsActivity.class;
+    }
+
+    @Override
+    public void handleNotification(Bundle messageInfo, NotificationManager notifManager, NotificationCompat.Builder builder) {
+        //TODO replace Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
+        Client ownerClient = null;
+        if (ownerClient != null && ownerClient.getStatus() == ClientStatus.ACTIVE) {
+            boolean res = ElfecAccountsManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
+            if (res) {
+                Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
+                        NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
+                //Si la vista de ver cuentas esta activa
+                AccountsPresenter presenter = ViewPresenterManager
+                        .getPresenter(AccountsPresenter.class);
+                if (presenter != null)
+                    presenter.loadAccounts(true);
+                //Si la vista de ver notificaciones está activa
+                ViewNotificationsPresenter notifPresenter = ViewPresenterManager
+                        .getPresenter(ViewNotificationsPresenter.class);
+                if (notifPresenter != null)
+                    notifPresenter.addNewAccountNotificationUpdate(notif);
+                notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
+            }
+        }
+    }
 
 }

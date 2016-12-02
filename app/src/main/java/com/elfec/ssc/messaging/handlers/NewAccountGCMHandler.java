@@ -34,7 +34,8 @@ public class NewAccountGCMHandler implements INotificationHandler {
 
     @Override
     public void handleNotification(Bundle messageInfo, NotificationManager notifManager, NotificationCompat.Builder builder) {
-        Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
+        Client ownerClient = null; //TODO current client Client.getClientByGmail(messageInfo
+        // .getString("gmail"));
         if (ownerClient != null && ownerClient.getStatus() == ClientStatus.ACTIVE) {
             try {
                 ElfecAccountsManager.registerAccount(JsonToAccountConverter.convert(messageInfo.getString("account")));
