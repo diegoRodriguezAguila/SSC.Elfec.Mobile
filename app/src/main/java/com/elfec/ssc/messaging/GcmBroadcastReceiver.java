@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging;
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;

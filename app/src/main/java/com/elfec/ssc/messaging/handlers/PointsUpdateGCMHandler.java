@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -17,11 +17,11 @@ import org.json.JSONArray;
  *
  * @author drodriguez
  */
-public class PointsUpdateGCMHandler implements IGCMHandler {
+public class PointsUpdateGCMHandler implements INotificationHandler {
     //private final int NOTIF_ID = 3;
     @Override
-    public void handleGCMessage(Bundle messageInfo,
-                                NotificationManager notifManager, Builder builder) {
+    public void handleNotification(Bundle messageInfo,
+                                   NotificationManager notifManager, Builder builder) {
         try {
             JSONArray result = new JSONArray(messageInfo.getString("points"));
             LocationServicesPresenter presenter = ViewPresenterManager

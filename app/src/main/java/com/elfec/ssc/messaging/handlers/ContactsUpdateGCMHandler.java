@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -14,12 +14,12 @@ import com.elfec.ssc.view.Contacts;
  * @author drodriguez
  *
  */
-public class ContactsUpdateGCMHandler implements IGCMHandler {
+public class ContactsUpdateGCMHandler implements INotificationHandler {
 
 	private final int NOTIF_ID = 4;
 	@Override
-	public void handleGCMessage(Bundle messageInfo,
-			NotificationManager notifManager, Builder builder) {
+	public void handleNotification(Bundle messageInfo,
+								   NotificationManager notifManager, Builder builder) {
 		ContactsManager.updateContactData(messageInfo.getString("phone"), messageInfo.getString("address"), 
 				messageInfo.getString("email"), messageInfo.getString("web_page"), messageInfo.getString("facebook"),
 						messageInfo.getString("facebook_id"));

@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging;
 
 import android.app.IntentService;
 import android.app.NotificationManager;
@@ -12,6 +12,8 @@ import android.text.Html;
 import android.util.Log;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.messaging.handlers.GcmHandlerFactory;
+import com.elfec.ssc.messaging.handlers.INotificationHandler;
 
 /**
  * Se encarga de procesar el mensaje recibido por el GCMBroadcastReceiver
@@ -34,7 +36,7 @@ public class GcmMessageService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Log.d(TAG, intent.getExtras().toString());
         Bundle messageInfo = intent.getExtras();
-        IGCMHandler gcmHandler = GCMHandlerFactory.getGCMHandler(messageInfo
+        INotificationHandler gcmHandler = GcmHandlerFactory.create(messageInfo
                 .getString("key"));
         if (gcmHandler != null) {
             NotificationManager notifManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
@@ -50,7 +52,7 @@ public class GcmMessageService extends IntentService {
                 builder.setContentIntent(pending);
             }
             gcmHandler
-                    .handleGCMessage(
+                    .handleNotification(
                             messageInfo,
                             notifManager,
                             builder.setSound(

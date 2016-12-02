@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -10,12 +10,12 @@ import android.support.v4.app.NotificationCompat.Builder;
  * @author drodriguez
  *
  */
-public class MiscellaneousGCMHandler implements IGCMHandler {
+public class MiscellaneousGCMHandler implements INotificationHandler {
 
 	private final int NOTIF_ID = 5;
 	@Override
-	public void handleGCMessage(Bundle messageInfo,
-			NotificationManager notifManager, Builder builder) {
+	public void handleNotification(Bundle messageInfo,
+								   NotificationManager notifManager, Builder builder) {
 		notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
 	}
 

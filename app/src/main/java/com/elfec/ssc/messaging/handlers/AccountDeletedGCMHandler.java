@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -22,7 +22,7 @@ import com.elfec.ssc.view.AccountsActivity;
  * @author drodriguez
  *
  */
-public class AccountDeletedGCMHandler implements IGCMHandler {
+public class AccountDeletedGCMHandler implements INotificationHandler {
 
 	private static final int NOTIF_ID = 2;
 	@Override
@@ -31,7 +31,7 @@ public class AccountDeletedGCMHandler implements IGCMHandler {
 	}
 
 	@Override
-	public void handleGCMessage(Bundle messageInfo,	NotificationManager notifManager, NotificationCompat.Builder builder) {
+	public void handleNotification(Bundle messageInfo, NotificationManager notifManager, NotificationCompat.Builder builder) {
 		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
 		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
 		{

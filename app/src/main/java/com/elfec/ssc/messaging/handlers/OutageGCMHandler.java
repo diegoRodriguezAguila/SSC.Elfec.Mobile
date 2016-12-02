@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -20,12 +20,12 @@ import com.elfec.ssc.view.ViewNotifications;
  * @author drodriguez
  *
  */
-public class OutageGCMHandler implements IGCMHandler {
+public class OutageGCMHandler implements INotificationHandler {
 
 	private final int NOTIF_ID = 3;
 	@Override
-	public void handleGCMessage(Bundle messageInfo,
-			NotificationManager notifManager, Builder builder) {
+	public void handleNotification(Bundle messageInfo,
+								   NotificationManager notifManager, Builder builder) {
 		Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
 		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
 		{

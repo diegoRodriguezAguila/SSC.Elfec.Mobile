@@ -4,7 +4,6 @@ import com.elfec.ssc.business_logic.UsageManager;
 import com.elfec.ssc.local_storage.UsageStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
-import com.elfec.ssc.web_services.SscTokenRequester;
 
 import java.net.ConnectException;
 
@@ -24,10 +23,8 @@ public class ViewAccountDetailsPresenter extends BasePresenter<IViewAccountDetai
         new UsageStorage().getUsages(account.getNus())
                 .flatMap(usages -> {
                     mView.showUsage(usages);
-                    return new SscTokenRequester().getSscToken();
-                }).flatMap(sscToken ->
-                UsageManager.syncUsages(account.getNus()))
-                .subscribeOn(Schedulers.io())
+                    return UsageManager.syncUsages(account.getNus());
+                }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mView::showUsage, e -> {
                     if (!(e instanceof ConnectException)) {

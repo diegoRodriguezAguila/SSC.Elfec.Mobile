@@ -67,7 +67,9 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
 
-    //Local Storage
+    //GCM
+    compile 'com.github.VictorAlbertos:RxGcm:0.3.0'
+
     //Local Storage
     compile 'io.paperdb:paperdb:2.0'
     compile 'com.cesarferreira.rxpaper:rxpaper:0.4.1'

@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import com.elfec.ssc.model.enums.NotificationKey;
 
@@ -10,8 +10,8 @@ import java.util.Hashtable;
  * @author Diego
  *
  */
-public class GCMHandlerFactory {
-	private static Hashtable<String, Class<? extends IGCMHandler>> gcmHandlers = new Hashtable<String, Class<? extends IGCMHandler>>();
+public class GcmHandlerFactory {
+	private static Hashtable<String, Class<? extends INotificationHandler>> gcmHandlers = new Hashtable<String, Class<? extends INotificationHandler>>();
 	static {
 		gcmHandlers.put(NotificationKey.NEW_ACCOUNT.toString(),
 				NewAccountGCMHandler.class);
@@ -40,7 +40,7 @@ public class GCMHandlerFactory {
 	 * @param key
 	 * @return
 	 */
-	public static IGCMHandler getGCMHandler(String key) {
+	public static INotificationHandler create(String key) {
 		try {
 			return gcmHandlers.get(key).newInstance();
 		} catch (InstantiationException e) {

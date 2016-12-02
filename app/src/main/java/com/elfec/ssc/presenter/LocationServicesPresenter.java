@@ -10,7 +10,6 @@ import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.security.AppPreferences;
-import com.elfec.ssc.web_services.SscTokenRequester;
 
 import java.util.List;
 
@@ -105,9 +104,7 @@ public class LocationServicesPresenter extends BasePresenter<ILocationServices> 
      * Obtiene la lista de puntos de ubicación
      */
     public void loadLocationPoints() {
-        new SscTokenRequester().getSscToken()
-                .flatMap(sscToken ->
-                        LocationPointsManager.syncLocationPoints())
+        LocationPointsManager.syncLocationPoints()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(locationPoints -> {

@@ -107,7 +107,7 @@
         </activity>
         
         <receiver
-            android:name=".gcmservices.GcmBroadcastReceiver"
+            android:name=".messaging.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
@@ -116,9 +116,9 @@
             </intent-filter>
         </receiver>
 
-        <service android:name=".gcmservices.GcmMessageService" />
+        <service android:name=".messaging.GcmMessageService" />
         
-		<receiver android:name=".gcmservices.UpdateReceiver">
+		<receiver android:name=".messaging.UpdateReceiver">
 		     <intent-filter>
 		          <action android:name="android.intent.action.PACKAGE_REPLACED" />
 		          <data android:path="com.elfec.ssc"
@@ -126,9 +126,9 @@
 		     </intent-filter>
 		</receiver>
 
-		<service android:name=".gcmservices.UpdateGCMTokenService" />
+		<service android:name=".messaging.UpdateGCMTokenService" />
 		
-		<receiver android:name=".gcmservices.InternetEnabledReceiver" >
+		<receiver android:name=".messaging.InternetEnabledReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>

@@ -1,4 +1,4 @@
-package com.elfec.ssc.gcmservices;
+package com.elfec.ssc.messaging.handlers;
 
 import android.app.Activity;
 import android.app.NotificationManager;
@@ -10,7 +10,7 @@ import android.support.v4.app.NotificationCompat.Builder;
  * @author Diego
  *
  */
-public interface IGCMHandler {
+public interface INotificationHandler {
 
 	/**
 	 * Se encarga de manejar el mensaje de forma adecuada
@@ -18,7 +18,7 @@ public interface IGCMHandler {
 	 * @param notifManager
 	 * @param builder
 	 */
-	public void handleGCMessage(Bundle messageInfo, NotificationManager notifManager, Builder builder);
+	public void handleNotification(Bundle messageInfo, NotificationManager notifManager, Builder builder);
 	/**
 	 * Obtiene el tipo de actividad que se iniciará al presionar en una notificación
 	 * en caso de tener una notificación que debe llevar a una vista
