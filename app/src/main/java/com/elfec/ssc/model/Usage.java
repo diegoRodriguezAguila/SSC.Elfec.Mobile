@@ -1,21 +1,13 @@
 package com.elfec.ssc.model;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Column.ForeignKeyAction;
 import com.google.gson.annotations.SerializedName;
 
-public class Usage extends Model {
-
-    @Column(name = "Account", notNull = true, onDelete = ForeignKeyAction.CASCADE)
-    private Account account;
+public class Usage {
 
     @SerializedName("EnergyUsage")
-    @Column(name = "EnergyUsage")
     private int energyUsage;
 
     @SerializedName("Term")
-    @Column(name = "Term")
     private String term;
 
     public Usage() {
@@ -29,14 +21,6 @@ public class Usage extends Model {
     }
 
     //region getter setters
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public int getEnergyUsage() {
         return energyUsage;

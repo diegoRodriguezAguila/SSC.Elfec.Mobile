@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Provee de una abstracción de la vista de información de una cuenta
  */
-public interface IViewAccountDetails {
+public interface IViewAccountDetails extends IBaseView {
     void setAccountNumber(String accountNumber);
 
     void setNus(String nus);
@@ -30,5 +30,11 @@ public interface IViewAccountDetails {
     void showDebts(List<Debt> debts);
 
     void navigateToAddress(Account account);
+
+    /**
+     * Called when an error while loading occurred
+     * @param e error
+     */
+    void onError(Throwable e);
 
 }

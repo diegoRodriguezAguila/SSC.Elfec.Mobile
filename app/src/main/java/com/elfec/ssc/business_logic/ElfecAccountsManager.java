@@ -1,9 +1,7 @@
 package com.elfec.ssc.business_logic;
 
-import com.activeandroid.ActiveAndroid;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
-import com.elfec.ssc.model.Usage;
 
 import org.joda.time.DateTime;
 
@@ -59,27 +57,6 @@ public class ElfecAccountsManager {
             return account.save() > 0;
         }
         return false;
-    }
-
-    /**
-     * Registra una lista de consumos a nombre de una cuenta
-     *
-     * @param account
-     * @param usages
-     */
-    public static void registerAccountUsages(Account account, List<Usage> usages) {
-        ActiveAndroid.beginTransaction();
-        try {
-            for (Usage usage : usages) {
-                usage.setAccount(account);
-                usage.save();
-            }
-            ActiveAndroid.setTransactionSuccessful();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            ActiveAndroid.endTransaction();
-        }
     }
 
 }

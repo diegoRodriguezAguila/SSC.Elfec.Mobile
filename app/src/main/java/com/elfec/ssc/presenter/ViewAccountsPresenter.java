@@ -6,21 +6,17 @@ import android.os.Looper;
 
 import com.elfec.ssc.business_logic.ClientManager;
 import com.elfec.ssc.business_logic.ElfecAccountsManager;
-import com.elfec.ssc.web_services.AccountWS;
-import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.utils.ErrorVerifierHelper;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.events.GcmTokenCallback;
-import com.elfec.ssc.model.events.IWSFinishEvent;
-import com.elfec.ssc.model.events.SscTokenReceivedCallback;
 import com.elfec.ssc.model.gcmservices.GcmTokenRequester;
-import com.elfec.ssc.model.security.SscToken;
-import com.elfec.ssc.model.webservices.WSResponse;
 import com.elfec.ssc.presenter.views.IViewAccounts;
 import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.security.CredentialManager;
+import com.elfec.ssc.web_services.AccountWS;
+import com.elfec.ssc.web_services.SscTokenRequester;
 
 import java.util.List;
 
@@ -49,34 +45,25 @@ public class ViewAccountsPresenter {
      * @param nus nus
      */
     public void removeAccount(final String nus) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                mSscTokenRequester.getTokenAsync(new SscTokenReceivedCallback() {
-                    @Override
-                    public void onSscTokenReceived(WSResponse<SscToken> wsTokenResult) {
-                        final Client client = Client.getActiveClient();
-                        new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(),
-                                nus, mImei, new IWSFinishEvent<Boolean>() {
-                                    @Override
-                                    public void executeOnFinished(WSResponse<Boolean> result) {
-                                        if (result.getResult()) {
-                                            ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
-                                            loadAccounts(true);
-                                            view.showAccountDeleted();
-                                            view.hideWaiting();
-                                        } else {
-                                            view.hideWaiting();
-                                            view.displayErrors(result.getErrors());
-                                        }
-                                    }
-                                });
-                    }
-                });
+        new Thread(() -> {
+            Looper.prepare();
+            mSscTokenRequester.getTokenAsync(wsTokenResult -> {
+                final Client client = Client.getActiveClient();
+                new AccountWS(wsTokenResult.getResult()).removeAccount(client.getGmail(),
+                        nus, mImei, result -> {
+                            if (result.getResult()) {
+                                ElfecAccountsManager.deleteAccount(client.getGmail(), nus);
+                                loadAccounts(true);
+                                view.showAccountDeleted();
+                                view.hideWaiting();
+                            } else {
+                                view.hideWaiting();
+                                view.displayErrors(result.getErrors());
+                            }
+                        });
+            });
 
-                Looper.loop();
-            }
+            Looper.loop();
         }).start();
     }
 

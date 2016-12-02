@@ -21,6 +21,8 @@ import com.elfec.ssc.presenter.views.IViewAccountDetails;
 import com.elfec.ssc.view.adapters.DebtAdapter;
 import com.elfec.ssc.view.adapters.ViewUsageAdapter;
 import com.elfec.ssc.view.controls.widget.LayoutListView;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -41,8 +43,12 @@ public class ViewAccountDetails extends AppCompatActivity implements
     private ViewAccountDetailsPresenter presenter;
 
     public boolean horizontal;
-    protected @BindView(R.id.listview_account_debts) LayoutListView mListViewDebts;
-    protected @BindView(R.id.list_usage) LayoutListView mListViewUsages;
+    protected
+    @BindView(R.id.listview_account_debts)
+    LayoutListView mListViewDebts;
+    protected
+    @BindView(R.id.list_usage)
+    LayoutListView mListViewUsages;
 
     protected NumberFormat mNumFormat;
 
@@ -55,7 +61,7 @@ public class ViewAccountDetails extends AppCompatActivity implements
         presenter = new ViewAccountDetailsPresenter(this, getIntent()
                 .getLongExtra(SELECTED_ACCOUNT_ID, -1));
         presenter.setFields();
-        presenter.getUsage();
+        presenter.getUsages();
 
     }
 
@@ -150,8 +156,11 @@ public class ViewAccountDetails extends AppCompatActivity implements
 
     @Override
     public void showUsage(final List<Usage> usage) {
-        runOnUiThread(() -> mListViewUsages.setAdapter(new ViewUsageAdapter(
-                ViewAccountDetails.this, R.layout.usage_row, usage)));
+        runOnUiThread(() -> {
+            if (usage == null || usage.size() == 0) return;
+            mListViewUsages.setAdapter(new ViewUsageAdapter(
+                    ViewAccountDetails.this, R.layout.usage_row, usage));
+        });
 
     }
 
@@ -161,13 +170,21 @@ public class ViewAccountDetails extends AppCompatActivity implements
                 .setAdapter(new DebtAdapter(ViewAccountDetails.this,
                         R.layout.debt_list_item, debts)));
     }
-    
+
 
     @Override
     public void navigateToAddress(Account account) {
         GoogleMapsHelper.launchGoogleMaps(this, account.getLatitude(),
                 account.getLongitude(), account.getAddress());
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
+    }
+
+    @Override
+    public void onError(Throwable e) {
+        runOnUiThread(() -> SuperToast.create(ViewAccountDetails.this,
+                e.getMessage(), SuperToast.Duration.SHORT,
+                Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
+                .show());
     }
 
     // #endregion

@@ -1,65 +1,61 @@
 package com.elfec.ssc.presenter;
 
-import android.os.Looper;
-
-import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.business_logic.UsageManager;
+import com.elfec.ssc.local_storage.UsageStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.views.IViewAccountDetails;
-import com.elfec.ssc.web_services.AccountWS;
 import com.elfec.ssc.web_services.SscTokenRequester;
 
-public class ViewAccountDetailsPresenter {
+import java.net.ConnectException;
 
-    private IViewAccountDetails view;
-    private Account accountToShow;
-    private SscTokenRequester mSscTokenRequester;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
+public class ViewAccountDetailsPresenter extends BasePresenter<IViewAccountDetails> {
+    private Account account;
 
     public ViewAccountDetailsPresenter(IViewAccountDetails view,
-                                       long accountToShowId) {
-        this.view = view;
-        this.accountToShow = Account.get(accountToShowId);
-        mSscTokenRequester = new SscTokenRequester();
+                                       long accountId) {
+        super(view);
+        this.account = Account.get(accountId);
     }
 
-    public void getUsage() {
-        new Thread(() -> {
-            Looper.prepare();
-            view.showUsage(accountToShow.getUsages());
-            mSscTokenRequester.getTokenAsync(wsTokenResult -> {
-                if (wsTokenResult.getResult() == null) return;
-                new AccountWS(wsTokenResult.getResult())
-                        .getUsage(accountToShow.getNus(), result -> {
-                            if (result.getErrors().size() > 0) return;
-                            accountToShow.removeUsages();
-                            ElfecAccountsManager
-                                    .registerAccountUsages(accountToShow,result.getResult());
-                            view.showUsage(result.getResult());
-                        });
-            });
-            Looper.loop();
-        }).start();
+    public void getUsages() {
+        new UsageStorage().getUsages(account.getNus())
+                .flatMap(usages -> {
+                    mView.showUsage(usages);
+                    return new SscTokenRequester().getSscToken();
+                }).flatMap(sscToken ->
+                UsageManager.syncUsages(account.getNus()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mView::showUsage, e -> {
+                    if (!(e instanceof ConnectException)) {
+                        mView.onError(e);
+                    }
+                });
     }
 
     /**
      * Asigna los datos a la vista
      */
     public void setFields() {
-        view.setAccountNumber(accountToShow.getAccountNumber());
-        view.setNus(accountToShow.getNus());
-        view.setOwnerClient(accountToShow.getAccountOwner());
-        view.setClientAddress(accountToShow.getAddress());
-        view.setEnergySupplyStatus(accountToShow.getEnergySupplyStatus());
+        mView.setAccountNumber(account.getAccountNumber());
+        mView.setNus(account.getNus());
+        mView.setOwnerClient(account.getAccountOwner());
+        mView.setClientAddress(account.getAddress());
+        mView.setEnergySupplyStatus(account.getEnergySupplyStatus());
         new Thread(() -> {
-            view.showDebts(accountToShow.getDebts());
-            view.setTotalDebt(accountToShow.getTotalDebt());
+            mView.showDebts(account.getDebts());
+            mView.setTotalDebt(account.getTotalDebt());
         }).start();
     }
 
     /**
-     * LLama a los m�todos necesarios para ir a la direcci�
+     * LLama a los métodos necesarios para ir a la dirección
      */
     public void goToAddress() {
-        view.navigateToAddress(accountToShow);
+        mView.navigateToAddress(account);
     }
 
 }

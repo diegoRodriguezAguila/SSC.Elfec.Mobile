@@ -1,5 +1,7 @@
 package com.elfec.ssc.web_services;
 
+import android.util.Log;
+
 import com.elfec.ssc.BuildConfig;
 import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.security.SscToken;
@@ -9,6 +11,8 @@ import com.elfec.ssc.model.webservices.MarshalDouble;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.ksoap2.HeaderProperty;
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -36,6 +40,7 @@ import rx.Observable;
  * @author Diego
  */
 public abstract class ServiceConnector<T> {
+    public static final String TAG = "ServiceConnector";
     private static final String WS_SERVER = BuildConfig.WS_SERVER_URL;
     private static final String SOAP_ACTION = "";
     private static final String NAMESPACE = "ssc_elfec";
@@ -108,11 +113,45 @@ public abstract class ServiceConnector<T> {
                 headerPropertyArrayList);
         checkHeaderStatus(headers);
         String response = envelope.getResponse().toString();
+        response = patchResponse(response);
+        Log.d(TAG, "Url: " + url + ", Response: " + response);
         Gson gson = GsonUtils.generateGson();
         DataResult<T> dataResult = gson.fromJson(response, type);
         if (dataResult.hasErrors())
             throw dataResult.getErrors().get(0);
         return dataResult.getData();
+    }
+
+    /**
+     * Some of the responses are strings instead of arrays or objects, due
+     * to bad server coding. Thus we should patch some responses.
+     *
+     * @param response response string
+     * @return patched response
+     */
+    private String patchResponse(String response) {
+        try {
+            JSONObject object = new JSONObject(response);
+            String respContent = object.optString("Response");
+            //if response is no string then return, everything Ok
+            if (respContent == null)
+                return response;
+            //is object
+            if (respContent.charAt(0) == '{' && respContent.charAt(respContent.length() - 1) == '}') {
+                JSONObject content = new JSONObject(respContent);
+                object.put("Response", content);
+                return object.toString();
+            }
+            //is array
+            if (respContent.charAt(0) == '[' && respContent.charAt(respContent.length() - 1) == ']') {
+                JSONArray content = new JSONArray(respContent);
+                object.put("Response", content);
+                return object.toString();
+            }
+        } catch (Exception e) {
+            return response;
+        }
+        return response;
     }
 
 

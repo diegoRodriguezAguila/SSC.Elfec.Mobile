@@ -217,30 +217,6 @@ public class Account extends Model {
         return debts;
     }
 
-    /**
-     * Obtiene los consumos relacionados a la cuenta
-     *
-     * @return Lista de consumos relacionadas
-     */
-    public List<Usage> getUsages() {
-        if (usages == null) {
-            try {
-                usages = getMany(Usage.class, "Account");
-            } catch (NullPointerException e) {
-                usages = new ArrayList<>();
-            }
-        }
-        return usages;
-    }
-
-    /**
-     * Elimina todos los consumos relacionados a la cuenta
-     */
-    public void removeUsages() {
-        usages = null;
-        new Delete().from(Usage.class).where("Account=?", getId()).execute();
-    }
-
     public String getAccountOwner() {
         return accountOwner;
     }
