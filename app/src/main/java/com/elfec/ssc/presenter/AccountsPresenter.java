@@ -1,17 +1,15 @@
 package com.elfec.ssc.presenter;
 
 import android.content.Context;
-import android.os.Looper;
 
 import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ClientManager;
 import com.elfec.ssc.local_storage.AccountStorage;
-import com.elfec.ssc.model.Client;
+import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.presenter.views.IAccountsView;
 import com.elfec.ssc.security.AppPreferences;
 import com.elfec.ssc.security.CredentialManager;
-import com.elfec.ssc.web_services.AccountService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,31 +32,21 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
     /**
      * Invoca a los webservices necesarios para eliminar una cuenta
      *
-     * @param nus nus
+     * @param account to remove
      */
-    public void removeAccount(final String nus) {
-
-        new Thread(() -> {
-            Looper.prepare();
-            mSscTokenRequester.getTokenAsync(wsTokenResult -> {
-                final Client client = null;//TODO current client Client.getClientByGmail(messageInfo
-                // .getString("gmail"));
-                new AccountService(wsTokenResult.getResult()).removeAccount(client.getGmail(),
-                        nus, mImei, result -> {
-                            if (result.getResult()) {
-                                AccountManager.deleteAccount(client.getGmail(), nus);
-                                loadAccounts();
-                                mView.showAccountDeleted();
-                                mView.hideWaiting();
-                            } else {
-                                mView.hideWaiting();
-                                mView.onError(result.getErrors().get(0));
-                            }
-                        });
-            });
-
-            Looper.loop();
-        }).start();
+    public void removeAccount(Account account) {
+        cancelSubscription();
+        mSubscription = ClientManager.activeClient()
+                .flatMap(client -> {
+                    mGmail = client.getGmail();
+                    return AccountManager.removeAccount(mGmail, account);
+                })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(acc->{
+                    loadAccounts();
+                    mView.onSuccess(acc);
+                }, mView::onError);
     }
 
     /**
@@ -66,7 +54,6 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
      * versión local
      */
     public void loadAccounts() {
-        mView.showWaiting();
         cancelSubscription();
         mSubscription = ClientManager.activeClient()
                 .flatMap(client -> {
@@ -74,20 +61,14 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
                     return new AccountStorage().getAccounts(mGmail);
                 })
                 .flatMap(accounts -> {
-                    mView.hideWaiting();
                     mView.onLoaded(accounts);
                     return AccountManager.syncAccounts(mGmail);
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(accounts -> {
-                    mView.hideWaiting();
-                    mView.onLoaded(accounts);
-                }, e -> {
-                    mView.hideWaiting();
+                .subscribe(mView::onLoaded, e -> {
                     if (e instanceof OutdatedAppException) {
                         mView.onError(e);
-                        mView.onLoaded(null);
                     }
                 });
     }
@@ -96,17 +77,10 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
      * Obtiene las cuentas del cliente remotamente
      */
     public void refreshAccounts() {
-        mView.showWaiting();
         cancelSubscription();
         mSubscription = AccountManager.syncAccounts(mGmail)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(accounts -> {
-                    mView.hideWaiting();
-                    mView.onLoaded(accounts);
-                }, e -> {
-                    mView.hideWaiting();
-                    mView.onError(e);
-                });
+                .subscribe(mView::onLoaded, mView::onError);
     }
 }

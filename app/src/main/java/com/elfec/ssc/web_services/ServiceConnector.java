@@ -46,6 +46,7 @@ public abstract class ServiceConnector<T> {
     private static final String WS_SERVER = BuildConfig.WS_SERVER_URL;
     private static final String SOAP_ACTION = "";
     private static final String NAMESPACE = "ssc_elfec";
+    private static final int TIMEOUT = 30000;
 
     private String url;
     private String methodName;
@@ -123,9 +124,10 @@ public abstract class ServiceConnector<T> {
         List<HeaderProperty> headerPropertyArrayList = new ArrayList<>();
         headerPropertyArrayList.add(new HeaderProperty("Connection",
                 "close"));
-        if (sscToken != null)
+        if (sscToken != null) {
             headerPropertyArrayList.add(new HeaderProperty("x-ws-token",
                     sscToken.toString()));
+        }
         @SuppressWarnings("unchecked")
         List<HeaderProperty> headers = ht.call(SOAP_ACTION, envelope,
                 headerPropertyArrayList);
@@ -148,6 +150,7 @@ public abstract class ServiceConnector<T> {
             ServiceConnection connection = ht.getServiceConnection();
             if (connection == null) return;
             connection.disconnect();
+            ht = null;
         } catch (Exception e) {
             //ignore error
         }
@@ -238,8 +241,8 @@ public abstract class ServiceConnector<T> {
      * @return HttpTransportSE
      */
     private HttpTransportSE getHttpTransportSE() {
-        HttpTransportSE ht = new HttpTransportSE(Proxy.NO_PROXY, url, 10000);
-        ht.debug = true;
+        HttpTransportSE ht = new HttpTransportSE(Proxy.NO_PROXY, url, TIMEOUT);
+        ht.debug = false;
         ht.setXmlVersionTag("<!--?xml version=\"1.0\" encoding= \"UTF-8\" ?-->");
         return ht;
     }
@@ -255,8 +258,8 @@ public abstract class ServiceConnector<T> {
         int port = urlObj.getPort();
         HttpTransportSE ht = new HttpsTransportSE(urlObj.getHost(),
                 port == -1 ? urlObj.getDefaultPort() : port, urlObj.getFile(),
-                10000);
-        ht.debug = true;
+                TIMEOUT);
+        ht.debug = false;
         ht.setXmlVersionTag("<!--?xml version=\"1.0\" encoding= \"UTF-8\" ?-->");
         return ht;
     }

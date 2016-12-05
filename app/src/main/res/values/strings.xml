@@ -30,8 +30,8 @@
     <string name="errors_in_fields">There are errors in some fields, correct them to
         continue</string>
     <string name="account_already_reg_title">ACCOUNT ALREADY REGISTERED</string>
-    <string name="account_already_reg_msg">The information you have provided is from an account
-        that you have already registered</string>
+    <string name="account_already_reg_msg">The information provided is from an account
+        that is already registered</string>
     <string name="errors_on_register_title">ERROR IN ACCOUNT REGISTRATION</string>
     <string name="register_account_information">Registration information</string>
     <string name="title_register_account_information">REGISTRATION INFORMATION</string>
@@ -75,11 +75,11 @@
        ● View your electricity usage.</string>
     <string name="lbl_loading_accounts">Loading your accounts&#8230;</string>
     <string name="lbl_account_list_item_name">Name:</string>
-    <string name="errors_on_download_accounts_title">ACCOUNTS DOWNLOAD ERROR</string>
+    <string name="errors_on_download_accounts_title">ERROR</string>
     <!-- View Accounts: Delete Account -->
     <string name="delete_account_title">DELETE ACCOUNT</string>
     <string name="delete_account_msg">Are you sure you want to delete this account?</string>
-    <string name="account_successfully_deleted">Account deleted successfully!</string>
+    <string name="account_successfully_deleted">Account %1$s successfully deleted!</string>
     <string name="errors_on_delete_account_title">DELETE ACCOUNT ERROR</string>
     <!-- View Accounts: Rows -->
     <string name="lbl_no_debts">No debts</string>

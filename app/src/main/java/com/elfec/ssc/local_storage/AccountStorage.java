@@ -36,7 +36,7 @@ public class AccountStorage {
     /**
      * Gets an account from the database
      *
-     * @param gmail Account's NUS
+     * @param gmail client's gmail
      * @return Observable of account
      */
     public Observable<Account> getAccount(String gmail, String nus) {
@@ -52,7 +52,7 @@ public class AccountStorage {
     /**
      * Saves an account to the database
      *
-     * @param gmail   Account's NUS
+     * @param gmail   client's gmail
      * @param account to save
      * @return Observable of account
      */
@@ -70,19 +70,23 @@ public class AccountStorage {
     /**
      * Removes an account from the database
      *
-     * @param gmail   Account's NUS
+     * @param gmail   client's gmail
      * @param account to remove
-     * @return Observable of account
+     * @return Observable of account or null if it wasn't removed
      */
     public Observable<Account> removeAccount(String gmail, Account account) {
         return getAccounts(gmail)
                 .flatMap(accounts -> {
                     if (accounts == null)
                         accounts = new ArrayList<>();
-                    if (!accounts.contains(account))
-                        accounts.remove(account);
-                    return saveAccounts(gmail, accounts);
-                }).map(m -> account);
+                    if (accounts.remove(account))
+                        return saveAccounts(gmail, accounts);
+                    return Observable.just(null);
+                }).map(m -> {
+                    if (m == null)
+                        return null;
+                    return account;
+                });
     }
 
     /**

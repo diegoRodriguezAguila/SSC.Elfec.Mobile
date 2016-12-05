@@ -1,6 +1,5 @@
 package com.elfec.ssc.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
@@ -26,7 +25,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
 public class AccountsActivity extends BaseActivity implements IAccountsView {
 
@@ -65,11 +63,10 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
             }
         });
         overridePendingTransition(R.anim.slide_left_in, R.anim.slide_left_out);
-        mAccountList
-                .setOnItemLongClickListener((adapter, view, position, arg3) -> {
-                    dialogRemove(position);
-                    return true;
-                });
+        mAccountList.setOnItemLongClickListener((adapter, view, position, arg3) -> {
+            dialogRemove(position);
+            return true;
+        });
         mAccountList.setOnItemClickListener((adapter, view, pos, arg3) -> {
             if (ButtonClicksHelper.canClickButton()) {
                 Intent i = new Intent(AccountsActivity.this,
@@ -103,9 +100,13 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
         ViewPresenterManager.setPresenter(null);
     }
 
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    public void hideWaiting() {
+        runOnUiThread(() -> {
+            if (isDestroyed()) return;
+            mAccountList.stopRefresh();
+            mLayoutLoadingAccounts.setVisibility(
+                    View.GONE);
+        });
     }
 
     public void btnRegisterAccountClick(View view) {
@@ -117,10 +118,15 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
         }
     }
 
-    @Override
-    public void onBackPressed() {
-        finish();// go back to the previous Activity
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+    public void dialogRemove(final int position) {
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.delete_account_title)
+                .setMessage(R.string.delete_account_msg)
+                .setPositiveButton(R.string.btn_confirm, (dialog, which) -> {
+                    mPresenter.removeAccount((Account) mAccountList
+                            .getAdapter().getItem(position));
+                }).setNegativeButton(R.string.btn_cancel, null)
+                .show();
     }
 
     @Override
@@ -143,6 +149,7 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
     public void onLoaded(List<Account> accounts) {
         runOnUiThread(() -> {
             if (isDestroyed()) return;
+            hideWaiting();
             if (accounts != null && accounts.size() > 0) {
                 mAccountList.setAdapter(new AccountAdapter(
                         AccountsActivity.this, R.layout.account_list_item,
@@ -158,54 +165,6 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
         });
     }
 
-    @Override
-    public void showAccountDeleted() {
-        runOnUiThread(() -> {
-            if (!isDestroyed()) {
-                SuperToast.cancelAllSuperToasts();
-                SuperToast.create(
-                        AccountsActivity.this,
-                        R.string.account_successfully_deleted,
-                        SuperToast.Duration.LONG,
-                        Style.getStyle(Style.BLUE,
-                                SuperToast.Animations.FADE)).show();
-            }
-        });
-    }
-
-    @Override
-    public void dialogRemove(final int position) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle(R.string.delete_account_title)
-                .setMessage(R.string.delete_account_msg)
-                .setPositiveButton(R.string.btn_confirm, (dialog, which) -> {
-                    Account account = (Account) mAccountList
-                            .getAdapter().getItem(position);
-                    showWaiting();
-                    mPresenter.removeAccount(account.getNus());
-                }).setNegativeButton(R.string.btn_cancel, null);
-        AlertDialog dialog = builder.create();
-        dialog.show();
-        ((TextView) dialog.findViewById(android.R.id.message))
-                .setMovementMethod(LinkMovementMethod.getInstance());
-    }
-
-    @Override
-    public void showWaiting() {
-
-    }
-
-    @Override
-    public void hideWaiting() {
-        runOnUiThread(() -> {
-            if (!isDestroyed()) {
-                mAccountList.stopRefresh();
-                mLayoutLoadingAccounts.setVisibility(
-                        View.GONE);
-            }
-
-        });
-    }
 
     @Override
     public void onLoading(@StringRes int message) {
@@ -213,9 +172,15 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
     }
 
     @Override
+    public void onProcessing(@StringRes int message) {
+
+    }
+
+    @Override
     public void onError(Throwable e) {
         runOnUiThread(() -> {
             if (isDestroyed()) return;
+            hideWaiting();
             AlertDialog dialog = new AlertDialog.Builder(
                     AccountsActivity.this)
                     .setTitle(R.string.errors_on_download_accounts_title)
@@ -227,6 +192,18 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
                 txtMessage.setMovementMethod(LinkMovementMethod.getInstance());
             }
         });
+    }
+
+    @Override
+    public void onSuccess(Account account) {
+        if (isDestroyed()) return;
+        SuperToast.cancelAllSuperToasts();
+        SuperToast.create(
+                AccountsActivity.this,
+                getString(R.string.account_successfully_deleted, account.getNus()),
+                SuperToast.Duration.LONG,
+                Style.getStyle(Style.BLUE,
+                        SuperToast.Animations.FADE)).show();
     }
 
     //endregion

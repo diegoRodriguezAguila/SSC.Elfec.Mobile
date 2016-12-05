@@ -1,12 +1,8 @@
 package com.elfec.ssc.business_logic;
 
 import com.elfec.ssc.local_storage.ClientStorage;
-import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.security.AppPreferences;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import rx.Observable;
 
@@ -38,19 +34,5 @@ public class ClientManager {
      */
     public static Observable<Client> activeClient() {
         return new ClientStorage().getClient();
-    }
-
-    /**
-     * Registra una lista de cuentas de un cliente
-     *
-     * @param accounts
-     * @return lista de cuentas registradas
-     */
-    public static List<Account> registerClientAccounts(final List<Account> accounts) {
-        List<Account> regAccounts = new ArrayList<>(accounts.size());
-        for (Account account : accounts) {
-            regAccounts.add(AccountManager.registerAccount(account));
-        }
-        return regAccounts;
     }
 }

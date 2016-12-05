@@ -74,9 +74,11 @@ dependencies {
     compile 'io.paperdb:paperdb:2.0'
     compile 'com.cesarferreira.rxpaper:rxpaper:0.4.1'
 
+    //SOAP
+    compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.0'
+
     compile files('libs/ActiveAndroid.jar')
     compile files('libs/crouton-1.8.5.jar')
-    compile files('libs/ksoap2-android-assembly-3.1.1-jar-with-dependencies.jar')
 }
 
 apply plugin: 'com.google.gms.google-services'

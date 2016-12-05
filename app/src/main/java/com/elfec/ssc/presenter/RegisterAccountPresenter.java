@@ -36,9 +36,10 @@ public class RegisterAccountPresenter extends BasePresenter<IRegisterAccount> {
             return;
         }
         mView.onProcessing(R.string.msg_registering_account);
-        ClientManager.activeClient()
+        cancelSubscription();
+        mSubscription = ClientManager.activeClient()
                 .flatMap(client -> AccountManager.registerAccount(client.getGmail(),
-                        new Account(client, mView.getAccountNumber(), mView.getNus())))
+                        new Account(mView.getAccountNumber(), mView.getNus())))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mView::onSuccess, mView::onError);

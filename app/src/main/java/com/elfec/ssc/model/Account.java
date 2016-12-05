@@ -1,7 +1,5 @@
 package com.elfec.ssc.model;
 
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Table;
 import com.elfec.ssc.helpers.utils.ObjectsCompat;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 import com.google.gson.annotations.SerializedName;
@@ -16,50 +14,36 @@ import java.util.List;
  *
  * @author Diego
  */
-@Table(name = "Accounts")
 public class Account {
 
-    @Column(name = "Client")
-    private Client client;
-
     @SerializedName("AccountNumber")
-    @Column(name = "AccountNumber")
     private String accountNumber;
 
     @SerializedName("NUS")
-    @Column(name = "NUS", index = true, notNull = true)
     private String nus;
 
     @SerializedName("AccountOwner")
-    @Column(name = "AccountOwner")
     private String accountOwner;
 
     @SerializedName("Address")
-    @Column(name = "Address")
     private String address;
 
     @SerializedName("Longitude")
-    @Column(name = "Longitude")
     private double longitude;
 
     @SerializedName("Latitude")
-    @Column(name = "Latitude")
     private double latitude;
 
     @SerializedName("EnergySupplyStatus")
-    @Column(name = "EnergySupplyStatus")
     private short energySupplyStatus;
 
     @SerializedName("Status")
-    @Column(name = "Status", notNull = true)
     private short status;
 
     @SerializedName("created_at")
-    @Column(name = "InsertDate", notNull = true)
     private DateTime insertDate;
 
     @SerializedName("updated_at")
-    @Column(name = "UpdateDate")
     private DateTime updateDate;
 
     @SerializedName("Debts")
@@ -69,9 +53,12 @@ public class Account {
         super();
     }
 
-    public Account(Client ownerClient, String accountNumber, String nus) {
+    public Account(String nus) {
+        this.nus = nus;
+    }
+
+    public Account(String accountNumber, String nus) {
         super();
-        this.client = ownerClient;
         this.accountNumber = accountNumber;
         this.nus = nus;
         this.status = 1;
@@ -112,14 +99,6 @@ public class Account {
     }
 
     //region Getters y Setters
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
 
     public String getAccountNumber() {
         return accountNumber;
@@ -211,17 +190,6 @@ public class Account {
     }
 
     //endregion
-
-    /**
-     * Busca una cuenta que coincida con los parámetros
-     *
-     * @param gmail
-     * @param nus
-     * @return
-     */
-    public static Account findAccount(String gmail, String nus) {
-        return null;
-    }
 
     @Override
     public boolean equals(Object o) {

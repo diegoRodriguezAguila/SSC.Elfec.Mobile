@@ -5,9 +5,7 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ElfecNotificationManager;
-import com.elfec.ssc.helpers.JsonToAccountConverter;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
 import com.elfec.ssc.model.Notification;
@@ -38,7 +36,8 @@ public class NewAccountGCMHandler implements INotificationHandler {
         // .getString("gmail"));
         if (ownerClient != null && ownerClient.getStatus() == ClientStatus.ACTIVE) {
             try {
-                AccountManager.registerAccount(JsonToAccountConverter.convert(messageInfo.getString("account")));
+               // AccountManager.registerAccount(JsonToAccountConverter.convert(messageInfo
+                      //  .getString("account")));
             } catch (Exception e) {
                 e.printStackTrace();
             }

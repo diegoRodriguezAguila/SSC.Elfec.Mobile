@@ -68,11 +68,11 @@
        ● Ver la evolución de su consumo.</string>
     <string name="lbl_loading_accounts">Cargando sus cuentas&#8230;</string>
     <string name="lbl_account_list_item_name">Nombre:</string>
-    <string name="errors_on_download_accounts_title">ERROR AL DESCARGAR CUENTAS</string>
+    <string name="errors_on_download_accounts_title">ERROR</string>
     <!-- View Accounts: Delete Account -->
     <string name="delete_account_title">ELIMINAR CUENTA</string>
     <string name="delete_account_msg">¿Esta seguro que desea eliminar esta cuenta?</string>
-    <string name="account_successfully_deleted">¡La cuenta se eliminó exitosamente!</string>
+    <string name="account_successfully_deleted">La cuenta %1$s se eliminó exitosamente</string>
     <string name="errors_on_delete_account_title">ERROR AL ELIMINAR LA CUENTA</string>
     <!-- View Accounts: Rows -->
     <string name="lbl_no_debts">Sin deudas</string>
