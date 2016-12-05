@@ -22,6 +22,7 @@ public abstract class BasePresenter<T extends IBaseView> implements Closeable {
     public void close() {
         mView = null;
         cancelSubscription();
+        mSubscription = null;
     }
 
     protected void cancelSubscription() {

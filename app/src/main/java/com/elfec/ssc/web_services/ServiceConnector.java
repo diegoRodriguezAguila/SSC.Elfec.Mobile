@@ -20,6 +20,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpResponseException;
 import org.ksoap2.transport.HttpTransportSE;
 import org.ksoap2.transport.HttpsTransportSE;
+import org.ksoap2.transport.ServiceConnection;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -30,6 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscription;
 
 /**
  * General object for web service connection.
@@ -49,6 +51,8 @@ public abstract class ServiceConnector<T> {
     private String methodName;
     private SscToken sscToken;
     private Type type;
+    private transient HttpTransportSE ht;
+    private transient boolean isUnsubscribed;
 
     /**
      * Construye un conector de webservice soap con los parámetros indicados y
@@ -86,6 +90,20 @@ public abstract class ServiceConnector<T> {
         return Observable.create(subs -> {
             if (subs.isUnsubscribed()) return;
             try {
+                isUnsubscribed = false;
+                subs.add(new Subscription() {
+                    @Override
+                    public void unsubscribe() {
+                        if (isUnsubscribed) return;
+                        isUnsubscribed = true;
+                        cancelRequest();
+                    }
+
+                    @Override
+                    public boolean isUnsubscribed() {
+                        return isUnsubscribed;
+                    }
+                });
                 subs.onNext(request(params));
             } catch (Throwable e) {
                 subs.onError(ServiceErrorFactory.fromThrowable(e));
@@ -101,7 +119,7 @@ public abstract class ServiceConnector<T> {
             request.addProperty(param.getKey(), param.getValue());
         }
         SoapSerializationEnvelope envelope = getSoapSerializationEnvelope(request);
-        HttpTransportSE ht = getProperProtocolTransportSE();
+        ht = getProperProtocolTransportSE();
         List<HeaderProperty> headerPropertyArrayList = new ArrayList<>();
         headerPropertyArrayList.add(new HeaderProperty("Connection",
                 "close"));
@@ -119,7 +137,20 @@ public abstract class ServiceConnector<T> {
         DataResult<T> dataResult = gson.fromJson(response, type);
         if (dataResult.hasErrors())
             throw dataResult.getErrors().get(0);
+        ht = null;
         return dataResult.getData();
+    }
+
+    private void cancelRequest() {
+        if (ht == null) return;
+        try {
+            ht.reset();
+            ServiceConnection connection = ht.getServiceConnection();
+            if (connection == null) return;
+            connection.disconnect();
+        } catch (Exception e) {
+            //ignore error
+        }
     }
 
     /**
