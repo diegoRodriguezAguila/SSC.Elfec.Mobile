@@ -1,9 +1,7 @@
 package com.elfec.ssc.view;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
@@ -33,9 +31,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class AccountDetailsActivity extends AppCompatActivity implements
+public class AccountDetailsActivity extends BaseActivity implements
         IAccountDetailsView {
 
     public static final String SELECTED_ACCOUNT_NUS = "selected_account_nus";
@@ -60,7 +57,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements
     protected LayoutListView mUsageList;
     protected NumberFormat mNumFormat;
 
-    private AccountDetailsPresenter presenter;
+    private AccountDetailsPresenter mPresenter;
     public boolean horizontal;
 
     @Override
@@ -69,14 +66,20 @@ public class AccountDetailsActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_view_account_details);
         ButterKnife.bind(this);
         initializeDecimalFormatter();
-        presenter = new AccountDetailsPresenter(this);
+        mPresenter = new AccountDetailsPresenter(this);
         Bundle extras = getIntent().getExtras();
         if (extras == null) return;
         String nus = getIntent()
                 .getStringExtra(SELECTED_ACCOUNT_NUS);
         if (nus == null) return;
-        presenter.loadAccount(nus);
-        presenter.loadUsages(nus);
+        mPresenter.loadAccount(nus);
+        mPresenter.loadUsages(nus);
+    }
+
+    @Override
+    public void releasePresenter() {
+        mPresenter.close();
+        mPresenter = null;
     }
 
     private void initializeDecimalFormatter() {
@@ -86,17 +89,6 @@ public class AccountDetailsActivity extends AppCompatActivity implements
         customSymbol.setGroupingSeparator('.');
         ((DecimalFormat) mNumFormat).setDecimalFormatSymbols(customSymbol);
         mNumFormat.setGroupingUsed(true);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
-    }
-
-    @Override
-    public void onBackPressed() {
-        finish();// go back to the previous Activity
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
     }
 
     public void showDebts(final List<Debt> debts) {
@@ -134,7 +126,7 @@ public class AccountDetailsActivity extends AppCompatActivity implements
      */
     public void goToAddressClick(View v) {
         if (ButtonClicksHelper.canClickButton()) {
-            presenter.goToAddress();
+            mPresenter.goToAddress();
         }
     }
 

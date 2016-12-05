@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.ScrollView;
@@ -29,11 +28,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class AccountsActivity extends AppCompatActivity implements IAccountsView {
+public class AccountsActivity extends BaseActivity implements IAccountsView {
 
-    private AccountsPresenter presenter;
-
-    private boolean mIsDestroyed;
+    private AccountsPresenter mPresenter;
 
     protected
     @BindView(R.id.accounts_list)
@@ -52,15 +49,14 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_accounts);
-        mIsDestroyed = false;
-        presenter = new AccountsPresenter(this);
+        mPresenter = new AccountsPresenter(this);
         ButterKnife.bind(this);
         mAccountList.setPullLoadEnable(false);
         mAccountList.setPullRefreshEnable(true);
         mAccountList.setXListViewListener(new IXListViewListener() {
             @Override
             public void onRefresh() {
-                presenter.refreshAccountsRemotely();
+                mPresenter.refreshAccountsRemotely();
             }
 
             @Override
@@ -86,19 +82,19 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
             }
         });
 
-        presenter.loadAccounts();
+        mPresenter.loadAccounts();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        ViewPresenterManager.setPresenter(presenter);
+        ViewPresenterManager.setPresenter(mPresenter);
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mIsDestroyed = true;
+    public void releasePresenter() {
+        mPresenter.close();
+        mPresenter = null;
     }
 
     @Override
@@ -134,7 +130,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
             if (resultCode == RESULT_OK) {
                 boolean updateList = data.getBooleanExtra(RegisterAccount.REGISTER_SUCCESS, false);
                 if (updateList) {
-                    presenter.loadAccounts();
+                    mPresenter.loadAccounts();
                 }
 
             }
@@ -146,7 +142,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
     @Override
     public void onLoaded(List<Account> accounts) {
         runOnUiThread(() -> {
-            if (mIsDestroyed) return;
+            if (isDestroyed()) return;
             if (accounts != null && accounts.size() > 0) {
                 mAccountList.setAdapter(new AccountAdapter(
                         AccountsActivity.this, R.layout.account_list_item,
@@ -165,7 +161,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
     @Override
     public void showAccountDeleted() {
         runOnUiThread(() -> {
-            if (!mIsDestroyed) {
+            if (!isDestroyed()) {
                 SuperToast.cancelAllSuperToasts();
                 SuperToast.create(
                         AccountsActivity.this,
@@ -186,7 +182,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
                     Account account = (Account) mAccountList
                             .getAdapter().getItem(position);
                     showWaiting();
-                    presenter.removeAccount(account.getNus());
+                    mPresenter.removeAccount(account.getNus());
                 }).setNegativeButton(R.string.btn_cancel, null);
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -202,7 +198,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
     @Override
     public void hideWaiting() {
         runOnUiThread(() -> {
-            if (!mIsDestroyed) {
+            if (!isDestroyed()) {
                 mAccountList.stopRefresh();
                 mLayoutLoadingAccounts.setVisibility(
                         View.GONE);
@@ -219,7 +215,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
     @Override
     public void onError(Throwable e) {
         runOnUiThread(() -> {
-            if (mIsDestroyed) return;
+            if (isDestroyed()) return;
             AlertDialog dialog = new AlertDialog.Builder(
                     AccountsActivity.this)
                     .setTitle(R.string.errors_on_download_accounts_title)
