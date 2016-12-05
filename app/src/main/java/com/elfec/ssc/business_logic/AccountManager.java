@@ -22,7 +22,7 @@ import rx.Observable;
  *
  * @author Diego
  */
-public class ElfecAccountsManager {
+public class AccountManager {
 
     /**
      * Registra una cuenta de elfec en la base de datos asignando al ownerClient
@@ -39,11 +39,11 @@ public class ElfecAccountsManager {
             newAccount = account;
             newAccount.setInsertDate(DateTime.now());
         } else {
-            newAccount.removeAllDebts();
+            //newAccount.removeAllDebts();
             newAccount.setStatus((short) 1);
             newAccount.copyAttributes(account);
         }
-        newAccount.save();
+        //newAccount.save();
         List<Debt> accountDebts = newAccount.getDebts();
         for (Debt debt : accountDebts) {
             if (debt.getInsertDate() == null) {
@@ -64,7 +64,7 @@ public class ElfecAccountsManager {
         Account account = Account.findAccount(gmail, nus);
         if (account != null) {
             account.setStatus((short) 0);
-            return account.save() > 0;
+            //return account.save() > 0;
         }
         return false;
     }

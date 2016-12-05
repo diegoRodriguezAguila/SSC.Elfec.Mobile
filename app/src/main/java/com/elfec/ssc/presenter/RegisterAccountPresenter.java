@@ -3,7 +3,7 @@ package com.elfec.ssc.presenter;
 import android.os.Build;
 import android.os.Looper;
 
-import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.FieldValidator;
 import com.elfec.ssc.web_services.AccountService;
 import com.elfec.ssc.web_services.SscTokenRequester;
@@ -110,7 +110,7 @@ public class RegisterAccountPresenter {
                                         WSResponse<Account> result) {
                                     view.hideWSWaiting();
                                     if (result.getResult() != null) {
-                                        ElfecAccountsManager
+                                        AccountManager
                                                 .registerAccount(result
                                                         .getResult());
                                         view.notifyAccountSuccessfullyRegistered();

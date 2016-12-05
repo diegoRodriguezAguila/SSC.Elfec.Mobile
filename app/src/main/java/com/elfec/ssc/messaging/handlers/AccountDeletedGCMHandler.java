@@ -5,7 +5,7 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ElfecNotificationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.model.Client;
@@ -36,7 +36,7 @@ public class AccountDeletedGCMHandler implements INotificationHandler {
         //TODO replace Client ownerClient = Client.getClientByGmail(messageInfo.getString("gmail"));
         Client ownerClient = null;
         if (ownerClient != null && ownerClient.getStatus() == ClientStatus.ACTIVE) {
-            boolean res = ElfecAccountsManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
+            boolean res = AccountManager.deleteAccount(ownerClient.getGmail(), messageInfo.getString("nus"));
             if (res) {
                 Notification notif = ElfecNotificationManager.SaveNotification(messageInfo.getString("title"), messageInfo.getString("message"),
                         NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
@@ -44,7 +44,7 @@ public class AccountDeletedGCMHandler implements INotificationHandler {
                 AccountsPresenter presenter = ViewPresenterManager
                         .getPresenter(AccountsPresenter.class);
                 if (presenter != null)
-                    presenter.loadAccounts(true);
+                    presenter.loadAccounts();
                 //Si la vista de ver notificaciones está activa
                 ViewNotificationsPresenter notifPresenter = ViewPresenterManager
                         .getPresenter(ViewNotificationsPresenter.class);

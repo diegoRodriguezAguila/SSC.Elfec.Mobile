@@ -54,7 +54,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
-                            android:text="@string/account_sample"
+                            tools:text="@string/account_sample"
                             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/mtrl_gray"
                             android:textSize="18sp" />
@@ -82,7 +82,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
-                            android:text="@string/nus_sample"
+                            tools:text="@string/nus_sample"
                             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/mtrl_gray"
                             android:textSize="18sp" />
@@ -110,7 +110,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
-                            android:text="@string/name_sample"
+                            tools:text="@string/name_sample"
                             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/mtrl_gray"
                             android:textSize="18sp" />
@@ -141,7 +141,7 @@
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
                             android:duplicateParentState="true"
-                            android:text="@string/address_sample"
+                            tools:text="@string/address_sample"
                             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/contact_link_txt_color"
                             android:textSize="18sp" />
@@ -168,7 +168,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="5dp"
                             android:layout_marginStart="5dp"
-                            android:text="@string/account_status_sample"
+                            tools:text="@string/account_status_sample"
                             android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                             android:textColor="@color/ssc_elfec_color"
                             android:textSize="20sp" />
@@ -220,7 +220,7 @@
                                 android:id="@+id/total_amount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@string/account_balance_sample"
+                                tools:text="@string/account_balance_sample"
                                 android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Light"
                                 android:textColor="@color/white"
                                 android:textSize="22sp" />
@@ -241,7 +241,7 @@
                                     android:background="@null"
                                     android:includeFontPadding="false"
                                     android:padding="0dp"
-                                    android:text="@string/decimal_balance_sample"
+                                    tools:text="@string/decimal_balance_sample"
                                     android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                                     android:textColor="@color/white"
                                     android:textSize="13sp" />
@@ -257,7 +257,7 @@
                                     android:background="@null"
                                     android:includeFontPadding="false"
                                     android:padding="0dp"
-                                    android:text="@string/lbl_currency"
+                                    tools:text="@string/lbl_currency"
                                     android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Semilight"
                                     android:textColor="@color/white"
                                     android:textSize="13sp" />

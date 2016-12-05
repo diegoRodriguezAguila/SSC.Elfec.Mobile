@@ -1,17 +1,14 @@
 package com.elfec.ssc.model;
 
-import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.activeandroid.query.Delete;
-import com.activeandroid.query.Select;
+import com.elfec.ssc.helpers.utils.ObjectsCompat;
 import com.elfec.ssc.model.enums.AccountEnergySupplyStatus;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +17,7 @@ import java.util.List;
  * @author Diego
  */
 @Table(name = "Accounts")
-public class Account extends Model {
+public class Account {
 
     @Column(name = "Client")
     private Client client;
@@ -68,8 +65,6 @@ public class Account extends Model {
     @SerializedName("Debts")
     private List<Debt> debts;
 
-    private List<Usage> usages;
-
     public Account() {
         super();
     }
@@ -105,7 +100,7 @@ public class Account extends Model {
         this.latitude = account.getLatitude();
         this.longitude = account.getLongitude();
         setEnergySupplyStatus(account.getEnergySupplyStatus());
-        this.addDebts(account.getDebts());
+        this.debts = account.getDebts();
     }
 
     public BigDecimal getTotalDebt() {
@@ -140,6 +135,14 @@ public class Account extends Model {
 
     public void setNus(String nUS) {
         nus = nUS;
+    }
+
+    public String getAccountOwner() {
+        return accountOwner;
+    }
+
+    public void setAccountOwner(String accountOwner) {
+        this.accountOwner = accountOwner;
     }
 
     public String getAddress() {
@@ -199,49 +202,15 @@ public class Account extends Model {
         this.updateDate = updateDate;
     }
 
-    //endregion
-
-    /**
-     * Obtiene todas las deudas relacionadas a la cuenta
-     *
-     * @return Lista de deudas relacionadas
-     */
     public List<Debt> getDebts() {
-        if (debts == null) {
-            try {
-                debts = getMany(Debt.class, "Account");
-            } catch (NullPointerException e) {
-                debts = new ArrayList<>();
-            }
-        }
         return debts;
     }
 
-    public String getAccountOwner() {
-        return accountOwner;
+    public void setDebts(List<Debt> debts) {
+        this.debts = debts;
     }
 
-    public void setAccountOwner(String accountOwner) {
-        this.accountOwner = accountOwner;
-    }
-
-    /**
-     * Elimina todas las deudas de esta cuenta
-     */
-    public void removeAllDebts() {
-        debts = null;
-        new Delete().from(Debt.class).where("Account=?", getId()).execute();
-    }
-
-    /**
-     * Agrega una lista de deudas siempre
-     *
-     * @param newDebt
-     */
-    public void addDebts(List<Debt> newDebt) {
-        List<Debt> debts = getDebts();
-        debts.addAll(newDebt);
-    }
+    //endregion
 
     /**
      * Busca una cuenta que coincida con los parámetros
@@ -254,15 +223,19 @@ public class Account extends Model {
         return null;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Account account = (Account) o;
+        return ObjectsCompat.equals(nus, account.nus);
 
-    /**
-     * Busca una cuenta con el id proporcionado
-     *
-     * @param id
-     * @return cuenta con el id proporcionado
-     */
-    public static Account get(Long id) {
-        return new Select().from(Account.class).where("Id = ?", id)
-                .executeSingle();
+    }
+
+    @Override
+    public int hashCode() {
+        if (nus == null)
+            return super.hashCode();
+        return nus.hashCode();
     }
 }

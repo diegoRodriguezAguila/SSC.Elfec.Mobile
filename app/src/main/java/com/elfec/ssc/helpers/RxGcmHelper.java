@@ -3,6 +3,7 @@ package com.elfec.ssc.helpers;
 import android.app.Application;
 
 import rx.Observable;
+import rx.schedulers.Schedulers;
 import rx_gcm.GcmReceiverData;
 import rx_gcm.GcmReceiverUIBackground;
 import rx_gcm.internal.RxGcm;
@@ -31,9 +32,12 @@ public class RxGcmHelper {
                 try {
                     RxGcm.Notifications
                             .register(app, gcmReceiverClass, gcmReceiverUIBackgroundClass)
+                            .subscribeOn(Schedulers.io())
                             .subscribe(token -> {//discard result
                                 }, subs::onError,
                                 () -> RxGcm.Notifications.currentToken()
+                                        .subscribeOn(Schedulers.io())
+                                        .observeOn(Schedulers.io())
                                 .subscribe(subs::onNext, subs::onError, subs::onCompleted));
                 } catch (Throwable e) {
                     subs.onError(e);

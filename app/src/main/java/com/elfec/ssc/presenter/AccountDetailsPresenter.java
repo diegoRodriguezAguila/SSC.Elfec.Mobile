@@ -1,6 +1,8 @@
 package com.elfec.ssc.presenter;
 
+import com.elfec.ssc.business_logic.ClientManager;
 import com.elfec.ssc.business_logic.UsageManager;
+import com.elfec.ssc.local_storage.AccountStorage;
 import com.elfec.ssc.local_storage.UsageStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.views.IAccountDetailsView;
@@ -13,39 +15,33 @@ import rx.schedulers.Schedulers;
 public class AccountDetailsPresenter extends BasePresenter<IAccountDetailsView> {
     private Account account;
 
-    public AccountDetailsPresenter(IAccountDetailsView view,
-                                   long accountId) {
+    public AccountDetailsPresenter(IAccountDetailsView view) {
         super(view);
-        this.account = Account.get(accountId);
     }
 
-    public void getUsages() {
-        new UsageStorage().getUsages(account.getNus())
+    public void loadAccount(String nus) {
+        ClientManager.activeClient()
+                .flatMap(client -> new AccountStorage().getAccount(client.getGmail(), nus))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(account -> {
+                    this.account = account;
+                    mView.onLoaded(account);
+                }, mView::onError);
+    }
+
+    public void loadUsages(String nus) {
+        new UsageStorage().getUsages(nus)
                 .flatMap(usages -> {
-                    mView.showUsage(usages);
-                    return UsageManager.syncUsages(account.getNus());
+                    mView.onUsageLoaded(usages);
+                    return UsageManager.syncUsages(nus);
                 }).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(mView::showUsage, e -> {
+                .subscribe(mView::onUsageLoaded, e -> {
                     if (!(e instanceof ConnectException)) {
                         mView.onError(e);
                     }
                 });
-    }
-
-    /**
-     * Asigna los datos a la vista
-     */
-    public void setFields() {
-        mView.setAccountNumber(account.getAccountNumber());
-        mView.setNus(account.getNus());
-        mView.setOwnerClient(account.getAccountOwner());
-        mView.setClientAddress(account.getAddress());
-        mView.setEnergySupplyStatus(account.getEnergySupplyStatus());
-        new Thread(() -> {
-            mView.showDebts(account.getDebts());
-            mView.setTotalDebt(account.getTotalDebt());
-        }).start();
     }
 
     /**

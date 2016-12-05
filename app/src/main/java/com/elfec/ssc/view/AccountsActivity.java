@@ -78,16 +78,15 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
             if (ButtonClicksHelper.canClickButton()) {
                 Intent i = new Intent(AccountsActivity.this,
                         AccountDetailsActivity.class);
-                Long id = ((Account) adapter.getItemAtPosition(pos))
-                        .getId();
-                i.putExtra(AccountDetailsActivity.SELECTED_ACCOUNT_ID, id);
+                i.putExtra(AccountDetailsActivity.SELECTED_ACCOUNT_NUS,
+                        ((Account) adapter.getItemAtPosition(pos)).getNus());
                 startActivity(i);
                 overridePendingTransition(R.anim.slide_left_in,
                         R.anim.slide_left_out);
             }
         });
 
-        presenter.loadAccounts(true);
+        presenter.loadAccounts();
     }
 
     @Override
@@ -135,7 +134,7 @@ public class AccountsActivity extends AppCompatActivity implements IAccountsView
             if (resultCode == RESULT_OK) {
                 boolean updateList = data.getBooleanExtra(RegisterAccount.REGISTER_SUCCESS, false);
                 if (updateList) {
-                    presenter.loadAccounts(true);
+                    presenter.loadAccounts();
                 }
 
             }

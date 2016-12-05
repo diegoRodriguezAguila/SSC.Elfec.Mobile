@@ -1,6 +1,8 @@
 package com.elfec.ssc.local_storage;
 
 import com.cesarferreira.rxpaper.RxPaper;
+import com.elfec.ssc.helpers.utils.CollectionUtils;
+import com.elfec.ssc.helpers.utils.ObjectsCompat;
 import com.elfec.ssc.model.Account;
 
 import java.util.ArrayList;
@@ -32,7 +34,23 @@ public class AccountStorage {
     }
 
     /**
-     * Saves a account to the database
+     * Gets an account from the database
+     *
+     * @param gmail Account's NUS
+     * @return Observable of account
+     */
+    public Observable<Account> getAccount(String gmail, String nus) {
+        return getAccounts(gmail)
+                .map(accounts -> {
+                    if (accounts == null)
+                        return null;
+                    return CollectionUtils.find(accounts, item ->
+                            ObjectsCompat.equals(nus, item.getNus()));
+                });
+    }
+
+    /**
+     * Saves an account to the database
      *
      * @param gmail   Account's NUS
      * @param account to save
@@ -45,6 +63,24 @@ public class AccountStorage {
                         accounts = new ArrayList<>();
                     if (!accounts.contains(account))
                         accounts.add(account);
+                    return saveAccounts(gmail, accounts);
+                }).map(m -> account);
+    }
+
+    /**
+     * Removes an account from the database
+     *
+     * @param gmail   Account's NUS
+     * @param account to remove
+     * @return Observable of account
+     */
+    public Observable<Account> removeAccount(String gmail, Account account) {
+        return getAccounts(gmail)
+                .flatMap(accounts -> {
+                    if (accounts == null)
+                        accounts = new ArrayList<>();
+                    if (!accounts.contains(account))
+                        accounts.remove(account);
                     return saveAccounts(gmail, accounts);
                 }).map(m -> account);
     }

@@ -5,7 +5,7 @@ import android.app.NotificationManager;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.elfec.ssc.business_logic.ElfecAccountsManager;
+import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ElfecNotificationManager;
 import com.elfec.ssc.helpers.JsonToAccountConverter;
 import com.elfec.ssc.helpers.ViewPresenterManager;
@@ -38,7 +38,7 @@ public class NewAccountGCMHandler implements INotificationHandler {
         // .getString("gmail"));
         if (ownerClient != null && ownerClient.getStatus() == ClientStatus.ACTIVE) {
             try {
-                ElfecAccountsManager.registerAccount(JsonToAccountConverter.convert(messageInfo.getString("account")));
+                AccountManager.registerAccount(JsonToAccountConverter.convert(messageInfo.getString("account")));
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -48,7 +48,7 @@ public class NewAccountGCMHandler implements INotificationHandler {
             AccountsPresenter presenter = ViewPresenterManager
                     .getPresenter(AccountsPresenter.class);
             if (presenter != null)
-                presenter.loadAccounts(true);
+                presenter.loadAccounts();
             //Si la vista de ver notificaciones está activa
             ViewNotificationsPresenter notifPresenter = ViewPresenterManager
                     .getPresenter(ViewNotificationsPresenter.class);
