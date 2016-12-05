@@ -56,7 +56,7 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
         mAccountList.setXListViewListener(new IXListViewListener() {
             @Override
             public void onRefresh() {
-                mPresenter.refreshAccountsRemotely();
+                mPresenter.refreshAccounts();
             }
 
             @Override

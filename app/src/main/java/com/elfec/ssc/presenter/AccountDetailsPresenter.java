@@ -31,7 +31,8 @@ public class AccountDetailsPresenter extends BasePresenter<IAccountDetailsView> 
     }
 
     public void loadUsages(String nus) {
-        new UsageStorage().getUsages(nus)
+        cancelSubscription();
+        mSubscription = new UsageStorage().getUsages(nus)
                 .flatMap(usages -> {
                     mView.onUsageLoaded(usages);
                     return UsageManager.syncUsages(nus);
@@ -44,11 +45,18 @@ public class AccountDetailsPresenter extends BasePresenter<IAccountDetailsView> 
                 });
     }
 
+    @Override
+    public void close() {
+        super.close();
+        account = null;
+    }
+
     /**
      * LLama a los métodos necesarios para ir a la dirección
      */
     public void goToAddress() {
-        mView.navigateToAddress(account);
+        if (account != null)
+            mView.navigateToAddress(account);
     }
 
 }
