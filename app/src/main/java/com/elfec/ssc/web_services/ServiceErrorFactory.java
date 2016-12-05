@@ -1,9 +1,11 @@
 package com.elfec.ssc.web_services;
 
+import com.elfec.ssc.model.exceptions.ApiException;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.model.exceptions.ServerDownException;
 import com.elfec.ssc.model.exceptions.ServerSideException;
-import com.google.gson.JsonParseException;
+import com.google.gson.JsonSyntaxException;
+import com.google.gson.stream.MalformedJsonException;
 
 import org.ksoap2.transport.HttpResponseException;
 import org.xmlpull.v1.XmlPullParserException;
@@ -36,6 +38,8 @@ public class ServiceErrorFactory {
      */
     public static Throwable fromThrowable(Throwable throwable) {
         throwable.printStackTrace();
+        if(throwable instanceof ApiException)
+            return throwable;
         if (throwable instanceof HttpResponseException) {
             int code = ((HttpResponseException) throwable).getStatusCode();
             if (code == HTTP_INTERNAL_ERROR)
@@ -45,7 +49,8 @@ public class ServiceErrorFactory {
             if (code == HTTP_UNAVAILABLE)
                 return new ServerDownException();
         }
-        if (throwable instanceof JsonParseException)
+        if (throwable instanceof MalformedJsonException ||
+                throwable instanceof JsonSyntaxException)
             return new DataFormatException("La información recibida del servidor no es válida, " +
                     "detalles: " + throwable.getMessage());
         if (throwable instanceof ConnectException)

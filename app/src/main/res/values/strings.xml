@@ -23,7 +23,10 @@
     <string name="account_img">Account</string>
     <string name="account_mask">##-###-###-##</string>
     <string name="waiting_msg">Please wait, your request is being processed&#8230;</string>
-    <string name="account_successfully_reg">Your account has been registered successfully!</string>
+    <string name="msg_registering_account">Please wait, your account is being verified and
+        registered&#8230;</string>
+    <string name="account_successfully_reg">The account %1$s has been registered
+        successfully!</string>
     <string name="errors_in_fields">There are errors in some fields, correct them to
         continue</string>
     <string name="account_already_reg_title">ACCOUNT ALREADY REGISTERED</string>

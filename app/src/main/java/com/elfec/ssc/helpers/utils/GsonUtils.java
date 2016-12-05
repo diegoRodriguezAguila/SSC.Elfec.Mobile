@@ -33,6 +33,7 @@ public class GsonUtils {
         if (sGsonCache == null || sGsonCache.get() == null)
             sGsonCache = new SoftReference<>(new GsonBuilder().setFieldNamingPolicy(
                     FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .serializeNulls()
                     .registerTypeAdapter(DateTime.class, new DateTimeConverter())
                     .registerTypeAdapter(BigDecimal.class, new BigDecimalConverter())
                     .registerTypeAdapter(double.class, new DoubleConverter())
@@ -47,6 +48,7 @@ public class GsonUtils {
         if (sBaseGsonCache == null || sBaseGsonCache.get() == null)
             sBaseGsonCache = new SoftReference<>(new GsonBuilder().setFieldNamingPolicy(
                     FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+                    .serializeNulls()
                     .registerTypeAdapter(DateTime.class, new DateTimeConverter())
                     .registerTypeAdapter(BigDecimal.class, new BigDecimalConverter())
                     .registerTypeAdapter(double.class, new DoubleConverter())

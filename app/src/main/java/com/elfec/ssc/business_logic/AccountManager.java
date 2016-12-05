@@ -1,13 +1,12 @@
 package com.elfec.ssc.business_logic;
 
-import android.os.Build;
-
+import com.elfec.ssc.R;
 import com.elfec.ssc.local_storage.AccountStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
+import com.elfec.ssc.model.Device;
+import com.elfec.ssc.helpers.ui.MessagesUtil;
 import com.elfec.ssc.model.security.SscToken;
-import com.elfec.ssc.security.AppPreferences;
-import com.elfec.ssc.security.CredentialManager;
 import com.elfec.ssc.web_services.AccountService;
 import com.elfec.ssc.web_services.SscTokenRequester;
 
@@ -56,6 +55,29 @@ public class AccountManager {
     }
 
     /**
+     * Registers an account within web services and saves it locally, validates
+     * if the account already exists
+     *
+     * @param gmail   gmail of the client which this account is
+     * @param account account
+     * @return observable of account
+     */
+    public static Observable<Account> registerAccount(String gmail, Account account) {
+        AccountStorage storage = new AccountStorage();
+        return storage.getAccount(gmail, account.getNus()).map(acc -> {
+            if (acc != null)
+                throw new RuntimeException(MessagesUtil.getString(R.string.account_already_reg_msg));
+            return null;
+        }).flatMap(n -> Observable.zip(new SscTokenRequester().getSscToken(),
+                DeviceManager.getCurrentDevice(), Tokens::new))
+                .flatMap(t -> new AccountService(t.sscToken)
+                        .registerAccount(account.getAccountNumber(),
+                                account.getNus(), gmail, t.device)
+                        .flatMap(student -> new AccountStorage()
+                                .saveAccount(gmail, account)));
+    }
+
+    /**
      * Marca a la cuenta con el nus y cliente especificados como eliminada
      *
      * @return boolean, true si se logro eliminar
@@ -88,21 +110,18 @@ public class AccountManager {
      * @return observable of account list
      */
     public static Observable<List<Account>> getAccountsFromWs(String gmail) {
-        String imei = new CredentialManager(AppPreferences.getApplicationContext())
-                .getDeviceIdentifier();
         return Observable.zip(new SscTokenRequester().getSscToken(),
-                DeviceManager.getGcmToken(), Tokens::new).flatMap(t ->
-                new AccountService(t.sscToken).getAccounts(gmail,
-                        Build.BRAND, Build.MODEL, imei, t.gcmToken));
+                DeviceManager.getCurrentDevice(), Tokens::new)
+                .flatMap(t -> new AccountService(t.sscToken).getAccounts(gmail, t.device));
     }
 
     private static class Tokens {
         SscToken sscToken;
-        String gcmToken;
+        Device device;
 
-        public Tokens(SscToken sscToken, String gcmToken) {
+        public Tokens(SscToken sscToken, Device device) {
             this.sscToken = sscToken;
-            this.gcmToken = gcmToken;
+            this.device = device;
         }
     }
 

@@ -78,7 +78,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".view.RegisterAccount"
+            android:name=".view.RegisterAccountActivity"
             android:label="@string/register_account_title"
             android:screenOrientation="portrait" >
         </activity>

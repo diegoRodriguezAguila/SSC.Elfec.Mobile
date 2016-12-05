@@ -1,11 +1,11 @@
 package com.elfec.ssc.web_services;
 
 import com.elfec.ssc.model.Account;
+import com.elfec.ssc.model.Device;
 import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSParam;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
-import com.elfec.ssc.model.webservices.converters.GetAllAccountsWSConverter;
 import com.elfec.ssc.model.webservices.converters.RegisterAccountWSConverter;
 import com.elfec.ssc.model.webservices.converters.RemoveAccountWSConverter;
 
@@ -48,39 +48,42 @@ public class AccountService {
     }
 
     /**
-     * Obtiene todas las cuentas que se hayan asignado a un gmail determinado
+     * Registra una cuenta por medio de servicios web
      *
-     * @param gmail        gmail
-     * @param eventHandler handler
+     * @param accountNumber número de cuenta
+     * @param nus           nus
+     * @param gmail         gmail del cliente a nombre del cual se registrará la cuenta
+     * @param device        device information
      */
-    public void getAllAccounts(String gmail, String deviceBrand, String deviceModel, String deviceIMEI,
-                               String gCMtoken, IWSFinishEvent<List<Account>> eventHandler) {
-        WebServiceConnector<List<Account>> accountWSConnector =
-                new WebServiceConnector<>("AccountWS.php?wsdl", "",
-                        "ssc_elfec", "GetAllAccounts", sscToken, new GetAllAccountsWSConverter(), eventHandler);
-        accountWSConnector.execute(new WSParam("GMail", gmail), new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
-                new WSParam("DeviceIMEI", deviceIMEI), new WSParam("GCM", gCMtoken));
+    public Observable<Account> registerAccount(String accountNumber, String nus,
+                                               String gmail, Device device) {
+        return new ServiceConnector<Account>("AccountWS.php?wsdl",
+                "RegisterAccount", sscToken) {
+        }.execute(new WSParam("AccountNumber", accountNumber),
+                new WSParam("NUS", nus), new WSParam("GMail", gmail),
+                new WSParam("PhoneNumber", device.getPhoneNumber()),
+                new WSParam("DeviceBrand", device.getBrand()),
+                new WSParam("DeviceModel", device.getModel()),
+                new WSParam("DeviceIMEI", device.getImei()),
+                new WSParam("GCM", device.getGcmToken()));
     }
 
 
     /**
      * Obtiene todas las cuentas que se hayan asignado a un gmail determinado
      *
-     * @param gmail       gmail
-     * @param deviceBrand device brand
-     * @param deviceModel device model
-     * @param deviceImei  device imei
-     * @param gcmToken    gcm token
+     * @param gmail  gmail
+     * @param device device information
      * @return observable of account list
      */
-    public Observable<List<Account>> getAccounts(String gmail, String deviceBrand,
-                                                 String deviceModel, String deviceImei,
-                                                 String gcmToken) {
+    public Observable<List<Account>> getAccounts(String gmail, Device device) {
         return new ServiceConnector<List<Account>>("AccountWS.php?wsdl",
                 "GetAllAccounts", sscToken) {
         }.execute(new WSParam("GMail", gmail),
-                new WSParam("DeviceBrand", deviceBrand), new WSParam("DeviceModel", deviceModel),
-                new WSParam("DeviceIMEI", deviceImei), new WSParam("GCM", gcmToken));
+                new WSParam("DeviceBrand", device.getBrand()),
+                new WSParam("DeviceModel", device.getModel()),
+                new WSParam("DeviceIMEI", device.getImei()),
+                new WSParam("GCM", device.getGcmToken()));
     }
 
     /**

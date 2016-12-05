@@ -1,5 +1,6 @@
 package com.elfec.ssc.model.webservices;
 
+import com.elfec.ssc.model.exceptions.ApiException;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -13,7 +14,10 @@ public class DataResult<T>{
     protected T data;
 
     @SerializedName("Errors")
-    private List<Exception> errors;
+    private List<ApiException> errors;
+
+    public DataResult() {
+    }
 
     //region getter setters
 
@@ -21,11 +25,11 @@ public class DataResult<T>{
         return errors != null && errors.size() > 0;
     }
 
-    public List<Exception> getErrors() {
+    public List<ApiException> getErrors() {
         return errors;
     }
 
-    public void setErrors(List<Exception> errors) {
+    public void setErrors(List<ApiException> errors) {
         this.errors = errors;
     }
 

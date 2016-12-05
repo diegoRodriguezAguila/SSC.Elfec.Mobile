@@ -1,5 +1,7 @@
 package com.elfec.ssc.presenter.views;
 
+import com.elfec.ssc.model.Account;
+
 import java.util.List;
 
 /***
@@ -7,18 +9,12 @@ import java.util.List;
  * @author Diego
  *
  */
- public interface IRegisterAccount {
+ public interface IRegisterAccount extends IProcessView<Account> {
 	 String getNus();
 	 String getNusValidationRules();
 	 void setNusErrors(List<String> validationErrors);
 	 String getAccountNumber();
 	 String getAccountNumberValidationRules();
 	 void setAccountNumberErrors(List<String> validationErrors);
-	 String getPhoneNumber();
-	 void notifyAccountSuccessfullyRegistered();
-	 void showWSWaiting();
-	 void hideWSWaiting();
-	 void notifyAccountAlreadyRegistered();
-	 void notifyErrorsInFields();
-	 void showRegistrationErrors(List<Exception> errors);
+	 void notifyFieldErrors();
 }

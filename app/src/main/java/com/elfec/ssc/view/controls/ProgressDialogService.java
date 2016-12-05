@@ -29,35 +29,42 @@ public class ProgressDialogService implements DialogInterface {
         mTxtMessage = (TextView) mRootView.findViewById(R.id.txt_progress_message);
     }
 
-    public void setMessage(CharSequence message){
+    public ProgressDialogService setMessage(CharSequence message){
         mTxtMessage.setText(message);
+        return this;
     }
 
-    public void setMessage(@StringRes int messageId){
+    public ProgressDialogService setMessage(@StringRes int messageId){
         mTxtMessage.setText(messageId);
+        return this;
     }
 
-    public void setTitle(CharSequence title){
+    public ProgressDialogService setTitle(CharSequence title){
         mDialogBuilder.setTitle(title);
+        return this;
     }
 
-    public void setTitle(@StringRes int titleId){
+    public ProgressDialogService setTitle(@StringRes int titleId){
         mDialogBuilder.setTitle(titleId);
+        return this;
     }
 
-    public void setCancelable(boolean cancelable){
+    public ProgressDialogService setCancelable(boolean cancelable){
         mDialogBuilder.setCancelable(cancelable);
+        return this;
     }
 
-    public void setNegativeButton(@StringRes int buttonLabel, DialogInterface.OnClickListener
+    public ProgressDialogService setNegativeButton(@StringRes int buttonLabel, DialogInterface.OnClickListener
             listener){
         mDialogBuilder.setNegativeButton(buttonLabel, listener);
+        return this;
     }
 
-    public void setCanceledOnTouchOutside(boolean cancel){
+    public ProgressDialogService setCanceledOnTouchOutside(boolean cancel){
         if(mDialog==null)
             mDialog = mDialogBuilder.create();
         mDialog.setCanceledOnTouchOutside(cancel);
+        return this;
     }
 
     public void show(){

@@ -1,13 +1,10 @@
 package com.elfec.ssc.view;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.StringRes;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
-import android.text.Html;
 import android.text.method.LinkMovementMethod;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,9 +15,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.HtmlCompat;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.helpers.ui.KeyboardHelper;
 import com.elfec.ssc.helpers.utils.MessageListFormatter;
+import com.elfec.ssc.model.Account;
 import com.elfec.ssc.presenter.RegisterAccountPresenter;
 import com.elfec.ssc.presenter.views.IRegisterAccount;
 import com.elfec.ssc.view.controls.ProgressDialogService;
@@ -33,9 +32,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class RegisterAccount extends AppCompatActivity implements
+public class RegisterAccountActivity extends BaseActivity implements
         IRegisterAccount {
 
     /**
@@ -47,7 +45,7 @@ public class RegisterAccount extends AppCompatActivity implements
      */
     public static final String REGISTER_SUCCESS = "AccountRegistered";
 
-    private RegisterAccountPresenter presenter;
+    private RegisterAccountPresenter mPresenter;
     protected
     @BindView(R.id.txt_nus)
     EditText mTxtNus;
@@ -64,7 +62,7 @@ public class RegisterAccount extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_account);
-        presenter = new RegisterAccountPresenter(this);
+        mPresenter = new RegisterAccountPresenter(this);
         ButterKnife.bind(this);
         mTxtAccountNumber
                 .setOnEditorActionListener((v, actionId, event) -> {
@@ -78,14 +76,10 @@ public class RegisterAccount extends AppCompatActivity implements
                 .setFontName("fonts/segoe_ui_semilight.ttf")
                 .setTextSize(16)
                 .setBackgroundColorValue(
-                        ContextCompat.getColor(RegisterAccount.this,
+                        ContextCompat.getColor(RegisterAccountActivity.this,
                                 R.color.ssc_elfec_color_highlight)).build();
         setOnFocusChangedListeners();
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+        mWaitingDialog = new ProgressDialogService(RegisterAccountActivity.this);
     }
 
     @Override
@@ -113,29 +107,28 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        finish();// go back to the previous Activity
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
+    public void releasePresenter() {
+        mPresenter.close();
+        mPresenter = null;
     }
 
     /**
      * Asigna los onFocusChange listeners del mTxtNus y el mTxtAccountNumber
      */
     public void setOnFocusChangedListeners() {
-        Thread thread = new Thread(() -> {
+        new Thread(() -> {
             mTxtNus.setOnFocusChangeListener((v, gotFocus) -> {
                 if (!gotFocus) {
-                    presenter.validateNUS();
+                    mPresenter.validateNus();
                 }
             });
             mTxtAccountNumber
                     .setOnFocusChangeListener((v, gotFocus) -> {
                         if (!gotFocus) {
-                            presenter.validateAccountNumber();
+                            mPresenter.validateAccountNumber();
                         }
                     });
-        });
-        thread.start();
+        }).start();
     }
 
     /**
@@ -151,7 +144,14 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     public void btnRegisterAccountClick(View view) {
-        presenter.processAccountData();
+        if (ButtonClicksHelper.canClickButton())
+            mPresenter.registerAccount();
+    }
+
+
+    public void hideWaiting() {
+        if (mWaitingDialog != null)
+            mWaitingDialog.dismiss();
     }
 
     //region Interface IRegisterAccount methods
@@ -160,7 +160,7 @@ public class RegisterAccount extends AppCompatActivity implements
     public void setNusErrors(final List<String> validationErrors) {
         runOnUiThread(() -> {
             if (validationErrors.size() > 0)
-                mTxtNus.setError(Html
+                mTxtNus.setError(HtmlCompat
                         .fromHtml(getHTMLListFromErrors(validationErrors)));
             else
                 mTxtNus.setError(null);
@@ -171,7 +171,7 @@ public class RegisterAccount extends AppCompatActivity implements
     public void setAccountNumberErrors(final List<String> validationErrors) {
         runOnUiThread(() -> {
             if (validationErrors.size() > 0)
-                mTxtAccountNumber.setError(Html
+                mTxtAccountNumber.setError(HtmlCompat
                         .fromHtml(getHTMLListFromErrors(validationErrors)));
             else
                 mTxtAccountNumber.setError(null);
@@ -189,13 +189,6 @@ public class RegisterAccount extends AppCompatActivity implements
     }
 
     @Override
-    public String getPhoneNumber() {
-        String phoneNumber = ((TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE))
-                .getLine1Number();
-        return phoneNumber == null ? "" : phoneNumber;
-    }
-
-    @Override
     public String getNusValidationRules() {
         return mTxtNus.getTag().toString();
     }
@@ -205,83 +198,52 @@ public class RegisterAccount extends AppCompatActivity implements
         return mTxtAccountNumber.getTag().toString();
     }
 
-    @Override
-    public void notifyAccountSuccessfullyRegistered() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                SuperToast.create(RegisterAccount.this,
-                        R.string.account_successfully_reg,
-                        SuperToast.Duration.LONG,
-                        Style.getStyle(Style.BLUE, SuperToast.Animations.FADE))
-                        .show();
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra(REGISTER_SUCCESS, true);
-                setResult(RESULT_OK, returnIntent);
-                onBackPressed();
-            }
-        });
-    }
 
     @Override
-    public void showWSWaiting() {
+    public void notifyFieldErrors() {
         runOnUiThread(() -> {
-            mWaitingDialog = new ProgressDialogService(RegisterAccount.this);
-            mWaitingDialog.setMessage(RegisterAccount.this.getResources()
-                    .getString(R.string.waiting_msg));
-            mWaitingDialog.setCancelable(false);
-            mWaitingDialog.setCanceledOnTouchOutside(false);
-            mWaitingDialog.show();
-        });
-    }
-
-    @Override
-    public void hideWSWaiting() {
-        runOnUiThread(() -> {
-            if (mWaitingDialog != null)
-                mWaitingDialog.dismiss();
-        });
-    }
-
-    @Override
-    public void notifyErrorsInFields() {
-        runOnUiThread(() -> {
-            Crouton.clearCroutonsForActivity(RegisterAccount.this);
-            Crouton.makeText(RegisterAccount.this,
+            Crouton.clearCroutonsForActivity(RegisterAccountActivity.this);
+            Crouton.makeText(RegisterAccountActivity.this,
                     R.string.errors_in_fields, mCroutonStyle, mRootLayout)
                     .show();
         });
     }
 
     @Override
-    public void notifyAccountAlreadyRegistered() {
-        runOnUiThread(() -> {
-            AlertDialog.Builder builder = new AlertDialog.Builder(
-                    RegisterAccount.this);
-            builder.setTitle(R.string.account_already_reg_title)
-                    .setMessage(R.string.account_already_reg_msg)
-                    .setPositiveButton(R.string.btn_ok, null).show();
-        });
+    public void onProcessing(@StringRes int message) {
+        runOnUiThread(() -> mWaitingDialog
+                .setMessage(RegisterAccountActivity.this.getString(message))
+                .setCancelable(false)
+                .setCanceledOnTouchOutside(false).show());
     }
 
     @Override
-    public void showRegistrationErrors(final List<Exception> errors) {
-        runOnUiThread(() -> {
-            if (errors.size() > 0) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(
-                        RegisterAccount.this);
-                builder.setTitle(R.string.errors_on_register_title)
-                        .setMessage(
-                                MessageListFormatter
-                                        .formatHTMLFromErrors(RegisterAccount
-                                                .this, errors))
-                        .setPositiveButton(R.string.btn_ok, null);
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                ((TextView)dialog.findViewById(android.R.id.message))
-                        .setMovementMethod(LinkMovementMethod.getInstance());
-            }
-        });
+    public void onError(Throwable e) {
+        hideWaiting();
+        AlertDialog.Builder builder = new AlertDialog.Builder(
+                RegisterAccountActivity.this);
+        builder.setTitle(R.string.errors_on_register_title)
+                .setMessage(e.getMessage())
+                .setPositiveButton(R.string.btn_ok, null);
+        AlertDialog dialog = builder.create();
+        dialog.show();
+        TextView txtMsg = (TextView) dialog.findViewById(android.R.id.message);
+        if (txtMsg != null) {
+            txtMsg.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+    }
+
+    @Override
+    public void onSuccess(Account account) {
+        hideWaiting();
+        SuperToast.create(RegisterAccountActivity.this,
+                getString(R.string.account_successfully_reg, account.getNus()),
+                SuperToast.Duration.LONG,
+                Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(REGISTER_SUCCESS, true);
+        setResult(RESULT_OK, returnIntent);
+        onBackPressed();
     }
 
     //endregion

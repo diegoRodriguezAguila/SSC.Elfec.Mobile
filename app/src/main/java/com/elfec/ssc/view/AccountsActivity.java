@@ -110,8 +110,8 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
 
     public void btnRegisterAccountClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            startActivityForResult(new Intent(AccountsActivity.this, RegisterAccount.class),
-                    RegisterAccount.REGISTER_REQUEST_CODE);
+            startActivityForResult(new Intent(AccountsActivity.this, RegisterAccountActivity.class),
+                    RegisterAccountActivity.REGISTER_REQUEST_CODE);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
         }
@@ -125,10 +125,10 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RegisterAccount.REGISTER_REQUEST_CODE) {
+        if (requestCode == RegisterAccountActivity.REGISTER_REQUEST_CODE) {
 
             if (resultCode == RESULT_OK) {
-                boolean updateList = data.getBooleanExtra(RegisterAccount.REGISTER_SUCCESS, false);
+                boolean updateList = data.getBooleanExtra(RegisterAccountActivity.REGISTER_SUCCESS, false);
                 if (updateList) {
                     mPresenter.loadAccounts();
                 }

@@ -1,12 +1,16 @@
 package com.elfec.ssc.business_logic;
 
 import android.app.Application;
+import android.os.Build;
 
 import com.elfec.ssc.helpers.RxGcmHelper;
+import com.elfec.ssc.helpers.utils.ObservableUtils;
 import com.elfec.ssc.messaging.GcmNotificationBgReceiver;
 import com.elfec.ssc.messaging.GcmNotificationReceiver;
 import com.elfec.ssc.messaging.RefreshTokenReceiver;
+import com.elfec.ssc.model.Device;
 import com.elfec.ssc.security.AppPreferences;
+import com.elfec.ssc.security.CredentialManager;
 
 import rx.Observable;
 import rx_gcm.internal.RxGcm;
@@ -35,6 +39,22 @@ public class DeviceManager {
         return RxGcmHelper.register((Application) AppPreferences.getApplicationContext(),
                 GcmNotificationReceiver.class,
                 GcmNotificationBgReceiver.class);
+    }
+
+    /**
+     * Gets Device info
+     * @return observable of Device
+     */
+    public static Observable<Device> getCurrentDevice(){
+        return getGcmToken().flatMap(DeviceManager::getDevice);
+    }
+
+    private static Observable<Device> getDevice(String gcmToken){
+        return ObservableUtils.from(() -> {
+            String imei = new CredentialManager(AppPreferences.getApplicationContext())
+                    .getDeviceIdentifier();
+            return new Device(Build.BRAND, Build.MODEL, imei, gcmToken);
+        });
     }
 
     /**
