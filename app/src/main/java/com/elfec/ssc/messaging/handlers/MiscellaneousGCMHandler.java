@@ -10,9 +10,9 @@ import android.support.v4.app.NotificationCompat.Builder;
  * @author drodriguez
  *
  */
-public class MiscellaneousGCMHandler implements INotificationHandler {
+public class MiscellaneousGcmHandler implements INotificationHandler {
 
-	private final int NOTIF_ID = 5;
+	private static final int NOTIF_ID = 5;
 	@Override
 	public void handleNotification(Bundle message,
 								   NotificationManager notifManager, Builder builder) {

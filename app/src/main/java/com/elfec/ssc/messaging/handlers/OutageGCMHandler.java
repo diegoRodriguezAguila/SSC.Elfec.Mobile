@@ -4,40 +4,53 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat.Builder;
 
-import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.enums.ClientStatus;
+import com.elfec.ssc.business_logic.ClientManager;
+import com.elfec.ssc.business_logic.NotificationManager;
+import com.elfec.ssc.helpers.ViewPresenterManager;
+import com.elfec.ssc.helpers.utils.ObjectsCompat;
+import com.elfec.ssc.model.Notification;
+import com.elfec.ssc.presenter.NotificationsPresenter;
 import com.elfec.ssc.view.NotificationsActivity;
+
+import rx.Observable;
+import rx.schedulers.Schedulers;
 
 /**
  * Maneja todos los tipos de notificaciones relacionadas a cortes
- * @author drodriguez
  *
+ * @author drodriguez
  */
-public class OutageGCMHandler implements INotificationHandler {
+public class OutageGcmHandler implements INotificationHandler {
 
-	private final int NOTIF_ID = 3;
-	@Override
-	public void handleNotification(Bundle message,
-								   android.app.NotificationManager notifManager, Builder builder) {
-		Client ownerClient =null;//TODO current client Client.getClientByGmail(messageInfo
-		// .getString("gmail"));
-		if(ownerClient != null && ownerClient.getStatus()==ClientStatus.ACTIVE)
-		{
-			/*Notification notif = NotificationManager.SaveNotification(messageInfo.getString
-				("title"), messageInfo.getString("message"),
-					NotificationType.get(Short.parseShort(messageInfo.getString("type"))), NotificationKey.get(messageInfo.getString("key")));
-			//Si la vista de ver notificaciones está activa
-			NotificationsPresenter notifPresenter = ViewPresenterManager
-					.getPresenter(NotificationsPresenter.class);
-			if (notifPresenter != null)
-				notifPresenter.addNewOutageNotificationUpdate(notif);
-			notifManager.notify(NOTIF_ID, builder.build());*/
-		}
-	}
+    private static final int NOTIF_ID = 3;
 
-	@Override
-	public Class<? extends Activity> getActivityClass() {
-		return NotificationsActivity.class;
-	}
+    @Override
+    public void handleNotification(Bundle message,
+                                   android.app.NotificationManager notifManager, Builder builder) {
+        ClientManager.activeClient()
+                .flatMap(client -> {
+                    String gmail = message.getString("gmail");
+                    if (client == null || !ObjectsCompat.equals(gmail, client.getGmail()) ||
+                            message.getString("nus") == null)
+                        return Observable.just(null);
+                    return NotificationManager.saveNotification(new Notification(message));
+                }).subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(notification -> {
+                    if (notification == null) return;
+                    //Si la vista de ver notificaciones está activa
+                    NotificationsPresenter notifPresenter = ViewPresenterManager
+                            .getPresenter(NotificationsPresenter.class);
+                    if (notifPresenter != null)
+                        notifPresenter.addNewOutageNotificationUpdate(notification);
+                    notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
+                }, e -> {
+                });
+    }
+
+    @Override
+    public Class<? extends Activity> getActivityClass() {
+        return NotificationsActivity.class;
+    }
 
 }

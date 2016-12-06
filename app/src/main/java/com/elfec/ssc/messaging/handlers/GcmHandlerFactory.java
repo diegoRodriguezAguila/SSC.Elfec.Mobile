@@ -17,20 +17,18 @@ public class GcmHandlerFactory {
 				NewAccountGcmHandler.class);
 		gcmHandlers.put(NotificationKey.ACCOUNT_DELETED.toString(),
 				AccountDeletedGcmHandler.class);
-		gcmHandlers.put(NotificationKey.POINTS_UPDATE.toString(),
-				PointsUpdateGCMHandler.class);
 		gcmHandlers.put(NotificationKey.CONTACTS_UPDATE.toString(),
 				ContactsUpdateGCMHandler.class);
 		gcmHandlers.put(NotificationKey.SCHEDULED_OUTAGE.toString(),
-				OutageGCMHandler.class);
+				OutageGcmHandler.class);
 		gcmHandlers.put(NotificationKey.INCIDENTAL_OUTAGE.toString(),
-				OutageGCMHandler.class);
+				OutageGcmHandler.class);
 		gcmHandlers.put(NotificationKey.NONPAYMENT_OUTAGE.toString(),
-				OutageGCMHandler.class);
+				OutageGcmHandler.class);
 		gcmHandlers.put(NotificationKey.MISCELLANEOUS.toString(),
-				MiscellaneousGCMHandler.class);
+				MiscellaneousGcmHandler.class);
 		gcmHandlers.put(NotificationKey.EXPIRED_DEBT.toString(),
-				OutageGCMHandler.class);
+				OutageGcmHandler.class);
 	}
 
 	/**

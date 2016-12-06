@@ -50,6 +50,7 @@ public class AccountDeletedGcmHandler implements INotificationHandler {
                 }).subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.newThread())
                 .subscribe(notification -> {
+                    if (notification == null) return;
                     //Si la vista de ver cuentas esta activa
                     AccountsPresenter presenter = ViewPresenterManager
                             .getPresenter(AccountsPresenter.class);
