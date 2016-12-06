@@ -31,7 +31,7 @@ public class SslConection {
      * @param context context
      */
     public static void allowSelfSignedElfecSSL(Context context) {
-        if (isAllowed.get()!=null && isAllowed.get()) return;
+        if (isAllowed!=null && isAllowed.get()!=null && isAllowed.get()) return;
         try {
             // Get an instance of the Bouncy Castle KeyStore format
             KeyStore trusted = KeyStore.getInstance("BKS");// put BKS literal

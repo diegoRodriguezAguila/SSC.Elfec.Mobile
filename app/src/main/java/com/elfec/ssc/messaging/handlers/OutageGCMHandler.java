@@ -17,7 +17,7 @@ public class OutageGCMHandler implements INotificationHandler {
 
 	private final int NOTIF_ID = 3;
 	@Override
-	public void handleNotification(Bundle messageInfo,
+	public void handleNotification(Bundle message,
 								   android.app.NotificationManager notifManager, Builder builder) {
 		Client ownerClient =null;//TODO current client Client.getClientByGmail(messageInfo
 		// .getString("gmail"));

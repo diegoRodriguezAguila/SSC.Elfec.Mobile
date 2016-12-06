@@ -14,11 +14,11 @@ public interface INotificationHandler {
 
 	/**
 	 * Se encarga de manejar el mensaje de forma adecuada
-	 * @param messageInfo
+	 * @param message
 	 * @param notifManager
 	 * @param builder
 	 */
-	public void handleNotification(Bundle messageInfo, NotificationManager notifManager, Builder builder);
+	public void handleNotification(Bundle message, NotificationManager notifManager, Builder builder);
 	/**
 	 * Obtiene el tipo de actividad que se iniciará al presionar en una notificación
 	 * en caso de tener una notificación que debe llevar a una vista

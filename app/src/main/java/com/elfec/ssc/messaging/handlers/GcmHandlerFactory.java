@@ -16,7 +16,7 @@ public class GcmHandlerFactory {
 		gcmHandlers.put(NotificationKey.NEW_ACCOUNT.toString(),
 				NewAccountGcmHandler.class);
 		gcmHandlers.put(NotificationKey.ACCOUNT_DELETED.toString(),
-				AccountDeletedGCMHandler.class);
+				AccountDeletedGcmHandler.class);
 		gcmHandlers.put(NotificationKey.POINTS_UPDATE.toString(),
 				PointsUpdateGCMHandler.class);
 		gcmHandlers.put(NotificationKey.CONTACTS_UPDATE.toString(),

@@ -20,10 +20,10 @@ import org.json.JSONArray;
 public class PointsUpdateGCMHandler implements INotificationHandler {
     //private final int NOTIF_ID = 3;
     @Override
-    public void handleNotification(Bundle messageInfo,
+    public void handleNotification(Bundle message,
                                    NotificationManager notifManager, Builder builder) {
         try {
-            JSONArray result = new JSONArray(messageInfo.getString("points"));
+            JSONArray result = new JSONArray(message.getString("points"));
             LocationServicesPresenter presenter = ViewPresenterManager
                     .getPresenter(LocationServicesPresenter.class);
             if (presenter != null) {

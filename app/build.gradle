@@ -16,9 +16,11 @@ android {
     buildTypes {
         debug {
             buildConfigField "String", "WS_SERVER_URL", '"https://ssc.elfec.bo:4343/"'
+            buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + System.currentTimeMillis() + "L)"
         }
         release {
             buildConfigField "String", "WS_SERVER_URL", '"https://ssc.elfec.bo:4343/"'
+            buildConfigField "java.util.Date", "buildTime", "new java.util.Date(" + System.currentTimeMillis() + "L)"
             minifyEnabled true
             shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'),

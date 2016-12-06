@@ -58,7 +58,6 @@ public class Account {
     }
 
     public Account(String accountNumber, String nus) {
-        super();
         this.accountNumber = accountNumber;
         this.nus = nus;
         this.status = 1;
