@@ -73,7 +73,7 @@ public abstract class ServiceConnector<T> {
         ParameterizedType c = (ParameterizedType) getClass().getGenericSuperclass();
         Type type = c.getActualTypeArguments()[0];
         this.type = new DataResultParametrizedType(type);
-        SSLConection.allowSelfSignedElfecSSL(AppPreferences.getApplicationContext());
+        SslConection.allowSelfSignedElfecSSL(AppPreferences.getApplicationContext());
     }
 
     /**

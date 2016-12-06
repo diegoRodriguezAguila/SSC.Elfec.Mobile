@@ -1,20 +1,15 @@
 package com.elfec.ssc.view;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -23,8 +18,8 @@ import com.elfec.ssc.R;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.model.Notification;
-import com.elfec.ssc.presenter.ViewNotificationsPresenter;
-import com.elfec.ssc.presenter.views.IViewNotifications;
+import com.elfec.ssc.presenter.NotificationsPresenter;
+import com.elfec.ssc.presenter.views.INotificationsView;
 import com.elfec.ssc.view.adapters.NotificationAdapter;
 import com.elfec.ssc.view.animations.HeightAnimation;
 import com.elfec.ssc.view.controls.xlistview.XListView;
@@ -34,16 +29,15 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
-public class ViewNotifications extends AppCompatActivity implements
-        IViewNotifications {
+public class NotificationsActivity extends BaseActivity implements
+        INotificationsView {
 
     public enum ExpandStatus {
         COLLAPSED, HALF, FULL
     }
 
-    private ViewNotificationsPresenter presenter;
+    private NotificationsPresenter mPresenter;
 
     private ExpandStatus outageStatus;
     private ExpandStatus accountsStatus;
@@ -67,7 +61,7 @@ public class ViewNotifications extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notifications);
-        presenter = new ViewNotificationsPresenter(this);
+        mPresenter = new NotificationsPresenter(this);
         ButterKnife.bind(this);
         outageStatus = ExpandStatus.COLLAPSED;
         accountsStatus = ExpandStatus.COLLAPSED;
@@ -77,14 +71,9 @@ public class ViewNotifications extends AppCompatActivity implements
     }
 
     @Override
-    public void onBackPressed() {
-        finish();// go back to the previous Activity
-        overridePendingTransition(R.anim.slide_right_in, R.anim.slide_right_out);
-    }
-
-    @Override
-    protected void attachBaseContext(Context newBase) {
-        super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
+    public void releasePresenter() {
+        mPresenter.close();
+        mPresenter = null;
     }
 
     @Override
@@ -96,8 +85,8 @@ public class ViewNotifications extends AppCompatActivity implements
     @Override
     protected void onResume() {
         super.onResume();
-        presenter.loadNotifications();
-        ViewPresenterManager.setPresenter(presenter);
+        mPresenter.loadNotifications();
+        ViewPresenterManager.setPresenter(mPresenter);
     }
 
     /**
@@ -123,27 +112,17 @@ public class ViewNotifications extends AppCompatActivity implements
      * Inicia un hilo para asignar los listeners a ambas listas
      */
     private void initializeListListeners() {
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                setOnCheckListeners();
-                setOnRefreshAndLoadListeners();
-            }
-        });
-        thread.start();
+        new Thread(() -> {
+            setOnCheckListeners();
+            setOnRefreshAndLoadListeners();
+        }).start();
     }
 
     /**
      * Pone los check listeners para los cortes y las cuentas
      */
     private void setOnCheckListeners() {
-        OnCheckedChangeListener checkListener = new OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView,
-                                         boolean isChecked) {
-                redefineViewSizes();
-            }
-        };
+        OnCheckedChangeListener checkListener = (buttonView, isChecked) -> redefineViewSizes();
         mCheckOutageGroup.setOnCheckedChangeListener(checkListener);
         mCheckAccountsGroup.setOnCheckedChangeListener(checkListener);
     }
@@ -179,12 +158,9 @@ public class ViewNotifications extends AppCompatActivity implements
             (new AlertDialog.Builder(this))
                     .setTitle(R.string.delete_notifications_title)
                     .setMessage(R.string.delete_outage_notifications_msg)
-                    .setPositiveButton(R.string.btn_ok, new OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int arg1) {
-                            presenter.clearOutageNotifications();
-                        }
-                    }).setNegativeButton(R.string.btn_cancel, null).show();
+                    .setPositiveButton(R.string.btn_ok, (dialog, arg1) ->
+                            mPresenter.clearOutageNotifications())
+                    .setNegativeButton(R.string.btn_cancel, null).show();
         }
     }
 
@@ -193,12 +169,9 @@ public class ViewNotifications extends AppCompatActivity implements
             (new AlertDialog.Builder(this))
                     .setTitle(R.string.delete_notifications_title)
                     .setMessage(R.string.delete_account_notifications_msg)
-                    .setPositiveButton(R.string.btn_ok, new OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int arg1) {
-                            presenter.clearAccountNotifications();
-                        }
-                    }).setNegativeButton(R.string.btn_cancel, null).show();
+                    .setPositiveButton(R.string.btn_ok, (dialog, arg1) ->
+                            mPresenter.clearAccountNotifications())
+                    .setNegativeButton(R.string.btn_cancel, null).show();
         }
     }
 
@@ -254,24 +227,24 @@ public class ViewNotifications extends AppCompatActivity implements
         outageListView.setXListViewListener(new IXListViewListener() {
             @Override
             public void onRefresh() {
-                presenter.refreshOutageNotifications();
+                mPresenter.refreshOutageNotifications();
             }
 
             @Override
             public void onLoadMore() {
-                presenter.loadMoreOutageNotifications();
+                mPresenter.loadMoreOutageNotifications();
             }
         });
         accountsListView.setXListViewListener(new IXListViewListener() {
 
             @Override
             public void onRefresh() {
-                presenter.refreshAccountNotifications();
+                mPresenter.refreshAccountNotifications();
             }
 
             @Override
             public void onLoadMore() {
-                presenter.loadMoreAccountNotifications();
+                mPresenter.loadMoreAccountNotifications();
             }
         });
     }
@@ -279,147 +252,103 @@ public class ViewNotifications extends AppCompatActivity implements
     // #region Interface Methods
     @Override
     public void setOutageList(final List<Notification> outageNotifications) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mLblNoOutageNotifications.setVisibility(outageNotifications
-                        .size() == 0 ? View.VISIBLE : View.GONE);
-                mOutagesAdapter = new NotificationAdapter(
-                        ViewNotifications.this,
-                        R.layout.notification_list_item, outageNotifications);
-                outageListView.setAdapter(mOutagesAdapter);
-            }
+        runOnUiThread(() -> {
+            mLblNoOutageNotifications.setVisibility(outageNotifications
+                    .size() == 0 ? View.VISIBLE : View.GONE);
+            mOutagesAdapter = new NotificationAdapter(
+                    NotificationsActivity.this,
+                    R.layout.notification_list_item, outageNotifications);
+            outageListView.setAdapter(mOutagesAdapter);
         });
     }
 
     @Override
     public void setAccountsList(final List<Notification> accountNotifications) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mLblNoAccountNotifications.setVisibility(accountNotifications
-                        .size() == 0 ? View.VISIBLE : View.GONE);
-                mAccountsAdapter = new NotificationAdapter(
-                        ViewNotifications.this,
-                        R.layout.notification_list_item, accountNotifications);
-                accountsListView.setAdapter(mAccountsAdapter);
-            }
+        runOnUiThread(() -> {
+            mLblNoAccountNotifications.setVisibility(accountNotifications
+                    .size() == 0 ? View.VISIBLE : View.GONE);
+            mAccountsAdapter = new NotificationAdapter(
+                    NotificationsActivity.this,
+                    R.layout.notification_list_item, accountNotifications);
+            accountsListView.setAdapter(mAccountsAdapter);
         });
     }
 
     @Override
     public void addOutageNotifications(
             final List<Notification> outageNotifications) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mOutagesAdapter == null)
-                    setOutageList(outageNotifications);
-                else
-                    mOutagesAdapter.addAll(outageNotifications);
-            }
+        runOnUiThread(() -> {
+            if (mOutagesAdapter == null)
+                setOutageList(outageNotifications);
+            else
+                mOutagesAdapter.addAll(outageNotifications);
         });
     }
 
     @Override
     public void addAccountNotifications(
             final List<Notification> accountNotifications) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (mAccountsAdapter == null)
-                    setAccountsList(accountNotifications);
-                else
-                    mAccountsAdapter.addAll(accountNotifications);
-            }
+        runOnUiThread(() -> {
+            if (mAccountsAdapter == null)
+                setAccountsList(accountNotifications);
+            else
+                mAccountsAdapter.addAll(accountNotifications);
         });
     }
 
     @Override
     public void setMoreOutageNotificationsEnabled(final boolean enabled) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                outageListView.setPullLoadEnable(enabled);
-            }
-        });
+        runOnUiThread(() -> outageListView.setPullLoadEnable(enabled));
     }
 
     @Override
     public void setMoreAcccountNotificationsEnabled(final boolean enabled) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                accountsListView.setPullLoadEnable(enabled);
-            }
-        });
+        runOnUiThread(() -> accountsListView.setPullLoadEnable(enabled));
     }
 
     @Override
     public void loadAndRefreshOutageFinished() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                outageListView.stopRefresh();
-                outageListView.stopLoadMore();
-            }
+        runOnUiThread(() -> {
+            outageListView.stopRefresh();
+            outageListView.stopLoadMore();
         });
         System.gc();
     }
 
     @Override
     public void loadAndRefreshAccountsFinished() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                accountsListView.stopRefresh();
-                accountsListView.stopLoadMore();
-            }
+        runOnUiThread(() -> {
+            accountsListView.stopRefresh();
+            accountsListView.stopLoadMore();
         });
         System.gc();
     }
 
     @Override
     public void hideOutageList() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCheckOutageGroup.setChecked(false);
-            }
-        });
+        runOnUiThread(() -> mCheckOutageGroup.setChecked(false));
     }
 
     @Override
     public void hideAccountsList() {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mCheckAccountsGroup.setChecked(false);
-            }
-        });
+        runOnUiThread(() -> mCheckAccountsGroup.setChecked(false));
     }
 
     @Override
     public void showNewOutageNotificationUpdate(final Notification notif,
                                                 final boolean removeLast) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mOutagesAdapter.addNewNotificationUpdate(notif, removeLast);
-                mLblNoOutageNotifications.setVisibility(View.GONE);
-            }
+        runOnUiThread(() -> {
+            mOutagesAdapter.addNewNotificationUpdate(notif, removeLast);
+            mLblNoOutageNotifications.setVisibility(View.GONE);
         });
     }
 
     @Override
     public void showNewAccountNotificationUpdate(final Notification notif,
                                                  final boolean removeLast) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mAccountsAdapter.addNewNotificationUpdate(notif, removeLast);
-                mLblNoAccountNotifications.setVisibility(View.GONE);
-            }
+        runOnUiThread(() -> {
+            mAccountsAdapter.addNewNotificationUpdate(notif, removeLast);
+            mLblNoAccountNotifications.setVisibility(View.GONE);
         });
     }
 

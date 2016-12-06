@@ -4,7 +4,7 @@ import com.elfec.ssc.model.Notification;
 
 import java.util.List;
 
-public interface IViewNotifications {
+public interface INotificationsView extends IBaseView {
 
 	/**
 	 * Muestra la lista de notificaciones respectivas a cortes

@@ -4,7 +4,7 @@ import android.app.IntentService;
 import android.content.Intent;
 
 import com.elfec.ssc.web_services.DeviceWS;
-import com.elfec.ssc.web_services.SSLConection;
+import com.elfec.ssc.web_services.SslConection;
 import com.elfec.ssc.web_services.SscTokenRequester;
 import com.elfec.ssc.model.events.GcmTokenCallback;
 import com.elfec.ssc.model.events.IWSFinishEvent;
@@ -25,7 +25,7 @@ public class UpdateGCMTokenService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        SSLConection.allowSelfSignedElfecSSL(this);
+        SslConection.allowSelfSignedElfecSSL(this);
         final AppPreferences preferences = AppPreferences.instance();
         final String lastToken = preferences.getGCMToken();
         //Eliminamos token ssc antiguo para que renueve con variables

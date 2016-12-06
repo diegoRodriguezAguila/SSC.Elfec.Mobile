@@ -96,7 +96,7 @@
             android:label="@string/contacts_title" >
         </activity>
         <activity
-            android:name=".view.ViewNotifications"
+            android:name=".view.NotificationsActivity"
             android:label="@string/notifications_title" >
         </activity>
         <activity

@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_top_margin"
-    tools:context="com.elfec.ssc.view.ViewNotifications">
+    tools:context="com.elfec.ssc.view.NotificationsActivity">
 
     <RelativeLayout
         android:id="@+id/outage_layout"

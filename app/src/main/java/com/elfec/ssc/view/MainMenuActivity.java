@@ -129,7 +129,7 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
 
     public void btnNotificationsClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            Intent i = new Intent(MainMenuActivity.this, ViewNotifications.class);
+            Intent i = new Intent(MainMenuActivity.this, NotificationsActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);
