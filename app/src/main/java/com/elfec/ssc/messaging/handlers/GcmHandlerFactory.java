@@ -14,7 +14,7 @@ public class GcmHandlerFactory {
 	private static Hashtable<String, Class<? extends INotificationHandler>> gcmHandlers = new Hashtable<>();
 	static {
 		gcmHandlers.put(NotificationKey.NEW_ACCOUNT.toString(),
-				NewAccountGCMHandler.class);
+				NewAccountGcmHandler.class);
 		gcmHandlers.put(NotificationKey.ACCOUNT_DELETED.toString(),
 				AccountDeletedGCMHandler.class);
 		gcmHandlers.put(NotificationKey.POINTS_UPDATE.toString(),

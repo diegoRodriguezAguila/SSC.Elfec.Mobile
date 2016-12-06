@@ -29,13 +29,11 @@ public class ContactsUpdateGCMHandler implements INotificationHandler {
                 .observeOn(Schedulers.newThread())
                 .subscribe(contact -> {
                     ContactPresenter presenter = ViewPresenterManager.getPresenter(ContactPresenter.class);
+                    notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
                     if (presenter != null)
                         presenter.loadContact();
                 }, e -> {
                 });
-        //Si la vista de contactos está activa
-
-        notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
     }
 
     @Override

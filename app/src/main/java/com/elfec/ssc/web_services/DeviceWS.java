@@ -6,30 +6,49 @@ import com.elfec.ssc.model.webservices.WSParam;
 import com.elfec.ssc.model.webservices.WebServiceConnector;
 import com.elfec.ssc.model.webservices.converters.UpdateDeviceGCMTokenConverter;
 
+import rx.Observable;
+
 /**
  * Se encarga de la conexi�n a los servicios web para dispositivos
- * @author Diego
  *
+ * @author Diego
  */
 public class DeviceWS {
-	private SscToken sscToken;
-	
-	public DeviceWS(SscToken sscToken){
-		this.sscToken = sscToken;
-	}
+    private SscToken sscToken;
 
-	/**
-	 * Registra una cuenta por medio de servicios web
-	 * @param lastToken ultimo token registrado
-	 * @param Imei Imei dispositivo
-	 * @param newToken nuevo token
-	 * @param eventHandler handler del evento
-	 */
-	public void updateDeviceGCMToken(String lastToken, String Imei, String newToken, IWSFinishEvent<Boolean> eventHandler )
-	{
-		WebServiceConnector<Boolean> accountWSConnector = 
-				new WebServiceConnector<>("DeviceWS.php?wsdl", "",
-						"ssc_elfec", "UpdateDeviceGCMToken", sscToken, new UpdateDeviceGCMTokenConverter(), eventHandler);
-		accountWSConnector.execute(new WSParam("LastToken", lastToken), new WSParam("IMEI", Imei), new WSParam("NewToken", newToken));
-	}
+    public DeviceWS(SscToken sscToken) {
+        this.sscToken = sscToken;
+    }
+
+    /**
+     * Registra una cuenta por medio de servicios web
+     *
+     * @param lastToken    ultimo token registrado
+     * @param Imei         Imei dispositivo
+     * @param newToken     nuevo token
+     * @param eventHandler handler del evento
+     */
+    public void updateDeviceGCMToken(String lastToken, String Imei, String newToken, IWSFinishEvent<Boolean> eventHandler) {
+        WebServiceConnector<Boolean> accountWSConnector =
+                new WebServiceConnector<>("DeviceWS.php?wsdl", "",
+                        "ssc_elfec", "UpdateDeviceGCMToken", sscToken,
+                        new UpdateDeviceGCMTokenConverter(), eventHandler);
+        accountWSConnector.execute(new WSParam("LastToken", lastToken),
+                new WSParam("IMEI", Imei), new WSParam("NewToken", newToken));
+    }
+
+    /**
+     * Registra una cuenta por medio de servicios web
+     *
+     * @param lastToken    ultimo token registrado
+     * @param Imei         Imei dispositivo
+     * @param newToken     nuevo token
+     */
+    public Observable<Boolean> updateGcmToken(String lastToken, String Imei, String newToken) {
+        return new ServiceConnector<Boolean>("DeviceWS.php?wsdl",
+                "UpdateDeviceGCMToken", sscToken) {
+        }.execute(new WSParam("LastToken", lastToken),
+                new WSParam("IMEI", Imei),
+                new WSParam("NewToken", newToken));
+    }
 }

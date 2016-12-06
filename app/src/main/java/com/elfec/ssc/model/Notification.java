@@ -1,5 +1,7 @@
 package com.elfec.ssc.model;
 
+import android.os.Bundle;
+
 import com.elfec.ssc.model.enums.NotificationKey;
 import com.elfec.ssc.model.enums.NotificationType;
 import com.google.gson.annotations.SerializedName;
@@ -29,6 +31,13 @@ public class Notification {
         this.setType(type);
         this.setKey(key);
     }
+
+    public Notification(Bundle payload) {
+        this(payload.getString("title"), payload.getString("message"),
+                NotificationType.get(Short.parseShort(payload.getString("type"))),
+                NotificationKey.get(payload.getString("key")));
+    }
+
     //region getters and setters
 
     public NotificationKey getKey() {
