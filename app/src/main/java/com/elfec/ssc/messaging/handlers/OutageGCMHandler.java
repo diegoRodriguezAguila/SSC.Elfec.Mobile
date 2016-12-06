@@ -30,8 +30,7 @@ public class OutageGcmHandler implements INotificationHandler {
         ClientManager.activeClient()
                 .flatMap(client -> {
                     String gmail = message.getString("gmail");
-                    if (client == null || !ObjectsCompat.equals(gmail, client.getGmail()) ||
-                            message.getString("nus") == null)
+                    if (client == null || !ObjectsCompat.equals(gmail, client.getGmail()))
                         return Observable.just(null);
                     return NotificationManager.saveNotification(new Notification(message));
                 }).subscribeOn(Schedulers.io())

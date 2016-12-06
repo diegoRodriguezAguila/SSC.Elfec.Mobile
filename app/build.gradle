@@ -78,8 +78,6 @@ dependencies {
 
     //SOAP
     compile 'com.google.code.ksoap2-android:ksoap2-android:3.6.0'
-
-    compile files('libs/ActiveAndroid.jar')
     compile files('libs/crouton-1.8.5.jar')
 }
 

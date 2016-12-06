@@ -6,19 +6,6 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.providers.gsf.permisson.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-   
-    <permission
-        android:name="com.elfec.ssc.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="com.elfec.ssc.permission.C2D_MESSAGE" />
-	<uses-permission android:name="android.permission.C2D_MESSAGE" />
-
-    <!-- This app has permission to register and receive data message. -->
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-
-    <!-- Network State Permissions to detect Internet status -->
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <!-- Permission to vibrate -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
@@ -36,25 +23,6 @@
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyAnuJ_uAGrMok6r-aSsR6MMsz6A1pObYcE" />
-        <!--
-             <meta-data
-		    android:name="com.google.android.gms.version"
-		    android:value="@integer/google_play_services_version" />
-
-
-        -->
-        <meta-data
-            android:name="AA_DB_NAME"
-            android:value="ssc.db" />
-        <meta-data
-            android:name="AA_DB_VERSION"
-            android:value="41" />
-        <meta-data android:name="AA_MODELS"
-                   android:value=""/>
-        <meta-data
-            android:name="AA_SERIALIZERS"
-            android:value="com.elfec.ssc.model.serializers.JodaDateTimeSerializer" />
-
         <activity
             android:name=".view.LauncherActivity"
             android:label="@string/app_name" >
@@ -103,34 +71,7 @@
             android:name="com.elfec.ssc.view.AccountDetailsActivity"
             android:label="@string/view_account_details_title" >
         </activity>
-        
-        <receiver
-            android:name=".messaging.GcmBroadcastReceiver"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-                <category android:name="com.elfec.ssc" />
-            </intent-filter>
-        </receiver>
 
-        <service android:name=".messaging.GcmMessageService" />
-        
-		<receiver android:name=".messaging.UpdateReceiver">
-		     <intent-filter>
-		          <action android:name="android.intent.action.PACKAGE_REPLACED" />
-		          <data android:path="com.elfec.ssc"
-		          android:scheme="package" />
-		     </intent-filter>
-		</receiver>
-
-		<service android:name=".messaging.UpdateGCMTokenService" />
-		
-		<receiver android:name=".messaging.InternetEnabledReceiver" >
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>

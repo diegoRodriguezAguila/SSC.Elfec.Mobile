@@ -1,6 +1,7 @@
 package com.elfec.ssc;
 
-import com.activeandroid.app.Application;
+import android.app.Application;
+
 import com.cesarferreira.rxpaper.RxPaper;
 import com.elfec.ssc.security.AppPreferences;
 

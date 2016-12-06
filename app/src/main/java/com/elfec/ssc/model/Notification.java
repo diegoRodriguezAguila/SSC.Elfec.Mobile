@@ -10,26 +10,27 @@ import org.joda.time.DateTime;
 
 public class Notification {
     @SerializedName("Key")
-    private short Key;
+    private short key;
     @SerializedName("Title")
-    private String Title;
+    private String title;
     @SerializedName("Content")
-    private String Content;
+    private String content;
     @SerializedName("Type")
-    private short Type;
+    private short type;
     @SerializedName("InsertDate")
-    private DateTime InsertDate;
+    private DateTime insertDate;
     @SerializedName("UpdateDate")
-    private DateTime UpdateDate;
+    private DateTime updateDate;
 
     public Notification() {
     }
 
     public Notification(String title, String content, NotificationType type, NotificationKey key) {
-        this.Title = title;
-        this.Content = content;
+        this.title = title;
+        this.content = content;
         this.setType(type);
         this.setKey(key);
+        insertDate = DateTime.now();
     }
 
     public Notification(Bundle payload) {
@@ -41,51 +42,51 @@ public class Notification {
     //region getters and setters
 
     public NotificationKey getKey() {
-        return NotificationKey.get(Key);
+        return NotificationKey.get(key);
     }
 
     public void setKey(NotificationKey key) {
-        Key = key.toShort();
+        this.key = key.toShort();
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
     public void setTitle(String title) {
-        Title = title;
+        this.title = title;
     }
 
     public String getContent() {
-        return Content;
+        return content;
     }
 
     public void setContent(String content) {
-        Content = content;
+        this.content = content;
     }
 
     public NotificationType getType() {
-        return NotificationType.get(Type);
+        return NotificationType.get(type);
     }
 
     public void setType(NotificationType type) {
-        Type = type.toShort();
+        this.type = type.toShort();
     }
 
     public DateTime getInsertDate() {
-        return InsertDate;
+        return insertDate;
     }
 
     public void setInsertDate(DateTime insertDate) {
-        InsertDate = insertDate;
+        this.insertDate = insertDate;
     }
 
     public DateTime getUpdateDate() {
-        return UpdateDate;
+        return updateDate;
     }
 
     public void setUpdateDate(DateTime updateDate) {
-        UpdateDate = updateDate;
+        this.updateDate = updateDate;
     }
     //endregion
 

@@ -1,12 +1,12 @@
 package com.elfec.ssc.view.adapters.viewholders;
 
 import android.graphics.drawable.Drawable;
-import android.text.Html;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.HtmlCompat;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.view.adapters.ExpandableItem;
 
@@ -40,9 +40,9 @@ public class NotificationViewHolder {
 		int endSize = expandedStatus.isExpanded() ? expandedStatus
 				.getExpandedSize() : 0;
 		lblMessage.getLayoutParams().height = endSize;
-		lblMessage.setText(Html.fromHtml(notification.getContent()));
+		lblMessage.setText(HtmlCompat.fromHtml(notification.getContent()));
 		mImgNotification.setImageDrawable(image);
-		mLblTitle.setText(Html.fromHtml(notification.getTitle()));
+		mLblTitle.setText(HtmlCompat.fromHtml(notification.getTitle()));
 		mLblDate.setText(notification.getInsertDate().toString("dd MMM yyyy"));
 		mLblHour.setText(notification.getInsertDate().toString("HH:mm"));
 	}
