@@ -19,7 +19,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
-import com.elfec.ssc.web_services.SSLConection;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.presenter.MainMenuPresenter;
 import com.elfec.ssc.presenter.views.IMainMenuView;
@@ -52,7 +51,6 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
         ButterKnife.bind(this);
         mBtnSwitchClient.setEnabled(false);
         // getSignature();
-        SSLConection.allowSelfSignedElfecSSL(this);
         mAccountPickService = AccountPickerService.instance(this)
                 .setAccountPickListener(gmail -> presenter.handlePickedGmailAccount(gmail));
     }
@@ -140,7 +138,7 @@ public class MainMenuActivity extends AppCompatActivity implements IMainMenuView
 
     public void btnContactsClick(View view) {
         if (ButtonClicksHelper.canClickButton()) {
-            Intent i = new Intent(MainMenuActivity.this, Contacts.class);
+            Intent i = new Intent(MainMenuActivity.this, ContactsActivity.class);
             startActivity(i);
             overridePendingTransition(R.anim.slide_left_in,
                     R.anim.slide_left_out);

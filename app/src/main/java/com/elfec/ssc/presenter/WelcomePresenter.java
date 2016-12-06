@@ -1,9 +1,7 @@
 package com.elfec.ssc.presenter;
 
 import com.elfec.ssc.business_logic.ClientManager;
-import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.model.Client;
-import com.elfec.ssc.model.Contact;
 import com.elfec.ssc.model.enums.ClientStatus;
 import com.elfec.ssc.presenter.views.IWelcomeView;
 
@@ -24,20 +22,5 @@ public class WelcomePresenter extends BasePresenter<IWelcomeView> {
                     mView.goToMainMenu();
                 }, e -> {
                 });
-    }
-
-    public void insertContact() {
-        Thread thread = new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-                if (Contact.getAll(Contact.class).size() == 0) {
-                    ThreadMutex.instance("InsertContact").setBusy();
-                    Contact.createDefaultContact();
-                    ThreadMutex.instance("InsertContact").setFree();
-                }
-            }
-        });
-        thread.start();
     }
 }

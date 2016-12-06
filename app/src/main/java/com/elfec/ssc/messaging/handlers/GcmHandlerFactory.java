@@ -11,7 +11,7 @@ import java.util.Hashtable;
  *
  */
 public class GcmHandlerFactory {
-	private static Hashtable<String, Class<? extends INotificationHandler>> gcmHandlers = new Hashtable<String, Class<? extends INotificationHandler>>();
+	private static Hashtable<String, Class<? extends INotificationHandler>> gcmHandlers = new Hashtable<>();
 	static {
 		gcmHandlers.put(NotificationKey.NEW_ACCOUNT.toString(),
 				NewAccountGCMHandler.class);

@@ -1,10 +1,10 @@
 package com.elfec.ssc.model.webservices.converters;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.elfec.ssc.model.Contact;
 import com.elfec.ssc.model.webservices.ResultConverter;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class GetContactUpdateWSConverter implements ResultConverter<Contact> {
 
@@ -18,7 +18,7 @@ public class GetContactUpdateWSConverter implements ResultConverter<Contact> {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return Contact.getDefaultContact();
+		return Contact.defaultContact();
 	}
 
 }

@@ -1,25 +1,24 @@
 package com.elfec.ssc.presenter;
 
-import com.elfec.ssc.helpers.threading.ThreadMutex;
-import com.elfec.ssc.model.Contact;
-import com.elfec.ssc.presenter.views.IContact;
+import com.elfec.ssc.business_logic.ContactManager;
+import com.elfec.ssc.presenter.views.IContactsView;
 
-public class ContactPresenter {
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-    private IContact view;
+public class ContactPresenter extends BasePresenter<IContactsView> {
 
-    public ContactPresenter(IContact view) {
-        this.view = view;
+
+    public ContactPresenter(IContactsView view) {
+        super(view);
     }
 
-    public void setDefaultData() {
-        ThreadMutex.instance("InsertContact").addOnThreadReleasedEvent(() ->
-                new Thread(() -> {
-            Contact defaultContact = Contact.getDefaultContact();
-            view.setData(defaultContact.getPhone(), defaultContact.getAddress(),
-                    defaultContact.getEmail(), defaultContact.getWebPage(),
-                    defaultContact.getFacebook(),
-                    defaultContact.getFacebookId());
-        }).start());
+    public void loadContact() {
+        cancelSubscription();
+        mSubscription = ContactManager.getDefaultContact()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mView::setContact, e -> {
+                });
     }
 }

@@ -6,7 +6,7 @@
     android:paddingBottom="@dimen/activity_vertical_top_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    tools:context="com.elfec.ssc.view.Contacts">
+    tools:context="com.elfec.ssc.view.ContactsActivity">
 
     <ImageView
         android:id="@+id/img_logo_elfec"

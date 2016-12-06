@@ -28,7 +28,6 @@ public class WelcomeActivity extends AppCompatActivity implements IWelcomeView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         presenter = new WelcomePresenter(this);
-        presenter.insertContact();
         mAccountPickService = AccountPickerService.instance(this)
                 .setAccountPickListener(gmail -> presenter.handlePickedGmailAccount(gmail));
         Animation slideRight = AnimationUtils.loadAnimation(this,

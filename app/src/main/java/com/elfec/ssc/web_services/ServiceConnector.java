@@ -9,6 +9,7 @@ import com.elfec.ssc.model.webservices.DataResult;
 import com.elfec.ssc.model.webservices.DataResultParametrizedType;
 import com.elfec.ssc.model.webservices.MarshalDouble;
 import com.elfec.ssc.model.webservices.WSParam;
+import com.elfec.ssc.security.AppPreferences;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
@@ -72,6 +73,7 @@ public abstract class ServiceConnector<T> {
         ParameterizedType c = (ParameterizedType) getClass().getGenericSuperclass();
         Type type = c.getActualTypeArguments()[0];
         this.type = new DataResultParametrizedType(type);
+        SSLConection.allowSelfSignedElfecSSL(AppPreferences.getApplicationContext());
     }
 
     /**
