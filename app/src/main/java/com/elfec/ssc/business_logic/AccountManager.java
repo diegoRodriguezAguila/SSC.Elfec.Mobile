@@ -41,8 +41,8 @@ public class AccountManager {
                 .flatMap(t -> new AccountService(t.sscToken)
                         .registerAccount(account.getAccountNumber(),
                                 account.getNus(), gmail, t.device)
-                        .flatMap(student -> new AccountStorage()
-                                .saveAccount(gmail, account)));
+                        .flatMap(acc -> new AccountStorage()
+                                .saveAccount(gmail, acc)));
     }
 
     /**

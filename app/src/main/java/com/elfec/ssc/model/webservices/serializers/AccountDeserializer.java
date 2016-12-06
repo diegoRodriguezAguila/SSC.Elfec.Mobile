@@ -1,7 +1,5 @@
 package com.elfec.ssc.model.webservices.serializers;
 
-import android.util.Log;
-
 import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Debt;
@@ -57,7 +55,6 @@ public class AccountDeserializer implements JsonDeserializer<Account> {
      * @return account
      */
     private Account convert(JsonElement json, Type typeOfT) {
-        Log.d(TAG, "Received: " + json.toString());
         Account account = GsonUtils.generateBaseGson().fromJson(json, typeOfT);
         //account.setClient(Client.getActiveClient());
         filterDebts(account);

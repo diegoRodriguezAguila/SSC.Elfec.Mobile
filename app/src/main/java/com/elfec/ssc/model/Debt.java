@@ -1,14 +1,9 @@
 package com.elfec.ssc.model;
 
-import com.activeandroid.Model;
-import com.activeandroid.annotation.Column;
-import com.activeandroid.annotation.Column.ForeignKeyAction;
-import com.activeandroid.annotation.Table;
 import com.google.gson.annotations.SerializedName;
 
 import org.joda.time.DateTime;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -17,57 +12,37 @@ import java.math.RoundingMode;
  *
  * @author drodriguez
  */
-@Table(name = "Debts")
-public class Debt extends Model implements Serializable {
-
-    /**
-     *
-     */
-    private static final long serialVersionUID = 4328967895169344533L;
-
-    @Column(name = "Account", notNull = true, onDelete = ForeignKeyAction.CASCADE)
-    private Account account;
+public class Debt {
 
     @SerializedName("Amount")
-    @Column(name = "Amount", notNull = true)
     private BigDecimal amount = BigDecimal.ZERO;
 
     @SerializedName("Year")
-    @Column(name = "Year", notNull = true)
     private int year;
 
     @SerializedName("Month")
-    @Column(name = "Month", notNull = true)
     private short month;
 
     @SerializedName("ReceiptNumber")
-    @Column(name = "ReceiptNumber")
     private int receiptNumber;
 
     @SerializedName("ExpirationDate")
-    @Column(name = "ExpirationDate")
     private DateTime expirationDate;
 
     @SerializedName("Status")
-    @Column(name = "Status", notNull = true)
     private short status;
 
     @SerializedName("created_at")
-    @Column(name = "InsertDate", notNull = true)
     private DateTime insertDate;
 
     @SerializedName("updated_at")
-    @Column(name = "UpdateDate")
     private DateTime updateDate;
 
     public Debt() {
-        super();
     }
 
-    public Debt(Account fromAccount, BigDecimal amount, int year,
+    public Debt(BigDecimal amount, int year,
                 short month, int receiptNumber, DateTime expirationDate) {
-        super();
-        this.account = fromAccount;
         this.amount = amount.setScale(2, RoundingMode.CEILING);
         this.year = year;
         this.month = month;
@@ -78,15 +53,6 @@ public class Debt extends Model implements Serializable {
 
 
     //region Getters y Setters
-
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 
     public BigDecimal getAmount() {
         return amount;

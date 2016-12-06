@@ -4,16 +4,12 @@ import com.elfec.ssc.model.enums.ClientStatus;
 
 import org.joda.time.DateTime;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Guarda la información del cliente que utiliza la aplicación
  *
  * @author Diego
  */
-public class Client implements Serializable {
+public class Client{
 
     private String gmail;
     /**
@@ -24,11 +20,9 @@ public class Client implements Serializable {
     private DateTime updateDate;
 
     public Client() {
-        super();
     }
 
     public Client(String gmail, ClientStatus status) {
-        super();
         this.gmail = gmail;
         setStatus(status);
     }
@@ -75,35 +69,5 @@ public class Client implements Serializable {
     }
 
     //endregion
-
-    /**
-     * Obtiene todas las cuentas relacionadas al cliente
-     *
-     * @return Lista de cuentas relacionadas
-     */
-    public List<Account> getAccounts() {
-        return new ArrayList<>();
-    }
-
-    /**
-     * Obtiene el las cuentas activas de un cliente
-     *
-     * @return el cuentas activas de un cliente
-     */
-    public List<Account> getActiveAccounts() {
-        return new ArrayList<>();
-
-    }
-
-    /**
-     * Retorna true si es que el usuario tiene una cuenta con el nus y numero provistos, y en estado activo = 1
-     *
-     * @param nus
-     * @param accountNumber
-     * @return
-     */
-    public boolean hasAccount(String nus, String accountNumber) {
-        return false;
-    }
 
 }

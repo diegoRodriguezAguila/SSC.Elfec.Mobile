@@ -2,11 +2,8 @@ package com.elfec.ssc.web_services;
 
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Device;
-import com.elfec.ssc.model.events.IWSFinishEvent;
 import com.elfec.ssc.model.security.SscToken;
 import com.elfec.ssc.model.webservices.WSParam;
-import com.elfec.ssc.model.webservices.WebServiceConnector;
-import com.elfec.ssc.model.webservices.converters.RemoveAccountWSConverter;
 
 import java.util.List;
 
@@ -61,22 +58,6 @@ public class AccountService {
                 new WSParam("DeviceModel", device.getModel()),
                 new WSParam("DeviceIMEI", device.getImei()),
                 new WSParam("GCM", device.getGcmToken()));
-    }
-
-    /**
-     * Elimina la cuenta que corresponde a los parametros, por medio de servicios web
-     *
-     * @param gmail        gmail
-     * @param nus          nus
-     * @param imei         Imei
-     * @param eventHandler handler
-     */
-    public void removeAccount(String gmail, String nus, String imei, IWSFinishEvent<Boolean> eventHandler) {
-        WebServiceConnector<Boolean> accountWSConnector =
-                new WebServiceConnector<>("AccountWS.php?wsdl", "",
-                        "ssc_elfec", "DeleteAccount", sscToken, new RemoveAccountWSConverter(), eventHandler);
-        accountWSConnector.execute(new WSParam("IMEI", imei), new WSParam("NUS", nus), new WSParam("GMail", gmail));
-
     }
 
     /**

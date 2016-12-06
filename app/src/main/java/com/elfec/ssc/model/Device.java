@@ -16,6 +16,7 @@ public class Device {
     }
 
     public Device(String brand, String model, String imei, String gcmToken) {
+        this.phoneNumber = "";
         this.brand = brand;
         this.model = model;
         this.imei = imei;

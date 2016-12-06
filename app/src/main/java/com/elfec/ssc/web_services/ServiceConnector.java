@@ -128,6 +128,7 @@ public abstract class ServiceConnector<T> {
             headerPropertyArrayList.add(new HeaderProperty("x-ws-token",
                     sscToken.toString()));
         }
+        Log.d(TAG, "Call to url: " + url + ", method: " + methodName);
         @SuppressWarnings("unchecked")
         List<HeaderProperty> headers = ht.call(SOAP_ACTION, envelope,
                 headerPropertyArrayList);
