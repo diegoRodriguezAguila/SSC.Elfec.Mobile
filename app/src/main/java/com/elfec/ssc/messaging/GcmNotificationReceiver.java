@@ -1,9 +1,9 @@
 package com.elfec.ssc.messaging;
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationCompat;
@@ -46,13 +46,16 @@ public class GcmNotificationReceiver implements GcmReceiverData {
 
     @NonNull
     private NotificationCompat.Builder getBuilder(Message message) {
+        CharSequence content = HtmlCompat.fromHtml(message.payload()
+                .getString("message"));
         return new NotificationCompat.Builder(
                 message.application())
-                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setStyle(new NotificationCompat.BigTextStyle()
+                        .bigText(content))
                 .setColor(ContextCompat.getColor(message.application(), R.color.ssc_elfec_color))
                 .setContentTitle(HtmlCompat.fromHtml(message.payload().getString("title")))
-                .setContentText(HtmlCompat.fromHtml(message.payload()
-                        .getString("message")))
+                .setContentText(content)
                 .setSmallIcon(R.drawable.elfec_notification);
     }
 

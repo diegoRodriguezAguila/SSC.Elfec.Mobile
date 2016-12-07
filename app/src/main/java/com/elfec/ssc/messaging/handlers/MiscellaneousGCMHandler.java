@@ -7,21 +7,22 @@ import android.support.v4.app.NotificationCompat.Builder;
 
 /**
  * Maneja aquellas notificaciones con el key miscellaneous, simplemente las muestra, no las guarda
- * @author drodriguez
  *
+ * @author drodriguez
  */
 public class MiscellaneousGcmHandler implements INotificationHandler {
 
-	private static final int NOTIF_ID = 5;
-	@Override
-	public void handleNotification(Bundle message,
-								   NotificationManager notifManager, Builder builder) {
-		notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
-	}
+    private static final int NOTIF_ID = 5;
 
-	@Override
-	public Class<? extends Activity> getActivityClass() {
-		return null;
-	}
+    @Override
+    public void handleNotification(Bundle message,
+                                   NotificationManager notifManager, Builder builder) {
+        notifManager.notify(NOTIF_ID, builder.setAutoCancel(true).build());
+    }
+
+    @Override
+    public Class<? extends Activity> getActivityClass() {
+        return null;
+    }
 
 }
