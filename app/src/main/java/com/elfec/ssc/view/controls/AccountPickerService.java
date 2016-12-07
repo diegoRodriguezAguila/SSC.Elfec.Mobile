@@ -51,7 +51,7 @@ public class AccountPickerService implements Closeable {
         mActivity = activity;
         GoogleSignInOptions gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(mActivity.getString(R.string.client_id))
+                .requestIdToken(mActivity.getString(R.string.default_web_client_id))
                 .requestEmail().build();
         mGoogleApiClient = new GoogleApiClient.Builder(mActivity)
                 .enableAutoManage(mActivity, connectionResult -> {

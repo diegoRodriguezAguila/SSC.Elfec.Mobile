@@ -201,7 +201,4 @@
 
     <string name="server_side_exception">An error occurred in the server while processing
         your request, please try again later.</string>
-
-    <!-- Client Id -->
-    <string name="client_id">302707079727-tqj5938es0km2fn7801041uuare0lovq.apps.googleusercontent.com</string>
 </resources>
