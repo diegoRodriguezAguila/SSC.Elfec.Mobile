@@ -1,160 +1,163 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical"
-    tools:context=".view.WelcomeActivity" >
-    
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical"
+              tools:context=".view.WelcomeActivity">
+
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.35" >
-        
+        android:layout_weight="0.35">
+
         <TextView
-        android:id="@+id/welcome_to_app"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center"
-        android:textColor="@color/ssc_elfec_color"
-        android:layout_centerHorizontal="true"
-        android:text="@string/welcome_to_app"
-        android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
-        android:textSize="34sp" /> 
+            android:id="@+id/welcome_to_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/welcome_to_app"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
+            android:textColor="@color/ssc_elfec_color"
+            android:textSize="34sp"/>
 
         <ImageView
             android:id="@+id/imgSSCLogo"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:paddingTop="28dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginStart="5dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:contentDescription="@string/logo_elfec_caption"
-            android:src="@drawable/welcome_ssc_elfec" />
+            android:src="@drawable/welcome_ssc_elfec"/>
 
         <TextView
             android:id="@+id/lbl_app_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_toRightOf="@+id/imgSSCLogo"
-            android:layout_toEndOf="@+id/imgSSCLogo"
-            android:text="@string/app_title"
+            android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:textSize="28sp"
+            android:layout_marginRight="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_toEndOf="@+id/imgSSCLogo"
+            android:layout_toRightOf="@+id/imgSSCLogo"
             android:lineSpacingExtra="-8dp"
-            android:paddingTop="20dp"
-            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
+            android:text="@string/app_title"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
+            android:textSize="28sp"/>
 
-       
-		
-	</RelativeLayout>
-	
+
+    </RelativeLayout>
+
     <RelativeLayout
-	        android:layout_width="fill_parent"
-	        android:layout_height="0dp"
-	        android:background="@color/ssc_elfec_color"
-	        android:layout_weight="0.65" >
- <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.65"
+        android:background="@color/ssc_elfec_color">
+
+        <ImageView
             android:id="@+id/welcome_logo_elfec"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
             android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
             android:contentDescription="@string/logo_elfec_caption"
-            android:src="@drawable/logo_elfec" />
+            android:src="@drawable/logo_elfec"/>
+
         <TextView
             android:id="@+id/welcome_description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginEnd="10dp"
-            android:text="@string/welcome_description"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
             android:layout_centerInParent="true"
-            android:textColor="@android:color/white"
-            android:textSize="22sp"
-            android:lineSpacingExtra="-2dp"
-            android:gravity="start|center_vertical"
-            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
-		<RelativeLayout
-		    android:background="@color/mtrl_gray_300"
-		    android:layout_width="fill_parent"
-		    android:layout_height="match_parent"
-		    android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/welcome_description"
-		     >
-		    <TextView
-            android:id="@+id/welcome_create_gmail"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginLeft="15dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginRight="10dp"
             android:layout_marginEnd="10dp"
-            android:layout_marginTop="3dp"
-            android:text="@string/welcome_create_gmail"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/mtrl_gray"
-            android:textSize="22sp"
-            android:lineSpacingExtra="-2dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="15dp"
             android:gravity="start|center_vertical"
-            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title" />
+            android:lineSpacingExtra="-2dp"
+            android:text="@string/welcome_description"
+            android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"/>
 
-		    <Button
-		        android:id="@+id/btn_select_account"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignParentBottom="true"
-		        android:layout_alignParentRight="true"
-		        android:layout_alignParentEnd="true"
-		        android:layout_marginRight="5dp"
-		        android:layout_marginEnd="5dp"
-		        android:layout_marginBottom="5dp"
-		        android:onClick="btnSelectAccountClick"
-		        android:text="@string/btn_select_account" />
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/welcome_description"
+            android:layout_marginTop="5dp"
+            android:background="@color/mtrl_gray_300"
+            >
 
-		    <Button
-		        android:id="@+id/btn_decline_account"
-		        android:layout_width="wrap_content"
-		        android:layout_height="wrap_content"
-		        android:layout_alignTop="@+id/btn_select_account"
-		        android:layout_alignBottom="@+id/btn_select_account"
-		        android:layout_toLeftOf="@+id/btn_select_account"
-		        android:layout_toStartOf="@+id/btn_select_account"
-		        android:layout_marginRight="5dp"
-		        android:layout_marginEnd="5dp"
-		        android:onClick="btnDeclineAccountClick"
-		        android:text="@string/btn_decline_account"
-                android:theme="@style/Widget.ElfecSsc.Button.Negative" />
+            <TextView
+                android:id="@+id/welcome_create_gmail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="3dp"
+                android:gravity="start|center_vertical"
+                android:lineSpacingExtra="-2dp"
+                android:text="@string/welcome_create_gmail"
+                android:textAppearance="@style/TextAppearance.ElfecSsc.CustomFont.Title"
+                android:textColor="@color/mtrl_gray"
+                android:textSize="22sp"/>
 
-		</RelativeLayout>
-	</RelativeLayout>
+            <Button
+                android:id="@+id/btn_select_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginBottom="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:onClick="btnSelectAccountClick"
+                android:text="@string/btn_select_account"/>
+
+            <Button
+                android:id="@+id/btn_decline_account"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/btn_select_account"
+                android:layout_alignTop="@+id/btn_select_account"
+                android:layout_marginEnd="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_toLeftOf="@+id/btn_select_account"
+                android:layout_toStartOf="@+id/btn_select_account"
+                android:onClick="btnDeclineAccountClick"
+                android:text="@string/btn_decline_account"
+                android:theme="@style/Widget.ElfecSsc.Button.Negative"/>
+
+        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>
