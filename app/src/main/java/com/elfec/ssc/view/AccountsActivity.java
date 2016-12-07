@@ -10,6 +10,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.HtmlCompat;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
 import com.elfec.ssc.model.Account;
@@ -68,15 +69,14 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
             return true;
         });
         mAccountList.setOnItemClickListener((adapter, view, pos, arg3) -> {
-            if (ButtonClicksHelper.canClickButton()) {
-                Intent i = new Intent(AccountsActivity.this,
-                        AccountDetailsActivity.class);
-                i.putExtra(AccountDetailsActivity.SELECTED_ACCOUNT_NUS,
-                        ((Account) adapter.getItemAtPosition(pos)).getNus());
-                startActivity(i);
-                overridePendingTransition(R.anim.slide_left_in,
-                        R.anim.slide_left_out);
-            }
+            if (!ButtonClicksHelper.canClickButton()) return;
+            Intent i = new Intent(AccountsActivity.this,
+                    AccountDetailsActivity.class);
+            i.putExtra(AccountDetailsActivity.SELECTED_ACCOUNT_NUS,
+                    ((Account) adapter.getItemAtPosition(pos)).getNus());
+            startActivity(i);
+            overridePendingTransition(R.anim.slide_left_in,
+                    R.anim.slide_left_out);
         });
 
         mPresenter.loadAccounts();
@@ -184,7 +184,7 @@ public class AccountsActivity extends BaseActivity implements IAccountsView {
             AlertDialog dialog = new AlertDialog.Builder(
                     AccountsActivity.this)
                     .setTitle(R.string.errors_on_download_accounts_title)
-                    .setMessage(e.getMessage())
+                    .setMessage(HtmlCompat.fromHtml(e.getMessage()))
                     .setPositiveButton(R.string.btn_ok, null).create();
             dialog.show();
             TextView txtMessage = (TextView) dialog.findViewById(android.R.id.message);

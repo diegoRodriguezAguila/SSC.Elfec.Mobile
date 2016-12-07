@@ -18,7 +18,7 @@ public class GcmHandlerFactory {
         gcmHandlers.put(NotificationKey.ACCOUNT_DELETED.toString(),
                 AccountDeletedGcmHandler.class);
         gcmHandlers.put(NotificationKey.CONTACTS_UPDATE.toString(),
-                ContactsUpdateGCMHandler.class);
+                ContactsUpdateGcmHandler.class);
         gcmHandlers.put(NotificationKey.SCHEDULED_OUTAGE.toString(),
                 OutageGcmHandler.class);
         gcmHandlers.put(NotificationKey.INCIDENTAL_OUTAGE.toString(),

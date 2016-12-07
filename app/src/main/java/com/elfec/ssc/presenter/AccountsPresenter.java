@@ -1,32 +1,23 @@
 package com.elfec.ssc.presenter;
 
-import android.content.Context;
-
 import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ClientManager;
+import com.elfec.ssc.business_logic.DeviceManager;
 import com.elfec.ssc.local_storage.AccountStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.presenter.views.IAccountsView;
 import com.elfec.ssc.security.AppPreferences;
-import com.elfec.ssc.security.CredentialManager;
-import com.elfec.ssc.web_services.SscTokenRequester;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class AccountsPresenter extends BasePresenter<IAccountsView> {
-
-    private SscTokenRequester mSscTokenRequester;
-    private final String mImei;
     private String mGmail;
 
     public AccountsPresenter(IAccountsView view) {
         super(view);
-        Context context = AppPreferences.getApplicationContext();
-        mSscTokenRequester = new SscTokenRequester();
-        mImei = new CredentialManager(context)
-                .getDeviceIdentifier();
+        checkGcmToken();
     }
 
     /**
@@ -43,7 +34,7 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
                 })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(acc->{
+                .subscribe(acc -> {
                     loadAccounts();
                     mView.onSuccess(acc);
                 }, mView::onError);
@@ -82,5 +73,18 @@ public class AccountsPresenter extends BasePresenter<IAccountsView> {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mView::onLoaded, mView::onError);
+    }
+
+    /**
+     * Checks if the token should be sent and send it if possible
+     */
+    private void checkGcmToken() {
+        if (!AppPreferences.instance().hasToSendGcmToken()) return;
+        new DeviceManager().syncGcmToken()
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
+                .subscribe(success -> {
+                }, error -> {
+                });
     }
 }

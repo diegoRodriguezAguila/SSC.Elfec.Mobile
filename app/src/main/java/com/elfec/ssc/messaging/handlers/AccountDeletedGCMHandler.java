@@ -4,11 +4,11 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ClientManager;
 import com.elfec.ssc.business_logic.NotificationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.utils.ObjectsCompat;
+import com.elfec.ssc.local_storage.AccountStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.presenter.AccountsPresenter;
@@ -40,7 +40,7 @@ public class AccountDeletedGcmHandler implements INotificationHandler {
                     if (client == null || !ObjectsCompat.equals(gmail, client.getGmail()) ||
                             message.getString("nus") == null)
                         return Observable.just(null);
-                    return AccountManager.removeAccount(gmail,
+                    return new AccountStorage().removeAccount(gmail,
                             new Account(message.getString("nus")));
                 })
                 .flatMap(acc -> {

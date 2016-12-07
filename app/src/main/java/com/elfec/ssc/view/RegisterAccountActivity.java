@@ -139,8 +139,10 @@ public class RegisterAccountActivity extends BaseActivity implements
      * @return cadena con mensajes formateados y color
      */
     public String getHTMLListFromErrors(List<String> validationErrors) {
-        return "<font color='#006086'><b>" +
-                MessageListFormatter.formatHTMLFromStringList(validationErrors).toString() + "</b></font>";
+        return "<b>" +
+                MessageListFormatter
+                        .formatHTMLFromStringList(validationErrors)
+                        .toString().replace("\n","<br />") + "</b>";
     }
 
     public void btnRegisterAccountClick(View view) {
@@ -220,12 +222,11 @@ public class RegisterAccountActivity extends BaseActivity implements
     @Override
     public void onError(Throwable e) {
         hideWaiting();
-        AlertDialog.Builder builder = new AlertDialog.Builder(
-                RegisterAccountActivity.this);
-        builder.setTitle(R.string.errors_on_register_title)
-                .setMessage(e.getMessage())
-                .setPositiveButton(R.string.btn_ok, null);
-        AlertDialog dialog = builder.create();
+        AlertDialog dialog = new AlertDialog.Builder(
+                RegisterAccountActivity.this)
+                .setTitle(R.string.errors_on_register_title)
+                .setMessage(HtmlCompat.fromHtml(e.getMessage()))
+                .setPositiveButton(R.string.btn_ok, null).create();
         dialog.show();
         TextView txtMsg = (TextView) dialog.findViewById(android.R.id.message);
         if (txtMsg != null) {

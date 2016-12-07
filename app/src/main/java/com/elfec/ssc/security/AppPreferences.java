@@ -22,13 +22,13 @@ import java.lang.ref.SoftReference;
  */
 public class AppPreferences {
 
-    private final String FIRST_APP_USAGE = "FirstAppUsage";
-    private final String HAS_ONE_GMAIL_ACCOUNT = "HasAtLeastOneGmailAccount";
-    private final String FIRST_LOAD_LOCATIONS = "FirstLoadLocations";
-    private final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
-    private final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
-    private final String SETUP_DISTANCE = "SetupDistance";
-    private final String WS_TOKEN = "SscToken";
+    private static final String FIRST_APP_USAGE = "FirstAppUsage";
+    private static final String HAS_ONE_GMAIL_ACCOUNT = "HasAtLeastOneGmailAccount";
+    private static final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
+    private static final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
+    private static final String SETUP_DISTANCE = "SetupDistance";
+    private static final String SSC_TOKEN = "SscToken";
+    private static final String HAS_TO_SEND_GCM_TOKEN = "HasToSendGcmToken";
 
     /**
      * Contexto
@@ -87,29 +87,10 @@ public class AppPreferences {
     /**
      * Asigna que la aplicación ya se ha utilizado por lo menos una vez
      *
-     * @return la instancia actual de AppPreferences
+     * @return this instance of {@link AppPreferences}
      */
     public AppPreferences setAppAlreadyUsed() {
         preferences.edit().putBoolean(FIRST_APP_USAGE, false).apply();
-        return this;
-    }
-
-    /**
-     * Verifica si es que es la primera vez que se descarga las ubicaciones
-     *
-     * @return true si es que es la primera vez
-     */
-    public boolean isFirstLoadLocations() {
-        return preferences.getBoolean(FIRST_LOAD_LOCATIONS, true);
-    }
-
-    /**
-     * Asigna que la aplicación ya descargo las localizaciones
-     *
-     * @return la instancia actual de AppPreferences
-     */
-    public AppPreferences setLoadLocationsAlreadyUsed() {
-        preferences.edit().putBoolean(FIRST_LOAD_LOCATIONS, false).apply();
         return this;
     }
 
@@ -125,7 +106,7 @@ public class AppPreferences {
     /**
      * Asigna que el cliente ha registrado por lo menos una cuenta de gmail
      *
-     * @return la instancia actual de AppPreferences
+     * @return this instance of {@link AppPreferences}
      */
     public AppPreferences setHasOneGmailAccount() {
         preferences.edit().putBoolean(HAS_ONE_GMAIL_ACCOUNT, true).apply();
@@ -136,7 +117,7 @@ public class AppPreferences {
      * Obtiene el tipo de punto de ubicación que fué seleccionado en los radio buttons de
      * locationservices
      *
-     * @return
+     * @return LocationPointType
      */
     public LocationPointType getSelectedLocationPointType() {
         return LocationPointType.get(Short.parseShort(preferences.getString(
@@ -147,17 +128,19 @@ public class AppPreferences {
      * Guarda el tipo de punto de ubicación que fué seleccionado en los radio buttons de
      * locationservices
      *
-     * @param type
+     * @param type LocationPointType
+     * @return this instance of {@link AppPreferences}
      */
-    public void setSelectedLocationPointType(LocationPointType type) {
+    public AppPreferences setSelectedLocationPointType(LocationPointType type) {
         preferences.edit().putString(SELECTED_LOCATION_POINT_TYPE, "" + type.toShort()).apply();
+        return this;
     }
 
     /**
      * Obtiene el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio
      * buttons de locationservices
      *
-     * @return
+     * @return LocationDistance
      */
     public LocationDistance getSelectedLocationPointDistance() {
         return LocationDistance.get(Short.parseShort(preferences.getString(
@@ -168,16 +151,19 @@ public class AppPreferences {
      * Guarda el tipo de distancia de los puntos de ubicación, que fué seleccionado en los radio
      * buttons de locationservices
      *
-     * @param distance
+     * @param distance LocationDistance
+     * @return this instance of {@link AppPreferences}
      */
-    public void setSelectedLocationPointDistance(LocationDistance distance) {
-        preferences.edit().putString(SELECTED_LOCATION_POINT_DISTANCE, "" + distance.toShort()).apply();
+    public AppPreferences setSelectedLocationPointDistance(LocationDistance distance) {
+        preferences.edit().putString(SELECTED_LOCATION_POINT_DISTANCE,
+                String.valueOf(distance.toShort())).apply();
+        return this;
     }
 
     /**
      * Obtiene la distancia configurada por el cliente para los servicios de ubicación
      *
-     * @return
+     * @return distance
      */
     public int getConfiguredDistance() {
         return preferences.getInt(SETUP_DISTANCE, 1000);
@@ -187,19 +173,11 @@ public class AppPreferences {
      * Guarda la distancia configurada por el cliente para los servicios de ubicación
      *
      * @param distance distancia
+     * @return this instance of {@link AppPreferences}
      */
-    public void setConfiguredDistance(int distance) {
+    public AppPreferences setConfiguredDistance(int distance) {
         preferences.edit().putInt(SETUP_DISTANCE, distance).apply();
-    }
-
-    /**
-     * Guarda el sscToken
-     *
-     * @param sscToken ssc token
-     */
-    public void setSscToken(SscToken sscToken) {
-        preferences.edit().putString(WS_TOKEN, sscToken != null ? sscToken.toString() : null)
-                .apply();
+        return this;
     }
 
     /**
@@ -209,10 +187,42 @@ public class AppPreferences {
      */
     public SscToken getSscToken() {
         try {
-            JSONObject json = new JSONObject(preferences.getString(WS_TOKEN, null));
+            JSONObject json = new JSONObject(preferences.getString(SSC_TOKEN, null));
             return new SscToken(json.getString("imei"), json.getString("token"));
         } catch (JSONException | NullPointerException ignored) {
         }
         return null;
+    }
+
+    /**
+     * Guarda el sscToken
+     *
+     * @param sscToken ssc token
+     * @return this instance of {@link AppPreferences}
+     */
+    public AppPreferences setSscToken(SscToken sscToken) {
+        preferences.edit().putString(SSC_TOKEN, sscToken != null ? sscToken.toString() : null)
+                .apply();
+        return this;
+    }
+
+    /**
+     * Verifies if the gcm token should be sent to the server
+     *
+     * @return true if it has to
+     */
+    public boolean hasToSendGcmToken() {
+        return preferences.getBoolean(HAS_TO_SEND_GCM_TOKEN, true);
+    }
+
+    /**
+     * Sets the preferences pointing out the gcm token should be sent to the server
+     *
+     * @param hasToSend true or false
+     * @return this instance of {@link AppPreferences}
+     */
+    public AppPreferences setHasToSendGcmToken(boolean hasToSend) {
+        preferences.edit().putBoolean(HAS_TO_SEND_GCM_TOKEN, hasToSend).apply();
+        return this;
     }
 }

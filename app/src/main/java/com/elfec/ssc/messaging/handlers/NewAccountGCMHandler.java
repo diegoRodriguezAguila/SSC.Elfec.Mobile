@@ -4,12 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
-import com.elfec.ssc.business_logic.AccountManager;
 import com.elfec.ssc.business_logic.ClientManager;
 import com.elfec.ssc.business_logic.NotificationManager;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.utils.GsonUtils;
 import com.elfec.ssc.helpers.utils.ObjectsCompat;
+import com.elfec.ssc.local_storage.AccountStorage;
 import com.elfec.ssc.model.Account;
 import com.elfec.ssc.model.Notification;
 import com.elfec.ssc.presenter.AccountsPresenter;
@@ -45,7 +45,7 @@ public class NewAccountGcmHandler implements INotificationHandler {
                         return Observable.just(null);
                     Gson gson = GsonUtils.generateGson();
                     Account account = gson.fromJson(message.getString("account"), Account.class);
-                    return AccountManager.registerAccount(gmail, account);
+                    return new AccountStorage().saveAccount(gmail, account);
                 })
                 .flatMap(acc -> {
                     if (acc == null)

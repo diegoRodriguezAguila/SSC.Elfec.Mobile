@@ -17,7 +17,7 @@ import rx.schedulers.Schedulers;
  *
  * @author drodriguez
  */
-public class ContactsUpdateGCMHandler implements INotificationHandler {
+public class ContactsUpdateGcmHandler implements INotificationHandler {
 
     private static final int NOTIF_ID = 4;
 

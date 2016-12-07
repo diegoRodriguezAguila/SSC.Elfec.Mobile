@@ -82,7 +82,10 @@ public class DeviceManager {
                     String imei = new CredentialManager(AppPreferences.getApplicationContext())
                             .getDeviceIdentifier();
                     return new DeviceService(sscToken).updateGcmToken(imei, token);
-                });
+                }).map(success -> {
+                    AppPreferences.instance().setHasToSendGcmToken(!success);
+                    return success;
+                }).doOnError(e -> AppPreferences.instance().setHasToSendGcmToken(true));
     }
 
 }

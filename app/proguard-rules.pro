@@ -61,7 +61,7 @@
     rx.internal.util.atomic.LinkedQueueNode consumerNode;
 }
 
--keep class com.lasalle.mobile.model.** { *; }
+-keep class com.elfec.ssc.model.** { *; }
 
 #Rx PaperDb
 -keep class io.paperdb.** { *; }
@@ -69,3 +69,9 @@
 -dontwarn com.esotericsoftware.**
 -keep class de.javakaffee.kryoserializers.** { *; }
 -dontwarn de.javakaffee.kryoserializers.**
+
+#Joda datetime
+-dontwarn org.joda.convert.**
+-dontwarn org.joda.time.**
+-keep class org.joda.time.** { *; }
+-keep interface org.joda.time.** { *; }

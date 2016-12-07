@@ -21,6 +21,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.elfec.ssc.R;
+import com.elfec.ssc.helpers.HtmlCompat;
 import com.elfec.ssc.helpers.ViewPresenterManager;
 import com.elfec.ssc.helpers.threading.ThreadMutex;
 import com.elfec.ssc.helpers.ui.ButtonClicksHelper;
@@ -28,6 +29,7 @@ import com.elfec.ssc.helpers.utils.MessageListFormatter;
 import com.elfec.ssc.model.LocationPoint;
 import com.elfec.ssc.model.enums.LocationDistance;
 import com.elfec.ssc.model.enums.LocationPointType;
+import com.elfec.ssc.model.exceptions.OutdatedAppException;
 import com.elfec.ssc.presenter.LocationServicesPresenter;
 import com.elfec.ssc.presenter.views.ILocationServices;
 import com.elfec.ssc.security.AppPreferences;
@@ -340,9 +342,9 @@ public class LocationServicesActivity extends AppCompatActivity implements
 
     @Override
     public void onError(Throwable e) {
-        SuperToast.create(LocationServicesActivity.this,
-                e.getMessage(), SuperToast.Duration.SHORT,
-                Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
+        if(e instanceof OutdatedAppException)
+            showErrorDialog(e);
+        else showErrorToast(e);
     }
 
     @Override
@@ -355,8 +357,25 @@ public class LocationServicesActivity extends AppCompatActivity implements
         });
 
     }
-
     //endregion
+
+    private void showErrorDialog(Throwable e){
+        AlertDialog dialog = new AlertDialog.Builder(this)
+                .setTitle(R.string.errors_on_get_points_title)
+                .setMessage(HtmlCompat.fromHtml(e.getMessage()))
+                .setPositiveButton(R.string.btn_ok, null).create();
+        dialog.show();
+        TextView txtMessage = (TextView) dialog.findViewById(android.R.id.message);
+        if (txtMessage != null) {
+            txtMessage.setMovementMethod(LinkMovementMethod.getInstance());
+        }
+    }
+
+    private void showErrorToast(Throwable e){
+        SuperToast.create(LocationServicesActivity.this,
+                e.getMessage(), SuperToast.Duration.SHORT,
+                Style.getStyle(Style.BLUE, SuperToast.Animations.FADE)).show();
+    }
 
     /**
      * Añade un marker al mapa

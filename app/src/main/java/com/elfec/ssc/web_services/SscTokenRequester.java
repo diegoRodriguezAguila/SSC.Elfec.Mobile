@@ -12,12 +12,10 @@ import rx.Observable;
  * @author drodriguez
  */
 public class SscTokenRequester {
-    private AppPreferences preferences;
     private SscToken currentToken;
 
     public SscTokenRequester() {
-        this.preferences = AppPreferences.instance();
-        this.currentToken = preferences.getSscToken();
+        this.currentToken = AppPreferences.instance().getSscToken();
     }
 
     /**
