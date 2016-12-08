@@ -23,7 +23,7 @@ import java.lang.ref.SoftReference;
 public class AppPreferences {
 
     private static final String FIRST_APP_USAGE = "FirstAppUsage";
-    private static final String HAS_ONE_GMAIL_ACCOUNT = "HasAtLeastOneGmailAccount";
+    private static final String HAS_ONE_GMAIL_ACCOUNT = "HasOneGmailAccount";
     private static final String SELECTED_LOCATION_POINT_TYPE = "SelectedLocationPointType";
     private static final String SELECTED_LOCATION_POINT_DISTANCE = "SelectedLocationPointDistance";
     private static final String SETUP_DISTANCE = "SetupDistance";
