@@ -1,6 +1,8 @@
 package com.elfec.ssc.view;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -18,7 +20,7 @@ public class ContactsActivity extends BaseActivity implements IContactsView {
 
     private boolean isFirst = true;
     private int mSelectedPhoneNumberIndex;
-    private String facebook;
+    private String facebookUrl;
     private String facebookId;
 
     @Override
@@ -53,7 +55,7 @@ public class ContactsActivity extends BaseActivity implements IContactsView {
                 .setText(contact.getAddress());
         ((TextView) findViewById(R.id.contact_email)).setText(contact.getEmail());
         ((TextView) findViewById(R.id.contact_web)).setText(contact.getWebPage());
-        ContactsActivity.this.facebook = contact.getFacebook();
+        ContactsActivity.this.facebookUrl = "https://" + contact.getFacebook();
         ContactsActivity.this.facebookId = contact.getFacebookId();
     }
 
@@ -102,13 +104,26 @@ public class ContactsActivity extends BaseActivity implements IContactsView {
      * @return Intent para el facebook
      */
     public Intent getFacebookIntent() {
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(getFacebookPageURL(this)));
+    }
+
+    public String getFacebookPageURL(Context context) {
+        PackageManager packageManager = context.getPackageManager();
         try {
-            this.getPackageManager().getPackageInfo("com.facebook.katana", 0);
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://profile/"
-                    + facebookId));
-        } catch (Exception e) {
-            return new Intent(Intent.ACTION_VIEW, Uri.parse("https://"
-                    + facebook));
+            int versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode;
+
+            boolean activated = packageManager.getApplicationInfo("com.facebook.katana", 0).enabled;
+            if (activated) {
+                if ((versionCode >= 3002850)) {
+                    return "fb://facewebmodal/f?href="+ facebookUrl;
+                } else {
+                    return "fb://page/" + facebookId;
+                }
+            } else {
+                return facebookUrl;
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            return facebookUrl;
         }
     }
 
